@@ -37,17 +37,17 @@
             <TableColumn fx:id="colEstado" prefWidth="108.0" text="Estado" />
         </columns>
       </TableView>
-      <Button layoutX="41.0" layoutY="688.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #5B6FD4FF;" text="Registrar" textFill="WHITE">
+      <Button layoutX="41.0" layoutY="688.0" mnemonicParsing="false" onAction="#clicBtnRegistrarOV" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #5B6FD4FF;" text="Registrar" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font>
       </Button>
-      <Button layoutX="205.0" layoutY="688.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="149.0" style="-fx-font-weight: Bold; -fx-background-color: #5B6FD4FF;" text="Actualizar" textFill="WHITE">
+      <Button layoutX="205.0" layoutY="688.0" mnemonicParsing="false" onAction="#clicBtnActualizarOV" prefHeight="31.0" prefWidth="149.0" style="-fx-font-weight: Bold; -fx-background-color: #5B6FD4FF;" text="Actualizar" textFill="WHITE">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
       </Button>
-      <Button layoutX="831.0" layoutY="688.0" mnemonicParsing="false" onAction="#clicBtnImprimir" prefHeight="31.0" prefWidth="149.0" style="-fx-font-weight: Bold; -fx-background-color: #5b6fd4;" text="Imprimir" textFill="WHITE">
+      <Button layoutX="831.0" layoutY="688.0" mnemonicParsing="false" onAction="#clicBtnImprimirOV" prefHeight="31.0" prefWidth="149.0" style="-fx-font-weight: Bold; -fx-background-color: #5b6fd4;" text="Imprimir" textFill="WHITE">
          <font>
             <Font name="Arial" size="15.0" />
          </font>

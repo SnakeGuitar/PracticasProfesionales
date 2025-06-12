@@ -33,10 +33,9 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class FXMLOrganizacionVinculadaController implements Initializable {
-    private static final String RUTA_FXML_REGISTRAR_OV = "/sgpp/vista/usuarios/coordinador/organizacionvinculada/"; // Implementar
-    private static final String RUTA_FXML_ACTUALIZAR_OV = "/sgpp/vista/usuarios/coordinador/organizacionvinculada/"; // Implementar
-    private static final String RUTA_FXML_ELIMINAR_OV = "/sgpp/vista/usuarios/coordinador/organizacionvinculada/"; // Implementar
-    private static final String RUTA_FXML_IMPRIMIR_OV = "/sgpp/vista/usuarios/coordinador/organizacionvinculada/"; // Implementar
+    private static final String RUTA_FXML_REGISTRAR_OV = "/sgpp/vista/usuarios/coordinador/organizacionvinculada/FXMLRegistrarOV.fxml"; // Implementar
+    private static final String RUTA_FXML_ACTUALIZAR_OV = "/sgpp/vista/usuarios/coordinador/organizacionvinculada/FXMLActualizarOV.fxml"; // Implementar
+    private static final String RUTA_FXML_ELIMINAR_OV = "/sgpp/vista/usuarios/coordinador/organizacionvinculada/FXMLEliminarOV.fxml"; // Implementar
 
     private ObservableList<OrganizacionVinculada> listaOrganizaciones;
 
@@ -95,17 +94,26 @@ public class FXMLOrganizacionVinculadaController implements Initializable {
 
     @FXML
     public void clicBtnRegistrarOV(ActionEvent actionEvent) {
+        Utilidad.crearEscenario(
+                RUTA_FXML_REGISTRAR_OV,
+                "Registrar Organización Vinculada");
+        cargarDatosTabla(); // Recargar datos después de registrar una nueva organización
     }
 
     @FXML
     public void clicBtnActualizarOV(ActionEvent actionEvent) {
-    }
-
-    @FXML
-    public void clicBtnImprimir(ActionEvent actionEvent) {
+        Utilidad.crearEscenario(
+                RUTA_FXML_ACTUALIZAR_OV,
+                "Actualizar Organización Vinculada");
     }
 
     @FXML
     public void clicBtnEliminarOV(ActionEvent actionEvent) {
     }
+
+    @FXML
+    public void clicBtnImprimirOV(ActionEvent actionEvent) {
+    }
+
+
 }
