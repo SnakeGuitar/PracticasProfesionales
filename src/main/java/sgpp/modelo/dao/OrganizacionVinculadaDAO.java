@@ -37,7 +37,7 @@ public class OrganizacionVinculadaDAO {
         return organizaciones;
     }
 
-    public static boolean registrarOrganizacionVinculada(OrganizacionVinculada organizacion) throws SQLException {
+    public static boolean registrar(OrganizacionVinculada organizacion) throws SQLException {
         String consulta = "INSERT INTO organizacion_vinculada(nombre, sector, correo, telefono, direccion, ciudad, estado) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection conexionBD = ConexionBD.abrirConexion();
@@ -63,7 +63,7 @@ public class OrganizacionVinculadaDAO {
         }
     }
 
-    public static boolean actualizarOrganizacionVinculada(OrganizacionVinculada organizacion) throws SQLException {
+    public static boolean actualizar(OrganizacionVinculada organizacion) throws SQLException {
         String consulta = "UPDATE organizacion_vinculada " +
                 "SET nombre = ?, " +
                 "sector = ?, " +
@@ -97,7 +97,7 @@ public class OrganizacionVinculadaDAO {
         }
     }
 
-    public static boolean eliminarOrganizacionVinculada(int id) throws SQLException {
+    public static boolean eliminar(int id) throws SQLException {
         String consulta = "DELETE FROM organizacion_vinculada WHERE ID_Org_Vinculada = ?";
         try (Connection conexionBD = ConexionBD.abrirConexion();
              PreparedStatement sentencia = conexionBD.prepareStatement(consulta)) {

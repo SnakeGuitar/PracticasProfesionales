@@ -42,21 +42,21 @@ public class FXMLOrganizacionVinculadaController implements Initializable {
     @FXML
     private TableView<OrganizacionVinculada> tblOV;
     @FXML
-    private TableColumn colId;
+    private TableColumn<OrganizacionVinculada, Integer> colId;
     @FXML
-    private TableColumn colNombre;
+    private TableColumn<OrganizacionVinculada, String> colNombre;
     @FXML
-    private TableColumn colSector;
+    private TableColumn<OrganizacionVinculada, String> colSector;
     @FXML
-    private TableColumn colCorreo;
+    private TableColumn<OrganizacionVinculada, String> colCorreo;
     @FXML
-    private TableColumn colTelefono;
+    private TableColumn<OrganizacionVinculada, String> colTelefono;
     @FXML
-    private TableColumn colDireccion;
+    private TableColumn<OrganizacionVinculada, String> colDireccion;
     @FXML
-    private TableColumn colCiudad;
+    private TableColumn<OrganizacionVinculada, String> colCiudad;
     @FXML
-    private TableColumn colEstado;
+    private TableColumn<OrganizacionVinculada, String> colEstado;
 
     @Override
     public void initialize(URL url, ResourceBundle resources) {
@@ -105,6 +105,7 @@ public class FXMLOrganizacionVinculadaController implements Initializable {
         Utilidad.crearEscenario(
                 RUTA_FXML_ACTUALIZAR_OV,
                 "Actualizar Organización Vinculada");
+        cargarDatosTabla(); // Recargar datos después de actualizar una organización
     }
 
     @FXML

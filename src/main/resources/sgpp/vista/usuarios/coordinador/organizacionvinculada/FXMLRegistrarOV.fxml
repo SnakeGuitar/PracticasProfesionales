@@ -1,14 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sgpp.controlador.usuarios.coordinador.organizacionvinculada.FXMLRegistrarOVController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="671.0" prefWidth="493.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.coordinador.organizacionvinculada.FXMLRegistrarOVController">
+   <children>
+      <Label layoutX="27.0" layoutY="28.0" style="-fx-font-weight: Italic;" text="Registrar">
+         <font>
+            <Font name="Arial Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="27.0" layoutY="68.0" text="Organizacion Vinculada">
+         <font>
+            <Font name="Arial" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="27.0" layoutY="130.0" text="Nombre">
+         <font>
+            <Font name="Arial Bold" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txfiNombre" layoutX="27.0" layoutY="158.0" prefHeight="35.0" prefWidth="434.0">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font></TextField>
+      <TextField fx:id="txfiSector" layoutX="27.0" layoutY="232.0" prefHeight="35.0" prefWidth="434.0" />
+      <Label layoutX="27.0" layoutY="204.0" text="Sector">
+         <font>
+            <Font name="Arial Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="27.0" layoutY="352.0" text="Telefono">
+         <font>
+            <Font name="Arial Bold" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txFiTelefono" layoutX="27.0" layoutY="380.0" prefHeight="35.0" prefWidth="434.0" />
+      <TextField fx:id="txfiCorreo" layoutX="27.0" layoutY="306.0" prefHeight="35.0" prefWidth="434.0" />
+      <Label layoutX="27.0" layoutY="278.0" text="Correo">
+         <font>
+            <Font name="Arial Bold" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txfiDireccion" layoutX="27.0" layoutY="454.0" prefHeight="35.0" prefWidth="434.0" />
+      <Label layoutX="27.0" layoutY="426.0" text="Direccion">
+         <font>
+            <Font name="Arial Bold" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txfiCiudad" layoutX="27.0" layoutY="529.0" prefHeight="35.0" prefWidth="175.0" />
+      <Label layoutX="27.0" layoutY="501.0" text="Ciudad">
+         <font>
+            <Font name="Arial Bold" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txfiEstado" layoutX="219.0" layoutY="529.0" prefHeight="35.0" prefWidth="242.0" />
+      <Label layoutX="219.0" layoutY="501.0" text="Estado">
+         <font>
+            <Font name="Arial Bold" size="15.0" />
+         </font>
+      </Label>
+      <Button layoutX="309.0" layoutY="606.0" mnemonicParsing="false" onAction="#clicBtnRegistrar" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #5b6fd4; -fx-background-radius: 5;" text="Registrar" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="143.0" layoutY="606.0" mnemonicParsing="false" onAction="#clicBtnCancelar" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-font-family: Arial; -fx-font-weight: Bold; -fx-border-radius: 5;" text="Cancelar" />
+   </children>
 </AnchorPane>
