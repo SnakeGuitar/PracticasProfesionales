@@ -17,10 +17,7 @@ package sgpp.modelo.dao;
 import sgpp.modelo.ConexionBD;
 import sgpp.modelo.beans.OrganizacionVinculada;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class OrganizacionVinculadaDAO {
@@ -31,7 +28,7 @@ public class OrganizacionVinculadaDAO {
              Statement sentencia = conexionBD.createStatement();
              ResultSet resultado = sentencia.executeQuery(consulta)) {
             while (resultado.next()) {
-                organizaciones.add(convertirRegistroALumno(resultado));
+                organizaciones.add(convertirResultSetAOV(resultado));
             }
         } catch (SQLException e) {
             System.err.println("Error al obtener organizaciones vinculadas: " + e.getMessage());
@@ -41,26 +38,87 @@ public class OrganizacionVinculadaDAO {
     }
 
     public static boolean registrarOrganizacionVinculada(OrganizacionVinculada organizacion) throws SQLException {
-        // Aquí se implementaría la lógica para registrar una nueva organización vinculada en la base de datos.
-        // Por ejemplo, se podría usar JDBC para ejecutar una sentencia SQL de inserción.
-        return true; // Retornar true si la inserción fue exitosa, false en caso contrario.
+        String consulta = "INSERT INTO organizacion_vinculada(nombre, sector, correo, telefono, direccion, ciudad, estado) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (Connection conexionBD = ConexionBD.abrirConexion();
+             PreparedStatement sentencia = conexionBD.prepareStatement(consulta)) {
+            sentencia.setString(1, organizacion.getNombre());
+            sentencia.setString(2, organizacion.getSector());
+            sentencia.setString(3, organizacion.getCorreo());
+            sentencia.setString(4, organizacion.getTelefono());
+            sentencia.setString(5, organizacion.getDireccion());
+            sentencia.setString(6, organizacion.getCiudad());
+            sentencia.setString(7, organizacion.getEstado());
+            int filasAfectadas = sentencia.executeUpdate();
+            if (filasAfectadas > 0) {
+                System.out.println("Organización vinculada registrada exitosamente.");
+                return true; // Retornar true si la inserción fue exitosa
+            } else {
+                System.out.println("No se pudo registrar la organización vinculada.");
+                return false; // Retornar false si no se insertó ninguna fila
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al registrar organización vinculada: " + e.getMessage());
+            throw e; // Re-lanzar la excepción para que pueda ser manejada por el llamador
+        }
     }
 
     public static boolean actualizarOrganizacionVinculada(OrganizacionVinculada organizacion) throws SQLException {
-        // Aquí se implementaría la lógica para actualizar una organización vinculada en la base de datos.
-        // Por ejemplo, se podría usar JDBC para ejecutar una sentencia SQL de actualización.
-        return true; // Retornar true si la actualización fue exitosa, false en caso contrario.
+        String consulta = "UPDATE organizacion_vinculada " +
+                "SET nombre = ?, " +
+                "sector = ?, " +
+                "correo = ?, " +
+                "telefono = ?, " +
+                "direccion = ?, " +
+                "ciudad = ?, " +
+                "estado = ? " +
+                "WHERE ID_Org_Vinculada = ?";
+        try (Connection conexionBD = ConexionBD.abrirConexion();
+             PreparedStatement sentencia = conexionBD.prepareStatement(consulta)) {
+            sentencia.setString(1, organizacion.getNombre());
+            sentencia.setString(2, organizacion.getSector());
+            sentencia.setString(3, organizacion.getCorreo());
+            sentencia.setString(4, organizacion.getTelefono());
+            sentencia.setString(5, organizacion.getDireccion());
+            sentencia.setString(6, organizacion.getCiudad());
+            sentencia.setString(7, organizacion.getEstado());
+            sentencia.setInt(8, organizacion.getId());
+            int filasAfectadas = sentencia.executeUpdate();
+            if (filasAfectadas > 0) {
+                System.out.println("Organización vinculada actualizada exitosamente.");
+                return true; // Retornar true si la actualización fue exitosa
+            } else {
+                System.out.println("No se pudo actualizar la organización vinculada.");
+                return false; // Retornar false si no se actualizó ninguna fila
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al actualizar organización vinculada: " + e.getMessage());
+            throw e; // Re-lanzar la excepción para que pueda ser manejada por el llamador
+        }
     }
 
     public static boolean eliminarOrganizacionVinculada(int id) throws SQLException {
-        // Aquí se implementaría la lógica para eliminar una organización vinculada de la base de datos.
-        // Por ejemplo, se podría usar JDBC para ejecutar una sentencia SQL de eliminación.
-        return true; // Retornar true si la eliminación fue exitosa, false en caso contrario.
+        String consulta = "DELETE FROM organizacion_vinculada WHERE ID_Org_Vinculada = ?";
+        try (Connection conexionBD = ConexionBD.abrirConexion();
+             PreparedStatement sentencia = conexionBD.prepareStatement(consulta)) {
+            sentencia.setInt(1, id);
+            int filasAfectadas = sentencia.executeUpdate();
+            if (filasAfectadas == 1) {
+                System.out.println("Organización vinculada eliminada exitosamente.");
+                return true; // Retornar true si la eliminación fue exitosa
+            } else {
+                System.out.println("No se pudo eliminar la organización vinculada.");
+                return false; // Retornar false si no se eliminó ninguna fila
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al eliminar organización vinculada: " + e.getMessage());
+            throw e; // Re-lanzar la excepción para que pueda ser manejada por el llamador
+        }
     }
 
-    public static OrganizacionVinculada convertirRegistroALumno(ResultSet resultado) throws SQLException {
+    private static OrganizacionVinculada convertirResultSetAOV(ResultSet resultado) throws SQLException {
         OrganizacionVinculada organizacion = new OrganizacionVinculada();
-        organizacion.setId(resultado.getInt("ID_Organizacion"));
+        organizacion.setId(resultado.getInt("ID_Org_Vinculada"));
         organizacion.setNombre(resultado.getString("Nombre"));
         organizacion.setSector(resultado.getString("Sector"));
         organizacion.setCorreo(resultado.getString("Correo"));
