@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+
+<AnchorPane blendMode="DARKEN" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #5b6fd4;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.FXMLInicioSesionController">
+   <children>
+      <Pane layoutX="419.0" layoutY="115.0" prefHeight="538.0" prefWidth="525.0" style="-fx-background-color: #ffffff; -fx-border-color: #5b6fd4; -fx-border-radius: 30; -fx-border-width: 15; -fx-border-insets: -15;">
+         <children>
+            <Label layoutX="127.0" layoutY="124.0" prefHeight="42.0" prefWidth="271.0" text="Practicas Profesionales">
+               <font>
+                  <Font name="Arial Bold Italic" size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfUsuario" layoutX="116.0" layoutY="219.0" prefHeight="42.0" prefWidth="294.0" />
+            <TextField fx:id="tfContrasena" layoutX="116.0" layoutY="284.0" prefHeight="42.0" prefWidth="294.0" />
+            <Button layoutX="116.0" layoutY="373.0" mnemonicParsing="false" onAction="#btnIniciarSesion" prefHeight="42.0" prefWidth="294.0" style="-fx-background-color: #5b6fd4; -fx-border-color: #ffffff; -fx-border-radius: 6; -fx-border-width: 3; -fx-border-insets: -2;" text="Iniciar Sesion" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="15.0" />
+               </font>
+            </Button>
+            <Label fx:id="lbUsuarioRequerido" layoutX="71.0" layoutY="236.0" prefHeight="20.0" prefWidth="24.0" textFill="#cd0000">
+               <font>
+                  <Font name="Arial Italic" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbContrasenaRequerida" layoutX="71.0" layoutY="301.0" prefHeight="20.0" prefWidth="24.0" textFill="#cc0000">
+               <font>
+                  <Font name="Arial Italic" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Label layoutX="24.0" layoutY="347.0" text="SGGP">
+         <font>
+            <Font name="Arial Bold" size="64.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop color="#15359e" />
+                  <Stop color="WHITE" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
+         <effect>
+            <Bloom threshold="0.5" />
+         </effect>
+      </Label>
+   </children>
+</AnchorPane>

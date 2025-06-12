@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.coordinador.organizacionvinculada.FXMLOrganizacionVinculadaController">
+   <children>
+      <Label layoutX="857.0" layoutY="47.0" prefHeight="27.0" prefWidth="102.0" text="Coordinador">
+         <font>
+            <Font name="Arial Italic" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="41.0" layoutY="47.0" prefHeight="27.0" prefWidth="710.0" text="Sistema de Gestion de Practicas Profesionales">
+         <font>
+            <Font name="Arial Bold Italic" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="41.0" layoutY="86.0" text="Organizacion Vinculada">
+         <font>
+            <Font name="Arial Italic" size="18.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tblOV" layoutX="41.0" layoutY="161.0" prefHeight="507.0" prefWidth="939.0">
+        <columns>
+          <TableColumn fx:id="colId" prefWidth="45.0" text="ID" />
+          <TableColumn fx:id="colNombre" prefWidth="105.0" text="Nombre" />
+            <TableColumn fx:id="colSector" prefWidth="75.0" text="Sector" />
+            <TableColumn fx:id="colCorreo" prefWidth="146.0" text="Correo" />
+            <TableColumn fx:id="colTelefono" prefWidth="114.0" text="Telefono" />
+            <TableColumn fx:id="colDireccion" prefWidth="247.0" text="Direccion" />
+            <TableColumn fx:id="colCiudad" prefWidth="98.0" text="Ciudad" />
+            <TableColumn fx:id="colEstado" prefWidth="108.0" text="Estado" />
+        </columns>
+      </TableView>
+      <Button layoutX="41.0" layoutY="688.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #5B6FD4FF;" text="Registrar" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="205.0" layoutY="688.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="149.0" style="-fx-font-weight: Bold; -fx-background-color: #5B6FD4FF;" text="Actualizar" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="831.0" layoutY="688.0" mnemonicParsing="false" onAction="#clicBtnImprimir" prefHeight="31.0" prefWidth="149.0" style="-fx-font-weight: Bold; -fx-background-color: #5b6fd4;" text="Imprimir" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="369.0" layoutY="688.0" mnemonicParsing="false" onAction="#clicBtnEliminarOV" prefHeight="31.0" prefWidth="149.0" style="-fx-font-weight: Bold; -fx-background-color: #5B6FD4FF;" text="Eliminar" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

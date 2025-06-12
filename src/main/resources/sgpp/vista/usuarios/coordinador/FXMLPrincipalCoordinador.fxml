@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.coordinador.FXMLPrincipalCoordinadorController">
+   <children>
+      <Label layoutX="31.0" layoutY="37.0" prefHeight="27.0" prefWidth="710.0" text="Sistema de Gestion de Practicas Profesionales">
+         <font>
+            <Font name="Arial Bold Italic" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="31.0" layoutY="73.0" prefHeight="27.0" prefWidth="115.0" text="Coordinador">
+         <font>
+            <Font name="Arial Italic" size="18.0" />
+         </font>
+      </Label>
+      <Pane layoutX="31.0" layoutY="149.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #5B6FD4FF;">
+         <children>
+            <Button layoutX="14.0" layoutY="110.0" mnemonicParsing="false" onAction="#clicBtnProyectos" prefHeight="31.0" prefWidth="99.0" style="-fx-background-color: #5B6FD4FF; -fx-font-weight: Bold;" text="Proyectos" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane layoutX="307.0" layoutY="149.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #49c5ef;">
+         <children>
+            <Button layoutX="14.0" layoutY="110.0" mnemonicParsing="false" onAction="#clicBtnOrganizacionVinculada" prefHeight="31.0" prefWidth="197.0" style="-fx-background-color: #49c5ef; -fx-font-weight: Bold;" text="Organizacion Vinculada" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane layoutX="583.0" layoutY="149.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #49c5ef;">
+         <children>
+            <Button layoutX="14.0" layoutY="110.0" mnemonicParsing="false" onAction="#clicBtnResponsableTecnico" prefHeight="31.0" prefWidth="174.0" style="-fx-background-color: #49c5ef; -fx-font-weight: Bold;" text="Responsable Técnico" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane layoutX="31.0" layoutY="419.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #49c5ef;">
+         <children>
+            <Button layoutX="14.0" layoutY="110.0" mnemonicParsing="false" onAction="#clicBtnDocumentosAsignacion" prefHeight="31.0" prefWidth="216.0" style="-fx-background-color: #49c5ef; -fx-font-weight: Bold;" text="Documentos de Asignacion" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane layoutX="307.0" layoutY="419.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #49c5ef;">
+         <children>
+            <Button layoutX="14.0" layoutY="110.0" mnemonicParsing="false" onAction="#clicBtnProgramarEntregas" prefHeight="31.0" prefWidth="174.0" style="-fx-background-color: #49c5ef; -fx-font-weight: Bold;" text="Programar Entregas" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
