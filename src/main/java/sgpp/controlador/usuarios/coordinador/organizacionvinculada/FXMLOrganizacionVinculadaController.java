@@ -3,7 +3,7 @@
  * Ultimo autor: Luis Donaldo
  * Fecha de creación: 10-06-2025
  * Fecha de la última versión aprobada:
- * Fecha de la última modificación: 11-06-2025
+ * Fecha de la última modificación: 13-06-2025
  * Descripción: Controlador para manejar las operaciones de la vista FXMLOrganizacionVinculada.fxml
  */
 
@@ -14,6 +14,11 @@
 
 package sgpp.controlador.usuarios.coordinador.organizacionvinculada;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import sgpp.modelo.beans.OrganizacionVinculada;
 import sgpp.modelo.dao.OrganizacionVinculadaDAO;
 import sgpp.utilidad.Utilidad;
@@ -27,13 +32,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class FXMLOrganizacionVinculadaController implements Initializable {
-    private static final String RUTA_FXML_REGISTRAR_OV = "/sgpp/vista/usuarios/coordinador/organizacionvinculada/FXMLRegistrarOV.fxml"; // Implementar
+    private static final String RUTA_FXML_REGISTRAR_OV = "/sgpp/vista/usuarios/coordinador/organizacionvinculada/FXMLRegistrarOV.fxml";
     private static final String RUTA_FXML_ACTUALIZAR_OV = "/sgpp/vista/usuarios/coordinador/organizacionvinculada/FXMLActualizarOV.fxml"; // Implementar
     private static final String RUTA_FXML_ELIMINAR_OV = "/sgpp/vista/usuarios/coordinador/organizacionvinculada/FXMLEliminarOV.fxml"; // Implementar
 
@@ -102,10 +108,38 @@ public class FXMLOrganizacionVinculadaController implements Initializable {
 
     @FXML
     public void clicBtnActualizarOV(ActionEvent actionEvent) {
-        Utilidad.crearEscenario(
-                RUTA_FXML_ACTUALIZAR_OV,
-                "Actualizar Organización Vinculada");
-        cargarDatosTabla(); // Recargar datos después de actualizar una organización
+        OrganizacionVinculada organizacion = tblOV.getSelectionModel().getSelectedItem();
+
+        if (organizacion == null) {
+            Utilidad.crearAlerta(Alert.AlertType.WARNING,
+                    "Selección requerida",
+                    "Por favor, seleccione una organización vinculada para actualizar.");
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource(RUTA_FXML_ACTUALIZAR_OV));
+            Parent root = loader.load();
+
+            FXMLActualizarOVController controlador = loader.getController();
+            controlador.inicializarDatos(organizacion);
+
+            Stage stage = new Stage();
+            stage.setTitle("Actualizar Organización Vinculada");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+            stage.showAndWait();
+
+            cargarDatosTabla(); // Recargar datos después de actualizar una organización
+
+        } catch (IOException e) {
+            Utilidad.crearAlerta(Alert.AlertType.ERROR,
+                    "Error de interfaz",
+                    "No se pudo cargar la vista de actualización de organización vinculada.");
+            e.printStackTrace();
+        }
     }
 
     @FXML

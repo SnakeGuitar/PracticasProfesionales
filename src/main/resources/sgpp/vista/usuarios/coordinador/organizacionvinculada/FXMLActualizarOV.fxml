@@ -7,10 +7,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="671.0" prefWidth="493.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.coordinador.organizacionvinculada.FXMLActualizarOVController">
+<AnchorPane prefHeight="671.0" prefWidth="493.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.coordinador.organizacionvinculada.FXMLActualizarOVController">
    <children>
       <Button layoutX="146.0" layoutY="609.0" mnemonicParsing="false" onAction="#clicBtnCancelar" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-font-family: Arial; -fx-font-weight: Bold; -fx-border-radius: 5;" text="Cancelar" />
-      <Button layoutX="312.0" layoutY="609.0" mnemonicParsing="false" onAction="#clicBtnRegistrar" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #5b6fd4; -fx-background-radius: 5;" text="Registrar" textFill="WHITE">
+      <Button layoutX="312.0" layoutY="609.0" mnemonicParsing="false" onAction="#clicBtnActualizar" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #5b6fd4; -fx-background-radius: 5;" text="Actualizar" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font>

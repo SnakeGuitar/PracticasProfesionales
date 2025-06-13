@@ -1,3 +1,17 @@
+/*
+ * Autor original: Luis Donaldo
+ * Ultimo autor: Luis Donaldo
+ * Fecha de creación: 10-06-2025
+ * Fecha de la última versión aprobada:
+ * Fecha de la última modificación: 12-06-2025
+ * Descripción: Controlador para manejar las operaciones de la vista FXMLRegistrarOV.fxml
+ */
+
+/*
+ * Estado: En progreso
+ * Modificaciones:
+ */
+
 package sgpp.controlador.usuarios.coordinador.organizacionvinculada;
 
 import javafx.event.ActionEvent;
