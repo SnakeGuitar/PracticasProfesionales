@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.coordinador.organizacionvinculada.FXMLOrganizacionVinculadaController">
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.coordinador.organizacionvinculada.FXMLOrganizacionVinculadaController">
    <children>
       <Label layoutX="857.0" layoutY="47.0" prefHeight="27.0" prefWidth="102.0" text="Coordinador">
          <font>
