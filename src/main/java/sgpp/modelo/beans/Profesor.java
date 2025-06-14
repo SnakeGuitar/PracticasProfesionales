@@ -12,28 +12,30 @@
  * Modificaciones:
  */
 
-package sgpp.modelo.beans.expediente.presentacion;
+package sgpp.modelo.beans;
 
-public class Evaluador {
-    private int idEvaluador;
+public class Profesor {
+    private int idProfesor;
     private String nombre;
     private int numeroPersonal;
+    private int idUsuario;
 
-    public Evaluador() {
+    public Profesor() {
     }
 
-    public Evaluador(int idEvaluador, String nombre, int numeroPersonal) {
-        this.idEvaluador = idEvaluador;
+    public Profesor(int idProfesor, String nombre, int numeroPersonal, int idUsuario) {
+        this.idProfesor = idProfesor;
         this.nombre = nombre;
         this.numeroPersonal = numeroPersonal;
+        this.idUsuario = idUsuario;
     }
 
-    public int getIdEvaluador() {
-        return idEvaluador;
+    public int getIdProfesor() {
+        return idProfesor;
     }
 
-    public void setIdEvaluador(int idEvaluador) {
-        this.idEvaluador = idEvaluador;
+    public void setIdProfesor(int idProfesor) {
+        this.idProfesor = idProfesor;
     }
 
     public String getNombre() {
@@ -50,5 +52,13 @@ public class Evaluador {
 
     public void setNumeroPersonal(int numeroPersonal) {
         this.numeroPersonal = numeroPersonal;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 }
