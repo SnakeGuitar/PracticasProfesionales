@@ -12,18 +12,21 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Button?>
 
-<AnchorPane blendMode="DARKEN" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #5b6fd4;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.FXMLInicioSesionController">
+<AnchorPane blendMode="DARKEN" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" styleClass="gradient-background" stylesheets="@login.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.FXMLInicioSesionController">
    <children>
-      <Pane layoutX="419.0" layoutY="115.0" prefHeight="538.0" prefWidth="525.0" style="-fx-background-color: #ffffff; -fx-border-color: #5b6fd4; -fx-border-radius: 30; -fx-border-width: 15; -fx-border-insets: -15;">
+      <Pane layoutX="419.0" layoutY="115.0" prefHeight="538.0" prefWidth="525.0" style="-fx-background-color: #ffffff; -fx-border-color: #5b6fd4; -fx-background-radius: 50;">
          <children>
             <Label layoutX="127.0" layoutY="124.0" prefHeight="42.0" prefWidth="271.0" text="Practicas Profesionales">
                <font>
                   <Font name="Arial Bold Italic" size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="tfUsuario" layoutX="116.0" layoutY="219.0" prefHeight="42.0" prefWidth="294.0" />
+            <TextField fx:id="tfUsuario" layoutX="116.0" layoutY="219.0" prefHeight="42.0" prefWidth="294.0">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font></TextField>
             <TextField fx:id="tfContrasena" layoutX="116.0" layoutY="284.0" prefHeight="42.0" prefWidth="294.0" />
-            <Button layoutX="116.0" layoutY="373.0" mnemonicParsing="false" onAction="#btnIniciarSesion" prefHeight="42.0" prefWidth="294.0" style="-fx-background-color: #5b6fd4; -fx-border-color: #ffffff; -fx-border-radius: 6; -fx-border-width: 3; -fx-border-insets: -2;" text="Iniciar Sesion" textFill="WHITE">
+            <Button layoutX="116.0" layoutY="373.0" mnemonicParsing="false" onAction="#btnIniciarSesion" prefHeight="42.0" prefWidth="294.0" style="-fx-background-color: #5b6fd4; -fx-background-radius: 10;" text="Iniciar Sesion" textFill="WHITE">
                <font>
                   <Font name="Arial Bold" size="15.0" />
                </font>
