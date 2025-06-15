@@ -22,12 +22,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import sgpp.dominio.ProyectoDM;
+import sgpp.dominio.ResultadoValidacion;
 import sgpp.modelo.beans.OrganizacionVinculada;
 import sgpp.modelo.beans.Proyecto;
 import sgpp.modelo.beans.ResponsableTecnico;
 import sgpp.modelo.dao.entidades.OrganizacionVinculadaDAO;
 import sgpp.modelo.dao.entidades.ResponsableTecnicoDAO;
 import sgpp.utilidad.Utilidad;
+import sgpp.utilidad.UtilidadFormatoDeDatos;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -176,6 +179,17 @@ public class FXMLFormularioProyectoController implements Initializable {
         }
     }
 
+    private void guardarProyecto() {
+        Proyecto candidato = construirProyectoCandidato();
+        if (validarProyecto(candidato)) {
+            if (!esEdicion) {
+
+            } else {
+
+            }
+        }
+    }
+
     private boolean validarCamposVacios() {
         lbErrorNombre.setText("");
         lbErrorObjetivo.setText("");
@@ -236,11 +250,39 @@ public class FXMLFormularioProyectoController implements Initializable {
             validos = false;
             lbErrorMetodologia.setText("*demasiado largo");
         }
-        if (!Utilidad.esUnNumeroEntero(txFiMaxParticipantes.getText())) {
+        if (!UtilidadFormatoDeDatos.esUnNumeroEntero(txFiMaxParticipantes.getText())) {
             validos = false;
             lbErrorMaxParticipantes.setText("*solo numeros enteros");
         }
         return validos;
+    }
+
+    private boolean validarProyecto(Proyecto proyecto) {
+        ResultadoValidacion validacion = new ResultadoValidacion();
+        validacion = ProyectoDM.validarParticipantes(
+                proyecto.getNumeroMaximoParticipantes());
+        if (!validacion.isValido()) {
+            lbErrorMaxParticipantes.setText(validacion.getMensaje());
+        }
+        validacion = ProyectoDM.validarFechas(
+                LocalDate.parse(proyecto.getFechaInicio()),
+                LocalDate.parse(proyecto.getFechaFin()));
+        if (!validacion.isValido()) {
+            lbErrorFechaInicio.setText(validacion.getMensaje());
+        }
+        return validacion.isValido();
+    }
+
+    //Debe llamarse con datos previamente validados o podria lanzar NumberFormatException
+    private Proyecto construirProyectoCandidato() {
+        Proyecto proyecto = new Proyecto();
+        proyecto.setNombre(txFiNombre.getText());
+        proyecto.setObjetivoGeneral(txFiObjetivo.getText());
+        proyecto.setMetodologia(txFiMetodologia.getText());
+        proyecto.setNumeroMaximoParticipantes(Integer.parseInt(txFiMaxParticipantes.getText()));
+        proyecto.setFechaInicio(datePkFechaInicio.getValue().toString());
+        proyecto.setFechaFin(datePkFechaFin.getValue().toString());
+        return proyecto;
     }
 
     private int obtenerIndiceEnComboOV(int idOrganizacion) {
