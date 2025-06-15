@@ -12,7 +12,7 @@
  * Modificaciones:
  */
 
-package sgpp.modelo.dao;
+package sgpp.modelo.dao.entidades;
 
 import sgpp.modelo.ConexionBD;
 import sgpp.modelo.beans.OrganizacionVinculada;

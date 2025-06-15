@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.coordinador.proyecto.FXMLFormularioProyectoController">
+   <children>
+      <BorderPane layoutY="-3.0" prefHeight="774.0" prefWidth="1024.0">
+         <top>
+            <VBox prefHeight="109.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Sistema de Gestión de Practicas Profesionales">
+                     <VBox.margin>
+                        <Insets left="15.0" top="35.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Arial Bold Italic" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbNombreCU" text="Registrar Proyecto">
+                     <VBox.margin>
+                        <Insets left="15.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Arial Italic" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+         </top>
+         <bottom>
+            <HBox prefHeight="59.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#clicBtnCancelar" prefWidth="150.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000;" text="Cancelar">
+                     <HBox.margin>
+                        <Insets left="15.0" right="465.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#clicBtnGuardar" prefWidth="150.0" style="-fx-background-color: #5b6fd4;" text="Registrar" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Black" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin></Button>
+               </children>
+            </HBox>
+         </bottom>
+         <center>
+            <GridPane prefHeight="606.0" prefWidth="992.0" BorderPane.alignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="506.0" minWidth="10.0" prefWidth="375.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="767.0" minWidth="10.0" prefWidth="388.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="767.0" minWidth="10.0" prefWidth="221.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label alignment="CENTER_RIGHT" contentDisplay="TOP" text="Nombre del Proyecto" GridPane.halignment="LEFT">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="15.0" />
+                     </font></Label>
+                  <Label text="Metodología" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="15.0" />
+                     </font></Label>
+                  <TextField fx:id="txFiNombre" prefHeight="31.0" prefWidth="552.0" GridPane.columnIndex="1" />
+                  <TextField fx:id="txFiObjetivo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="txFiMetodologia" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label text="Objetivo General" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="15.0" />
+                     </font></Label>
+                  <Label text="Máximo de Participantes" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="15.0" />
+                     </font></Label>
+                  <Label text="Organización Vinculada" GridPane.halignment="LEFT" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="15.0" />
+                     </font></Label>
+                  <Label text="Responsable Tecnico" GridPane.halignment="LEFT" GridPane.rowIndex="5">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="15.0" />
+                     </font></Label>
+                  <TextField fx:id="txFiMaxParticipantes" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <ComboBox fx:id="comboOV" prefHeight="31.0" prefWidth="427.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <ComboBox fx:id="comboResponsable" prefHeight="31.0" prefWidth="429.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Label fx:id="lbErrorNombre" textFill="RED" GridPane.columnIndex="2">
+                     <GridPane.margin>
+                        <Insets left="15.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="lbErrorObjetivo" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="15.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="lbErrorMetodologia" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                     <padding>
+                        <Insets left="15.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="lbErrorMaxParticipantes" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                     <padding>
+                        <Insets left="15.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="lbErrorOV" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                     <padding>
+                        <Insets left="15.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="lbErrorResponsable" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                     <padding>
+                        <Insets left="15.0" />
+                     </padding>
+                  </Label>
+                  <GridPane GridPane.rowIndex="6">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="183.0" minWidth="10.0" prefWidth="130.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="248.0" minWidth="10.0" prefWidth="245.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="118.0" text="Fecha de Inicio">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="15.0" />
+                           </font></Label>
+                        <DatePicker fx:id="datePkFechaInicio" prefHeight="31.0" prefWidth="190.0" GridPane.columnIndex="1" />
+                        <Label fx:id="lbErrorFechaInicio" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="6">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="188.0" text="Fecha de Finalización">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="15.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin></Label>
+                        <DatePicker fx:id="datePkFechaFin" prefHeight="31.0" prefWidth="190.0" GridPane.columnIndex="1" />
+                        <Label fx:id="lbErrorFechaFin" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+               </children>
+               <BorderPane.margin>
+                  <Insets left="20.0" right="20.0" />
+               </BorderPane.margin>
+            </GridPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

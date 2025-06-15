@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.coordinador.proyecto.FXMLProyectoController">
+   <children>
+      <BorderPane prefHeight="781.0" prefWidth="1034.0">
+         <bottom>
+            <HBox prefHeight="59.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#clicBtnRegistrar" prefWidth="150.0" style="-fx-background-color: #5b6fd4;" text="Registrar" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Black" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="15.0" right="20.0" top="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#clicBtnActualizar" prefWidth="150.0" style="-fx-background-color: #5b6fd4;" text="Actualizar" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Black" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </bottom>
+         <center>
+            <TableView fx:id="tblProyecto" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <columns>
+                  <TableColumn fx:id="colNombre" prefWidth="135.0" text="Nombre" />
+                  <TableColumn fx:id="colObjetivoGeneral" prefWidth="117.0" text="Objetivo" />
+                  <TableColumn fx:id="colMetodologia" prefWidth="112.0" text="Metodología" />
+                  <TableColumn fx:id="colNombreOV" prefWidth="147.0" text="Organización" />
+                  <TableColumn fx:id="colNombreResponsable" prefWidth="138.0" text="Responsable" />
+                  <TableColumn fx:id="colMaxParticipantes" prefWidth="84.0" text="Max Participantes" />
+                  <TableColumn fx:id="colFechaInicio" prefWidth="136.0" text="Fecha Inicio" />
+                  <TableColumn fx:id="colFechaFin" prefWidth="134.0" text="Fecha Finalización" />
+               </columns>
+               <BorderPane.margin>
+                  <Insets left="15.0" right="15.0" />
+               </BorderPane.margin>
+            </TableView>
+         </center>
+         <top>
+            <VBox prefHeight="109.0" prefWidth="1031.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Sistema de Gestión de Practicas Profesionales">
+                     <font>
+                        <Font name="Arial Bold Italic" size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="15.0" top="35.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label text="Proyecto">
+                     <font>
+                        <Font name="Arial Italic" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="15.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+         </top>
+      </BorderPane>
+   </children>
+</AnchorPane>
