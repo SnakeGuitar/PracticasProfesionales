@@ -22,7 +22,7 @@
                         <Font name="Arial Bold Italic" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="Registrar Proyecto">
+                  <Label fx:id="lbNombreCU" text="Registrar Proyecto">
                      <VBox.margin>
                         <Insets left="15.0" />
                      </VBox.margin>
@@ -44,7 +44,7 @@
                         <Font name="Arial" size="15.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#clicBtnGuardar" prefWidth="150.0" style="-fx-background-color: #5b6fd4;" text="Registrar" textFill="WHITE">
+                  <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#clicBtnGuardar" prefWidth="150.0" style="-fx-background-color: #5b6fd4;" text="Registrar" textFill="WHITE">
                      <font>
                         <Font name="Arial Black" size="15.0" />
                      </font>
@@ -111,7 +111,7 @@
                               <Font name="Arial Rounded MT Bold" size="15.0" />
                            </font></Label>
                         <DatePicker fx:id="datePkFechaInicio" prefHeight="31.0" prefWidth="190.0" />
-                        <Label fx:id="lbErrorFechaInicio" text="Label" textFill="RED">
+                        <Label fx:id="lbErrorFechaInicio" textFill="RED">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
@@ -120,7 +120,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                      <children>
-                        <Label prefHeight="17.0" prefWidth="167.0" text="Fecha de Finalización">
+                        <Label prefHeight="17.0" prefWidth="188.0" text="Fecha de Finalización">
                            <HBox.margin>
                               <Insets right="15.0" />
                            </HBox.margin>
@@ -128,39 +128,39 @@
                               <Font name="Arial Rounded MT Bold" size="15.0" />
                            </font></Label>
                         <DatePicker fx:id="datePkFechaFin" prefHeight="31.0" prefWidth="190.0" />
-                        <Label fx:id="lbErrorFechaFIn" prefHeight="21.0" prefWidth="52.0" text="Label" textFill="RED">
+                        <Label fx:id="lbErrorFechaFIn" prefHeight="21.0" prefWidth="52.0" textFill="RED">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
                         </Label>
                      </children>
                   </HBox>
-                  <Label fx:id="lbErrorNombre" text="Label" textFill="RED" GridPane.columnIndex="2">
+                  <Label fx:id="lbErrorNombre" textFill="RED" GridPane.columnIndex="2">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label fx:id="lbErrorObjetivo" text="Label" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <Label fx:id="lbErrorObjetivo" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label fx:id="lbErrorMetodologia" text="Label" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                  <Label fx:id="lbErrorMetodologia" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <padding>
                         <Insets left="15.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="lbErrorMaxParticipantes" text="Label" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                  <Label fx:id="lbErrorMaxParticipantes" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="3">
                      <padding>
                         <Insets left="15.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="lbErrorOV" text="Label" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                  <Label fx:id="lbErrorOV" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="4">
                      <padding>
                         <Insets left="15.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="lbErrorResponsable" text="Label" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                  <Label fx:id="lbErrorResponsable" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="5">
                      <padding>
                         <Insets left="15.0" />
                      </padding>

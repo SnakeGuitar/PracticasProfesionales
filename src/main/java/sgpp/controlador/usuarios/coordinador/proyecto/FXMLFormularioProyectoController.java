@@ -30,10 +30,13 @@ import sgpp.utilidad.Utilidad;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class FXMLFormularioProyectoController implements Initializable {
+    @FXML
+    private Label lbNombreCU;
     @FXML
     private TextField txFiNombre;
     @FXML
@@ -66,6 +69,8 @@ public class FXMLFormularioProyectoController implements Initializable {
     private Label lbErrorFechaInicio;
     @FXML
     private Label lbErrorFechaFIn;
+    @FXML
+    private Button btnGuardar;
 
     private ObservableList<OrganizacionVinculada> organizaciones;
     private ObservableList<ResponsableTecnico> responsables;
@@ -83,6 +88,8 @@ public class FXMLFormularioProyectoController implements Initializable {
         this.proyectoEdicion = proyectoEdicion;
         this.esEdicion = esEdicion;
         if (esEdicion) {
+            lbNombreCU.setText("Actualizar Proyecto");
+            btnGuardar.setText("Actualizar");
             cargarInformacionEdicion();
         }
     }
@@ -141,6 +148,8 @@ public class FXMLFormularioProyectoController implements Initializable {
             txFiMaxParticipantes.setText(String.valueOf(proyectoEdicion.getNumeroMaximoParticipantes()));
             comboOV.getSelectionModel().select(proyectoEdicion.getIdOrganizacionVinculada());
             comboResponsable.getSelectionModel().select(proyectoEdicion.getIdResponsable());
+            datePkFechaInicio.setValue(LocalDate.parse(proyectoEdicion.getFechaInicio()));
+            datePkFechaFin.setValue(LocalDate.parse(proyectoEdicion.getFechaFin()));
         }
     }
 
