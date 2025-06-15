@@ -14,9 +14,9 @@
 
 package sgpp.modelo;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import sgpp.utilidad.Utilidad;
+
+import java.sql.*;
 
 public class ConexionBD {
     private static final String IP = "localhost";
@@ -51,5 +51,40 @@ public class ConexionBD {
             e.printStackTrace();
         }
         return conexionBD;
+    }
+
+    public static void cerrarConexion(Connection conexion, PreparedStatement consulta, ResultSet resultado) {
+        try {
+            if(resultado != null) {
+                resultado.close();
+            }
+
+            if(consulta != null) {
+                consulta.close();
+            }
+
+            if(conexion != null) {
+                conexion.close();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al cerrar conexión con la base de datos");
+            e.printStackTrace();
+        }
+    }
+
+    // Para DAOs que utilizen procedimientos almacenados.
+    public static void cerrarConexionProcedimiento(Connection conexion, CallableStatement consulta) {
+        try {
+            if(consulta != null) {
+                consulta.close();
+            }
+
+            if(conexion != null) {
+                conexion.close();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al cerrar conexión con la base de datos");
+            e.printStackTrace();
+        }
     }
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="496.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.profesor.FXMLSeleccionEstudianteController">
+   <children>
+      <Pane prefHeight="455.0" prefWidth="400.0">
+         <children>
+            <Label layoutX="12.0" layoutY="73.0" text="Selecciona un estudiante." />
+            <Button fx:id="btnRefrescar" layoutX="325.0" layoutY="62.0" mnemonicParsing="false" text="Refrescar" />
+             <Button fx:id="btnRegresar" layoutX="12.0" layoutY="12.0" mnemonicParsing="false" text="Regresar" />
+            <Label layoutX="12.0" layoutY="46.0" text="Estudiantes">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <TableView layoutX="10.0" layoutY="95.0" prefHeight="351.0" prefWidth="380.0">
+              <columns>
+                <TableColumn prefWidth="122.33333587646484" text="Matrícula" />
+                <TableColumn prefWidth="256.0" text="Nombre" />
+              </columns>
+            </TableView>
+         </children>
+      </Pane>
+      <Button fx:id="btnConsultar" layoutX="321.0" layoutY="455.0" mnemonicParsing="false" text="Consultar" />
+   </children>
+</AnchorPane>

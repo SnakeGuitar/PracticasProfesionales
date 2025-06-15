@@ -53,6 +53,7 @@ public class FXMLInicioSesionController {
             String password = tfContrasena.getText();
 
             Usuario sesionUsuario = validarCredenciales(username, password);
+
             if (sesionUsuario != null) {
                 irPantallaPrincipal(sesionUsuario);
             }
@@ -100,7 +101,7 @@ public class FXMLInicioSesionController {
 
     private void irPantallaPrincipal(Usuario sesionUsuario) {
         try {
-            Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
+            Stage escenarioBase = Utilidad.getEscenarioComponente(tfUsuario);
             FXMLLoader cargador = null;
             String titulo = "";
 
@@ -124,10 +125,9 @@ public class FXMLInicioSesionController {
                     titulo = "Sistema de Prácticas Profesionales - Profesor";
                     break;
                 default:
-                    Utilidad.crearAlerta(
-                            Alert.AlertType.ERROR,
-                            "Error en tipo de usuario",
+                    Utilidad.crearAlertaError("Error en tipo de usuario",
                             "Tipo de usuario no reconocido");
+
                     return;
             }
 
@@ -143,11 +143,8 @@ public class FXMLInicioSesionController {
             escenarioBase.setTitle(titulo);
             escenarioBase.show();
         } catch (IOException e) {
-            Utilidad.crearAlerta(
-                    Alert.AlertType.ERROR,
-                    "Error al cargar pantalla",
+            Utilidad.mostrarError(true, e, "Error al cargar pantalla",
                     "No se pudo cargar la ventana principal");
-            e.printStackTrace();
         }
     }
 }

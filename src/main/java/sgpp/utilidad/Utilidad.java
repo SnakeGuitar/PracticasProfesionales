@@ -40,7 +40,29 @@ public class Utilidad {
         alertaConfirmacion.setTitle(titulo);
         alertaConfirmacion.setHeaderText(null);
         alertaConfirmacion.setContentText(contenido);
+
         return alertaConfirmacion.showAndWait().get() == ButtonType.OK;
+    }
+
+    public static void crearAlertaError(String titulo, String contenido) {
+        crearAlerta(Alert.AlertType.ERROR, titulo, contenido);
+    }
+
+    public static void crearAlertaInformacion(String titulo, String contenido) {
+        crearAlerta(Alert.AlertType.INFORMATION, titulo, contenido);
+    }
+
+    public static void mostrarError(boolean mostrarAlerta, Exception excepcion, String titulo, String contenido) {
+        System.err.println(excepcion.getMessage());
+        excepcion.printStackTrace();
+
+        if(mostrarAlerta) {
+            crearAlertaError(titulo, contenido);
+        }
+    }
+
+    public static void mostrarErrorBD(Exception exception, boolean mostrarAlerta) {
+        mostrarError(mostrarAlerta, exception, "Error de conexión", "No se pudo conectar a la base de datos.");
     }
 
     public static Stage getEscenarioComponente(Control componente) {
@@ -51,14 +73,14 @@ public class Utilidad {
         try {
             Stage nuevoEscenario = new Stage();
             Parent vista = FXMLLoader.load(SistemaGestionPracticasProfesionales.class.getResource(URL));
+
             Scene nuevaEscena = new Scene(vista);
             nuevoEscenario.setScene(nuevaEscena);
             nuevoEscenario.initModality(Modality.APPLICATION_MODAL);
             nuevoEscenario.setTitle(tituloEscenario);
             nuevoEscenario.showAndWait();
-        } catch(IOException e) {
-            crearAlerta(Alert.AlertType.ERROR, "Error al cargar la vista", "No se pudo cargar la vista: " + URL);
-            e.printStackTrace();
+        } catch(IOException excepcion) {
+            mostrarError(true, excepcion, "Error al cargar la vista", "No se pudo cargar la vista: " + URL);
         }
     }
 }
