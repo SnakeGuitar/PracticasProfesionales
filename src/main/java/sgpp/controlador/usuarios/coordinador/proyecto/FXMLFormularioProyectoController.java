@@ -170,7 +170,9 @@ public class FXMLFormularioProyectoController implements Initializable {
 
     public void clicBtnGuardar(ActionEvent actionEvent) {
         if (validarCamposVacios()) {
+            if (validarDatosParaBD()) {
 
+            }
         }
     }
 
@@ -216,6 +218,27 @@ public class FXMLFormularioProyectoController implements Initializable {
         if (datePkFechaFin.getValue() == null) {
             validos = false;
             lbErrorFechaFin.setText("*requerido");
+        }
+        return validos;
+    }
+
+    private boolean validarDatosParaBD() {
+        boolean validos = true;
+        if (txFiNombre.getText().length() > 100) {
+            validos = false;
+            lbErrorNombre.setText("*demasiado largo");
+        }
+        if (txFiObjetivo.getText().length() > 100) {
+            validos = false;
+            lbErrorObjetivo.setText("*demasiado largo");
+        }
+        if (txFiMetodologia.getText().length() > 100) {
+            validos = false;
+            lbErrorMetodologia.setText("*demasiado largo");
+        }
+        if (!Utilidad.esUnNumeroEntero(txFiMaxParticipantes.getText())) {
+            validos = false;
+            lbErrorMaxParticipantes.setText("*solo numeros enteros");
         }
         return validos;
     }
