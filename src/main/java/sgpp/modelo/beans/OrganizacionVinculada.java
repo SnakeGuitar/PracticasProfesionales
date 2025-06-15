@@ -1,21 +1,21 @@
 /*
  * Autor original: Luis Donaldo
- * Último autor: Luis Donaldo
+ * Último autor: Abel Yong
  * Fecha de creación: 10-06-2025
  * Fecha de la última versión aprobada:
- * Fecha de la última modificación: 11-06-2025
+ * Fecha de la última modificación: 15-06-2025
  * Descripción: Clase beans del modelo de dominio
  */
 
 /*
  * Estado: En progreso
- * Modificaciones:
+ * Modificaciones: renombrado id -> idOrganizacionVinculada
  */
 
 package sgpp.modelo.beans;
 
 public class OrganizacionVinculada {
-    private int id;
+    private int idOrganizacionVinculada;
     private String nombre;
     private String sector;
     private String correo;
@@ -28,7 +28,7 @@ public class OrganizacionVinculada {
     }
 
     public OrganizacionVinculada(int id, String nombre, String sector, String correo, String telefono, String direccion, String ciudad, String estado) {
-        this.id = id;
+        this.idOrganizacionVinculada = id;
         this.nombre = nombre;
         this.sector = sector;
         this.correo = correo;
@@ -38,12 +38,12 @@ public class OrganizacionVinculada {
         this.estado = estado;
     }
 
-    public int getId() {
-        return id;
+    public int getIdOrganizacionVinculada() {
+        return idOrganizacionVinculada;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdOrganizacionVinculada(int idOrganizacionVinculada) {
+        this.idOrganizacionVinculada = idOrganizacionVinculada;
     }
 
     public String getNombre() {

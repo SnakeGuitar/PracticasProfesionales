@@ -65,7 +65,7 @@ public class FXMLActualizarRegistrarResponsableTecnicoController implements Init
             tfCorreo.setText(r.getCorreo());
 
             for (OrganizacionVinculada ov : listaOrganizaciones) {
-                if (ov.getId() == r.getIdOrganizacionVinculada()) {
+                if (ov.getIdOrganizacionVinculada() == r.getIdOrganizacionVinculada()) {
                     cbEmpresa.getSelectionModel().select(ov);
                     break;
                 }
@@ -98,7 +98,7 @@ public class FXMLActualizarRegistrarResponsableTecnicoController implements Init
                 nuevo.setDepartamento(tfDepartamento.getText());
                 nuevo.setPuesto(tfPuesto.getText());
                 nuevo.setCorreo(tfCorreo.getText());
-                nuevo.setIdOrganizacionVinculada(cbEmpresa.getSelectionModel().getSelectedItem().getId());
+                nuevo.setIdOrganizacionVinculada(cbEmpresa.getSelectionModel().getSelectedItem().getIdOrganizacionVinculada());
 
                 boolean exito = ResponsableTecnicoDAO.insertar(nuevo);
                 if (exito) {
@@ -116,7 +116,7 @@ public class FXMLActualizarRegistrarResponsableTecnicoController implements Init
                 // Solo cambiar la empresa si el ComboBox está habilitado
                 if (!cbEmpresa.isDisabled()) {
                     responsableActual.setIdOrganizacionVinculada(
-                        cbEmpresa.getSelectionModel().getSelectedItem().getId()
+                        cbEmpresa.getSelectionModel().getSelectedItem().getIdOrganizacionVinculada()
                     );
                 }
 

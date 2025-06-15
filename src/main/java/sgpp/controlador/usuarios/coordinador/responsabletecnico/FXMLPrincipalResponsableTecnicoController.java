@@ -121,7 +121,7 @@ public class FXMLPrincipalResponsableTecnicoController implements Initializable 
             // Llenar el mapa de ID → Nombre
             mapaIdANombreOV = new HashMap<>();
             for (OrganizacionVinculada ov : ovList) {
-                mapaIdANombreOV.put(ov.getId(), ov.getNombre());
+                mapaIdANombreOV.put(ov.getIdOrganizacionVinculada(), ov.getNombre());
             }
 
         } catch (SQLException e) {
@@ -145,7 +145,7 @@ public class FXMLPrincipalResponsableTecnicoController implements Initializable 
 
         responsablesFiltrados.setPredicate(responsable -> {
             boolean cumpleNombre = responsable.getNombre().toLowerCase().contains(filtroNombre);
-            boolean cumpleOV = (filtroOV == null || filtroOV.getId() == 0) || responsable.getIdOrganizacionVinculada() == filtroOV.getId();
+            boolean cumpleOV = (filtroOV == null || filtroOV.getIdOrganizacionVinculada() == 0) || responsable.getIdOrganizacionVinculada() == filtroOV.getIdOrganizacionVinculada();
             return cumpleNombre && cumpleOV;
         });
     }
