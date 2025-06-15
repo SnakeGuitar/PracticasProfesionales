@@ -128,4 +128,27 @@ public class OrganizacionVinculadaDAO {
         organizacion.setEstado(resultado.getString("Estado"));
         return organizacion;
     }
+    
+      public static ArrayList<OrganizacionVinculada> obtenerIdYNombresOrganizaciones() throws SQLException {
+        ArrayList<OrganizacionVinculada> organizaciones = new ArrayList<>();
+        String consulta = "SELECT ID_Org_Vinculada, nombre FROM organizacion_vinculada";
+        
+        try (Connection conexionBD = ConexionBD.abrirConexion();
+             PreparedStatement sentencia = conexionBD.prepareStatement(consulta);
+             ResultSet resultado = sentencia.executeQuery()) {
+
+            while (resultado.next()) {
+                OrganizacionVinculada organizacion = new OrganizacionVinculada();
+                organizacion.setId(resultado.getInt("ID_Org_Vinculada"));
+                organizacion.setNombre(resultado.getString("nombre"));
+                organizaciones.add(organizacion);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error al obtener ID y nombres de organizaciones vinculadas: " + e.getMessage());
+            throw e;
+        }
+
+        return organizaciones;
+    }
 }

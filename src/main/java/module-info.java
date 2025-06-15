@@ -3,6 +3,7 @@ module com.sgpp.sistemagestionpracticasprofesionales {
     requires javafx.fxml;
     requires java.sql;
     requires java.desktop;
+    requires java.base;
 
     opens sgpp.controlador to javafx.fxml;
 
