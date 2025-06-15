@@ -18,16 +18,22 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import sgpp.SistemaGestionPracticasProfesionales;
 import sgpp.modelo.beans.Proyecto;
 import sgpp.modelo.dao.entidades.ProyectoDAO;
 import sgpp.utilidad.Utilidad;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
@@ -53,6 +59,7 @@ public class FXMLProyectoController implements Initializable {
     @FXML
     private TableColumn<Proyecto, String> colFechaFin;
 
+    private final String RUTA_FXML_FORMULARIO_PROYECTO = "/sgpp/vista/usuarios/coordinador/proyecto/FXMLFormularioProyecto.fxml";
     private ObservableList<Proyecto> proyectos;
 
     @Override
@@ -94,9 +101,41 @@ public class FXMLProyectoController implements Initializable {
     }
 
     public void clicBtnRegistrar(ActionEvent actionEvent) {
-
+        irAFormularioProyecto(false, null);
     }
 
     public void clicBtnActualizar(ActionEvent actionEvent) {
+        Proyecto proyectoSeleccionado = tblProyecto.getSelectionModel().getSelectedItem();
+        if (proyectoSeleccionado != null) {
+            irAFormularioProyecto(true, proyectoSeleccionado);
+        } else {
+            Utilidad.crearAlerta(
+                    Alert.AlertType.INFORMATION,
+                    "Seleccione requerida",
+                    "Por favor seleccione un proyecto primero"
+            );
+        }
+    }
+
+    private void irAFormularioProyecto(boolean esEdicion, Proyecto proyectoEdicion) {
+        try {
+            Stage escenaFormulario = new Stage();
+            FXMLLoader loader = new FXMLLoader(
+                    SistemaGestionPracticasProfesionales.class.getResource(RUTA_FXML_FORMULARIO_PROYECTO));
+            Parent vista = loader.load();
+            FXMLFormularioProyectoController controlador = loader.getController();
+            Scene nuevaEscena = new Scene(vista);
+            escenaFormulario.setScene(nuevaEscena);
+            escenaFormulario.setTitle(!esEdicion ? "Registrar Proyecto" : "Actualizar Proyecto");
+            escenaFormulario.initModality(Modality.APPLICATION_MODAL);
+            controlador.inicializarInformacion(esEdicion, proyectoEdicion);
+            escenaFormulario.showAndWait();
+        } catch (IOException ioex) {
+            Utilidad.crearAlerta(
+                    Alert.AlertType.ERROR,
+                    "Error",
+                    "Lo sentidmos, no se pudo abrir el formulario del proyecto"
+            );
+        }
     }
 }

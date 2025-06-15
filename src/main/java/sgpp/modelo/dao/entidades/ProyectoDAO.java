@@ -14,13 +14,13 @@ public class ProyectoDAO {
     public static List<Proyecto> obtenerProyectos() throws SQLException {
         List<Proyecto> proyectos = new ArrayList<Proyecto>();
         Connection conexion = ConexionBD.abrirConexion();
-        if(conexion != null) {
+        if (conexion != null) {
             String consulta = "SELECT p.ID_Proyecto, p.nombre, p.objetivo_general, p.metodologia, ov.nombre AS nombre_ov, rt.nombre AS nombre_responsable, p.max_participantes, p.fecha_inicio, p.fecha_fin, p.ID_Org_Vinculada, p.ID_Responsable FROM proyecto p " +
                     "JOIN organizacion_vinculada ov ON p.ID_Org_Vinculada = ov.ID_Org_Vinculada " +
                     "JOIN responsable_tecnico rt ON rt.ID_Org_Vinculada = ov.ID_Org_Vinculada";
             PreparedStatement sentencia = conexion.prepareStatement(consulta);
             ResultSet resultado = sentencia.executeQuery();
-            while(resultado.next()) {
+            while (resultado.next()) {
                 proyectos.add(convertirProyecto(resultado));
             }
             resultado.close();
