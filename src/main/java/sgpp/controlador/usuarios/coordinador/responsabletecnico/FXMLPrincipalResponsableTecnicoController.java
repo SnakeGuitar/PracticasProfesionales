@@ -168,10 +168,8 @@ public class FXMLPrincipalResponsableTecnicoController implements Initializable 
     }
     }
 
- 
-
-@FXML
-private void clicBtnEliminarResponsable(ActionEvent event) {
+    @FXML
+    private void clicBtnEliminarResponsable(ActionEvent event) {
     ResponsableTecnico seleccionado = tblResponsable.getSelectionModel().getSelectedItem();
 
     if (seleccionado == null) {
@@ -209,8 +207,6 @@ private void clicBtnEliminarResponsable(ActionEvent event) {
         Utilidad.mostrarErrorBD(ex, true);
     }
 }
-
-
     
     private void mostrarFormulario(ResponsableTecnico responsable) {
     try {
@@ -238,6 +234,7 @@ private void clicBtnEliminarResponsable(ActionEvent event) {
         ex.printStackTrace();
     }
 }
+
 }
 
 
