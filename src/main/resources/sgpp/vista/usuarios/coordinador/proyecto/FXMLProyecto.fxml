@@ -8,10 +8,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.coordinador.proyecto.FXMLProyectoController">
    <children>
-      <BorderPane layoutX="10.0" layoutY="7.0" prefHeight="774.0" prefWidth="1024.0">
+      <BorderPane prefHeight="781.0" prefWidth="1034.0">
          <bottom>
             <HBox prefHeight="59.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
                <children>
@@ -38,11 +37,13 @@
             <TableView fx:id="tblProyecto" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <columns>
                   <TableColumn fx:id="colNombre" prefWidth="135.0" text="Nombre" />
-                  <TableColumn fx:id="colObjetivoGeneral" prefWidth="164.0" text="Objetivo" />
-                  <TableColumn fx:id="colMetodologia" prefWidth="196.0" text="Metodología" />
-                  <TableColumn fx:id="colMaxParticipantes" prefWidth="156.0" text="Max Participantes" />
-                  <TableColumn fx:id="colFechaInicio" prefWidth="181.0" text="Fecha Inicio" />
-                  <TableColumn fx:id="colFechaFin" prefWidth="161.0" text="Fecha Finalización" />
+                  <TableColumn fx:id="colObjetivoGeneral" prefWidth="117.0" text="Objetivo" />
+                  <TableColumn fx:id="colMetodologia" prefWidth="112.0" text="Metodología" />
+                  <TableColumn fx:id="colNombreOV" prefWidth="147.0" text="Organización" />
+                  <TableColumn fx:id="colNombreResponsable" prefWidth="138.0" text="Responsable" />
+                  <TableColumn fx:id="colMaxParticipantes" prefWidth="84.0" text="Max Participantes" />
+                  <TableColumn fx:id="colFechaInicio" prefWidth="136.0" text="Fecha Inicio" />
+                  <TableColumn fx:id="colFechaFin" prefWidth="134.0" text="Fecha Finalización" />
                </columns>
                <BorderPane.margin>
                   <Insets left="15.0" right="15.0" />

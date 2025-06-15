@@ -18,35 +18,40 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.stage.Stage;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import sgpp.modelo.beans.Proyecto;
+import sgpp.modelo.dao.entidades.ProyectoDAO;
 import sgpp.utilidad.Utilidad;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class FXMLProyectoController implements Initializable {
     @FXML
     private TableView<Proyecto> tblProyecto;
     @FXML
-    private TableColumn colNombre;
+    private TableColumn<Proyecto, String> colNombre;
     @FXML
-    private TableColumn colObjetivoGeneral;
+    private TableColumn<Proyecto, String> colObjetivoGeneral;
     @FXML
-    private TableColumn colMetodologia;
+    private TableColumn<Proyecto, String> colMetodologia;
     @FXML
-    private TableColumn colMaxParticipantes;
+    private TableColumn<Proyecto, String> colNombreOV;
     @FXML
-    private TableColumn colFechaInicio;
+    private TableColumn<Proyecto, String> colNombreResponsable;
     @FXML
-    private TableColumn colFechaFin;
+    private TableColumn<Proyecto, Integer> colMaxParticipantes;
+    @FXML
+    private TableColumn<Proyecto, String> colFechaInicio;
+    @FXML
+    private TableColumn<Proyecto, String> colFechaFin;
 
     private ObservableList<Proyecto> proyectos;
 
@@ -61,19 +66,20 @@ public class FXMLProyectoController implements Initializable {
         colObjetivoGeneral.setCellValueFactory(new PropertyValueFactory<Proyecto, String>("objetivoGeneral"));
         colMetodologia.setCellValueFactory(new PropertyValueFactory<Proyecto, String>("metodologia"));
         colMaxParticipantes.setCellValueFactory(new PropertyValueFactory<Proyecto, Integer>("numeroMaximoParticipantes"));
+        colNombreOV.setCellValueFactory(new PropertyValueFactory<Proyecto, String>("nombreOV"));
+        colNombreResponsable.setCellValueFactory(new PropertyValueFactory<Proyecto, String>("nombreResponsable"));
         colFechaInicio.setCellValueFactory(new PropertyValueFactory<Proyecto, String>("fechaInicio"));
-        colFechaInicio.setCellFactory(new PropertyValueFactory<Proyecto, String>("fechaInicio"));
         colFechaFin.setCellValueFactory(new PropertyValueFactory<Proyecto, String>("fechaFin"));
     }
 
     private void cargarInformacion() {
-        /* TODO
         try {
             proyectos = FXCollections.observableArrayList();
-            ArrayList<Proyecto> proyectosAux = ProyectoDAO.obtenerProyectos();
+            List<Proyecto> proyectosAux = ProyectoDAO.obtenerProyectos();
             proyectos.addAll(proyectosAux);
             tblProyecto.setItems(proyectos);
-        } catch (SQLException slqex) {
+        } catch (SQLException sqlex) {
+            sqlex.printStackTrace();
             Utilidad.crearAlerta(
                     Alert.AlertType.ERROR,
                     "Error de datos",
@@ -81,7 +87,6 @@ public class FXMLProyectoController implements Initializable {
             );
             cerrarVentana();
         }
-        */
     }
 
     public void cerrarVentana() {

@@ -24,11 +24,13 @@ public class Proyecto {
     private String fechaFin;
     private int idOrganizacionVinculada;
     private int idResponsable;
+    private String nombreOV;
+    private String nombreResponsable;
 
     public Proyecto() {
     }
 
-    public Proyecto(int idProyecto, String nombre, String objetivoGeneral, String metodologia, int numeroMaximoParticipantes, String fechaInicio, String fechaFin, int idOrganizacionVinculada, int idResponsable) {
+    public Proyecto(int idProyecto, String nombre, String objetivoGeneral, String metodologia, int numeroMaximoParticipantes, String fechaInicio, String fechaFin, int idOrganizacionVinculada, int idResponsable, String nombreOV, String nombreResponsable) {
         this.idProyecto = idProyecto;
         this.nombre = nombre;
         this.objetivoGeneral = objetivoGeneral;
@@ -38,6 +40,8 @@ public class Proyecto {
         this.fechaFin = fechaFin;
         this.idOrganizacionVinculada = idOrganizacionVinculada;
         this.idResponsable = idResponsable;
+        this.nombreOV = nombreOV;
+        this.nombreResponsable = nombreResponsable;
     }
 
     public int getIdProyecto() {
@@ -110,5 +114,21 @@ public class Proyecto {
 
     public void setIdResponsable(int idResponsable) {
         this.idResponsable = idResponsable;
+    }
+
+    public String getNombreOV() {
+        return nombreOV;
+    }
+
+    public void setNombreOV(String nombreOV) {
+        this.nombreOV = nombreOV;
+    }
+
+    public String getNombreResponsable() {
+        return nombreResponsable;
+    }
+
+    public void setNombreResponsable(String nombreResponsable) {
+        this.nombreResponsable = nombreResponsable;
     }
 }
