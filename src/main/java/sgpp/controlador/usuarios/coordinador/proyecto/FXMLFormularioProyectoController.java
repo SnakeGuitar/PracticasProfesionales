@@ -68,7 +68,7 @@ public class FXMLFormularioProyectoController implements Initializable {
     @FXML
     private Label lbErrorFechaInicio;
     @FXML
-    private Label lbErrorFechaFIn;
+    private Label lbErrorFechaFin;
     @FXML
     private Button btnGuardar;
 
@@ -164,7 +164,55 @@ public class FXMLFormularioProyectoController implements Initializable {
     }
 
     public void clicBtnGuardar(ActionEvent actionEvent) {
+        if (validarCamposVacios()) {
 
+        }
+    }
+
+    private boolean validarCamposVacios() {
+        lbErrorNombre.setText("");
+        lbErrorObjetivo.setText("");
+        lbErrorMetodologia.setText("");
+        lbErrorMaxParticipantes.setText("");
+        lbErrorOV.setText("");
+        lbErrorResponsable.setText("");
+        lbErrorFechaInicio.setText("");
+        lbErrorFechaFin.setText("");
+        lbErrorFechaInicio.setText("");
+        boolean validos = true;
+        if (txFiNombre.getText().isEmpty()) {
+            validos = false;
+            lbErrorNombre.setText("*requerido");
+        }
+        if (txFiObjetivo.getText().isEmpty()) {
+            validos = false;
+            lbErrorObjetivo.setText("*requerido");
+        }
+        if (txFiMetodologia.getText().isEmpty()) {
+            validos = false;
+            lbErrorMetodologia.setText("*requerido");
+        }
+        if (txFiMaxParticipantes.getText().isEmpty()) {
+            validos = false;
+            lbErrorMaxParticipantes.setText("*requerido");
+        }
+        if (comboOV.getSelectionModel().getSelectedItem() == null) {
+            validos = false;
+            lbErrorOV.setText("*requerido");
+        }
+        if (comboResponsable.getSelectionModel().getSelectedItem() == null) {
+            validos = false;
+            lbErrorResponsable.setText("*requerido");
+        }
+        if (datePkFechaInicio.getValue() == null) {
+            validos = false;
+            lbErrorFechaInicio.setText("*requerido");
+        }
+        if (datePkFechaFin.getValue() == null) {
+            validos = false;
+            lbErrorFechaFin.setText("*requerido");
+        }
+        return validos;
     }
 
     private void cerrarVentana() {
