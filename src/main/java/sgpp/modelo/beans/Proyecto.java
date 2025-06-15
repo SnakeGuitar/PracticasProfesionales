@@ -1,20 +1,18 @@
 /*
  * Autor original: Luis Donaldo
- * Último autor: Luis Donaldo
+ * Último autor: Abel Hernandez Yong
  * Fecha de creación: 13-06-2025
  * Fecha de la última versión aprobada:
- * Fecha de la última modificación: 13-06-2025
+ * Fecha de la última modificación: 14-06-2025 6:51
  * Descripción: Clase beans del modelo de dominio
  */
 
 /*
  * Estado: En progreso
- * Modificaciones:
+ * Modificaciones: Se cambiaron los tipos Date a String
  */
 
 package sgpp.modelo.beans;
-
-import java.util.Date;
 
 public class Proyecto {
     private int idProyecto;
@@ -22,15 +20,15 @@ public class Proyecto {
     private String objetivoGeneral;
     private String metodologia;
     private int numeroMaximoParticipantes;
-    private Date fechaInicio;
-    private Date fechaFin;
+    private String fechaInicio;
+    private String fechaFin;
     private int idOrganizacionVinculada;
     private int idResponsable;
 
     public Proyecto() {
     }
 
-    public Proyecto(int idProyecto, String nombre, String objetivoGeneral, String metodologia, int numeroMaximoParticipantes, Date fechaInicio, Date fechaFin, int idOrganizacionVinculada, int idResponsable) {
+    public Proyecto(int idProyecto, String nombre, String objetivoGeneral, String metodologia, int numeroMaximoParticipantes, String fechaInicio, String fechaFin, int idOrganizacionVinculada, int idResponsable) {
         this.idProyecto = idProyecto;
         this.nombre = nombre;
         this.objetivoGeneral = objetivoGeneral;
@@ -82,19 +80,19 @@ public class Proyecto {
         this.numeroMaximoParticipantes = numeroMaximoParticipantes;
     }
 
-    public Date getFechaInicio() {
+    public String getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(Date fechaInicio) {
+    public void setFechaInicio(String fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public Date getFechaFin() {
+    public String getFechaFin() {
         return fechaFin;
     }
 
-    public void setFechaFin(Date fechaFin) {
+    public void setFechaFin(String fechaFin) {
         this.fechaFin = fechaFin;
     }
 
