@@ -20,7 +20,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sgpp.modelo.beans.OrganizacionVinculada;
-import sgpp.modelo.dao.OrganizacionVinculadaDAO;
+import sgpp.modelo.dao.entidades.OrganizacionVinculadaDAO;
 import sgpp.utilidad.Utilidad;
 
 import java.sql.SQLException;
