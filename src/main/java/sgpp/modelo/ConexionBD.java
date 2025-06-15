@@ -21,15 +21,15 @@ import java.sql.*;
 public class ConexionBD {
     private static final String IP = "localhost";
     private static final String PUERTO = "3306";
-    private static final String NOMBRE_BD = "practicasprofesionales";
+    private static final String NOMBRE_BD = "1_bd_practicasprofesionales";
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String URL = String.format(
             "jdbc:mysql://%s:%s/%s?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8", IP, PUERTO, NOMBRE_BD);
 
     // Por ahora hay que poner root y la contraseña de la base de datos.
 
-    private static final String DEFAULT_USERNAME = "";
-    private static final String DEFAULT_PASSWORD = "";
+    private static final String DEFAULT_USERNAME = "root";
+    private static final String DEFAULT_PASSWORD = "12399";
 
     public static Connection abrirConexion() {
         return abrirConexion(DEFAULT_USERNAME, DEFAULT_PASSWORD);
