@@ -147,6 +147,7 @@ public class ResponsableTecnicoDAO {
              PreparedStatement stmt = conexion.prepareStatement(consulta)) {
 
             stmt.setInt(1, id);
+
             int filas = stmt.executeUpdate();
 
             if (filas > 0) {

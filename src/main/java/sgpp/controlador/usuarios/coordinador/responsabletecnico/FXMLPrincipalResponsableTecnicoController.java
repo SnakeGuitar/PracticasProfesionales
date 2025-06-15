@@ -204,7 +204,7 @@ public class FXMLPrincipalResponsableTecnicoController implements Initializable 
         }
 
     } catch (SQLException ex) {
-        Utilidad.mostrarErrorBD(ex, true);
+        Utilidad.mostrarErrorBD(true, ex);
     }
 }
     

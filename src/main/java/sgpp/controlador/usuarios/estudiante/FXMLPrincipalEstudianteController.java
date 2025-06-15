@@ -15,9 +15,13 @@
 package sgpp.controlador.usuarios.estudiante;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
 import sgpp.utilidad.Utilidad;
 
-public class FXMLPrincipalEstudianteController implements javafx.fxml.Initializable {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class FXMLPrincipalEstudianteController implements Initializable {
     private static final String RUTA_FXML_CONSULTAR_ENTREGAS = "/sgpp/vista/usuarios/estudiante/documentopracticas/FXMLConsultarEntregas.fxml";
     private static final String RUTA_FXML_CONSULTAR_AVANCE = "";
     private static final String RUTA_FXML_LLENAR_AUTOEVALUACION = "";
@@ -25,7 +29,7 @@ public class FXMLPrincipalEstudianteController implements javafx.fxml.Initializa
     private static final String RUTA_FXML_SUBIR_REPORTE = "";
 
     @Override
-    public void initialize(java.net.URL url, java.util.ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb) {
         // Inicialización de la vista principal del estudiante
     }
 
