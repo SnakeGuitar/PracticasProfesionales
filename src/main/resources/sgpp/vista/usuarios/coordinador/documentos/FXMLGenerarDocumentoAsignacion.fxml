@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="sgpp.controlador.usuarios.coordinador.FXMLGenerarDocumentosController"
+            prefWidth="850" prefHeight="500">
+    <children>
+        <Button fx:id="btnSeleccionarTodos" layoutX="500" layoutY="445"
+        text="Seleccionar Todos" onAction="#seleccionarTodos"/>
+
+        <Label layoutX="30" layoutY="20" text="Generar Documentos de Asignación"
+               style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+
+        <TableView fx:id="tablaAsignaciones" layoutX="30" layoutY="60" prefWidth="790" prefHeight="370">
+            <columns>
+                <TableColumn fx:id="colEmpresa" text="Empresa" prefWidth="180"/>
+                <TableColumn fx:id="colProyecto" text="Proyecto" prefWidth="180"/>
+                <TableColumn fx:id="colAlumno" text="Estudiante" prefWidth="180"/>
+                <TableColumn fx:id="colMatricula" text="Matrícula" prefWidth="100"/>
+                <TableColumn fx:id="colSeleccion" text="Seleccionar" prefWidth="100"/>
+            </columns>
+        </TableView>
+
+        <Button fx:id="btnGenerar" text="Generar Documentos"
+                layoutX="650" layoutY="445"
+                onAction="#generarDocumentos"/>
+    </children>
+</AnchorPane>
