@@ -42,7 +42,10 @@
                   <Font name="Arial Bold" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="lbldescripcion" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="16.0" layoutY="235.0" prefHeight="255.0" prefWidth="500.0" text="El coordinador tiene que escribir una breve descripcion de la entrega que el estudiante tiene que realizar" wrapText="true" />
+            <Label fx:id="lbldescripcion" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="16.0" layoutY="235.0" prefHeight="255.0" prefWidth="500.0" text="El coordinador tiene que escribir una breve descripcion de la entrega que el estudiante tiene que realizar" wrapText="true">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font></Label>
             <Label fx:id="lblFechaInicio" layoutX="59.0" layoutY="130.0" prefHeight="21.0" prefWidth="134.0" text="dd/mm/yyyy - hh:ss">
                <font>
                   <Font name="Arial" size="15.0" />
