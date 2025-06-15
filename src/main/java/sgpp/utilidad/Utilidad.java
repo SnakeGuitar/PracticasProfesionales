@@ -64,13 +64,15 @@ public class Utilidad {
     public static void mostrarError(boolean mostrarAlerta, Exception excepcion, String titulo, String contenido) {
         System.err.println(excepcion.getMessage());
         excepcion.printStackTrace();
-        if (mostrarAlerta) {
-            crearAlertaError(titulo, contenido);
+
+
+        if(mostrarAlerta) {
+            crearAlertaError(titulo, contenido + ": " + excepcion.getMessage());
         }
     }
 
-    public static void mostrarErrorBD(Exception exception, boolean mostrarAlerta) {
-        mostrarError(mostrarAlerta, exception, "Error de conexión", "No se pudo conectar a la base de datos.");
+    public static void mostrarErrorBD(boolean mostrarAlerta, Exception exception) {
+        mostrarError(mostrarAlerta, exception, "Error de conexión", "Hubo un error de conexión");
     }
 
     public static Stage getEscenarioComponente(Control componente) {

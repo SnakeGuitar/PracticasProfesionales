@@ -72,7 +72,7 @@ public class FXMLActualizarOVController implements javafx.fxml.Initializable {
         if (validarCampos()) {
             try {
                 OrganizacionVinculada organizacionActualizada = new OrganizacionVinculada();
-                organizacionActualizada.setId(organizacionVinculada.getId());
+                organizacionActualizada.setIdOrganizacionVinculada(organizacionVinculada.getIdOrganizacionVinculada());
                 organizacionActualizada.setNombre(txfiNombre.getText());
                 organizacionActualizada.setSector(txfiSector.getText().trim());
                 organizacionActualizada.setCorreo(txfiCorreo.getText().trim());

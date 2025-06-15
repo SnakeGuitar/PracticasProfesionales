@@ -25,7 +25,7 @@ public class Estudiante {
     private float promedio;
     private boolean hablaIdiomaIndigena;
     private int idProyecto;
-    private int idusuario;
+    private int idUsuario;
 
     public Estudiante() {
     }
@@ -41,7 +41,7 @@ public class Estudiante {
         this.promedio = promedio;
         this.hablaIdiomaIndigena = hablaIdiomaIndigena;
         this.idProyecto = idProyecto;
-        this.idusuario = idusuario;
+        this.idUsuario = idusuario;
     }
 
     public int getIdEstudiante() {
@@ -124,11 +124,11 @@ public class Estudiante {
         this.idProyecto = idProyecto;
     }
 
-    public int getIdusuario() {
-        return idusuario;
+    public int getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setIdusuario(int idusuario) {
-        this.idusuario = idusuario;
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 }

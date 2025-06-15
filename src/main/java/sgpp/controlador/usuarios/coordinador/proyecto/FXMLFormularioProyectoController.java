@@ -22,11 +22,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import sgpp.dominio.ProyectoDM;
+import sgpp.dominio.ResultadoValidacion;
 import sgpp.modelo.beans.OrganizacionVinculada;
 import sgpp.modelo.beans.Proyecto;
 import sgpp.modelo.beans.ResponsableTecnico;
 import sgpp.modelo.dao.entidades.OrganizacionVinculadaDAO;
+import sgpp.modelo.dao.entidades.ResponsableTecnicoDAO;
 import sgpp.utilidad.Utilidad;
+import sgpp.utilidad.UtilidadFormatoDeDatos;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -98,8 +102,8 @@ public class FXMLFormularioProyectoController implements Initializable {
         organizaciones = FXCollections.observableArrayList();
         try {
             List<OrganizacionVinculada> organizacionesAux = OrganizacionVinculadaDAO.obtenerOrganizacionesVinculadas();
-            organizacionesAux.addAll(organizaciones);
-            comboOV.setItems(FXCollections.observableArrayList(organizacionesAux));
+            organizaciones.addAll(organizacionesAux);
+            comboOV.setItems(FXCollections.observableArrayList(organizaciones));
         } catch (SQLException sqlex) {
             Utilidad.crearAlerta(
                     Alert.AlertType.ERROR,
@@ -109,12 +113,10 @@ public class FXMLFormularioProyectoController implements Initializable {
         }
     }
 
-    private void cargarResponsables() {
+    private void cargarResponsables(int idOrganizacion) {
         responsables = FXCollections.observableArrayList();
-        /*
         try {
-            //WAIT
-            List<ResponsableTecnico> responsablesAux = ResponsableTecnicoDAO.obtenerResponsables();
+            List<ResponsableTecnico> responsablesAux = ResponsableTecnicoDAO.obtenerPorOrganizacion(idOrganizacion);
             responsables.addAll(responsablesAux);
             comboResponsable.setItems(responsables);
         } catch (SQLException sqlex) {
@@ -125,7 +127,6 @@ public class FXMLFormularioProyectoController implements Initializable {
             );
             cerrarVentana();
         }
-         */
     }
 
     //Metodo listener para actualizar los responsables disponibles para seleccion
@@ -134,7 +135,7 @@ public class FXMLFormularioProyectoController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends OrganizacionVinculada> observable, OrganizacionVinculada oldValue, OrganizacionVinculada newValue) {
                 if (newValue != null) {
-                    cargarResponsables();
+                    cargarResponsables(newValue.getIdOrganizacionVinculada());
                 }
             }
         });
@@ -146,8 +147,15 @@ public class FXMLFormularioProyectoController implements Initializable {
             txFiObjetivo.setText(proyectoEdicion.getObjetivoGeneral());
             txFiMetodologia.setText(proyectoEdicion.getMetodologia());
             txFiMaxParticipantes.setText(String.valueOf(proyectoEdicion.getNumeroMaximoParticipantes()));
-            comboOV.getSelectionModel().select(proyectoEdicion.getIdOrganizacionVinculada());
-            comboResponsable.getSelectionModel().select(proyectoEdicion.getIdResponsable());
+
+            int indiceOV = obtenerIndiceEnComboOV(proyectoEdicion.getIdOrganizacionVinculada());
+            System.out.println(indiceOV);
+            comboOV.getSelectionModel().select(indiceOV);
+
+            int indiceResponsable = obtenerIndiceEnComboResponsable(proyectoEdicion.getIdResponsable());
+            System.out.println(indiceResponsable);
+            comboResponsable.getSelectionModel().select(indiceResponsable);
+
             datePkFechaInicio.setValue(LocalDate.parse(proyectoEdicion.getFechaInicio()));
             datePkFechaFin.setValue(LocalDate.parse(proyectoEdicion.getFechaFin()));
         }
@@ -165,7 +173,20 @@ public class FXMLFormularioProyectoController implements Initializable {
 
     public void clicBtnGuardar(ActionEvent actionEvent) {
         if (validarCamposVacios()) {
+            if (validarDatosParaBD()) {
 
+            }
+        }
+    }
+
+    private void guardarProyecto() {
+        Proyecto candidato = construirProyectoCandidato();
+        if (validarProyecto(candidato)) {
+            if (!esEdicion) {
+
+            } else {
+
+            }
         }
     }
 
@@ -213,6 +234,77 @@ public class FXMLFormularioProyectoController implements Initializable {
             lbErrorFechaFin.setText("*requerido");
         }
         return validos;
+    }
+
+    private boolean validarDatosParaBD() {
+        boolean validos = true;
+        if (txFiNombre.getText().length() > 100) {
+            validos = false;
+            lbErrorNombre.setText("*demasiado largo");
+        }
+        if (txFiObjetivo.getText().length() > 100) {
+            validos = false;
+            lbErrorObjetivo.setText("*demasiado largo");
+        }
+        if (txFiMetodologia.getText().length() > 100) {
+            validos = false;
+            lbErrorMetodologia.setText("*demasiado largo");
+        }
+        if (!UtilidadFormatoDeDatos.esUnNumeroEntero(txFiMaxParticipantes.getText())) {
+            validos = false;
+            lbErrorMaxParticipantes.setText("*solo numeros enteros");
+        }
+        return validos;
+    }
+
+    private boolean validarProyecto(Proyecto proyecto) {
+        ResultadoValidacion validacion = new ResultadoValidacion();
+        validacion = ProyectoDM.validarParticipantes(
+                proyecto.getNumeroMaximoParticipantes());
+        if (!validacion.isValido()) {
+            lbErrorMaxParticipantes.setText(validacion.getMensaje());
+        }
+        validacion = ProyectoDM.validarFechas(
+                LocalDate.parse(proyecto.getFechaInicio()),
+                LocalDate.parse(proyecto.getFechaFin()));
+        if (!validacion.isValido()) {
+            lbErrorFechaInicio.setText(validacion.getMensaje());
+        }
+        return validacion.isValido();
+    }
+
+    //Debe llamarse con datos previamente validados o podria lanzar NumberFormatException
+    private Proyecto construirProyectoCandidato() {
+        Proyecto proyecto = new Proyecto();
+        proyecto.setNombre(txFiNombre.getText());
+        proyecto.setObjetivoGeneral(txFiObjetivo.getText());
+        proyecto.setMetodologia(txFiMetodologia.getText());
+        proyecto.setNumeroMaximoParticipantes(Integer.parseInt(txFiMaxParticipantes.getText()));
+        proyecto.setFechaInicio(datePkFechaInicio.getValue().toString());
+        proyecto.setFechaFin(datePkFechaFin.getValue().toString());
+        return proyecto;
+    }
+
+    private int obtenerIndiceEnComboOV(int idOrganizacion) {
+        System.out.println(idOrganizacion);
+        System.out.println(organizaciones.size());
+        for (int i = 0; i < organizaciones.size(); i++) {
+            if (organizaciones.get(i).getIdOrganizacionVinculada() == idOrganizacion) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    private int obtenerIndiceEnComboResponsable(int idResponsable) {
+        System.out.println(idResponsable);
+        System.out.println(responsables.size());
+        for (int i = 0; i < responsables.size(); i++) {
+            if (responsables.get(i).getIdResponsable() == idResponsable) {
+                return i;
+            }
+        }
+        return 0;
     }
 
     private void cerrarVentana() {

@@ -7,7 +7,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.estudiante.FXMLPrincipalEstudianteController">
    <children>
       <Pane layoutX="306.0" layoutY="413.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #6a92c8; -fx-background-radius: 10;">
@@ -48,7 +47,7 @@
       </Pane>
       <Pane layoutX="30.0" layoutY="143.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #6a92c8; -fx-background-radius: 10;">
          <children>
-            <Button layoutX="14.0" layoutY="110.0" mnemonicParsing="false" onAction="#clicBtnDocumentos" prefHeight="31.0" prefWidth="159.0" style="-fx-background-color: #6a92c8; -fx-font-weight: Bold;" text="Subir Documento" textFill="WHITE">
+            <Button layoutX="14.0" layoutY="110.0" mnemonicParsing="false" onAction="#clicBtnExpediente" prefHeight="31.0" prefWidth="177.0" style="-fx-background-color: #6a92c8; -fx-font-weight: Bold;" text="Consultar Expediente" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>

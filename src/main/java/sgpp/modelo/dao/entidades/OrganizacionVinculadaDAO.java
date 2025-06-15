@@ -82,7 +82,7 @@ public class OrganizacionVinculadaDAO {
             sentencia.setString(5, organizacion.getDireccion());
             sentencia.setString(6, organizacion.getCiudad());
             sentencia.setString(7, organizacion.getEstado());
-            sentencia.setInt(8, organizacion.getId());
+            sentencia.setInt(8, organizacion.getIdOrganizacionVinculada());
             int filasAfectadas = sentencia.executeUpdate();
             if (filasAfectadas > 0) {
                 System.out.println("Organización vinculada actualizada exitosamente.");
@@ -118,7 +118,7 @@ public class OrganizacionVinculadaDAO {
 
     private static OrganizacionVinculada convertirResultSetAOV(ResultSet resultado) throws SQLException {
         OrganizacionVinculada organizacion = new OrganizacionVinculada();
-        organizacion.setId(resultado.getInt("ID_Org_Vinculada"));
+        organizacion.setIdOrganizacionVinculada(resultado.getInt("ID_Org_Vinculada"));
         organizacion.setNombre(resultado.getString("Nombre"));
         organizacion.setSector(resultado.getString("Sector"));
         organizacion.setCorreo(resultado.getString("Correo"));
@@ -139,7 +139,7 @@ public class OrganizacionVinculadaDAO {
 
             while (resultado.next()) {
                 OrganizacionVinculada organizacion = new OrganizacionVinculada();
-                organizacion.setId(resultado.getInt("ID_Org_Vinculada"));
+                organizacion.setIdOrganizacionVinculada(resultado.getInt("ID_Org_Vinculada"));
                 organizacion.setNombre(resultado.getString("nombre"));
                 organizaciones.add(organizacion);
             }
