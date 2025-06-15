@@ -83,4 +83,13 @@ public class Utilidad {
             mostrarError(true, excepcion, "Error al cargar la vista", "No se pudo cargar la vista: " + URL);
         }
     }
+
+    public static boolean esUnNumeroEntero(String numero) {
+        try {
+            Integer.parseInt(numero);
+            return true;
+        } catch (NumberFormatException nfex) {
+            return false;
+        }
+    }
 }
