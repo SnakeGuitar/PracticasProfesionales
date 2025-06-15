@@ -1,13 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sgpp.controlador.usuarios.profesor.FXMLPrincipalProfesorController"
-            prefHeight="400.0" prefWidth="600.0">
+
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.profesor.FXMLPrincipalProfesorController">
+   <children>
+      <Label layoutX="28.0" layoutY="68.0" prefHeight="27.0" prefWidth="115.0" text="Estudiante">
+         <font>
+            <Font name="Arial Italic" size="18.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="0.4368932038834952" endY="1.0">
+               <stops>
+                  <Stop color="#bfbfbf" />
+                  <Stop color="WHITE" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+      <Label layoutX="28.0" layoutY="32.0" prefHeight="27.0" prefWidth="710.0" text="Sistema de Gestion de Practicas Profesionales">
+         <effect>
+            <Bloom threshold="0.08" />
+         </effect>
+         <font>
+            <Font name="Arial Bold Italic" size="24.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop color="#e1e1e1" />
+                  <Stop color="WHITE" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+      <Pane prefHeight="115.0" prefWidth="1024.0" style="-fx-background-color: #6a92c8;">
+         <children>
+            <Label layoutX="28.0" layoutY="31.0" prefHeight="27.0" prefWidth="710.0" text="Sistema de Gestion de Practicas Profesionales">
+               <effect>
+                  <Bloom threshold="0.08" />
+               </effect>
+               <font>
+                  <Font name="Arial Bold Italic" size="24.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop color="#e1e1e1" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+            <Label layoutX="28.0" layoutY="67.0" prefHeight="27.0" prefWidth="115.0" text="Profesor">
+               <font>
+                  <Font name="Arial Italic" size="18.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="0.4368932038834952" endY="1.0">
+                     <stops>
+                        <Stop color="#bfbfbf" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="28.0" layoutY="153.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #6a92c8; -fx-background-radius: 10;">
+         <children>
+            <Button layoutX="14.0" layoutY="94.0" mnemonicParsing="false" onAction="#clicBtnExpedienteEstudiante" prefHeight="62.0" prefWidth="222.0" style="-fx-background-color: #6a92c8; -fx-font-weight: Bold;" text="Consultar Expediente de Estudiante" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane layoutX="304.0" layoutY="153.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #6a92c8; -fx-background-radius: 10;">
+         <children>
+            <Button layoutX="14.0" layoutY="94.0" mnemonicParsing="false" onAction="#clicBtnValidarDocumento" prefHeight="62.0" prefWidth="213.0" style="-fx-background-color: #6a92c8; -fx-font-weight: Bold;" text="Validar Entrega de Documentos" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane layoutX="581.0" layoutY="153.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #6a92c8; -fx-background-radius: 10;">
+         <children>
+            <Button layoutX="14.0" layoutY="110.0" mnemonicParsing="false" onAction="#clicBtnValidarReporte" prefHeight="31.0" prefWidth="139.0" style="-fx-background-color: #6a92c8; -fx-font-weight: Bold;" text="Validar Reportes" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+   </children>
 </AnchorPane>
