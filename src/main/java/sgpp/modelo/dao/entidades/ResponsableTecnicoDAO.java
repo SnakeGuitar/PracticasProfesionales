@@ -19,6 +19,7 @@ import sgpp.modelo.beans.ResponsableTecnico;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ResponsableTecnicoDAO {
 
@@ -31,7 +32,7 @@ public class ResponsableTecnicoDAO {
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                lista.add(convertirResultSetART(rs));
+                lista.add(convertirResultSetAResponsable(rs));
             }
 
         } catch (SQLException e) {
@@ -52,7 +53,7 @@ public class ResponsableTecnicoDAO {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    responsable = convertirResultSetART(rs);
+                    responsable = convertirResultSetAResponsable(rs);
                 }
             }
 
@@ -62,6 +63,24 @@ public class ResponsableTecnicoDAO {
         }
 
         return responsable;
+    }
+
+    public static List<ResponsableTecnico> obtenerPorOrganizacion(int idOV) throws SQLException {
+        List<ResponsableTecnico> lista = new ArrayList<>();
+        String consulta = "SELECT * FROM responsable_tecnico WHERE ID_Org_Vinculada = ?";
+        try (Connection conexion = ConexionBD.abrirConexion();
+             PreparedStatement sentencia = conexion.prepareStatement(consulta)) {
+            sentencia.setInt(1, idOV);
+            try (ResultSet rs = sentencia.executeQuery()) {
+                while (rs.next()) {
+                    lista.add(convertirResultSetAResponsable(rs));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al obtener los responsables técnicos por Organizacion: "+e.getMessage());
+            throw e;
+        }
+        return lista;
     }
 
     public static boolean insertar(ResponsableTecnico r) throws SQLException {
@@ -166,7 +185,7 @@ public class ResponsableTecnicoDAO {
         return tieneProyectos;
     }
 
-    private static ResponsableTecnico convertirResultSetART(ResultSet rs) throws SQLException {
+    private static ResponsableTecnico convertirResultSetAResponsable(ResultSet rs) throws SQLException {
         ResponsableTecnico r = new ResponsableTecnico();
         r.setIdResponsable(rs.getInt("ID_Responsable"));
         r.setNombre(rs.getString("nombre"));
