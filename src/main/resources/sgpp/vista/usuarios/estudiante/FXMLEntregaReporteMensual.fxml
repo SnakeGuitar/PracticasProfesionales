@@ -35,6 +35,7 @@
                     <font><Font name="Arial Rounded MT Bold" size="16.0"/></font>
                 </Button>
             </HBox>
+
             <Label fx:id="lblFechas"
                    text="Selecciona un reporte para ver su fecha de apertura y de cierre">
                 <font><Font name="Arial Italic" size="16.0"/></font>
@@ -52,6 +53,11 @@
             <Label fx:id="lblArchivoSeleccionado"
                    text="Ningún archivo seleccionado"
                    style="-fx-font-style:italic;"/>
+
+            <Button text="Regresar"
+                    onAction="#volverAtras"
+                    style="-fx-background-color: #9e9e9e; -fx-text-fill: white;"
+                    prefWidth="120"/>
 
         </VBox>
     </children>

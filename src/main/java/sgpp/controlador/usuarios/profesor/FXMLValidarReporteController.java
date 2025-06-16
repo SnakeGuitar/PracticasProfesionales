@@ -1,3 +1,22 @@
+/*
+ * Autor original: Seth Marquez
+ * Último autor: Seth Marquez
+ * Fecha de creación: 16-06-2025
+ * Fecha de la última modificación: 17-06-2025
+ * Descripción: Controlador JavaFX para la vista de validación de reportes mensuales.
+ *              Permite visualizar las entregas realizadas por los estudiantes, descargar
+ *              los documentos PDF asociados, y validar o rechazar los reportes incluyendo
+ *              observaciones opcionales.
+ *
+ * Funcionalidades:
+ *   - Mostrar reportes entregados por los estudiantes en el periodo actual
+ *   - Descargar el PDF de cada entrega mediante doble clic
+ *   - Validar o rechazar entregas con opción a comentario
+ *   - Mostrar nombre del estudiante y horas reportadas
+ * Estado: En funcionamiento
+ */
+
+
 package sgpp.controlador.usuarios.profesor;
 
 import javafx.collections.FXCollections;
@@ -21,6 +40,7 @@ import java.net.URL;
 import java.sql.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import javafx.stage.Stage;
 
 public class FXMLValidarReporteController implements Initializable {
 
@@ -203,4 +223,14 @@ public class FXMLValidarReporteController implements Initializable {
             Utilidad.mostrarErrorBD(true, ex);
         }
     }
+    
+private void volverAtras(ActionEvent event) {
+    ((Stage) tablaEntregas.getScene().getWindow()).close();
+}
+
+    @FXML
+    private void btnRegresar(ActionEvent event) {
+    }
+
+
 }

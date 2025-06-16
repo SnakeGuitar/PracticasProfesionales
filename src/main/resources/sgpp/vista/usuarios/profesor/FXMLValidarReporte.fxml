@@ -12,7 +12,7 @@
     <VBox spacing="15"
           alignment="TOP_CENTER"
           AnchorPane.topAnchor="15" AnchorPane.leftAnchor="15"
-          AnchorPane.rightAnchor="15" AnchorPane.bottomAnchor="15">
+          AnchorPane.rightAnchor="15" AnchorPane.bottomAnchor="60">
 
         <Label text="Entregas – Periodo 4"
                style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #3b5998;"/>
@@ -26,8 +26,7 @@
                 <TableColumn fx:id="colReporte"        text="Reporte"       prefWidth="70"/>
                 <TableColumn fx:id="colFechaEntrega"   text="Fecha entrega" prefWidth="180"/>
                 <TableColumn fx:id="colEstado"         text="Estado"        prefWidth="100"/>
-                <TableColumn fx:id="colHoras" text="Horas Reportadas" />
-
+                <TableColumn fx:id="colHoras"          text="Horas Reportadas" />
             </columns>
         </TableView>
 
@@ -43,4 +42,11 @@
                     style="-fx-background-color: #c0392b; -fx-text-fill: white;" prefWidth="120"/>
         </HBox>
     </VBox>
+
+    <!-- Botón Regresar -->
+    <Button text="Regresar"
+            onAction="#volverAtras"
+            layoutX="695" layoutY="470"
+            prefWidth="100"
+            style="-fx-background-color: #95a5a6; -fx-text-fill: white;"/>
 </AnchorPane>

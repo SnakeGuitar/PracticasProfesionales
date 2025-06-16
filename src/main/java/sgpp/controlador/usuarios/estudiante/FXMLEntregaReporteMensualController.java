@@ -137,4 +137,8 @@ public class FXMLEntregaReporteMensualController implements Initializable {
             Utilidad.crearAlertaInformacion("Abierta", "Puedes subir tu reporte.");
         }
     }
+
+    @FXML
+    private void btnRegresar(ActionEvent event) {
+    }
 }

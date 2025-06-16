@@ -20,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -234,6 +235,14 @@ public class FXMLPrincipalResponsableTecnicoController implements Initializable 
         ex.printStackTrace();
     }
 }
+
+ 
+
+    @FXML
+    private void BtnRegresar(ActionEvent event) {
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        stage.close();
+    }
 
 }
 
