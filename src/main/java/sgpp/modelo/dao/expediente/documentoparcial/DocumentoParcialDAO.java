@@ -1,9 +1,8 @@
-/* Autor original: Seth Marquez
+/* Autor original: Luis Donaldo
+ * Último autor: Luis Donaldo
  * Fecha de creación: 15-06-2025
  * Fecha de la última modificación: 15-06-2025
- * Descripción: Clase DAO para el manejo de la tabla 'documento_parcial'.
- *              Permite gestionar documentos parciales del expediente estudiantil,
- *              incluyendo tipos 'ReporteParcial' y 'EvaluacionParcialPorOV'.
+ * Descripción: Clase DAO para el manejo de documentos parciales en la base de datos
  */
 
 package sgpp.modelo.dao.expediente.documentoparcial;
