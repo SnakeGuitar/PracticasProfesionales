@@ -30,4 +30,5 @@ module com.sgpp.sistemagestionpracticasprofesionales {
 
     // Paquete de aplicación principal
     exports sgpp;
+    requires org.apache.pdfbox;
 }

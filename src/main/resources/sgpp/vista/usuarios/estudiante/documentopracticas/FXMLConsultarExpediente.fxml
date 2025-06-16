@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.estudiante.documentopracticas.FXMLConsultarEntregasController">
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.estudiante.documentopracticas.FXMLConsultarExpediente">
    <children>
       <ListView fx:id="listViewEntregas" layoutX="32.0" layoutY="178.0" prefHeight="554.0" prefWidth="394.0" style="-fx-background-radius: 10;" />
       <Pane layoutX="455.0" layoutY="178.0" prefHeight="507.0" prefWidth="533.0" style="-fx-border-color: #000000; -fx-border-radius: 10;">
