@@ -1,9 +1,9 @@
 /*
  * Autor original: Luis Donaldo
- * Último autor: Luis Donaldo
+ * Último autor: Abel Yong
  * Fecha de creación: 15-06-2025
  * Fecha de la última versión aprobada:
- * Fecha de la última modificación: 15-06-2025
+ * Fecha de la última modificación: 16-06-2025
  * Descripción: Clase DAO para manejar las entregas de los documentos iniciales de los expedientes
  */
 

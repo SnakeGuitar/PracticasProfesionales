@@ -14,19 +14,20 @@
 
 package sgpp.modelo.beans.expediente.documentoparcial;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class EntregaDocumentoParcial {
     private int idEntregaDocumentoParcial;
-    private Date fechaApertura;
-    private Date fechaLimite;
+    private LocalDateTime fechaApertura;
+    private LocalDateTime fechaLimite;
     private int idEstudiante;
     private int idPeriodo;
 
     public EntregaDocumentoParcial() {
     }
 
-    public EntregaDocumentoParcial(int idEntregaDocumentoParcial, Date fechaApertura, Date fechaLimite, int idEstudiante, int idPeriodo) {
+    public EntregaDocumentoParcial(int idEntregaDocumentoParcial, LocalDateTime fechaApertura, LocalDateTime fechaLimite, int idEstudiante, int idPeriodo) {
         this.idEntregaDocumentoParcial = idEntregaDocumentoParcial;
         this.fechaApertura = fechaApertura;
         this.fechaLimite = fechaLimite;
@@ -42,19 +43,19 @@ public class EntregaDocumentoParcial {
         this.idEntregaDocumentoParcial = idEntregaDocumentoParcial;
     }
 
-    public Date getFechaApertura() {
+    public LocalDateTime getFechaApertura() {
         return fechaApertura;
     }
 
-    public void setFechaApertura(Date fechaApertura) {
+    public void setFechaApertura(LocalDateTime fechaApertura) {
         this.fechaApertura = fechaApertura;
     }
 
-    public Date getFechaLimite() {
+    public LocalDateTime getFechaLimite() {
         return fechaLimite;
     }
 
-    public void setFechaLimite(Date fechaLimite) {
+    public void setFechaLimite(LocalDateTime fechaLimite) {
         this.fechaLimite = fechaLimite;
     }
 

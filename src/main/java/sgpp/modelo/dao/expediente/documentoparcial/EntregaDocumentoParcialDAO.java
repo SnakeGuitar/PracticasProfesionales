@@ -18,6 +18,7 @@ package sgpp.modelo.dao.expediente.documentoparcial;
 
 import sgpp.modelo.ConexionBD;
 import sgpp.modelo.beans.expediente.documentoparcial.EntregaDocumentoParcial;
+import sgpp.utilidad.UtilidadFormatoDeDatos;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -60,12 +61,7 @@ public class EntregaDocumentoParcialDAO {
                 if (filasAfectadas > 0) {
                     resultado = sentencia.getGeneratedKeys();
                     if (resultado.next()) {
-                        entregaDocumentoParcial = new EntregaDocumentoParcial();
-                        entregaDocumentoParcial.setIdEntregaDocumentoParcial(resultado.getInt(1));
-                        entregaDocumentoParcial.setFechaApertura(fechaApertura);
-                        entregaDocumentoParcial.setFechaLimite(fechaLimite);
-                        entregaDocumentoParcial.setIdEstudiante(idEstudiante);
-                        entregaDocumentoParcial.setIdPeriodo(idPeriodo);
+                        entregaDocumentoParcial = convertirAEntrega(resultado);
                     }
                 }
             } else {
@@ -107,17 +103,7 @@ public class EntregaDocumentoParcialDAO {
                 resultado = sentencia.executeQuery();
 
                 if (resultado.next()) {
-                    Date fechaApertura = resultado.getDate("fecha_apertura");
-                    Date fechaLimite = resultado.getDate("fecha_limite");
-                    int idEstudiante = resultado.getInt("ID_Estudiante");
-                    int idPeriodo = resultado.getInt("ID_Periodo");
-
-                    entregaDocumentoParcial = new EntregaDocumentoParcial();
-                    entregaDocumentoParcial.setIdEntregaDocumentoParcial(idEntregaDocumentoParcial);
-                    entregaDocumentoParcial.setFechaApertura(fechaApertura);
-                    entregaDocumentoParcial.setFechaLimite(fechaLimite);
-                    entregaDocumentoParcial.setIdEstudiante(idEstudiante);
-                    entregaDocumentoParcial.setIdPeriodo(idPeriodo);
+                    entregaDocumentoParcial = convertirAEntrega(resultado);
                 }
             } else {
                 throw new SQLException("No se pudo establecer la conexión a la base de datos.");
@@ -167,13 +153,7 @@ public class EntregaDocumentoParcialDAO {
                 resultado = sentencia.executeQuery();
 
                 while (resultado.next()) {
-                    EntregaDocumentoParcial entrega = new EntregaDocumentoParcial();
-                    entrega.setIdEntregaDocumentoParcial(resultado.getInt("ID_Entrega_Doc_Parcial"));
-                    entrega.setFechaApertura(resultado.getTimestamp("fecha_apertura"));
-                    entrega.setFechaLimite(resultado.getTimestamp("fecha_limite"));
-                    entrega.setIdEstudiante(resultado.getInt("ID_Estudiante"));
-                    entrega.setIdPeriodo(resultado.getInt("ID_Periodo"));
-                    entregas.add(entrega);
+                    entregas.add(convertirAEntrega(resultado));
                 }
             } else {
                 throw new SQLException("No se pudo establecer la conexión a la base de datos.");
@@ -222,13 +202,7 @@ public class EntregaDocumentoParcialDAO {
                 resultado = sentencia.executeQuery();
 
                 while (resultado.next()) {
-                    EntregaDocumentoParcial entrega = new EntregaDocumentoParcial();
-                    entrega.setIdEntregaDocumentoParcial(resultado.getInt("ID_Entrega_Doc_Parcial"));
-                    entrega.setFechaApertura(resultado.getTimestamp("fecha_apertura"));
-                    entrega.setFechaLimite(resultado.getTimestamp("fecha_limite"));
-                    entrega.setIdEstudiante(resultado.getInt("ID_Estudiante"));
-                    entrega.setIdPeriodo(resultado.getInt("ID_Periodo"));
-                    entregas.add(entrega);
+                    entregas.add(convertirAEntrega(resultado));
                 }
             } else {
                 throw new SQLException("No se pudo establecer la conexión a la base de datos.");
@@ -329,5 +303,47 @@ public class EntregaDocumentoParcialDAO {
             }
         }
         return exito;
+    }
+
+    public static List<EntregaDocumentoParcial> obtenerEntregasPorPeriodo(int idPeriodo) throws SQLException {
+        ArrayList<EntregaDocumentoParcial> entregas = new ArrayList<>();
+        Connection conexionBD = null;
+        PreparedStatement sentencia = null;
+        ResultSet resultado = null;
+        try {
+            conexionBD = ConexionBD.abrirConexion();
+            if (conexionBD != null) {
+                String consulta = "SELECT * FROM entrega_doc_parcial WHERE ID_Periodo = ?";
+                sentencia = conexionBD.prepareStatement(consulta);
+                sentencia.setInt(1, idPeriodo);
+                resultado = sentencia.executeQuery();
+                while (resultado.next()) {
+                    entregas.add(convertirAEntrega(resultado));
+                }
+            } else {
+                throw new SQLException("No se pudo establecer la conexión a la base de datos.");
+            }
+        } finally {
+            if (resultado != null) {
+                resultado.close();
+            }
+            if (sentencia != null) {
+                sentencia.close();
+            }
+            if (conexionBD != null) {
+                conexionBD.close();
+            }
+        }
+        return entregas;
+    }
+
+    private static EntregaDocumentoParcial convertirAEntrega(ResultSet resultado) throws SQLException {
+        EntregaDocumentoParcial entrega = new EntregaDocumentoParcial();
+        entrega.setIdEntregaDocumentoParcial(resultado.getInt("ID_Entrega_Doc_Inicial"));
+        entrega.setFechaApertura(UtilidadFormatoDeDatos.stringToLocalDateTime(resultado.getString("fecha_apertura")));
+        entrega.setFechaLimite(UtilidadFormatoDeDatos.stringToLocalDateTime(resultado.getString("fecha_limite")));
+        entrega.setIdEstudiante(resultado.getInt("ID_Estudiante"));
+        entrega.setIdPeriodo(resultado.getInt("ID_Periodo"));
+        return entrega;
     }
 }
