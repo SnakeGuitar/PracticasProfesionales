@@ -28,9 +28,7 @@ public class InicioSesionDAO {
         Usuario sesionUsuario = null;
         Connection conexionBD = ConexionBD.abrirConexion();
         if(conexionBD != null) {
-            String consulta = "SELECT ID_Usuario, tipo_usuario, username, activo " +
-                    "FROM usuario " +
-                    "WHERE username = ? AND password = UNHEX(MD5(?)) AND activo = true";
+            String consulta = "CALL autenticar_usuario(?, ?)";
             try (PreparedStatement sentencia = conexionBD.prepareStatement(consulta)) {
                 sentencia.setString(1, username);
                 sentencia.setString(2, password);
