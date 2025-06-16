@@ -2,14 +2,14 @@
  * Autor original: Abel Hernandez Yong
  * Último autor: Abel Hernandez Yong
  * Fecha de creación: 14-06-2025
- * Fecha de la última versión aprobada:S/F
- * Fecha de la última modificación: 14-06-2025 6:49
+ * Fecha de la última versión aprobada: 15-06-2025 18:49
+ * Fecha de la última modificación: 15-06-2025 18:49
  * Descripción: Controlador para la ventana de administracion de proyectos
  */
 
 /*
- * Estado: En progreso
- * Modificaciones:
+ * Estado: Terminada
+ * Modificaciones: Se corrigio una falta de ortografia en un Alert
  */
 
 package sgpp.controlador.usuarios.coordinador.proyecto;
@@ -136,7 +136,7 @@ public class FXMLProyectoController implements Initializable {
             Utilidad.crearAlerta(
                     Alert.AlertType.ERROR,
                     "Error",
-                    "Lo sentidmos, no se pudo abrir el formulario del proyecto"
+                    "Lo sentimos, no se pudo abrir el formulario del proyecto"
             );
         }
     }

@@ -2,14 +2,14 @@
  * Autor original: Abel Hernandez Yong
  * Último autor: Abel Hernandez Yong
  * Fecha de creación: 14-06-2025
- * Fecha de la última versión aprobada:S/F
- * Fecha de la última modificación: 14-06-2025 10:03
+ * Fecha de la última versión aprobada: 21:15
+ * Fecha de la última modificación: 15-06-2025 20:32
  * Descripción: Controlador para el formulario utlizado en los CU01 y CU02
  */
 
 /*
- * Estado: En progreso
- * Modificaciones:
+ * Estado: Terminado - Pruebas Superficiales realizadas
+ * Modificaciones: cambiado el metodo de validarProyecto para que se muestren todos los mensajes de error
  */
 
 package sgpp.controlador.usuarios.coordinador.proyecto;

@@ -3,7 +3,7 @@
  * Ultimo autor: Abel Yong
  * Fecha de creación: 15-06-2025
  * Fecha de la última versión aprobada:
- * Fecha de la última modificación: 10-06-2025 16:42
+ * Fecha de la última modificación: 15-06-2025 16:42
  * Descripción: Clase DAO para contener validaciones comunes de formato de datos.
  */
 
