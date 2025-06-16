@@ -14,17 +14,19 @@
 
 package sgpp.modelo.beans.expediente.documentofinal;
 
+import java.util.Date;
+
 public class EntregaDocumentoFinal {
     private int idEntregaDocumentoFinal;
-    private String fechaApertura;
-    private String fechaLimite;
+    private Date fechaApertura;
+    private Date fechaLimite;
     private int idEstudiante;
     private int idPeriodo;
 
     public EntregaDocumentoFinal() {
     }
 
-    public EntregaDocumentoFinal(int idEntregaDocumentoFinal, String fechaApertura, String fechaLimite, int idEstudiante, int idPeriodo) {
+    public EntregaDocumentoFinal(int idEntregaDocumentoFinal, Date fechaApertura, Date fechaLimite, int idEstudiante, int idPeriodo) {
         this.idEntregaDocumentoFinal = idEntregaDocumentoFinal;
         this.fechaApertura = fechaApertura;
         this.fechaLimite = fechaLimite;
@@ -40,19 +42,19 @@ public class EntregaDocumentoFinal {
         this.idEntregaDocumentoFinal = idEntregaDocumentoFinal;
     }
 
-    public String getFechaApertura() {
+    public Date getFechaApertura() {
         return fechaApertura;
     }
 
-    public void setFechaApertura(String fechaApertura) {
+    public void setFechaApertura(Date fechaApertura) {
         this.fechaApertura = fechaApertura;
     }
 
-    public String getFechaLimite() {
+    public Date getFechaLimite() {
         return fechaLimite;
     }
 
-    public void setFechaLimite(String fechaLimite) {
+    public void setFechaLimite(Date fechaLimite) {
         this.fechaLimite = fechaLimite;
     }
 
