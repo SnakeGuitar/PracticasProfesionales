@@ -22,7 +22,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class FXMLPrincipalEstudianteController implements Initializable {
-    private static final String RUTA_FXML_CONSULTAR_ENTREGAS = "/sgpp/vista/usuarios/estudiante/documentopracticas/FXMLConsultarExpediente.fxml";
+    private static final String RUTA_FXML_SUBIR_DOCUMENTO = "/sgpp/vista/usuarios/estudiante/documentopracticas/FXMLSubirDocumentoPracticas.fxml";
     private static final String RUTA_FXML_CONSULTAR_AVANCE = "";
     private static final String RUTA_FXML_LLENAR_AUTOEVALUACION = "/sgpp/vista/usuarios/estudiante/FXMLAutoevaluacionEstudiante.fxml";
     private static final String RUTA_FXML_FORMATO_EVALUACION = "";
@@ -49,8 +49,8 @@ public class FXMLPrincipalEstudianteController implements Initializable {
     public void clicBtnAvance(ActionEvent actionEvent) {
     }
 
-    public void clicBtnExpediente(ActionEvent actionEvent) {
-        Utilidad.crearEscenario(RUTA_FXML_CONSULTAR_ENTREGAS, "Consultar Entregas");
+    public void clicBtnSubirDocumento(ActionEvent actionEvent) {
+        Utilidad.crearEscenario(RUTA_FXML_SUBIR_DOCUMENTO, "Consultar Entregas");
 
     }
 }
