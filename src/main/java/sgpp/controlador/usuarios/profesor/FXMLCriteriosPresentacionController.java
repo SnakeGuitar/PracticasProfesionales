@@ -17,6 +17,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static sgpp.utilidad.Utilidad.configurarListener;
+import static sgpp.utilidad.Utilidad.configurarRadioButton;
+
 public class FXMLCriteriosPresentacionController implements Initializable {
     private static final String RUTA_FXML_CALIFICACION_OBSERVACIONES = "/sgpp/vista/usuarios/profesor/FXMLCalificacionObservaciones.fxml";
 
@@ -37,6 +40,7 @@ public class FXMLCriteriosPresentacionController implements Initializable {
     public RadioButton rdBtnCriterio14;
     @FXML
     public RadioButton rdBtnCriterio15;
+
     @FXML
     public RadioButton rdBtnCriterio21;
     @FXML
@@ -47,6 +51,7 @@ public class FXMLCriteriosPresentacionController implements Initializable {
     public RadioButton rdBtnCriterio24;
     @FXML
     public RadioButton rdBtnCriterio25;
+
     @FXML
     public RadioButton rdBtnCriterio31;
     @FXML
@@ -57,6 +62,7 @@ public class FXMLCriteriosPresentacionController implements Initializable {
     public RadioButton rdBtnCriterio34;
     @FXML
     public RadioButton rdBtnCriterio35;
+
     @FXML
     public RadioButton rdBtnCriterio41;
     @FXML
@@ -67,6 +73,7 @@ public class FXMLCriteriosPresentacionController implements Initializable {
     public RadioButton rdBtnCriterio44;
     @FXML
     public RadioButton rdBtnCriterio45;
+
     @FXML
     public RadioButton rdBtnCriterio51;
     @FXML
@@ -101,55 +108,41 @@ public class FXMLCriteriosPresentacionController implements Initializable {
         tgCriterio4 = new ToggleGroup();
         tgCriterio5 = new ToggleGroup();
 
-        rdBtnCriterio11.setToggleGroup(tgCriterio1); rdBtnCriterio11.setUserData(10);
-        rdBtnCriterio12.setToggleGroup(tgCriterio1); rdBtnCriterio12.setUserData(9);
-        rdBtnCriterio13.setToggleGroup(tgCriterio1); rdBtnCriterio13.setUserData(8);
-        rdBtnCriterio14.setToggleGroup(tgCriterio1); rdBtnCriterio14.setUserData(7);
-        rdBtnCriterio15.setToggleGroup(tgCriterio1); rdBtnCriterio15.setUserData(6);
+        configurarRadioButton(rdBtnCriterio11, tgCriterio1, 10);
+        configurarRadioButton(rdBtnCriterio12, tgCriterio1, 9);
+        configurarRadioButton(rdBtnCriterio13, tgCriterio1, 8);
+        configurarRadioButton(rdBtnCriterio14, tgCriterio1, 7);
+        configurarRadioButton(rdBtnCriterio15, tgCriterio1, 6);
 
-        rdBtnCriterio21.setToggleGroup(tgCriterio2); rdBtnCriterio21.setUserData(10);
-        rdBtnCriterio22.setToggleGroup(tgCriterio2); rdBtnCriterio22.setUserData(9);
-        rdBtnCriterio23.setToggleGroup(tgCriterio2); rdBtnCriterio23.setUserData(8);
-        rdBtnCriterio24.setToggleGroup(tgCriterio2); rdBtnCriterio24.setUserData(7);
-        rdBtnCriterio25.setToggleGroup(tgCriterio2); rdBtnCriterio25.setUserData(6);
+        configurarRadioButton(rdBtnCriterio21, tgCriterio2, 10);
+        configurarRadioButton(rdBtnCriterio22, tgCriterio2, 9);
+        configurarRadioButton(rdBtnCriterio23, tgCriterio2, 8);
+        configurarRadioButton(rdBtnCriterio24, tgCriterio2, 7);
+        configurarRadioButton(rdBtnCriterio25, tgCriterio2, 6);
 
-        rdBtnCriterio31.setToggleGroup(tgCriterio3); rdBtnCriterio31.setUserData(10);
-        rdBtnCriterio32.setToggleGroup(tgCriterio3); rdBtnCriterio32.setUserData(9);
-        rdBtnCriterio33.setToggleGroup(tgCriterio3); rdBtnCriterio33.setUserData(8);
-        rdBtnCriterio34.setToggleGroup(tgCriterio3); rdBtnCriterio34.setUserData(7);
-        rdBtnCriterio35.setToggleGroup(tgCriterio3); rdBtnCriterio35.setUserData(6);
+        configurarRadioButton(rdBtnCriterio31, tgCriterio3, 10);
+        configurarRadioButton(rdBtnCriterio32, tgCriterio3, 9);
+        configurarRadioButton(rdBtnCriterio33, tgCriterio3, 8);
+        configurarRadioButton(rdBtnCriterio34, tgCriterio3, 7);
+        configurarRadioButton(rdBtnCriterio35, tgCriterio3, 6);
 
-        rdBtnCriterio41.setToggleGroup(tgCriterio4); rdBtnCriterio41.setUserData(10);
-        rdBtnCriterio42.setToggleGroup(tgCriterio4); rdBtnCriterio42.setUserData(9);
-        rdBtnCriterio43.setToggleGroup(tgCriterio4); rdBtnCriterio43.setUserData(8);
-        rdBtnCriterio44.setToggleGroup(tgCriterio4); rdBtnCriterio44.setUserData(7);
-        rdBtnCriterio45.setToggleGroup(tgCriterio4); rdBtnCriterio45.setUserData(6);
+        configurarRadioButton(rdBtnCriterio41, tgCriterio4, 10);
+        configurarRadioButton(rdBtnCriterio42, tgCriterio4, 9);
+        configurarRadioButton(rdBtnCriterio43, tgCriterio4, 8);
+        configurarRadioButton(rdBtnCriterio44, tgCriterio4, 7);
+        configurarRadioButton(rdBtnCriterio45, tgCriterio4, 6);
 
-        rdBtnCriterio51.setToggleGroup(tgCriterio5); rdBtnCriterio51.setUserData(10);
-        rdBtnCriterio52.setToggleGroup(tgCriterio5); rdBtnCriterio52.setUserData(9);
-        rdBtnCriterio53.setToggleGroup(tgCriterio5); rdBtnCriterio53.setUserData(8);
-        rdBtnCriterio54.setToggleGroup(tgCriterio5); rdBtnCriterio54.setUserData(7);
-        rdBtnCriterio55.setToggleGroup(tgCriterio5); rdBtnCriterio55.setUserData(6);
+        configurarRadioButton(rdBtnCriterio51, tgCriterio5, 10);
+        configurarRadioButton(rdBtnCriterio52, tgCriterio5, 9);
+        configurarRadioButton(rdBtnCriterio53, tgCriterio5, 8);
+        configurarRadioButton(rdBtnCriterio54, tgCriterio5, 7);
+        configurarRadioButton(rdBtnCriterio55, tgCriterio5, 6);
 
-        tgCriterio1.selectedToggleProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) valorCriterio[0] = (int) newVal.getUserData();
-        });
-
-        tgCriterio2.selectedToggleProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) valorCriterio[1] = (int) newVal.getUserData();
-        });
-
-        tgCriterio3.selectedToggleProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) valorCriterio[2] = (int) newVal.getUserData();
-        });
-
-        tgCriterio4.selectedToggleProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) valorCriterio[3] = (int) newVal.getUserData();
-        });
-
-        tgCriterio5.selectedToggleProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) valorCriterio[4] = (int) newVal.getUserData();
-        });
+        configurarListener(tgCriterio1, valorCriterio, 0);
+        configurarListener(tgCriterio2, valorCriterio, 1);
+        configurarListener(tgCriterio3, valorCriterio, 2);
+        configurarListener(tgCriterio4, valorCriterio, 3);
+        configurarListener(tgCriterio5, valorCriterio, 4);
     }
 
     private void irCalificacionObservaciones() {
@@ -193,5 +186,10 @@ public class FXMLCriteriosPresentacionController implements Initializable {
     }
 
     public void BtnClicCancelar(ActionEvent actionEvent) {
+        boolean confirmado = Utilidad.confirmarCancelar();
+
+        if(confirmado) {
+            Utilidad.cerrarVentana(btnContinuar);
+        }
     }
 }

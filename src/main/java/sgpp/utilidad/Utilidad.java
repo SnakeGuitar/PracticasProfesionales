@@ -9,13 +9,11 @@
 
 package sgpp.utilidad;
 
+import javafx.scene.control.*;
 import sgpp.SistemaGestionPracticasProfesionales;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Control;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -105,6 +103,17 @@ public class Utilidad {
         } catch (IOException excepcion) {
             mostrarError(true, excepcion, "Error al cargar la vista", "No se pudo cargar la vista: " + URL);
         }
+    }
+
+    public static void configurarRadioButton(RadioButton boton, ToggleGroup grupo, int valor) {
+        boton.setToggleGroup(grupo);
+        boton.setUserData(valor);
+    }
+
+    public static void configurarListener(ToggleGroup grupo, int[]valores, int indice) {
+        grupo.selectedToggleProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) valores[indice] = (int) newVal.getUserData();
+        });
     }
 
     public static byte[] generarDocumentoAsignacion(TablaAsignacion a) {

@@ -14,42 +14,24 @@
 
 package sgpp.modelo.beans.expediente.documentoparcial;
 
+import sgpp.modelo.beans.expediente.Documento;
 import sgpp.modelo.beans.expediente.EstadoDocumento;
 
-public class DocumentoParcial {
+import java.util.Date;
+
+public class DocumentoParcial extends Documento {
     private int idDocumentoParcial;
-    private int fechaEntrega;
+    private Date fechaEntrega;
     private TipoDocumentoParcial tipo;
     private EstadoDocumento estado;
     private byte[] documento;
     private int idEntregaDocumentoParcial;
 
-    public DocumentoParcial() {
-    }
+    public DocumentoParcial() {}
 
-    public DocumentoParcial(int idDocumentoParcial, int fechaEntrega, TipoDocumentoParcial tipo, EstadoDocumento estado, byte[] documento, int idEntregaDocumentoParcial) {
-        this.idDocumentoParcial = idDocumentoParcial;
-        this.fechaEntrega = fechaEntrega;
+    public DocumentoParcial(int idDocumentoParcial, Date fechaEntrega, TipoDocumentoParcial tipo, EstadoDocumento estado, byte[] documento, int idEntregaDocumentoParcial) {
+        super(idDocumentoParcial, fechaEntrega, estado, documento, idEntregaDocumentoParcial);
         this.tipo = tipo;
-        this.estado = estado;
-        this.documento = documento;
-        this.idEntregaDocumentoParcial = idEntregaDocumentoParcial;
-    }
-
-    public int getIdDocumentoParcial() {
-        return idDocumentoParcial;
-    }
-
-    public void setIdDocumentoParcial(int idDocumentoParcial) {
-        this.idDocumentoParcial = idDocumentoParcial;
-    }
-
-    public int getFechaEntrega() {
-        return fechaEntrega;
-    }
-
-    public void setFechaEntrega(int fechaEntrega) {
-        this.fechaEntrega = fechaEntrega;
     }
 
     public TipoDocumentoParcial getTipo() {
@@ -60,27 +42,8 @@ public class DocumentoParcial {
         this.tipo = tipo;
     }
 
-    public EstadoDocumento getEstado() {
-        return estado;
-    }
-
-    public void setEstado(EstadoDocumento estado) {
-        this.estado = estado;
-    }
-
-    public byte[] getDocumento() {
-        return documento;
-    }
-
-    public void setDocumento(byte[] documento) {
-        this.documento = documento;
-    }
-
-    public int getIdEntregaDocumentoParcial() {
-        return idEntregaDocumentoParcial;
-    }
-
-    public void setIdEntregaDocumentoParcial(int idEntregaDocumentoParcial) {
-        this.idEntregaDocumentoParcial = idEntregaDocumentoParcial;
+    @Override
+    public Enum<?> getTipoDocumento() {
+        return tipo;
     }
 }
