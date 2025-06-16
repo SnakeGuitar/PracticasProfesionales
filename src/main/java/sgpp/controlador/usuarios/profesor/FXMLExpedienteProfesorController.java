@@ -14,6 +14,7 @@ import sgpp.modelo.beans.expediente.Documento;
 import sgpp.modelo.dao.expediente.documentoinicial.DocumentoInicialDAO;
 import sgpp.modelo.dao.expediente.documentoparcial.DocumentoParcialDAO;
 import sgpp.modelo.dao.expediente.documentofinal.DocumentoFinalDAO;
+import sgpp.utilidad.Utilidad;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -61,11 +62,11 @@ public class FXMLExpedienteProfesorController implements Initializable {
     }
 
     private void cargarInformacion() throws SQLException {
+        listDocumentosExpediente.setCellFactory(new PropertyValueFactory("tipo"));
+
         documentos = FXCollections.observableArrayList();
 
         ArrayList<Documento> documentosDAO = new ArrayList<>();
-
-        // TODO: Obtener y pasar ID de Estudiante y Periodo
         documentosDAO.addAll(DocumentoInicialDAO.obtenerDocumentosInicialesPorExpediente(idEstudiante, idPeriodo));
         documentosDAO.addAll(DocumentoParcialDAO.obtenerDocumentosParcialesPorExpediente(idEstudiante, idPeriodo));
         documentosDAO.addAll(DocumentoFinalDAO.obtenerDocumentosFinalesPorExpediente(idEstudiante, idPeriodo));
@@ -76,7 +77,7 @@ public class FXMLExpedienteProfesorController implements Initializable {
     }
 
     public void btnClicRegresar(ActionEvent actionEvent) {
-        // TODO
+        Utilidad.cerrarVentana(lbNombreEstudiante);
     }
 
     public void btnClicBorrar(ActionEvent actionEvent) {

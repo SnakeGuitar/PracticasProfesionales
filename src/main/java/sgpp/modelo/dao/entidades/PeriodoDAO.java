@@ -16,6 +16,7 @@ package sgpp.modelo.dao.entidades;
 
 import sgpp.modelo.ConexionBD;
 import sgpp.modelo.beans.Periodo;
+import sgpp.utilidad.Utilidad;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,17 +27,32 @@ public class PeriodoDAO {
 
     public static Periodo obtenerPeriodoActual() throws SQLException {
         Periodo periodo = null;
-        Connection conexion = ConexionBD.abrirConexion();
+        Connection conexion = null;
+        PreparedStatement sentencia = null;
+        ResultSet resultado = null;
         String consulta = "SELECT ID_Periodo, abreviatura, fecha_inicio, fecha_fin FROM periodo where NOW() BETWEEN fecha_inicio AND fecha_fin";
-        PreparedStatement sentencia = conexion.prepareStatement(consulta);
-        ResultSet resultado = sentencia.executeQuery();
-        if (resultado.next()) {
-            periodo = new Periodo();
-            periodo.setIdPeriodo(resultado.getInt("ID_Periodo"));
-            periodo.setAbreviatura(resultado.getString("abreviatura"));
-            periodo.setFechaInicio(resultado.getString("fecha_inicio"));
-            periodo.setFechaFin(resultado.getString("fecha_fin"));
+
+        try {
+            conexion = ConexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(consulta);
+            resultado = sentencia.executeQuery();
+
+            if (resultado.next()) {
+                periodo = new Periodo();
+
+                periodo.setIdPeriodo(resultado.getInt("ID_Periodo"));
+                periodo.setAbreviatura(resultado.getString("abreviatura"));
+                periodo.setFechaInicio(resultado.getString("fecha_inicio"));
+                periodo.setFechaFin(resultado.getString("fecha_fin"));
+            } else {
+                throw new SQLException();
+            }
+        } catch (SQLException e) {
+            Utilidad.mostrarErrorBD(true, e);
+        } finally {
+            ConexionBD.cerrarConexion(conexion, sentencia, resultado);
         }
+
         return periodo;
     }
 }

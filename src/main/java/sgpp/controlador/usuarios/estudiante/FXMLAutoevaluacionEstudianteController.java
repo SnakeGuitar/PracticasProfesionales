@@ -285,6 +285,6 @@ public class FXMLAutoevaluacionEstudianteController implements Initializable {
     }
 
     public void btnClicRegresar(ActionEvent actionEvent) {
-        // TODO
+        Utilidad.cerrarVentana(lbDepartamento);
     }
 }

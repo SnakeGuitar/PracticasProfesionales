@@ -94,9 +94,17 @@ public class FXMLCriteriosPresentacionController implements Initializable {
 
     private int[] valorCriterio;
 
+    private int idProfesor, idEstudiante, idPeriodo;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarCriterios();
+    }
+
+    public void inicializarInformacion(int idProfesor, int idEstudiante, int idPeriodo) {
+        this.idEstudiante = idEstudiante;
+        this.idProfesor = idProfesor;
+        this.idPeriodo = idPeriodo;
     }
 
     private void configurarCriterios() {
@@ -155,7 +163,7 @@ public class FXMLCriteriosPresentacionController implements Initializable {
             Parent vista = cargador.load();
 
             FXMLCalificacionObservacionesController controlador = cargador.getController();
-            controlador.inicializarInformacion(valorCriterio);
+            controlador.inicializarInformacion(valorCriterio, idEstudiante, idProfesor, idPeriodo);
 
             Scene escenaPrincipal = new Scene(vista);
             escenarioBase.setScene(escenaPrincipal);

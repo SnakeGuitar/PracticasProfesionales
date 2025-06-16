@@ -15,7 +15,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sgpp.SistemaGestionPracticasProfesionales;
 import sgpp.modelo.beans.Estudiante;
+import sgpp.modelo.beans.Periodo;
 import sgpp.modelo.dao.entidades.EstudianteDAO;
+import sgpp.modelo.dao.entidades.PeriodoDAO;
 import sgpp.utilidad.Utilidad;
 
 import java.io.IOException;
@@ -26,6 +28,7 @@ import java.util.ResourceBundle;
 
 public class FXMLSeleccionEstudianteController implements Initializable {
     private static final String RUTA_FXML_EXPEDIENTE_PROFESOR = "/sgpp/vista/usuarios/profesor/FXMLExpedienteProfesor.fxml";
+    private static final String RUTA_FXML_RUBRICA_PRESENTACION = "/sgpp/vista/usuarios/profesor/FXMLCriteriosPresentacion.fxml";
 
     @FXML
     public Button btnRefrescar;
@@ -47,10 +50,23 @@ public class FXMLSeleccionEstudianteController implements Initializable {
 
     private ObservableList<Estudiante> estudiantes;
 
+    private boolean irRubrica;
+
+    private int idProfesor;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
         cargarInformacion();
+    }
+
+    public void prepararParaRubrica(int idProfesor) {
+        if(idProfesor != 0) {
+            irRubrica = true;
+            this.idProfesor = idProfesor;
+
+            btnConsultar.setText("Evaluar");
+        }
     }
 
     private void configurarTabla() {
@@ -69,11 +85,7 @@ public class FXMLSeleccionEstudianteController implements Initializable {
         }
     }
 
-    private void obtenerExpediente() {
-
-    }
-
-    private void irExpedienteEstudiante(int idEstudiante) {
+    private void irExpedienteEstudiante(int idEstudiante, int idPeriodo) {
         try {
             Stage escenarioBase = Utilidad.getEscenarioComponente(btnConsultar);
             FXMLLoader cargador = new FXMLLoader(
@@ -83,7 +95,7 @@ public class FXMLSeleccionEstudianteController implements Initializable {
             Parent vista = cargador.load();
 
             FXMLExpedienteProfesorController controlador = cargador.getController();
-            // Inicializar controlador con estudiante
+            controlador.inicializarInformacion(idEstudiante, idPeriodo);
 
             Scene escenaPrincipal = new Scene(vista);
             escenarioBase.setScene(escenaPrincipal);
@@ -96,27 +108,56 @@ public class FXMLSeleccionEstudianteController implements Initializable {
         }
     }
 
+    private void irRubricaPresentacion(int idEstudiante, int idProfesor, int idPeriodo) {
+        try {
+            Stage escenarioBase = Utilidad.getEscenarioComponente(btnConsultar);
+            FXMLLoader cargador = new FXMLLoader(
+                    SistemaGestionPracticasProfesionales.class.getResource(
+                            RUTA_FXML_RUBRICA_PRESENTACION));
+
+            Parent vista = cargador.load();
+
+            FXMLCriteriosPresentacionController controlador = cargador.getController();
+            controlador.inicializarInformacion(idEstudiante, idProfesor, idPeriodo);
+
+            Scene escenaPrincipal = new Scene(vista);
+            escenarioBase.setScene(escenaPrincipal);
+            escenarioBase.setTitle("Criterios de Presentación");
+            escenarioBase.show();
+        } catch (IOException excepcion) {
+            Utilidad.mostrarError(true, excepcion,
+                    "Error al cargar criterios",
+                    "No se pudo cargar la ventana de criterios");
+        }
+    }
+
     private void mostrarAlertaSeleccionEstudiante() {
         Utilidad.crearAlertaAdvertencia("Selecciona un estudiante",
                 "Selecciona un estudiante para continuar.");
     }
 
+    private Estudiante obtenerEstudianteDeTabla() {
+        return tblEstudiantes.getSelectionModel().getSelectedItem();
+    }
 
     public void btnClicRefrescar(ActionEvent actionEvent) {
         cargarInformacion();
     }
 
     public void btnClicRegresar(ActionEvent actionEvent) {
-        // Utilidad.cerrarVentana(btnConsultar);
-        // TODO: Si la ventana se creó sobre el Stage de otra ventana,
-        //  implementar forma de "regresar" a la ventana anterior.
+        Utilidad.cerrarVentana(btnConsultar);
     }
 
-    public void btnClicConsultar(ActionEvent actionEvent) {
-        Estudiante estudiante = tblEstudiantes.getSelectionModel().getSelectedItem();
+    public void btnClicConsultar(ActionEvent actionEvent) throws SQLException {
+        int idEstudiante = obtenerEstudianteDeTabla().getIdEstudiante();
+        int idPeriodo = PeriodoDAO.obtenerPeriodoActual().getIdPeriodo();
 
-        if(estudiante != null) {
-            irExpedienteEstudiante(estudiante.getIdEstudiante());
+        if(idEstudiante != 0) {
+            if(irRubrica) { // Si la selección del estudiante es para evaluar presentación.
+                irRubricaPresentacion(idEstudiante, idProfesor, idPeriodo);
+            } else { // Si es para ver expediente.
+                irExpedienteEstudiante(idEstudiante, idPeriodo);
+            }
         } else {
             mostrarAlertaSeleccionEstudiante();
         }
