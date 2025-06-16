@@ -246,12 +246,12 @@ public class DocumentoFinalDAO {
                 resultado = sentencia.executeQuery();
                 if (resultado.next()) {
                     documentoFinal = new DocumentoFinal();
-                    documentoFinal.setIdDocumentoFinal(resultado.getInt("ID_Doc_Final"));
+                    documentoFinal.setIdDocumento(resultado.getInt("ID_Doc_Final"));
                     documentoFinal.setFechaEntrega(resultado.getDate("fecha_entrega"));
                     documentoFinal.setTipo(TipoDocumentoFinal.valueOf(resultado.getString("tipo")));
                     documentoFinal.setEstado(EstadoDocumento.valueOf(resultado.getString("estado")));
                     documentoFinal.setDocumento(resultado.getBytes("documento"));
-                    documentoFinal.setIdEntregaDocumentoFinal(resultado.getInt("ID_Entrega_Doc_Final"));
+                    documentoFinal.setIdEntregaDocumento(resultado.getInt("ID_Entrega_Doc_Final"));
                 }
             } else {
                 throw new SQLException("No se pudo establecer la conexión a la base de datos.");
