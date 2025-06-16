@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -16,8 +17,8 @@
    <children>
       <ButtonBar layoutX="8.0" layoutY="601.0" prefHeight="38.0" prefWidth="978.0">
         <buttons>
-          <Button fx:id="btnContinuar" mnemonicParsing="false" text="Continuar" />
-            <Button fx:id="btnCancelar" mnemonicParsing="false" text="Cancelar" />
+          <Button fx:id="btnContinuar" mnemonicParsing="false" onAction="#btnClicContinuar" text="Continuar" />
+            <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#BtnClicCancelar" text="Cancelar" />
         </buttons>
       </ButtonBar>
       <GridPane gridLinesVisible="true" layoutX="14.0" layoutY="67.0" prefHeight="534.0" prefWidth="972.0">
@@ -115,8 +116,11 @@
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
+               <toggleGroup>
+                  <ToggleGroup fx:id="tgCriterio1" />
+               </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="rdBtnCriterio12" layoutX="210.0" layoutY="144.0" mnemonicParsing="false" text="Son adecuados y se han aplicado de manera correcta" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+            <RadioButton fx:id="rdBtnCriterio12" layoutX="210.0" layoutY="144.0" mnemonicParsing="false" text="Son adecuados y se han aplicado de manera correcta" toggleGroup="$tgCriterio1" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="1">
                <padding>
                   <Insets left="10.0" />
                </padding>
@@ -124,7 +128,7 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </RadioButton>
-            <RadioButton fx:id="rdBtnCriterio13" layoutX="372.0" layoutY="144.0" mnemonicParsing="false" text="Son adecuados, aunque se presentan algunas deficiencias en su aplicación." wrapText="true" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+            <RadioButton fx:id="rdBtnCriterio13" layoutX="372.0" layoutY="144.0" mnemonicParsing="false" text="Son adecuados, aunque se presentan algunas deficiencias en su aplicación." toggleGroup="$tgCriterio1" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="1">
                <padding>
                   <Insets left="10.0" />
                </padding>
@@ -132,7 +136,7 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </RadioButton>
-            <RadioButton fx:id="rdBtnCriterio14" layoutX="534.0" layoutY="144.0" mnemonicParsing="false" text="No son adecuados, pero se han aplicado de manera correcta." wrapText="true" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+            <RadioButton fx:id="rdBtnCriterio14" layoutX="534.0" layoutY="144.0" mnemonicParsing="false" text="No son adecuados, pero se han aplicado de manera correcta." toggleGroup="$tgCriterio1" wrapText="true" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="1">
                <padding>
                   <Insets left="10.0" />
                </padding>
@@ -140,7 +144,7 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </RadioButton>
-            <RadioButton fx:id="rdBtnCriterio15" layoutX="696.0" layoutY="144.0" mnemonicParsing="false" text="No se han aplicado." wrapText="true" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+            <RadioButton fx:id="rdBtnCriterio15" layoutX="696.0" layoutY="144.0" mnemonicParsing="false" text="No se han aplicado." toggleGroup="$tgCriterio1" wrapText="true" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="1">
                <padding>
                   <Insets left="10.0" />
                </padding>
@@ -152,8 +156,11 @@
                <GridPane.margin>
                   <Insets left="10.0" right="5.0" />
                </GridPane.margin>
+               <toggleGroup>
+                  <ToggleGroup fx:id="tgCriterio2" />
+               </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="rdBtnCriterio22" layoutX="210.0" layoutY="239.0" mnemonicParsing="false" text="Cumplió con todos los requisitos." wrapText="true" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+            <RadioButton fx:id="rdBtnCriterio22" layoutX="210.0" layoutY="239.0" mnemonicParsing="false" text="Cumplió con todos los requisitos." toggleGroup="$tgCriterio2" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="2">
                <padding>
                   <Insets left="10.0" />
                </padding>
@@ -168,6 +175,9 @@
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
+               <toggleGroup>
+                  <ToggleGroup fx:id="tgCriterio3" />
+               </toggleGroup>
             </RadioButton>
             <RadioButton fx:id="rdBtnCriterio41" layoutX="210.0" layoutY="334.0" mnemonicParsing="false" text="Cubre los temas a profundidad con detalles y ejemplos. El conocimiento del tema es excelente." wrapText="true" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4">
                <padding>
@@ -176,6 +186,9 @@
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
+               <toggleGroup>
+                  <ToggleGroup fx:id="tgCriterio4" />
+               </toggleGroup>
             </RadioButton>
             <RadioButton fx:id="rdBtnCriterio51" layoutX="210.0" layoutY="429.0" mnemonicParsing="false" text="No hay errores de gramática, ortografía o puntuación." wrapText="true" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="5">
                <padding>
@@ -184,8 +197,11 @@
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
+               <toggleGroup>
+                  <ToggleGroup fx:id="tgCriterio5" />
+               </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="rdBtnCriterio32" layoutX="210.0" layoutY="523.0" mnemonicParsing="false" text="Se posee un dominio adecuado y la exposición fue fluida." wrapText="true" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+            <RadioButton fx:id="rdBtnCriterio32" layoutX="210.0" layoutY="523.0" mnemonicParsing="false" text="Se posee un dominio adecuado y la exposición fue fluida." toggleGroup="$tgCriterio3" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="3">
                <padding>
                   <Insets left="10.0" />
                </padding>
@@ -193,7 +209,7 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </RadioButton>
-            <RadioButton fx:id="rdBtnCriterio42" layoutX="372.0" layoutY="334.0" mnemonicParsing="false" text="Incluye conocimiento básico sobre el tema. El contenido parece ser bueno." wrapText="true" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="4">
+            <RadioButton fx:id="rdBtnCriterio42" layoutX="372.0" layoutY="334.0" mnemonicParsing="false" text="Incluye conocimiento básico sobre el tema. El contenido parece ser bueno." toggleGroup="$tgCriterio4" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="4">
                <padding>
                   <Insets left="10.0" />
                </padding>
@@ -201,7 +217,7 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </RadioButton>
-            <RadioButton fx:id="rdBtnCriterio52" layoutX="372.0" layoutY="429.0" mnemonicParsing="false" text="Casi no hay errores de gramática, ortografía o puntuación." wrapText="true" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="5">
+            <RadioButton fx:id="rdBtnCriterio52" layoutX="372.0" layoutY="429.0" mnemonicParsing="false" text="Casi no hay errores de gramática, ortografía o puntuación." toggleGroup="$tgCriterio5" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="5">
                <padding>
                   <Insets left="10.0" />
                </padding>
@@ -209,7 +225,7 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </RadioButton>
-            <RadioButton fx:id="rdBtnCriterio23" layoutX="372.0" layoutY="523.0" mnemonicParsing="false" text="No cumple satisfactoriamente con un requisito." wrapText="true" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+            <RadioButton fx:id="rdBtnCriterio23" layoutX="372.0" layoutY="523.0" mnemonicParsing="false" text="No cumple satisfactoriamente con un requisito." toggleGroup="$tgCriterio2" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="2">
                <padding>
                   <Insets left="10.0" />
                </padding>
@@ -217,7 +233,7 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </RadioButton>
-            <RadioButton fx:id="rdBtnCriterio33" layoutX="534.0" layoutY="239.0" mnemonicParsing="false" text="Aunque con algunos fallos en el dominio, la exposición fue fluida." wrapText="true" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+            <RadioButton fx:id="rdBtnCriterio33" layoutX="534.0" layoutY="239.0" mnemonicParsing="false" text="Aunque con algunos fallos en el dominio, la exposición fue fluida." toggleGroup="$tgCriterio3" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="3">
                <padding>
                   <Insets left="10.0" />
                </padding>
@@ -225,7 +241,7 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </RadioButton>
-            <RadioButton fx:id="rdBtnCriterio24" layoutX="534.0" layoutY="334.0" mnemonicParsing="false" text="Más de un requisito no fué cumplido satisfactoriamente." wrapText="true" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+            <RadioButton fx:id="rdBtnCriterio24" layoutX="534.0" layoutY="334.0" mnemonicParsing="false" text="Más de un requisito no fué cumplido satisfactoriamente." toggleGroup="$tgCriterio2" wrapText="true" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="2">
                <padding>
                   <Insets left="10.0" />
                </padding>
@@ -233,7 +249,7 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </RadioButton>
-            <RadioButton fx:id="rdBtnCriterio25" layoutX="696.0" layoutY="239.0" mnemonicParsing="false" text="Más de dos requisitos no fueron cumplidos satisfactoriamente." wrapText="true" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+            <RadioButton fx:id="rdBtnCriterio25" layoutX="696.0" layoutY="239.0" mnemonicParsing="false" text="Más de dos requisitos no fueron cumplidos satisfactoriamente." toggleGroup="$tgCriterio2" wrapText="true" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="2">
                <padding>
                   <Insets left="10.0" />
                </padding>
@@ -241,7 +257,7 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </RadioButton>
-            <RadioButton fx:id="rdBtnCriterio34" layoutX="858.0" layoutY="239.0" mnemonicParsing="false" text="Aunque con algunos fallos en el dominio, la exposición fue fluida." wrapText="true" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+            <RadioButton fx:id="rdBtnCriterio34" layoutX="858.0" layoutY="239.0" mnemonicParsing="false" text="Aunque con algunos fallos en el dominio, la exposición fue fluida." toggleGroup="$tgCriterio3" wrapText="true" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="3">
                <padding>
                   <Insets left="10.0" />
                </padding>
@@ -249,7 +265,7 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </RadioButton>
-            <RadioButton fx:id="rdBtnCriterio43" layoutX="534.0" layoutY="334.0" mnemonicParsing="false" text="Incluye información esencial sobre el tema, pero tiene 1-2 errores en los hechos." wrapText="true" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="4">
+            <RadioButton fx:id="rdBtnCriterio43" layoutX="534.0" layoutY="334.0" mnemonicParsing="false" text="Incluye información esencial sobre el tema, pero tiene 1-2 errores en los hechos." toggleGroup="$tgCriterio4" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="4">
                <padding>
                   <Insets left="10.0" />
                </padding>
@@ -257,7 +273,7 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </RadioButton>
-            <RadioButton fx:id="rdBtnCriterio53" layoutX="534.0" layoutY="429.0" mnemonicParsing="false" text="Algunos errores de gramática, ortografía o puntuación." wrapText="true" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="5">
+            <RadioButton fx:id="rdBtnCriterio53" layoutX="534.0" layoutY="429.0" mnemonicParsing="false" text="Algunos errores de gramática, ortografía o puntuación." toggleGroup="$tgCriterio5" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="5">
                <padding>
                   <Insets left="10.0" />
                </padding>
@@ -265,7 +281,7 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </RadioButton>
-            <RadioButton fx:id="rdBtnCriterio44" layoutX="534.0" layoutY="523.0" mnemonicParsing="false" text="El contenido es mínimo y tiene 3 errores en los hechos." wrapText="true" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="4">
+            <RadioButton fx:id="rdBtnCriterio44" layoutX="534.0" layoutY="523.0" mnemonicParsing="false" text="El contenido es mínimo y tiene 3 errores en los hechos." toggleGroup="$tgCriterio4" wrapText="true" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="4">
                <padding>
                   <Insets left="10.0" />
                </padding>
@@ -273,7 +289,7 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </RadioButton>
-            <RadioButton fx:id="rdBtnCriterio54" layoutX="696.0" layoutY="429.0" mnemonicParsing="false" text="Varios errores de gramática, ortografía o puntuación." wrapText="true" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="5">
+            <RadioButton fx:id="rdBtnCriterio54" layoutX="696.0" layoutY="429.0" mnemonicParsing="false" text="Varios errores de gramática, ortografía o puntuación." toggleGroup="$tgCriterio5" wrapText="true" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="5">
                <padding>
                   <Insets left="10.0" />
                </padding>
@@ -281,7 +297,7 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </RadioButton>
-            <RadioButton fx:id="rdBtnCriterio35" layoutX="696.0" layoutY="523.0" mnemonicParsing="false" text="No existe dominio sobre el tema y la exposición es deficiente." wrapText="true" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+            <RadioButton fx:id="rdBtnCriterio35" layoutX="696.0" layoutY="523.0" mnemonicParsing="false" text="No existe dominio sobre el tema y la exposición es deficiente." toggleGroup="$tgCriterio3" wrapText="true" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="3">
                <padding>
                   <Insets left="10.0" right="5.0" />
                </padding>
@@ -289,7 +305,7 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </RadioButton>
-            <RadioButton fx:id="rdBtnCriterio45" layoutX="858.0" layoutY="334.0" mnemonicParsing="false" text="El contenido es mínimo y tiene varios errores en los hechos." wrapText="true" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="4">
+            <RadioButton fx:id="rdBtnCriterio45" layoutX="858.0" layoutY="334.0" mnemonicParsing="false" text="El contenido es mínimo y tiene varios errores en los hechos." toggleGroup="$tgCriterio4" wrapText="true" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="4">
                <padding>
                   <Insets left="10.0" />
                </padding>
@@ -297,7 +313,7 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </RadioButton>
-            <RadioButton fx:id="rdBtnCriterio55" layoutX="858.0" layoutY="429.0" mnemonicParsing="false" text="Demasiados errores de gramática, ortografía o puntuación." wrapText="true" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="5">
+            <RadioButton fx:id="rdBtnCriterio55" layoutX="858.0" layoutY="429.0" mnemonicParsing="false" text="Demasiados errores de gramática, ortografía o puntuación." toggleGroup="$tgCriterio5" wrapText="true" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="5">
                <padding>
                   <Insets left="10.0" />
                </padding>

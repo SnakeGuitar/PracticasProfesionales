@@ -44,8 +44,19 @@ public class Utilidad {
         return alertaConfirmacion.showAndWait().get() == ButtonType.OK;
     }
 
+    public static boolean confirmarCancelar() {
+        return crearAlertaConfirmacion(
+                "Cancelar operación",
+                "¿Estás seguro de que deseas cancelar?\n" +
+                        "Se perderá el progreso no guardado.");
+    }
+
     public static void crearAlertaError(String titulo, String contenido) {
         crearAlerta(Alert.AlertType.ERROR, titulo, contenido);
+    }
+
+    public static void crearAlertaAdvertencia(String titulo, String contenido) {
+        crearAlerta(Alert.AlertType.WARNING, titulo, contenido);
     }
 
     public static void crearAlertaInformacion(String titulo, String contenido) {
@@ -67,6 +78,10 @@ public class Utilidad {
 
     public static Stage getEscenarioComponente(Control componente) {
         return (Stage) componente.getScene().getWindow();
+    }
+
+    public static void cerrarVentana(Control componente) {
+        getEscenarioComponente(componente).close();
     }
 
     public static void crearEscenario(String URL, String tituloEscenario) {
