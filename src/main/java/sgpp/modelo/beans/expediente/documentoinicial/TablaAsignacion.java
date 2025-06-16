@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 public class TablaAsignacion {
 
-    // ─── Campos existentes ───────────────────────────────────────────────
+  
     private final IntegerProperty idEstudiante;
     private final StringProperty  nombreEstudiante;
     private final StringProperty  matricula;
@@ -17,18 +17,17 @@ public class TablaAsignacion {
     private final IntegerProperty idResponsable;
     private final StringProperty  nombreResponsable;
 
-    // ─── Nuevos campos ───────────────────────────────────────────────────
+
     private final StringProperty  direccionOrganizacion;
     private final ObjectProperty<LocalDate> fechaInicio;
     private final StringProperty  puestoResponsable;
     private final StringProperty  departamentoResponsable;
 
-    // Checkbox de selección
+
     private final BooleanProperty seleccionado = new SimpleBooleanProperty(false);
 
-    /* ────────────────── CONSTRUCTORES ────────────────── */
-
-    /** Constructor antiguo: se mantiene para compatibilidad */
+  
+   
     public TablaAsignacion(int idEstudiante, String nombreEstudiante, String matricula,
                            int idOrganizacion, String nombreOrganizacion,
                            int idProyecto, String nombreProyecto,
@@ -40,7 +39,7 @@ public class TablaAsignacion {
              idResponsable, nombreResponsable, null, null);
     }
 
-    /** Constructor nuevo con todos los campos */
+    
     public TablaAsignacion(int idEstudiante, String nombreEstudiante, String matricula,
                            int idOrganizacion, String nombreOrganizacion, String direccionOrganizacion,
                            int idProyecto, String nombreProyecto, LocalDate fechaInicio,
@@ -73,7 +72,7 @@ public class TablaAsignacion {
         );
     }
 
-    /* ────────────────── GETTERS SIMPLES ────────────────── */
+ 
 
     public int getIdEstudiante()            { return idEstudiante.get(); }
     public String getNombreEstudiante()     { return nombreEstudiante.get(); }
@@ -92,7 +91,7 @@ public class TablaAsignacion {
 
     public void setSeleccionado(boolean v)  { seleccionado.set(v); }
 
-    /* ────────────────── PROPIEDADES PARA JavaFX ────────────────── */
+   
 
     public IntegerProperty idEstudianteProperty()  { return idEstudiante; }
     public StringProperty  nombreEstudianteProperty(){ return nombreEstudiante; }

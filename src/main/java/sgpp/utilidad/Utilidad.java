@@ -65,7 +65,6 @@ public class Utilidad {
         System.err.println(excepcion.getMessage());
         excepcion.printStackTrace();
 
-
         if(mostrarAlerta) {
             crearAlertaError(titulo, contenido + ": " + excepcion.getMessage());
         }
@@ -125,33 +124,33 @@ public class Utilidad {
             content.newLine();
 
             String cuerpo = String.format("""
-                En atención a su solicitud expresada a la Coordinación de Prácticas Profesionales de la Licenciatura en Ingeniería de Software, 
-                hacemos de su conocimiento que el C. %s, estudiante de la Licenciatura con matrícula %s, ha sido asignado al proyecto de 
-                %s, a su digno cargo a partir del %s del presente hasta cubrir 420 HORAS. Cabe mencionar que el estudiante cuenta con la formación 
-                y el perfil para las actividades a desempeñar.
+                En atención a su solicitud expresada a la Coordinación de Prácticas Profesionales de la 
+                Licenciatura en Ingeniería de Software, hacemos de su conocimiento que el C. %s
+                estudiante de la Licenciatura con matrícula %s, ha sido asignado al proyecto de 
+                %s, a su digno cargo a partir del %s del presente 
+                hasta cubrir 420 HORAS. Cabe mencionar que el estudiante cuenta 
+                con la formación y el perfil para las actividades a desempeñar.
 
-                Anexo a este documento usted encontrará una copia del horario de las experiencias educativas que el estudiante asignado se encuentra cursando 
-                para que sea respetado y tomado en cuenta al momento de establecer el horario de realización de sus Prácticas Profesionales.
+                Anexo a este documento usted encontrará una copia del horario de las experiencias educativas 
+                que el estudiante asignado se encuentra cursando para que sea respetado y tomado en cuenta al
+                momento de establecer el horario de realización de sus Prácticas Profesionales.
 
-                Por otra parte, le solicito de la manera más atenta, haga llegar a la brevedad con el estudiante, el oficio de aceptación 
-                así como el plan de trabajo detallado del estudiante, además del horario que cubrirá. Deberá indicar además, la forma en que 
+                Por otra parte, le solicito de la manera más atenta, haga llegar a la brevedad con el 
+                estudiante, el oficio de aceptación así como el plan de trabajo detallado del estudiante
+                además del horario que cubrirá. Deberá indicar además, la forma en que 
                 se registrará la evidencia de asistencia y número de horas cubiertas.
 
-                Es importante mencionar que el estudiante deberá presentar mensualmente un reporte de avances de sus prácticas. 
-                Este reporte de avances puede entregarse hasta con una semana de atraso por lo que le solicito de la manera más atenta 
-                sean elaborados y avalados (incluyendo sello si aplica) de manera oportuna para su entrega al académico responsable de la experiencia 
+                Es importante mencionar que el estudiante deberá presentar mensualmente un reporte de avances
+                de sus prácticas. Este reporte de avances puede entregarse hasta con una semana de atraso por
+                lo que le solicito de la manera más atenta sean elaborados y avalados (incluyendo sello si aplica)
+                de manera oportuna para su entrega al académico responsable de la experiencia 
                 de Prácticas de Ingeniería de Software.
 
-                En relación con lo anterior, es importante que en el oficio de aceptación proporcione el nombre de la persona que supervisará y avalará 
-                en su dependencia la prestación de las prácticas profesionales así como número telefónico, extensión (cuando aplique) y correo electrónico. 
-                Lo anterior con el fin de contar con el canal de comunicación que permita dar seguimiento al desempeño del estudiante.
+                En relación con lo anterior, es importante que en el oficio de aceptación proporcione el nombre
+                de la persona que supervisará y avalará en su dependencia la prestación de las prácticas profesionales
+                así como número telefónico, extensión (cuando aplique) y correo electrónico. 
 
-                Le informo que las Prácticas de Ingeniería de Software forman parte de la currícula de la Licenciatura en Ingeniería de Software, 
-                por lo cual es necesaria su evaluación y de ahí la necesidad de realizar el seguimiento correspondiente. 
-                Es por ello que, durante el semestre, el coordinador de prácticas de Ingeniería de Software realizará al menos un seguimiento 
-                de las actividades del estudiante, por lo que se agradecerá mostrar evidencias de la asistencia del estudiante, 
-                así como de sus actividades. Este seguimiento podrá ser vía correo electrónico, teléfono o incluso mediante una visita a sus oficinas, 
-                por lo que le solicito de la manera más atenta, proporcione las facilidades requeridas en su caso.
+
 
                 Sin más por el momento, agradezco su atención al presente reiterándole a usted mis apreciables órdenes.
                 """,
