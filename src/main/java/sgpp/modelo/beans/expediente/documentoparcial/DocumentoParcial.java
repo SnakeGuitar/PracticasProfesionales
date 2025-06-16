@@ -16,9 +16,11 @@ package sgpp.modelo.beans.expediente.documentoparcial;
 
 import sgpp.modelo.beans.expediente.EstadoDocumento;
 
+import java.util.Date;
+
 public class DocumentoParcial {
     private int idDocumentoParcial;
-    private int fechaEntrega;
+    private Date fechaEntrega;
     private TipoDocumentoParcial tipo;
     private EstadoDocumento estado;
     private byte[] documento;
@@ -27,7 +29,7 @@ public class DocumentoParcial {
     public DocumentoParcial() {
     }
 
-    public DocumentoParcial(int idDocumentoParcial, int fechaEntrega, TipoDocumentoParcial tipo, EstadoDocumento estado, byte[] documento, int idEntregaDocumentoParcial) {
+    public DocumentoParcial(int idDocumentoParcial, Date fechaEntrega, TipoDocumentoParcial tipo, EstadoDocumento estado, byte[] documento, int idEntregaDocumentoParcial) {
         this.idDocumentoParcial = idDocumentoParcial;
         this.fechaEntrega = fechaEntrega;
         this.tipo = tipo;
@@ -44,11 +46,11 @@ public class DocumentoParcial {
         this.idDocumentoParcial = idDocumentoParcial;
     }
 
-    public int getFechaEntrega() {
+    public Date getFechaEntrega() {
         return fechaEntrega;
     }
 
-    public void setFechaEntrega(int fechaEntrega) {
+    public void setFechaEntrega(Date fechaEntrega) {
         this.fechaEntrega = fechaEntrega;
     }
 
@@ -56,9 +58,7 @@ public class DocumentoParcial {
         return tipo;
     }
 
-    public void setTipo(TipoDocumentoParcial tipo) {
-        this.tipo = tipo;
-    }
+    public void setTipo(TipoDocumentoParcial tipo) { this.tipo = tipo; }
 
     public EstadoDocumento getEstado() {
         return estado;
