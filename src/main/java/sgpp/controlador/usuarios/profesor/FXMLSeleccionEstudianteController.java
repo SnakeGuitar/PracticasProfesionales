@@ -69,7 +69,11 @@ public class FXMLSeleccionEstudianteController implements Initializable {
         }
     }
 
-    private void irExpedienteEstudiante(Estudiante estudiante) {
+    private void obtenerExpediente() {
+
+    }
+
+    private void irExpedienteEstudiante(int idEstudiante) {
         try {
             Stage escenarioBase = Utilidad.getEscenarioComponente(btnConsultar);
             FXMLLoader cargador = new FXMLLoader(
@@ -112,7 +116,7 @@ public class FXMLSeleccionEstudianteController implements Initializable {
         Estudiante estudiante = tblEstudiantes.getSelectionModel().getSelectedItem();
 
         if(estudiante != null) {
-            irExpedienteEstudiante(estudiante);
+            irExpedienteEstudiante(estudiante.getIdEstudiante());
         } else {
             mostrarAlertaSeleccionEstudiante();
         }

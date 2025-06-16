@@ -9,135 +9,161 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class EstudianteDAO {
 
     public static boolean insertar(Estudiante estudiante) throws SQLException {
+        boolean exitoso = false;
+        Connection conexion = null;
+        PreparedStatement sentencia = null;
+
         String consulta = "INSERT INTO estudiante (matricula, nombre, genero, correo, telefono, semestre, promedio, habla_idioma_indigena, ID_Proyecto, ID_Usuario) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection conexion = ConexionBD.abrirConexion();
-             PreparedStatement statement = conexion.prepareStatement(consulta)) {
+        try {
+            conexion = ConexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(consulta);
 
-            statement.setString(1, estudiante.getMatricula());
-            statement.setString(2, estudiante.getNombre());
-            statement.setString(3, estudiante.getGenero());
-            statement.setString(4, estudiante.getCorreo());
-            statement.setString(5, estudiante.getTelefono());
-            statement.setInt(6, Integer.parseInt(estudiante.getSemestre()));
-            statement.setFloat(7, estudiante.getPromedio());
-            statement.setBoolean(8, estudiante.isHablaIdiomaIndigena());
-            statement.setInt(9, estudiante.getIdProyecto());
-            statement.setInt(10, estudiante.getIdUsuario());
+            sentencia.setString(1, estudiante.getMatricula());
+            sentencia.setString(2, estudiante.getNombre());
+            sentencia.setString(3, estudiante.getGenero());
+            sentencia.setString(4, estudiante.getCorreo());
+            sentencia.setString(5, estudiante.getTelefono());
+            sentencia.setInt(6, Integer.parseInt(estudiante.getSemestre()));
+            sentencia.setFloat(7, estudiante.getPromedio());
+            sentencia.setBoolean(8, estudiante.isHablaIdiomaIndigena());
+            sentencia.setInt(9, estudiante.getIdProyecto());
+            sentencia.setInt(10, estudiante.getIdUsuario());
 
-            int filas = statement.executeUpdate();
+            int filas = sentencia.executeUpdate();
 
             if (filas > 0) {
                 Utilidad.crearAlertaInformacion("Registro exitoso",
                         "Estudiante registrado exitosamente.");
                 return true;
             } else {
-                Utilidad.crearAlertaError("Registro fallido",
-                        "No se pudo registrar al estudiante.");
-                return false;
+                throw new SQLException();
             }
-
         } catch (SQLException e) {
             Utilidad.mostrarErrorBD(true, e);
-            throw e;
+        } finally {
+            ConexionBD.cerrarConexion(conexion, sentencia, null);
         }
+
+        return exitoso;
     }
 
     public static Estudiante obtenerPorId(int id) throws SQLException {
+        Connection conexion = null;
+        PreparedStatement sentencia = null;
+        ResultSet resultado = null;
         Estudiante estudiante = null;
         String consulta = "SELECT * FROM estudiante WHERE ID_Estudiante = ?";
 
-        try (Connection conexion = ConexionBD.abrirConexion();
-             PreparedStatement statement = conexion.prepareStatement(consulta)) {
+        try  {
+            conexion = ConexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(consulta);
 
-            statement.setInt(1, id);
+            sentencia.setInt(1, id);
 
-            try (ResultSet resultado = statement.executeQuery()) {
-                if (resultado.next()) {
-                    estudiante = convertirResultSetEstudiante(resultado);
-                }
+            resultado = sentencia.executeQuery();
+
+            if (resultado.next()) {
+                estudiante = convertirResultSetEstudiante(resultado);
+            } else {
+                throw new SQLException();
             }
 
         } catch (SQLException e) {
             Utilidad.mostrarErrorBD(true, e);
-            throw e;
+        } finally {
+            ConexionBD.cerrarConexion(conexion, sentencia, resultado);
         }
 
         return estudiante;
     }
 
     public static boolean actualizar(Estudiante estudiante) throws SQLException {
+        boolean exitoso = false;
+        Connection conexion = null;
+        PreparedStatement sentencia = null;
+
         String consulta = "UPDATE estudiante SET nombre = ?, correo = ?, telefono = ?, semestre = ?, promedio = ?, habla_idioma_indigena = ? " +
                 "WHERE ID_Responsable = ?";
 
-        try (Connection conexion = ConexionBD.abrirConexion();
-             PreparedStatement statement = conexion.prepareStatement(consulta)) {
+        try {
+            conexion = ConexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(consulta);
 
-            statement.setString(1, estudiante.getNombre());
-            statement.setString(2, estudiante.getCorreo());
-            statement.setString(3, estudiante.getTelefono());
-            statement.setInt(4, Integer.parseInt(estudiante.getSemestre()));
-            statement.setFloat(5, estudiante.getPromedio());
-            statement.setBoolean(6, estudiante.isHablaIdiomaIndigena());
-            statement.setInt(7, estudiante.getIdEstudiante());
+            sentencia.setString(1, estudiante.getNombre());
+            sentencia.setString(2, estudiante.getCorreo());
+            sentencia.setString(3, estudiante.getTelefono());
+            sentencia.setInt(4, Integer.parseInt(estudiante.getSemestre()));
+            sentencia.setFloat(5, estudiante.getPromedio());
+            sentencia.setBoolean(6, estudiante.isHablaIdiomaIndigena());
+            sentencia.setInt(7, estudiante.getIdEstudiante());
 
-            int filas = statement.executeUpdate();
+            int filas = sentencia.executeUpdate();
 
             if (filas > 0) {
                 Utilidad.crearAlertaInformacion("Modificación exitosa",
                         "Estudiante modificado exitosamente.");
                 return true;
             } else {
-                Utilidad.crearAlertaError("Modificación fallida",
-                        "No se pudo modificar al estudiante.");
-                return false;
+                throw new SQLException();
             }
-
         } catch (SQLException e) {
             Utilidad.mostrarErrorBD(true, e);
-            throw e;
+        } finally {
+            ConexionBD.cerrarConexion(conexion, sentencia, null);
         }
+
+        return exitoso;
     }
 
     public static boolean eliminar(int id) throws SQLException {
+        boolean exitoso = false;
+        Connection conexion = null;
+        PreparedStatement sentencia = null;
+
         String consulta = "DELETE FROM estudiante WHERE ID_Estudiante = ?";
 
-        try (Connection conexion = ConexionBD.abrirConexion();
-             PreparedStatement statement = conexion.prepareStatement(consulta)) {
+        try {
+            conexion = ConexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(consulta);
 
-            statement.setInt(1, id);
+            sentencia.setInt(1, id);
 
-            int filas = statement.executeUpdate();
+            int filas = sentencia.executeUpdate();
 
             if (filas > 0) {
                 Utilidad.crearAlertaInformacion("Eliminación exitosa",
                         "Estudiante eliminado exitosamente.");
                 return true;
             } else {
-                Utilidad.crearAlertaError("Eliminación fallida",
-                        "No se pudo eliminar al estudiante.");
-                return false;
+                throw new SQLException();
             }
-
         } catch (SQLException e) {
             Utilidad.mostrarErrorBD(true, e);
-            throw e;
+        } finally {
+            ConexionBD.cerrarConexion(conexion, sentencia, null);
         }
+
+        return exitoso;
     }
 
     public static ArrayList<Estudiante> obtenerEstudiantes() throws SQLException {
+        Connection conexion = null;
+        PreparedStatement sentencia = null;
+        ResultSet resultado = null;
         ArrayList<Estudiante> estudiantes = new ArrayList<>();
         String consulta = "SELECT * FROM estudiante";
 
-        try (Connection conexion = ConexionBD.abrirConexion();
-             PreparedStatement statement = conexion.prepareStatement(consulta);
-             ResultSet resultado = statement.executeQuery()) {
+        try {
+
+            conexion = ConexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(consulta);
+            resultado = sentencia.executeQuery();
 
             while (resultado.next()) {
                 estudiantes.add(convertirResultSetEstudiante(resultado));
@@ -145,7 +171,8 @@ public class EstudianteDAO {
 
         } catch (SQLException e) {
             Utilidad.mostrarErrorBD(true, e);
-            throw e;
+        } finally {
+            ConexionBD.cerrarConexion(conexion, sentencia, resultado);
         }
 
         return estudiantes;
@@ -168,6 +195,5 @@ public class EstudianteDAO {
 
         return estudiante;
     }
-
 
 }

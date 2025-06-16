@@ -6,7 +6,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import sgpp.modelo.beans.expediente.presentacion.RubricaPresentacion;
+import sgpp.modelo.dao.expediente.presentacion.RubricaPresentacionDAO;
 import sgpp.utilidad.Utilidad;
+
+import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 public class FXMLCalificacionObservacionesController {
 
@@ -66,11 +71,27 @@ public class FXMLCalificacionObservacionesController {
         lbPromedio.setText(String.valueOf(promedio));
     }
 
-    private void guardarRubricaPresentacion() {
-        // TODO
+    private void guardarRubricaPresentacion() throws SQLException {
+        RubricaPresentacion rubrica = new RubricaPresentacion();
+
+        rubrica.setFechaHora(LocalDateTime.now());
+        rubrica.setCalificacion(Float.parseFloat(lbPromedio.getText()));
+        rubrica.setObservaciones(txArObservaciones.getText());
+
+        // TODO: Obtener y asignar ID de Estudiante, Profesor y Periodo.
+
+        boolean exitoso = RubricaPresentacionDAO.insertar(rubrica);
+
+        if(exitoso) {
+            Utilidad.crearAlertaInformacion("Registro exitoso",
+                    "Registro de rúbrica exitosa.");
+        } else {
+            Utilidad.crearAlertaError("Error",
+                    "No se pudo registrar la rúbrica.");
+        }
     }
 
-    public void btnClicSubir(ActionEvent actionEvent) {
+    public void btnClicSubir(ActionEvent actionEvent) throws SQLException {
         boolean confirmado = Utilidad.crearAlertaConfirmacion(
                 "Subir rúbrica",
                 "¿Estás seguro de que deseas subir la rúbrica?\n" +

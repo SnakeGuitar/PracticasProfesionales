@@ -14,11 +14,12 @@
 
 package sgpp.modelo.beans.expediente.presentacion;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class RubricaPresentacion {
     private int idPresentacion;
-    private Date fechaHora;
+    private LocalDateTime fechaHora;
     private float calificacion;
     private String observaciones;
     private int idEstudiante;
@@ -29,7 +30,7 @@ public class RubricaPresentacion {
     public RubricaPresentacion() {
     }
 
-    public RubricaPresentacion(int idPresentacion, Date fechaHora, float calificacion, String observaciones,
+    public RubricaPresentacion(int idPresentacion, LocalDateTime fechaHora, float calificacion, String observaciones,
                                int idEstudiante, int idPeriodo, int idProfesor, Evaluador evaluador) {
         this.idPresentacion = idPresentacion;
         this.fechaHora = fechaHora;
@@ -49,11 +50,11 @@ public class RubricaPresentacion {
         this.idPresentacion = idPresentacion;
     }
 
-    public Date getFechaHora() {
+    public LocalDateTime getFechaHora() {
         return fechaHora;
     }
 
-    public void setFechaHora(Date fechaHora) {
+    public void setFechaHora(LocalDateTime fechaHora) {
         this.fechaHora = fechaHora;
     }
 

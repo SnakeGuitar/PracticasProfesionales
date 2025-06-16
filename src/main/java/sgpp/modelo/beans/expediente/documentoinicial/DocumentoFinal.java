@@ -19,7 +19,7 @@ import sgpp.modelo.beans.expediente.EstadoDocumento;
 
 import java.util.Date;
 
-public class DocumentoInicial extends Documento {
+public class DocumentoFinal extends Documento {
     private int idDocumentoInicial;
     private Date fechaEntrega;
     private TipoDocumentoInicial tipo;
@@ -27,9 +27,9 @@ public class DocumentoInicial extends Documento {
     private byte[] documento;
     private int idEntregaDocumentoInicial;
 
-    public DocumentoInicial() {}
+    public DocumentoFinal() {}
 
-    public DocumentoInicial(int idDocumentoInicial, Date fechaEntrega, TipoDocumentoInicial tipo, EstadoDocumento estado, byte[] documento, int idEntregaDocumentoInicial) {
+    public DocumentoFinal(int idDocumentoInicial, Date fechaEntrega, TipoDocumentoInicial tipo, EstadoDocumento estado, byte[] documento, int idEntregaDocumentoInicial) {
         super(idDocumentoInicial, fechaEntrega, estado, documento, idEntregaDocumentoInicial);
         this.tipo = tipo;
     }

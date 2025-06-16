@@ -11,6 +11,7 @@ import sgpp.modelo.ConexionBD;
 import sgpp.modelo.beans.expediente.EstadoDocumento;
 import sgpp.modelo.beans.expediente.documentoparcial.DocumentoParcial;
 import sgpp.modelo.beans.expediente.documentoparcial.TipoDocumentoParcial;
+import sgpp.utilidad.Utilidad;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,16 +32,16 @@ public class DocumentoParcialDAO {
      * @return true si la inserción fue exitosa, false en caso contrario
      * @throws SQLException Si ocurre un error en la inserción
      */
-    public static boolean subirDocumentoParcial(DocumentoParcial documentoParcial, int idEntregaDocumentoParcial, int idEstudiante, int idPeriodo) throws SQLException {
-        Connection conexionBD = null;
+    public static boolean subirDocumentoParcial(sgpp.modelo.beans.expediente.documentoparcial.DocumentoParcial documentoParcial, int idEntregaDocumentoParcial, int idEstudiante, int idPeriodo) throws SQLException {
+        Connection conexion = null;
         PreparedStatement sentencia = null;
         boolean exito = false;
 
         try {
-            conexionBD = ConexionBD.abrirConexion();
-            if (conexionBD != null) {
+            conexion = ConexionBD.abrirConexion();
+            if (conexion != null) {
                 String consulta = "INSERT INTO documento_parcial (fecha_entrega, tipo, estado, documento, ID_Entrega_Doc_Parcial) VALUES (?, ?, ?, ?, ?)";
-                sentencia = conexionBD.prepareStatement(consulta);
+                sentencia = conexion.prepareStatement(consulta);
                 sentencia.setDate(1, new java.sql.Date(documentoParcial.getFechaEntrega().getTime()));
                 sentencia.setString(2, documentoParcial.getTipo().name());
                 sentencia.setString(3, documentoParcial.getEstado().name());
@@ -50,16 +51,14 @@ public class DocumentoParcialDAO {
                 int filasAfectadas = sentencia.executeUpdate();
                 exito = filasAfectadas > 0;
             } else {
-                throw new SQLException("No se pudo establecer la conexión a la base de datos.");
+                throw new SQLException();
             }
+        } catch (SQLException e) {
+            Utilidad.mostrarErrorBD(true, e);
         } finally {
-            if (sentencia != null) {
-                sentencia.close();
-            }
-            if (conexionBD != null) {
-                conexionBD.close();
-            }
+            ConexionBD.cerrarConexion(conexion, sentencia, null);
         }
+
         return exito;
     }
 
@@ -71,16 +70,17 @@ public class DocumentoParcialDAO {
      * @throws SQLException Si ocurre un error en la consulta
      */
     public static List<DocumentoParcial> obtenerDocumentosParciales(int idEntregaDocumentoParcial) throws SQLException {
-        Connection conexionBD = null;
+        Connection conexion = null;
         PreparedStatement sentencia = null;
         ResultSet resultado = null;
+
         List<DocumentoParcial> documentosParciales = new ArrayList<>();
 
         try {
-            conexionBD = ConexionBD.abrirConexion();
-            if (conexionBD != null) {
+            conexion = ConexionBD.abrirConexion();
+            if (conexion != null) {
                 String consulta = "SELECT * FROM documento_parcial WHERE ID_Entrega_Doc_Parcial = ?";
-                sentencia = conexionBD.prepareStatement(consulta);
+                sentencia = conexion.prepareStatement(consulta);
                 sentencia.setInt(1, idEntregaDocumentoParcial);
 
                 resultado = sentencia.executeQuery();
@@ -92,22 +92,18 @@ public class DocumentoParcialDAO {
                     documentoParcial.setEstado(EstadoDocumento.valueOf(resultado.getString("estado")));
                     documentoParcial.setDocumento(resultado.getBytes("documento"));
                     documentoParcial.setIdEntregaDocumento(resultado.getInt("ID_Entrega_Doc_Parcial"));
+
                     documentosParciales.add(documentoParcial);
                 }
             } else {
-                throw new SQLException("No se pudo establecer la conexión a la base de datos.");
+                throw new SQLException();
             }
+        } catch (SQLException e) {
+            Utilidad.mostrarErrorBD(true, e);
         } finally {
-            if (resultado != null) {
-                resultado.close();
-            }
-            if (sentencia != null) {
-                sentencia.close();
-            }
-            if (conexionBD != null) {
-                conexionBD.close();
-            }
+            ConexionBD.cerrarConexion(conexion, sentencia, resultado);
         }
+
         return documentosParciales;
     }
 
@@ -119,16 +115,16 @@ public class DocumentoParcialDAO {
      * @throws SQLException Si ocurre un error en la consulta
      */
     public static boolean existeDocumentoParcial(int idEntregaDocumentoParcial) throws SQLException {
-        Connection conexionBD = null;
+        Connection conexion = null;
         PreparedStatement sentencia = null;
         ResultSet resultado = null;
         boolean existe = false;
 
         try {
-            conexionBD = ConexionBD.abrirConexion();
-            if (conexionBD != null) {
+            conexion = ConexionBD.abrirConexion();
+            if (conexion != null) {
                 String consulta = "SELECT COUNT(*) FROM documento_parcial WHERE ID_Entrega_Doc_Parcial = ?";
-                sentencia = conexionBD.prepareStatement(consulta);
+                sentencia = conexion.prepareStatement(consulta);
                 sentencia.setInt(1, idEntregaDocumentoParcial);
 
                 resultado = sentencia.executeQuery();
@@ -136,18 +132,12 @@ public class DocumentoParcialDAO {
                     existe = resultado.getInt(1) > 0;
                 }
             } else {
-                throw new SQLException("No se pudo establecer la conexión a la base de datos.");
+                throw new SQLException();
             }
+        } catch (SQLException e) {
+            Utilidad.mostrarErrorBD(true, e);
         } finally {
-            if (resultado != null) {
-                resultado.close();
-            }
-            if (sentencia != null) {
-                sentencia.close();
-            }
-            if (conexionBD != null) {
-                conexionBD.close();
-            }
+            ConexionBD.cerrarConexion(conexion, sentencia, resultado);
         }
         return existe;
     }
@@ -161,31 +151,29 @@ public class DocumentoParcialDAO {
      * @throws SQLException Si ocurre un error en la actualización
      */
     public static boolean actualizarEstadoDocumentoParcial(int idDocumentoParcial, EstadoDocumento nuevoEstado) throws SQLException {
-        Connection conexionBD = null;
+        Connection conexion = null;
         PreparedStatement sentencia = null;
         boolean exito = false;
 
         try {
-            conexionBD = ConexionBD.abrirConexion();
-            if (conexionBD != null) {
+            conexion = ConexionBD.abrirConexion();
+            if (conexion != null) {
                 String consulta = "UPDATE documento_parcial SET estado = ? WHERE ID_Doc_Parcial = ?";
-                sentencia = conexionBD.prepareStatement(consulta);
+                sentencia = conexion.prepareStatement(consulta);
                 sentencia.setString(1, nuevoEstado.name());
                 sentencia.setInt(2, idDocumentoParcial);
 
                 int filasAfectadas = sentencia.executeUpdate();
                 exito = filasAfectadas > 0;
             } else {
-                throw new SQLException("No se pudo establecer la conexión a la base de datos.");
+                throw new SQLException();
             }
+        } catch (SQLException e) {
+            Utilidad.mostrarErrorBD(true, e);
         } finally {
-            if (sentencia != null) {
-                sentencia.close();
-            }
-            if (conexionBD != null) {
-                conexionBD.close();
-            }
+            ConexionBD.cerrarConexion(conexion, sentencia, null);
         }
+
         return exito;
     }
 
@@ -198,30 +186,39 @@ public class DocumentoParcialDAO {
      * @throws SQLException Si ocurre un error al actualizar el registro
      */
     public static void guardarDocumentoParcial(byte[] pdfDocumento, int idEntregaDocumentoParcial, TipoDocumentoParcial tipoDocumento) throws SQLException {
-        Connection conexion = ConexionBD.abrirConexion();
-        if (conexion != null) {
-            String consulta = "UPDATE documento_parcial " +
-                    "SET documento = ?, estado = 'Entregado', fecha_entrega = NOW() " +
-                    "WHERE tipo = ? AND ID_Entrega_Doc_Parcial = ?";
+        Connection conexion = null;
+        PreparedStatement sentencia = null;
 
-            PreparedStatement sentencia = conexion.prepareStatement(consulta);
-            sentencia.setBytes(1, pdfDocumento);
-            sentencia.setString(2, tipoDocumento.name());
-            sentencia.setInt(3, idEntregaDocumentoParcial);
+        try {
+            conexion = ConexionBD.abrirConexion();
 
-            int filasAfectadas = sentencia.executeUpdate();
+            if (conexion != null) {
+                String consulta = "UPDATE documento_parcial " +
+                        "SET documento = ?, estado = 'Entregado', fecha_entrega = NOW() " +
+                        "WHERE tipo = ? AND ID_Entrega_Doc_Parcial = ?";
 
-            sentencia.close();
-            conexion.close();
+                sentencia = conexion.prepareStatement(consulta);
+                sentencia.setBytes(1, pdfDocumento);
+                sentencia.setString(2, tipoDocumento.name());
+                sentencia.setInt(3, idEntregaDocumentoParcial);
 
-            if (filasAfectadas > 0) {
-                System.out.println("Documento parcial de tipo " + tipoDocumento.name() + " guardado correctamente en la base de datos.");
+                int filasAfectadas = sentencia.executeUpdate();
+
+                ConexionBD.cerrarConexion(conexion, sentencia, null);
+
+                if (filasAfectadas > 0) {
+                    System.out.println("Documento parcial de tipo " + tipoDocumento.name() + " guardado correctamente en la base de datos.");
+                } else {
+                    throw new SQLException("No se encontró un documento tipo '" + tipoDocumento.name() + "' con ID_Entrega_Doc_Parcial = " + idEntregaDocumentoParcial);
+                }
+
             } else {
-                throw new SQLException("No se encontró un documento tipo '" + tipoDocumento.name() + "' con ID_Entrega_Doc_Parcial = " + idEntregaDocumentoParcial);
+                throw new SQLException();
             }
-
-        } else {
-            throw new SQLException("No se pudo establecer la conexión a la base de datos.");
+        } catch (SQLException e) {
+            Utilidad.mostrarErrorBD(true, e);
+        } finally {
+            ConexionBD.cerrarConexion(conexion, sentencia, null);
         }
     }
 
@@ -233,16 +230,16 @@ public class DocumentoParcialDAO {
      * @throws SQLException Si ocurre un error en la consulta
      */
     public static DocumentoParcial obtenerDocumentoParcialPorId(int idDocumentoParcial) throws SQLException {
-        Connection conexionBD = null;
+        Connection conexion = null;
         PreparedStatement sentencia = null;
         ResultSet resultado = null;
         DocumentoParcial documentoParcial = null;
 
         try {
-            conexionBD = ConexionBD.abrirConexion();
-            if (conexionBD != null) {
+            conexion = ConexionBD.abrirConexion();
+            if (conexion != null) {
                 String consulta = "SELECT * FROM documento_parcial WHERE ID_Doc_Parcial = ?";
-                sentencia = conexionBD.prepareStatement(consulta);
+                sentencia = conexion.prepareStatement(consulta);
                 sentencia.setInt(1, idDocumentoParcial);
 
                 resultado = sentencia.executeQuery();
@@ -256,19 +253,53 @@ public class DocumentoParcialDAO {
                     documentoParcial.setIdEntregaDocumento(resultado.getInt("ID_Entrega_Doc_Parcial"));
                 }
             } else {
-                throw new SQLException("No se pudo establecer la conexión a la base de datos.");
+                throw new SQLException();
             }
+        } catch (SQLException e) {
+            Utilidad.mostrarErrorBD(true, e);
         } finally {
-            if (resultado != null) {
-                resultado.close();
-            }
-            if (sentencia != null) {
-                sentencia.close();
-            }
-            if (conexionBD != null) {
-                conexionBD.close();
-            }
+            ConexionBD.cerrarConexion(conexion, sentencia, resultado);
         }
+
         return documentoParcial;
     }
+
+    public static List<DocumentoParcial> obtenerDocumentosParcialesPorExpediente(int idEstudiante, int idPeriodo) throws SQLException {
+        Connection conexion = null;
+        PreparedStatement sentencia = null;
+        ResultSet resultado = null;
+
+        List<DocumentoParcial> documentosParciales = new ArrayList<>();
+
+        try {
+            conexion = ConexionBD.abrirConexion();
+            if (conexion != null) {
+                String consulta = "SELECT * FROM documento_parcial WHERE id_estudiante = ? AND id_periodo = ?";
+                sentencia = conexion.prepareStatement(consulta);
+                sentencia.setInt(1, idEstudiante);
+                sentencia.setInt(2, idPeriodo);
+
+                resultado = sentencia.executeQuery();
+                while (resultado.next()) {
+                    DocumentoParcial documentoParcial = new DocumentoParcial();
+                    documentoParcial.setIdDocumento(resultado.getInt("id_documento_parcial"));
+                    documentoParcial.setFechaEntrega(resultado.getDate("fecha_entrega"));
+                    documentoParcial.setTipo(TipoDocumentoParcial.valueOf(resultado.getString("tipo")));
+                    documentoParcial.setEstado(EstadoDocumento.valueOf(resultado.getString("estado")));
+                    documentoParcial.setDocumento(resultado.getBytes("documento"));
+                    documentoParcial.setIdEntregaDocumento(resultado.getInt("id_entrega_documento_parcial"));
+                    documentosParciales.add(documentoParcial);
+                }
+            } else {
+                throw new SQLException();
+            }
+        } catch (SQLException e) {
+            Utilidad.mostrarErrorBD(true, e);
+        } finally {
+            ConexionBD.cerrarConexion(conexion, sentencia, resultado);
+        }
+
+        return documentosParciales;
+    }
+
 }

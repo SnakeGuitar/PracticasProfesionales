@@ -20,8 +20,9 @@ package sgpp.modelo.dao.expediente.documentoinicial;
 
 import sgpp.modelo.ConexionBD;
 import sgpp.modelo.beans.expediente.EstadoDocumento;
-import sgpp.modelo.beans.expediente.documentoinicial.DocumentoInicial;
+import sgpp.modelo.beans.expediente.documentoinicial.DocumentoFinal;
 import sgpp.modelo.beans.expediente.documentoinicial.TipoDocumentoInicial;
+import sgpp.utilidad.Utilidad;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,29 +41,38 @@ public class DocumentoInicialDAO {
      * @throws SQLException Si ocurre un error al actualizar el registro.
      */
     public static void guardarOficioAsignacion(byte[] pdfDocumento, int idEntrega) throws SQLException {
-        Connection conexion = ConexionBD.abrirConexion();
-        if (conexion != null) {
-            String consulta = "UPDATE documento_inicial " +
-                    "SET documento = ?, estado = 'Entregado', fecha_entrega = NOW() " +
-                    "WHERE tipo = 'OficioAsignacion' AND ID_Entrega_Doc_Inicial = ?";
+        Connection conexion = null;
+        PreparedStatement sentencia = null;
 
-            PreparedStatement sentencia = conexion.prepareStatement(consulta);
-            sentencia.setBytes(1, pdfDocumento);
-            sentencia.setInt(2, idEntrega);
+        try {
+            conexion = ConexionBD.abrirConexion();
+            if (conexion != null) {
+                String consulta = "UPDATE documento_inicial " +
+                        "SET documento = ?, estado = 'Entregado', fecha_entrega = NOW() " +
+                        "WHERE tipo = 'OficioAsignacion' AND ID_Entrega_Doc_Inicial = ?";
 
-            int filasAfectadas = sentencia.executeUpdate();
+                sentencia = conexion.prepareStatement(consulta);
+                sentencia.setBytes(1, pdfDocumento);
+                sentencia.setInt(2, idEntrega);
 
-            sentencia.close();
-            conexion.close();
+                int filasAfectadas = sentencia.executeUpdate();
 
-            if (filasAfectadas > 0) {
-                System.out.println("Documento de OficioAsignacion guardado correctamente en la base de datos.");
+                sentencia.close();
+                conexion.close();
+
+                if (filasAfectadas > 0) {
+                    System.out.println("Documento de OficioAsignacion guardado correctamente en la base de datos.");
+                } else {
+                    throw new SQLException("No se encontró un documento tipo 'OficioAsignacion' con ID_Entrega_Doc_Inicial = " + idEntrega);
+                }
+
             } else {
-                throw new SQLException("No se encontró un documento tipo 'OficioAsignacion' con ID_Entrega_Doc_Inicial = " + idEntrega);
+                throw new SQLException();
             }
-
-        } else {
-            throw new SQLException("No se pudo establecer la conexión a la base de datos.");
+        } catch (SQLException e) {
+            Utilidad.mostrarErrorBD(true, e);
+        } finally {
+            ConexionBD.cerrarConexion(conexion, sentencia, null);
         }
     }
 
@@ -75,23 +85,24 @@ public class DocumentoInicialDAO {
      * @throws SQLException Si ocurre un error en la consulta
      */
 
-    public static List<DocumentoInicial> obtenerDocumentosInicialesPorExpediente(int idEstudiante, int idPeriodo) throws SQLException {
-        Connection conexionBD = null;
+    public static List<DocumentoFinal> obtenerDocumentosInicialesPorExpediente(int idEstudiante, int idPeriodo) throws SQLException {
+        Connection conexion = null;
         PreparedStatement sentencia = null;
         ResultSet resultado = null;
-        List<DocumentoInicial> documentosIniciales = new ArrayList<>();
+
+        List<DocumentoFinal> documentosIniciales = new ArrayList<>();
 
         try {
-            conexionBD = ConexionBD.abrirConexion();
-            if (conexionBD != null) {
+            conexion = ConexionBD.abrirConexion();
+            if (conexion != null) {
                 String consulta = "SELECT * FROM documento_inicial WHERE id_estudiante = ? AND id_periodo = ?";
-                sentencia = conexionBD.prepareStatement(consulta);
+                sentencia = conexion.prepareStatement(consulta);
                 sentencia.setInt(1, idEstudiante);
                 sentencia.setInt(2, idPeriodo);
 
                 resultado = sentencia.executeQuery();
                 while (resultado.next()) {
-                    DocumentoInicial documentoInicial = new DocumentoInicial();
+                    DocumentoFinal documentoInicial = new DocumentoFinal();
                     documentoInicial.setIdDocumento(resultado.getInt("id_documento_inicial"));
                     documentoInicial.setFechaEntrega(resultado.getDate("fecha_entrega"));
                     documentoInicial.setTipo(TipoDocumentoInicial.valueOf(resultado.getString("tipo")));
@@ -101,19 +112,14 @@ public class DocumentoInicialDAO {
                     documentosIniciales.add(documentoInicial);
                 }
             } else {
-                throw new SQLException("No se pudo establecer la conexión a la base de datos.");
+                throw new SQLException();
             }
+        } catch (SQLException e) {
+            Utilidad.mostrarErrorBD(true, e);
         } finally {
-            if (resultado != null) {
-                resultado.close();
-            }
-            if (sentencia != null) {
-                sentencia.close();
-            }
-            if (conexionBD != null) {
-                conexionBD.close();
-            }
+            ConexionBD.cerrarConexion(conexion, sentencia, resultado);
         }
+
         return documentosIniciales;
     }
 
@@ -127,7 +133,7 @@ public class DocumentoInicialDAO {
      * @return true si la inserción fue exitosa, false en caso contrario
      * @throws SQLException Si ocurre un error en la inserción
      */
-    public static boolean subirDocumentoInicial(DocumentoInicial documentoInicial, int idEntregaDocumentoInicial, int idEstudiante, int idPeriodo) throws SQLException {
+    public static boolean subirDocumentoInicial(DocumentoFinal documentoInicial, int idEntregaDocumentoInicial, int idEstudiante, int idPeriodo) throws SQLException {
         Connection conexionBD = null;
         PreparedStatement sentencia = null;
         boolean exito = false;
