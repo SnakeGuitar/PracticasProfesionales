@@ -13,8 +13,8 @@
       <Pane prefHeight="455.0" prefWidth="400.0">
          <children>
             <Label layoutX="12.0" layoutY="73.0" text="Selecciona un estudiante." />
-            <Button fx:id="btnRefrescar" layoutX="325.0" layoutY="62.0" mnemonicParsing="false" text="Refrescar" />
-             <Button fx:id="btnRegresar" layoutX="12.0" layoutY="12.0" mnemonicParsing="false" text="Regresar" />
+            <Button fx:id="btnRefrescar" layoutX="325.0" layoutY="62.0" mnemonicParsing="false" onAction="#btnClicRefrescar" text="Refrescar" />
+             <Button fx:id="btnRegresar" layoutX="12.0" layoutY="12.0" mnemonicParsing="false" onAction="#btnClicRegresar" text="Regresar" />
             <Label layoutX="12.0" layoutY="46.0" text="Estudiantes">
                <font>
                   <Font name="System Bold" size="18.0" />
@@ -28,6 +28,6 @@
             </TableView>
          </children>
       </Pane>
-      <Button fx:id="btnConsultar" layoutX="321.0" layoutY="455.0" mnemonicParsing="false" text="Consultar" />
+      <Button fx:id="btnConsultar" layoutX="321.0" layoutY="455.0" mnemonicParsing="false" onAction="#btnClicConsultar" text="Consultar" />
    </children>
 </AnchorPane>

@@ -164,10 +164,8 @@ public class FXMLFormularioProyectoController implements Initializable {
     }
 
     public void clicBtnCancelar(ActionEvent actionEvent) {
-        boolean cancelar = Utilidad.crearAlertaConfirmacion(
-                "¿Cancelar?",
-                "Se perderá el progreso no guardado"
-        );
+        boolean cancelar = Utilidad.confirmarCancelar();
+
         if (cancelar) {
             cerrarVentana();
         }

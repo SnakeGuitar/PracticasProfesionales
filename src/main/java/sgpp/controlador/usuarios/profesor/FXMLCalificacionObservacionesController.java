@@ -1,11 +1,18 @@
 package sgpp.controlador.usuarios.profesor;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import sgpp.utilidad.Utilidad;
 
-public class FXMLCalificacionObservacionesController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class FXMLCalificacionObservacionesController implements Initializable {
 
     @FXML
     public Button btnSubir;
@@ -33,4 +40,66 @@ public class FXMLCalificacionObservacionesController {
 
     @FXML
     public TextArea txArObservaciones;
+
+    @FXML
+    public Label lbPromedio;
+
+    private int[] calificaciones;
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+    }
+
+    public void inicializarInformacion(int[] valorCriterio) {
+        calificaciones = valorCriterio;
+
+        txFiCalificacion1.setText(String.valueOf(calificaciones[0]));
+        txFiCalificacion2.setText(String.valueOf(calificaciones[1]));
+        txFiCalificacion3.setText(String.valueOf(calificaciones[2]));
+        txFiCalificacion4.setText(String.valueOf(calificaciones[3]));
+        txFiCalificacion5.setText(String.valueOf(calificaciones[4]));
+
+        obtenerPromedio();
+    }
+
+    private void obtenerPromedio() {
+        int promedio = 0;
+
+        for (int calificacion : calificaciones) {
+            promedio += calificacion;
+        }
+
+        promedio /= 5;
+
+        lbPromedio.setText(String.valueOf(promedio));
+    }
+
+    private void guardarDatos() {
+        // TODO
+    }
+
+    public void btnClicSubir(ActionEvent actionEvent) {
+        boolean confirmado = Utilidad.crearAlertaConfirmacion(
+                "Subir rúbrica",
+                "¿Estás seguro de que deseas subir la rúbrica?\n" +
+                        "Verifica que los datos sean correctos."
+        );
+
+        if(confirmado) {
+            guardarDatos();
+        }
+    }
+
+    public void btnClicCancelar(ActionEvent actionEvent) {
+        boolean confirmado = Utilidad.confirmarCancelar();
+
+        if(confirmado) {
+            Utilidad.cerrarVentana(lbPromedio);
+        }
+    }
+
+    public void btnClicRegresar(ActionEvent actionEvent) {
+        // TODO
+    }
 }
