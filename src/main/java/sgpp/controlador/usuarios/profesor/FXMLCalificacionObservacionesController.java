@@ -6,7 +6,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import sgpp.modelo.beans.Profesor;
+import sgpp.modelo.beans.expediente.presentacion.Evaluador;
 import sgpp.modelo.beans.expediente.presentacion.RubricaPresentacion;
+import sgpp.modelo.dao.entidades.ProfesorDAO;
 import sgpp.modelo.dao.expediente.presentacion.RubricaPresentacionDAO;
 import sgpp.utilidad.Utilidad;
 
@@ -47,7 +50,13 @@ public class FXMLCalificacionObservacionesController {
 
     private int[] calificaciones;
 
-    public void inicializarInformacion(int[] valorCriterio) {
+    private int idEstudiante, idProfesor, idPeriodo;
+
+    public void inicializarInformacion(int[] valorCriterio, int idProfesor, int idEstudiante, int idPeriodo) {
+        this.idEstudiante = idEstudiante;
+        this.idProfesor = idProfesor;
+        this.idPeriodo = idPeriodo;
+
         calificaciones = valorCriterio;
 
         txFiCalificacion1.setText(String.valueOf(calificaciones[0]));
@@ -77,8 +86,17 @@ public class FXMLCalificacionObservacionesController {
         rubrica.setFechaHora(LocalDateTime.now());
         rubrica.setCalificacion(Float.parseFloat(lbPromedio.getText()));
         rubrica.setObservaciones(txArObservaciones.getText());
+        rubrica.setIdEstudiante(idEstudiante);
+        rubrica.setIdProfesor(idProfesor);
+        rubrica.setIdPeriodo(idPeriodo);
 
-        // TODO: Obtener y asignar ID de Estudiante, Profesor y Periodo.
+        Profesor profesor = ProfesorDAO.obtenerPorId(idProfesor);
+        Evaluador evaluador = new Evaluador();
+        evaluador.setIdEvaluador(profesor.getIdProfesor());
+        evaluador.setNombre(profesor.getNombre());
+        evaluador.setNumeroPersonal(profesor.getNumeroPersonal());
+
+        rubrica.setEvaluador(evaluador);
 
         boolean exitoso = RubricaPresentacionDAO.insertar(rubrica);
 
@@ -90,6 +108,8 @@ public class FXMLCalificacionObservacionesController {
                     "No se pudo registrar la rúbrica.");
         }
     }
+
+    // TODO: Listener por cada input en los TextField
 
     public void btnClicSubir(ActionEvent actionEvent) throws SQLException {
         boolean confirmado = Utilidad.crearAlertaConfirmacion(
@@ -112,6 +132,6 @@ public class FXMLCalificacionObservacionesController {
     }
 
     public void btnClicRegresar(ActionEvent actionEvent) {
-        // TODO
+        Utilidad.cerrarVentana(lbPromedio);
     }
 }

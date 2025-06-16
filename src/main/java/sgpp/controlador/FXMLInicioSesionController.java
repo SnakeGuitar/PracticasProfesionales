@@ -15,9 +15,12 @@
 package sgpp.controlador;
 
 import sgpp.SistemaGestionPracticasProfesionales;
+import sgpp.controlador.usuarios.profesor.FXMLPrincipalProfesorController;
 import sgpp.modelo.IControladorPrincipal;
+import sgpp.modelo.beans.Profesor;
 import sgpp.modelo.beans.Usuario;
 import sgpp.modelo.dao.InicioSesionDAO;
+import sgpp.modelo.dao.entidades.ProfesorDAO;
 import sgpp.utilidad.Utilidad;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -123,6 +126,12 @@ public class FXMLInicioSesionController {
                             SistemaGestionPracticasProfesionales.class.getResource(
                                     "vista/usuarios/profesor/FXMLPrincipalProfesor.fxml"));
                     titulo = "Sistema de Prácticas Profesionales - Profesor";
+
+                    int idProfesor = ProfesorDAO.obtenerIdProfesorPorIdUsuario(sesionUsuario.getIdUsuario());
+
+                    FXMLPrincipalProfesorController controladorProfesor = cargador.getController();
+                    controladorProfesor.inicializarInformacion(idProfesor);
+
                     break;
                 default:
                     Utilidad.crearAlertaError("Error en tipo de usuario",
@@ -145,6 +154,8 @@ public class FXMLInicioSesionController {
         } catch (IOException e) {
             Utilidad.mostrarError(true, e, "Error al cargar pantalla",
                     "No se pudo cargar la ventana principal");
+        } catch (SQLException e) {
+            Utilidad.mostrarErrorBD(true, e);
         }
     }
 }
