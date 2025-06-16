@@ -2,17 +2,13 @@ package sgpp.controlador.usuarios.profesor;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import sgpp.utilidad.Utilidad;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-public class FXMLCalificacionObservacionesController implements Initializable {
+public class FXMLCalificacionObservacionesController {
 
     @FXML
     public Button btnSubir;
@@ -46,11 +42,6 @@ public class FXMLCalificacionObservacionesController implements Initializable {
 
     private int[] calificaciones;
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }
-
     public void inicializarInformacion(int[] valorCriterio) {
         calificaciones = valorCriterio;
 
@@ -75,7 +66,7 @@ public class FXMLCalificacionObservacionesController implements Initializable {
         lbPromedio.setText(String.valueOf(promedio));
     }
 
-    private void guardarDatos() {
+    private void guardarRubricaPresentacion() {
         // TODO
     }
 
@@ -87,7 +78,7 @@ public class FXMLCalificacionObservacionesController implements Initializable {
         );
 
         if(confirmado) {
-            guardarDatos();
+            guardarRubricaPresentacion();
         }
     }
 

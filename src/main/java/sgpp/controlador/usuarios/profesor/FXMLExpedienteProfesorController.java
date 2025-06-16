@@ -1,13 +1,21 @@
 package sgpp.controlador.usuarios.profesor;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import sgpp.modelo.beans.expediente.Documento;
 
-public class FXMLExpedienteProfesorController {
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+
+public class FXMLExpedienteProfesorController implements Initializable {
     @FXML
     public Button btnRegresar;
 
@@ -29,7 +37,20 @@ public class FXMLExpedienteProfesorController {
     @FXML
     public Button btnDescargar;
 
-    // TODO: Implementar ObservableList para todos los documentos.
+    // private ObservableList<Documento> documentos;
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+
+    }
+
+    private void configurarLista() {
+        // TODO
+    }
+
+    private void cargarInformacion() {
+        // TODO
+    }
 
     public void btnClicRegresar(ActionEvent actionEvent) {
     }

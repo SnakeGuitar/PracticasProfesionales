@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -134,7 +135,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Button fx:id="btnRegresar" layoutX="12.0" layoutY="12.0" mnemonicParsing="false" text="Regresar" />
+            <Button fx:id="btnRegresar" layoutX="12.0" layoutY="12.0" mnemonicParsing="false" onAction="#btnClicRegresar" text="Regresar" />
             <Separator layoutX="455.0" orientation="VERTICAL" prefHeight="263.0" prefWidth="14.0" />
          </children>
       </Pane>
@@ -436,7 +437,10 @@
                         <Insets left="10.0" right="5.0" />
                      </padding>
                   </Label>
-                  <RadioButton fx:id="rdBtnCriterio11" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <RadioButton fx:id="rdBtnCriterio11" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="tgCriterio1" />
+                     </toggleGroup></RadioButton>
                   <Label text="5" GridPane.columnIndex="2" GridPane.halignment="CENTER">
                      <font>
                         <Font name="System Bold" size="13.0" />
@@ -462,61 +466,88 @@
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
-                  <RadioButton fx:id="rdBtnCriterio12" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <RadioButton fx:id="rdBtnCriterio13" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <RadioButton fx:id="rdBtnCriterio14" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <RadioButton fx:id="rdBtnCriterio15" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <RadioButton fx:id="rdBtnCriterio21" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                  <RadioButton fx:id="rdBtnCriterio22" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                  <RadioButton fx:id="rdBtnCriterio23" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                  <RadioButton fx:id="rdBtnCriterio24" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                  <RadioButton fx:id="rdBtnCriterio25" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                  <RadioButton fx:id="rdBtnCriterio31" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                  <RadioButton fx:id="rdBtnCriterio32" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                  <RadioButton fx:id="rdBtnCriterio33" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                  <RadioButton fx:id="rdBtnCriterio34" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                  <RadioButton fx:id="rdBtnCriterio35" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                  <RadioButton fx:id="rdBtnCriterio41" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                  <RadioButton fx:id="rdBtnCriterio42" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                  <RadioButton fx:id="rdBtnCriterio43" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                  <RadioButton fx:id="rdBtnCriterio44" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                  <RadioButton fx:id="rdBtnCriterio45" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                  <RadioButton fx:id="rdBtnCriterio51" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                  <RadioButton fx:id="rdBtnCriterio52" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                  <RadioButton fx:id="rdBtnCriterio53" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                  <RadioButton fx:id="rdBtnCriterio54" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                  <RadioButton fx:id="rdBtnCriterio55" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                  <RadioButton fx:id="rdBtnCriterio61" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                  <RadioButton fx:id="rdBtnCriterio62" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                  <RadioButton fx:id="rdBtnCriterio63" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                  <RadioButton fx:id="rdBtnCriterio64" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                  <RadioButton fx:id="rdBtnCriterio65" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                  <RadioButton fx:id="rdBtnCriterio71" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                  <RadioButton fx:id="rdBtnCriterio72" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                  <RadioButton fx:id="rdBtnCriterio73" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                  <RadioButton fx:id="rdBtnCriterio74" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                  <RadioButton fx:id="rdBtnCriterio75" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                  <RadioButton fx:id="rdBtnCriterio81" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
-                  <RadioButton fx:id="rdBtnCriterio82" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
-                  <RadioButton fx:id="rdBtnCriterio83" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
-                  <RadioButton fx:id="rdBtnCriterio84" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
-                  <RadioButton fx:id="rdBtnCriterio85" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
-                  <RadioButton fx:id="rdBtnCriterio91" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
-                  <RadioButton fx:id="rdBtnCriterio92" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
-                  <RadioButton fx:id="rdBtnCriterio93" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
-                  <RadioButton fx:id="rdBtnCriterio94" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
-                  <RadioButton fx:id="rdBtnCriterio95" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
-                  <RadioButton fx:id="rdBtnCriterio101" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
-                  <RadioButton fx:id="rdBtnCriterio102" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
-                  <RadioButton fx:id="rdBtnCriterio103" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
-                  <RadioButton fx:id="rdBtnCriterio104" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
-                  <RadioButton fx:id="rdBtnCriterio105" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+                  <RadioButton fx:id="rdBtnCriterio12" mnemonicParsing="false" toggleGroup="$tgCriterio1" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <RadioButton fx:id="rdBtnCriterio13" mnemonicParsing="false" toggleGroup="$tgCriterio1" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <RadioButton fx:id="rdBtnCriterio14" mnemonicParsing="false" toggleGroup="$tgCriterio1" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <RadioButton fx:id="rdBtnCriterio15" mnemonicParsing="false" toggleGroup="$tgCriterio1" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <RadioButton fx:id="rdBtnCriterio21" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="tgCriterio2" />
+                     </toggleGroup></RadioButton>
+                  <RadioButton fx:id="rdBtnCriterio22" mnemonicParsing="false" toggleGroup="$tgCriterio2" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                  <RadioButton fx:id="rdBtnCriterio23" mnemonicParsing="false" toggleGroup="$tgCriterio2" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                  <RadioButton fx:id="rdBtnCriterio24" mnemonicParsing="false" toggleGroup="$tgCriterio2" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                  <RadioButton fx:id="rdBtnCriterio25" mnemonicParsing="false" toggleGroup="$tgCriterio2" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                  <RadioButton fx:id="rdBtnCriterio31" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="tgCriterio3" />
+                     </toggleGroup></RadioButton>
+                  <RadioButton fx:id="rdBtnCriterio32" mnemonicParsing="false" toggleGroup="$tgCriterio3" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                  <RadioButton fx:id="rdBtnCriterio33" mnemonicParsing="false" toggleGroup="$tgCriterio3" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                  <RadioButton fx:id="rdBtnCriterio34" mnemonicParsing="false" toggleGroup="$tgCriterio3" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                  <RadioButton fx:id="rdBtnCriterio35" mnemonicParsing="false" toggleGroup="$tgCriterio3" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                  <RadioButton fx:id="rdBtnCriterio41" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="tgCriterio4" />
+                     </toggleGroup></RadioButton>
+                  <RadioButton fx:id="rdBtnCriterio42" mnemonicParsing="false" toggleGroup="$tgCriterio4" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                  <RadioButton fx:id="rdBtnCriterio43" mnemonicParsing="false" toggleGroup="$tgCriterio4" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                  <RadioButton fx:id="rdBtnCriterio44" mnemonicParsing="false" toggleGroup="$tgCriterio4" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                  <RadioButton fx:id="rdBtnCriterio45" mnemonicParsing="false" toggleGroup="$tgCriterio4" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                  <RadioButton fx:id="rdBtnCriterio51" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="tgCriterio5" />
+                     </toggleGroup></RadioButton>
+                  <RadioButton fx:id="rdBtnCriterio52" mnemonicParsing="false" toggleGroup="$tgCriterio5" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                  <RadioButton fx:id="rdBtnCriterio53" mnemonicParsing="false" toggleGroup="$tgCriterio5" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                  <RadioButton fx:id="rdBtnCriterio54" mnemonicParsing="false" toggleGroup="$tgCriterio5" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                  <RadioButton fx:id="rdBtnCriterio55" mnemonicParsing="false" toggleGroup="$tgCriterio5" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                  <RadioButton fx:id="rdBtnCriterio61" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="tgCriterio6" />
+                     </toggleGroup></RadioButton>
+                  <RadioButton fx:id="rdBtnCriterio62" mnemonicParsing="false" toggleGroup="$tgCriterio6" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                  <RadioButton fx:id="rdBtnCriterio63" mnemonicParsing="false" toggleGroup="$tgCriterio6" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                  <RadioButton fx:id="rdBtnCriterio64" mnemonicParsing="false" toggleGroup="$tgCriterio6" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                  <RadioButton fx:id="rdBtnCriterio65" mnemonicParsing="false" toggleGroup="$tgCriterio6" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                  <RadioButton fx:id="rdBtnCriterio71" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="tgCriterio7" />
+                     </toggleGroup></RadioButton>
+                  <RadioButton fx:id="rdBtnCriterio72" mnemonicParsing="false" toggleGroup="$tgCriterio7" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                  <RadioButton fx:id="rdBtnCriterio73" mnemonicParsing="false" toggleGroup="$tgCriterio7" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                  <RadioButton fx:id="rdBtnCriterio74" mnemonicParsing="false" toggleGroup="$tgCriterio7" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                  <RadioButton fx:id="rdBtnCriterio75" mnemonicParsing="false" toggleGroup="$tgCriterio7" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                  <RadioButton fx:id="rdBtnCriterio81" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="8">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="tgCriterio8" />
+                     </toggleGroup></RadioButton>
+                  <RadioButton fx:id="rdBtnCriterio82" mnemonicParsing="false" toggleGroup="$tgCriterio8" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+                  <RadioButton fx:id="rdBtnCriterio83" mnemonicParsing="false" toggleGroup="$tgCriterio8" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+                  <RadioButton fx:id="rdBtnCriterio84" mnemonicParsing="false" toggleGroup="$tgCriterio8" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+                  <RadioButton fx:id="rdBtnCriterio85" mnemonicParsing="false" toggleGroup="$tgCriterio8" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+                  <RadioButton fx:id="rdBtnCriterio91" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="9">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="tgCriterio9" />
+                     </toggleGroup></RadioButton>
+                  <RadioButton fx:id="rdBtnCriterio92" mnemonicParsing="false" toggleGroup="$tgCriterio9" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
+                  <RadioButton fx:id="rdBtnCriterio93" mnemonicParsing="false" toggleGroup="$tgCriterio9" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
+                  <RadioButton fx:id="rdBtnCriterio94" mnemonicParsing="false" toggleGroup="$tgCriterio9" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
+                  <RadioButton fx:id="rdBtnCriterio95" mnemonicParsing="false" toggleGroup="$tgCriterio9" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
+                  <RadioButton fx:id="rdBtnCriterio101" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="10">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="tgCriterio10" />
+                     </toggleGroup></RadioButton>
+                  <RadioButton fx:id="rdBtnCriterio102" mnemonicParsing="false" toggleGroup="$tgCriterio10" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+                  <RadioButton fx:id="rdBtnCriterio103" mnemonicParsing="false" toggleGroup="$tgCriterio10" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+                  <RadioButton fx:id="rdBtnCriterio104" mnemonicParsing="false" toggleGroup="$tgCriterio10" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+                  <RadioButton fx:id="rdBtnCriterio105" mnemonicParsing="false" toggleGroup="$tgCriterio10" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
                </children>
             </GridPane>
             <ButtonBar layoutX="496.0" layoutY="467.0" prefHeight="28.0" prefWidth="192.0">
                <buttons>
-                  <Button fx:id="btnSubir" mnemonicParsing="false" text="Subir" />
-                  <Button fx:id="btnCancelar" layoutX="429.0" layoutY="18.0" mnemonicParsing="false" text="Cancelar" />
+                  <Button fx:id="btnSubir" mnemonicParsing="false" onAction="#btnClicSubir" text="Subir" />
+                  <Button fx:id="btnCancelar" layoutX="429.0" layoutY="18.0" mnemonicParsing="false" onAction="#btnClicCancelar" text="Cancelar" />
                </buttons>
             </ButtonBar>
          </children>

@@ -14,11 +14,12 @@
 
 package sgpp.modelo.beans.expediente.documentoinicial;
 
+import sgpp.modelo.beans.expediente.Documento;
 import sgpp.modelo.beans.expediente.EstadoDocumento;
 
 import java.util.Date;
 
-public class DocumentoInicial {
+public class DocumentoInicial extends Documento {
     private int idDocumentoInicial;
     private Date fechaEntrega;
     private TipoDocumentoInicial tipo;
@@ -26,32 +27,11 @@ public class DocumentoInicial {
     private byte[] documento;
     private int idEntregaDocumentoInicial;
 
-    public DocumentoInicial() {
-    }
+    public DocumentoInicial() {}
 
     public DocumentoInicial(int idDocumentoInicial, Date fechaEntrega, TipoDocumentoInicial tipo, EstadoDocumento estado, byte[] documento, int idEntregaDocumentoInicial) {
-        this.idDocumentoInicial = idDocumentoInicial;
-        this.fechaEntrega = fechaEntrega;
+        super(idDocumentoInicial, fechaEntrega, estado, documento, idEntregaDocumentoInicial);
         this.tipo = tipo;
-        this.estado = estado;
-        this.documento = documento;
-        this.idEntregaDocumentoInicial = idEntregaDocumentoInicial;
-    }
-
-    public int getIdDocumentoInicial() {
-        return idDocumentoInicial;
-    }
-
-    public void setIdDocumentoInicial(int idDocumentoInicial) {
-        this.idDocumentoInicial = idDocumentoInicial;
-    }
-
-    public Date getFechaEntrega() {
-        return fechaEntrega;
-    }
-
-    public void setFechaEntrega(Date fechaEntrega) {
-        this.fechaEntrega = fechaEntrega;
     }
 
     public TipoDocumentoInicial getTipo() {
@@ -62,27 +42,8 @@ public class DocumentoInicial {
         this.tipo = tipo;
     }
 
-    public EstadoDocumento getEstado() {
-        return estado;
-    }
-
-    public void setEstado(EstadoDocumento estado) {
-        this.estado = estado;
-    }
-
-    public byte[] getDocumento() {
-        return documento;
-    }
-
-    public void setDocumento(byte[] documento) {
-        this.documento = documento;
-    }
-
-    public int getIdEntregaDocumentoInicial() {
-        return idEntregaDocumentoInicial;
-    }
-
-    public void setIdEntregaDocumentoInicial(int idEntregaDocumentoInicial) {
-        this.idEntregaDocumentoInicial = idEntregaDocumentoInicial;
+    @Override
+    public Enum<?> getTipoDocumento() {
+        return tipo;
     }
 }
