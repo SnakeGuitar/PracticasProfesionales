@@ -73,5 +73,25 @@ public class ReporteMensualDAO {
 
     return false;
     }
+    
+    public static boolean actualizarEstado(int idEntregaReporte,
+                                       String nuevoEstado,
+                                       String observaciones) throws SQLException {
+
+    String sql = """
+        UPDATE reporte_mensual
+        SET estado = ?, observaciones = ?
+        WHERE ID_Entrega_Reporte = ?""";
+
+    try (Connection c = ConexionBD.abrirConexion();
+         PreparedStatement ps = c.prepareStatement(sql)) {
+
+        ps.setString(1, nuevoEstado);
+        ps.setString(2, observaciones);   // puede ser null
+        ps.setInt   (3, idEntregaReporte);
+
+        return ps.executeUpdate() == 1;
+    }
+}
 
 }

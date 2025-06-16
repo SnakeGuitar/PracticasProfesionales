@@ -6,39 +6,41 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sgpp.controlador.usuarios.profesor.FXMLValidarDocumentoController"
-            prefWidth="800.0" prefHeight="500.0">
+            fx:controller="sgpp.controlador.usuarios.profesor.FXMLValidarReporteController"
+            prefWidth="820.0" prefHeight="520.0">
 
-    <VBox spacing="20.0"
+    <VBox spacing="15"
           alignment="TOP_CENTER"
-          AnchorPane.topAnchor="20.0"
-          AnchorPane.leftAnchor="20.0"
-          AnchorPane.rightAnchor="20.0"
-          AnchorPane.bottomAnchor="20.0">
+          AnchorPane.topAnchor="15" AnchorPane.leftAnchor="15"
+          AnchorPane.rightAnchor="15" AnchorPane.bottomAnchor="15">
 
-        <Label text="Lista de Entregas del Periodo 4"
-               style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #3b5998;" />
+        <Label text="Entregas – Periodo 4"
+               style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #3b5998;"/>
 
-        <TableView fx:id="tablaEntregas"
-                   prefHeight="380.0"
-                   prefWidth="760.0"
+        <!-- Tabla -->
+        <TableView fx:id="tablaEntregas" prefHeight="380" prefWidth="780"
                    style="-fx-border-color: #5b6fd4;">
-
             <columns>
-                <TableColumn fx:id="colID" text="ID" prefWidth="60"/>
-                <TableColumn fx:id="colEstudiante" text="Estudiante" prefWidth="200"/>
-                <TableColumn fx:id="colReporte" text="N° Reporte" prefWidth="100"/>
-                <TableColumn fx:id="colFechaEntrega" text="Fecha de Entrega" prefWidth="200"/>
-                <TableColumn fx:id="colEstado" text="Estado" prefWidth="180"/>
+                <TableColumn fx:id="colID"             text="ID"            prefWidth="60"/>
+                <TableColumn fx:id="colEstudiante"     text="Estudiante"    prefWidth="190"/>
+                <TableColumn fx:id="colReporte"        text="Reporte"       prefWidth="70"/>
+                <TableColumn fx:id="colFechaEntrega"   text="Fecha entrega" prefWidth="180"/>
+                <TableColumn fx:id="colEstado"         text="Estado"        prefWidth="100"/>
+                <TableColumn fx:id="colHoras" text="Horas Reportadas" />
+
             </columns>
         </TableView>
 
-        <Button text="Actualizar lista"
-                onAction="#actualizarLista"
-                style="-fx-background-color: #5b6fd4; -fx-text-fill: white;"
-                prefWidth="180"
-                prefHeight="35"
-                />
-
+        <!-- Botonera -->
+        <HBox spacing="20" alignment="CENTER">
+            <Button text="Actualizar lista" onAction="#actualizarLista"
+                    style="-fx-background-color: #5b6fd4; -fx-text-fill: white;" prefWidth="160"/>
+            <Button text="Validar"  fx:id="btnValidar"
+                    onAction="#validarEntrega"
+                    style="-fx-background-color: #5b6fd4; -fx-text-fill: white;" prefWidth="120"/>
+            <Button text="Rechazar" fx:id="btnRechazar"
+                    onAction="#rechazarEntrega"
+                    style="-fx-background-color: #c0392b; -fx-text-fill: white;" prefWidth="120"/>
+        </HBox>
     </VBox>
 </AnchorPane>
