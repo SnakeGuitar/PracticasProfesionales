@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="768.0" prefWidth="1013.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.coordinador.proyecto.FXMLConfigurarEntregasController">
+   <children>
+      <BorderPane prefHeight="768.0" prefWidth="1024.0">
+         <bottom>
+            <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#clicBtnCancelar" text="Cancelar">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#clicBtnGuardar" style="-fx-background-color: #5b6fd4;" text="Guardar" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets bottom="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </bottom>
+         <center>
+            <VBox prefHeight="515.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Deje los campos en blanco para programar la entrega más tarde">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox prefHeight="116.0" prefWidth="1024.0">
+                     <children>
+                        <Label text="Entrega de Documentos Iniciales">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label text="Fecha y hora de Apertura">
+                           <HBox.margin>
+                              <Insets left="20.0" right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="txFiAperturaInicial">
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Label text="Fecha y hora Limite">
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="txFiLimiteInicial" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="146.0" prefWidth="1024.0">
+                     <children>
+                        <Label text="Entrega de Documentos Parciales">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label text="Fecha y hora de Apertura">
+                           <HBox.margin>
+                              <Insets left="20.0" right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="txFiAperturaParcial">
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Label text="Fecha y hora Limite">
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="txFiLimiteParcial" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="104.0" prefWidth="1024.0">
+                     <children>
+                        <Label text="Entrega de Documentos Finales">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label text="Fecha y hora de Apertura">
+                           <HBox.margin>
+                              <Insets left="20.0" right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="txFiAperturaFinal">
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Label text="Fecha y hora Limite">
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="txFiLimiteFinal" />
+                     </children>
+                  </HBox>
+                  <Label text="Reportes Mensuales">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Reporte #1">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label text="Fecha y hora de Apertura">
+                           <HBox.margin>
+                              <Insets left="20.0" right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="txFiAperturaReporteUno">
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Label text="Fecha y hora Limite">
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="txFiLimiteReporteUno" />
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Reporte #2">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label text="Fecha y hora de Apertura">
+                           <HBox.margin>
+                              <Insets left="20.0" right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="txFiAperturaReporteDos">
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Label text="Fecha y hora Limite">
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="txFiLimiteReporteDos" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="87.0" prefWidth="1024.0">
+                     <children>
+                        <Label text="Reporte #3">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label text="Fecha y hora de Apertura">
+                           <HBox.margin>
+                              <Insets left="20.0" right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="txFiAperturaReporteTres">
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Label text="Fecha y hora Limite">
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="txFiLimiteReporteTres" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Reporte #4">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label text="Fecha y hora de Apertura">
+                           <HBox.margin>
+                              <Insets left="20.0" right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="txFiAperturaReporteCuatro">
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Label text="Fecha y hora Limite">
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="txFiLimiteReporteCuatro" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </center>
+         <top>
+            <VBox prefHeight="109.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Sistema de Gestión de Practicas Profesionales">
+                     <font>
+                        <Font name="Arial Bold Italic" size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="15.0" top="35.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="lbNombreCU" text="Programar Entregas de Prácticas Profesionales">
+                     <font>
+                        <Font name="Arial Italic" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="15.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+         </top>
+      </BorderPane>
+   </children>
+</AnchorPane>
