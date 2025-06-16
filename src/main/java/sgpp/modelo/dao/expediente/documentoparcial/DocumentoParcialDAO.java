@@ -86,12 +86,12 @@ public class DocumentoParcialDAO {
                 resultado = sentencia.executeQuery();
                 while (resultado.next()) {
                     DocumentoParcial documentoParcial = new DocumentoParcial();
-                    documentoParcial.setIdDocumentoParcial(resultado.getInt("ID_Doc_Parcial"));
+                    documentoParcial.setIdDocumento(resultado.getInt("ID_Doc_Parcial"));
                     documentoParcial.setFechaEntrega(resultado.getDate("fecha_entrega"));
                     documentoParcial.setTipo(TipoDocumentoParcial.valueOf(resultado.getString("tipo")));
                     documentoParcial.setEstado(EstadoDocumento.valueOf(resultado.getString("estado")));
                     documentoParcial.setDocumento(resultado.getBytes("documento"));
-                    documentoParcial.setIdEntregaDocumentoParcial(resultado.getInt("ID_Entrega_Doc_Parcial"));
+                    documentoParcial.setIdEntregaDocumento(resultado.getInt("ID_Entrega_Doc_Parcial"));
                     documentosParciales.add(documentoParcial);
                 }
             } else {
@@ -248,12 +248,12 @@ public class DocumentoParcialDAO {
                 resultado = sentencia.executeQuery();
                 if (resultado.next()) {
                     documentoParcial = new DocumentoParcial();
-                    documentoParcial.setIdDocumentoParcial(resultado.getInt("ID_Doc_Parcial"));
+                    documentoParcial.setIdDocumento(resultado.getInt("ID_Doc_Parcial"));
                     documentoParcial.setFechaEntrega(resultado.getDate("fecha_entrega"));
                     documentoParcial.setTipo(TipoDocumentoParcial.valueOf(resultado.getString("tipo")));
                     documentoParcial.setEstado(EstadoDocumento.valueOf(resultado.getString("estado")));
                     documentoParcial.setDocumento(resultado.getBytes("documento"));
-                    documentoParcial.setIdEntregaDocumentoParcial(resultado.getInt("ID_Entrega_Doc_Parcial"));
+                    documentoParcial.setIdEntregaDocumento(resultado.getInt("ID_Entrega_Doc_Parcial"));
                 }
             } else {
                 throw new SQLException("No se pudo establecer la conexión a la base de datos.");

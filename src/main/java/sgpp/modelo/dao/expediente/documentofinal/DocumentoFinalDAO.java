@@ -84,12 +84,12 @@ public class DocumentoFinalDAO {
                 resultado = sentencia.executeQuery();
                 while (resultado.next()) {
                     DocumentoFinal documentoFinal = new DocumentoFinal();
-                    documentoFinal.setIdDocumentoFinal(resultado.getInt("ID_Doc_Final"));
+                    documentoFinal.setIdDocumento(resultado.getInt("ID_Doc_Final"));
                     documentoFinal.setFechaEntrega(resultado.getDate("fecha_entrega"));
                     documentoFinal.setTipo(TipoDocumentoFinal.valueOf(resultado.getString("tipo")));
                     documentoFinal.setEstado(EstadoDocumento.valueOf(resultado.getString("estado")));
                     documentoFinal.setDocumento(resultado.getBytes("documento"));
-                    documentoFinal.setIdEntregaDocumentoFinal(resultado.getInt("ID_Entrega_Doc_Final"));
+                    documentoFinal.setIdEntregaDocumento(resultado.getInt("ID_Entrega_Doc_Final"));
                     documentosFinales.add(documentoFinal);
                 }
             } else {
