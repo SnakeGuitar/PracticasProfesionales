@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="sgpp.controlador.usuarios.estudiante.FXMLEntregaReporteMensualController"
+            prefHeight="768.0" prefWidth="1013.0">
+
+    <children>
+        <VBox alignment="TOP_CENTER" spacing="30.0"
+              AnchorPane.topAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+
+            <Label text="Entregas de Reportes Mensuales">
+                <font><Font name="Arial Rounded MT Bold" size="22.0"/></font>
+            </Label>
+
+            <HBox alignment="CENTER" spacing="50.0">
+                <Button fx:id="btnReporte1" text="Reporte 1" onAction="#btnReporte1"
+                        style="-fx-background-color:#5b6fd4;" textFill="white">
+                    <font><Font name="Arial Rounded MT Bold" size="16.0"/></font>
+                </Button>
+                <Button fx:id="btnReporte2" text="Reporte 2" onAction="#btnReporte2"
+                        style="-fx-background-color:#5b6fd4;" textFill="white">
+                    <font><Font name="Arial Rounded MT Bold" size="16.0"/></font>
+                </Button>
+                <Button fx:id="btnReporte3" text="Reporte 3" onAction="#btnReporte3"
+                        style="-fx-background-color:#5b6fd4;" textFill="white">
+                    <font><Font name="Arial Rounded MT Bold" size="16.0"/></font>
+                </Button>
+                <Button fx:id="btnReporte4" text="Reporte 4" onAction="#btnReporte4"
+                        style="-fx-background-color:#5b6fd4;" textFill="white">
+                    <font><Font name="Arial Rounded MT Bold" size="16.0"/></font>
+                </Button>
+            </HBox>
+            <Label fx:id="lblFechas"
+                   text="Selecciona un reporte para ver su fecha de apertura y de cierre">
+                <font><Font name="Arial Italic" size="16.0"/></font>
+            </Label>
+
+            <HBox alignment="CENTER" spacing="15.0">
+                <Label text="Horas reportadas:"/>
+                <TextField fx:id="tfHoras" promptText="Ej. 35" prefWidth="70"/>
+
+                <Button text="Seleccionar PDF" onAction="#seleccionarPDF"/>
+                <Button text="Subir Reporte" onAction="#subirReporte"
+                        style="-fx-background-color:#4caf50;" textFill="white"/>
+            </HBox>
+
+            <Label fx:id="lblArchivoSeleccionado"
+                   text="Ningún archivo seleccionado"
+                   style="-fx-font-style:italic;"/>
+
+        </VBox>
+    </children>
+</AnchorPane>

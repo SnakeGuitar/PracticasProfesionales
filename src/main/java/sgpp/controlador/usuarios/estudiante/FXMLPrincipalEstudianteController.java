@@ -26,7 +26,7 @@ public class FXMLPrincipalEstudianteController implements Initializable {
     private static final String RUTA_FXML_CONSULTAR_AVANCE = "";
     private static final String RUTA_FXML_LLENAR_AUTOEVALUACION = "/sgpp/vista/usuarios/estudiante/FXMLAutoevaluacionEstudiante.fxml";
     private static final String RUTA_FXML_FORMATO_EVALUACION = "";
-    private static final String RUTA_FXML_SUBIR_REPORTE = "";
+    private static final String RUTA_FXML_SUBIR_REPORTE = "/sgpp/vista/usuarios/estudiante/FXMLEntregaReporteMensual.fxml";
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -34,6 +34,8 @@ public class FXMLPrincipalEstudianteController implements Initializable {
     }
 
     public void clicBtnReporte(ActionEvent actionEvent) {
+        Utilidad.crearEscenario(RUTA_FXML_SUBIR_REPORTE, "ReportesMensuales");
+        
     }
 
     public void clicBtnFormatoEvaluacion(ActionEvent actionEvent) {

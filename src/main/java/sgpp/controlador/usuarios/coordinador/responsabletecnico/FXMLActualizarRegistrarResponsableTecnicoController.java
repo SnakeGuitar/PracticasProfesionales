@@ -1,3 +1,11 @@
+/*
+ * Autor original: Seth Marquez
+ * Último autor: Seth Marquez
+ * Fecha de creación: 16-06-2025
+ * Descripción: Controlador FXML para registrar o actualizar un Responsable Técnico.
+ *              Permite cargar organizaciones, llenar campos si es edición y guardar datos a través del DAO.
+ */
+
 package sgpp.controlador.usuarios.coordinador.responsabletecnico;
 
 import javafx.collections.FXCollections;

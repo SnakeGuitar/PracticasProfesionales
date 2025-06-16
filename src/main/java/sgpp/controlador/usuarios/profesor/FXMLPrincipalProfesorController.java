@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 public class FXMLPrincipalProfesorController implements Initializable {
     private static final String RUTA_FXML_EXPEDIENTE_ESTUDIANTE = "/sgpp/vista/usuarios/profesor/FXMLExpedienteProfesor.fxml";
     private static final String RUTA_FXML_VALIDAR_DOCUMENTO = "/sgpp/vista/usuarios/profesor/FXMLValidarDocumento.fxml";
+    
 
 
     @Override
