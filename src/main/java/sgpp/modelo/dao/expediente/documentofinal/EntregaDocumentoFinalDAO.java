@@ -18,6 +18,7 @@ package sgpp.modelo.dao.expediente.documentofinal;
 
 import sgpp.modelo.ConexionBD;
 import sgpp.modelo.beans.expediente.documentofinal.EntregaDocumentoFinal;
+import sgpp.utilidad.UtilidadFormatoDeDatos;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -60,12 +61,7 @@ public class EntregaDocumentoFinalDAO {
                 if (filasAfectadas > 0) {
                     resultado = sentencia.getGeneratedKeys();
                     if (resultado.next()) {
-                        entregaDocumentoFinal = new EntregaDocumentoFinal();
-                        entregaDocumentoFinal.setIdEntregaDocumentoFinal(resultado.getInt(1));
-                        entregaDocumentoFinal.setFechaApertura(fechaApertura);
-                        entregaDocumentoFinal.setFechaLimite(fechaLimite);
-                        entregaDocumentoFinal.setIdEstudiante(idEstudiante);
-                        entregaDocumentoFinal.setIdPeriodo(idPeriodo);
+                        entregaDocumentoFinal = convertirAEntrega(resultado);
                     }
                 }
             } else {
@@ -107,17 +103,7 @@ public class EntregaDocumentoFinalDAO {
                 resultado = sentencia.executeQuery();
 
                 if (resultado.next()) {
-                    Date fechaApertura = resultado.getTimestamp("fecha_apertura");
-                    Date fechaLimite = resultado.getTimestamp("fecha_limite");
-                    int idEstudiante = resultado.getInt("ID_Estudiante");
-                    int idPeriodo = resultado.getInt("ID_Periodo");
-
-                    entregaDocumentoFinal = new EntregaDocumentoFinal();
-                    entregaDocumentoFinal.setIdEntregaDocumentoFinal(idEntregaDocumentoFinal);
-                    entregaDocumentoFinal.setFechaApertura(fechaApertura);
-                    entregaDocumentoFinal.setFechaLimite(fechaLimite);
-                    entregaDocumentoFinal.setIdEstudiante(idEstudiante);
-                    entregaDocumentoFinal.setIdPeriodo(idPeriodo);
+                    entregaDocumentoFinal = convertirAEntrega(resultado);
                 }
             } else {
                 throw new SQLException("No se pudo establecer la conexión a la base de datos.");
@@ -167,13 +153,7 @@ public class EntregaDocumentoFinalDAO {
                 resultado = sentencia.executeQuery();
 
                 while (resultado.next()) {
-                    EntregaDocumentoFinal entrega = new EntregaDocumentoFinal();
-                    entrega.setIdEntregaDocumentoFinal(resultado.getInt("ID_Entrega_Doc_Final"));
-                    entrega.setFechaApertura(resultado.getTimestamp("fecha_apertura"));
-                    entrega.setFechaLimite(resultado.getTimestamp("fecha_limite"));
-                    entrega.setIdEstudiante(resultado.getInt("ID_Estudiante"));
-                    entrega.setIdPeriodo(resultado.getInt("ID_Periodo"));
-                    entregas.add(entrega);
+                    entregas.add(convertirAEntrega(resultado));
                 }
             } else {
                 throw new SQLException("No se pudo establecer la conexión a la base de datos.");
@@ -222,13 +202,7 @@ public class EntregaDocumentoFinalDAO {
                 resultado = sentencia.executeQuery();
 
                 while (resultado.next()) {
-                    EntregaDocumentoFinal entrega = new EntregaDocumentoFinal();
-                    entrega.setIdEntregaDocumentoFinal(resultado.getInt("ID_Entrega_Doc_Final"));
-                    entrega.setFechaApertura(resultado.getTimestamp("fecha_apertura"));
-                    entrega.setFechaLimite(resultado.getTimestamp("fecha_limite"));
-                    entrega.setIdEstudiante(resultado.getInt("ID_Estudiante"));
-                    entrega.setIdPeriodo(resultado.getInt("ID_Periodo"));
-                    entregas.add(entrega);
+                    entregas.add(convertirAEntrega(resultado));
                 }
             } else {
                 throw new SQLException("No se pudo establecer la conexión a la base de datos.");
@@ -329,5 +303,47 @@ public class EntregaDocumentoFinalDAO {
             }
         }
         return exito;
+    }
+
+    public static List<EntregaDocumentoFinal> obtenerEntregasPorPeriodo(int idPeriodo) throws SQLException {
+        ArrayList<EntregaDocumentoFinal> entregas = new ArrayList<>();
+        Connection conexionBD = null;
+        PreparedStatement sentencia = null;
+        ResultSet resultado = null;
+        try {
+            conexionBD = ConexionBD.abrirConexion();
+            if (conexionBD != null) {
+                String consulta = "SELECT * FROM entrega_doc_final WHERE ID_Periodo = ?";
+                sentencia = conexionBD.prepareStatement(consulta);
+                sentencia.setInt(1, idPeriodo);
+                resultado = sentencia.executeQuery();
+                while (resultado.next()) {
+                    entregas.add(convertirAEntrega(resultado));
+                }
+            } else {
+                throw new SQLException("No se pudo establecer la conexión a la base de datos.");
+            }
+        } finally {
+            if (resultado != null) {
+                resultado.close();
+            }
+            if (sentencia != null) {
+                sentencia.close();
+            }
+            if (conexionBD != null) {
+                conexionBD.close();
+            }
+        }
+        return entregas;
+    }
+
+    private static EntregaDocumentoFinal convertirAEntrega(ResultSet resultado) throws SQLException {
+        EntregaDocumentoFinal entrega = new EntregaDocumentoFinal();
+        entrega.setIdEntregaDocumentoFinal(resultado.getInt("ID_Entrega_Doc_Final"));
+        entrega.setFechaApertura(UtilidadFormatoDeDatos.stringToLocalDateTime(resultado.getString("fecha_apertura")));
+        entrega.setFechaLimite(UtilidadFormatoDeDatos.stringToLocalDateTime(resultado.getString("fecha_limite")));
+        entrega.setIdEstudiante(resultado.getInt("ID_Estudiante"));
+        entrega.setIdPeriodo(resultado.getInt("ID_Periodo"));
+        return entrega;
     }
 }
