@@ -34,7 +34,7 @@ public class UtilidadFormatoDeDatos {
     }
 
     public static String localDateTimeToString(LocalDateTime date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return date.format(formatter);
     }
 }

@@ -31,19 +31,19 @@
             </HBox>
          </bottom>
          <center>
-            <VBox prefHeight="502.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
+            <VBox BorderPane.alignment="CENTER">
                <children>
                   <Label text="Deje los campos en blanco para programar la entrega más tarde">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="15.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="20.0" left="10.0" />
+                        <Insets bottom="20.0" />
                      </VBox.margin>
                   </Label>
                   <HBox prefWidth="1024.0">
                      <children>
-                        <Label text="Entrega de Documentos Iniciales">
+                        <Label prefHeight="17.0" prefWidth="249.0" text="Entrega de Documentos Iniciales">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="15.0" />
                            </font>
@@ -53,20 +53,33 @@
                               <Insets left="20.0" right="15.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="txFiAperturaInicial" promptText="yyyy-mm-dd hh:mm">
+                        <VBox>
+                           <children>
+                              <TextField fx:id="txFiAperturaInicial" promptText="yyyy-mm-dd hh:mm">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </TextField>
+                              <Label fx:id="lbErrorAperturaInicial" text="l" textFill="RED" wrapText="true" />
+                           </children>
                            <HBox.margin>
                               <Insets right="20.0" />
                            </HBox.margin>
-                        </TextField>
+                        </VBox>
                         <Label text="Fecha y hora Limite">
                            <HBox.margin>
                               <Insets right="15.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="txFiLimiteInicial" promptText="yyyy-mm-dd hh:mm" />
+                        <VBox>
+                           <children>
+                              <TextField fx:id="txFiLimiteInicial" promptText="yyyy-mm-dd hh:mm" />
+                              <Label fx:id="lbErrorLimiteInicial" textFill="RED" wrapText="true" />
+                           </children>
+                        </VBox>
                      </children>
                      <VBox.margin>
-                        <Insets bottom="50.0" />
+                        <Insets bottom="35.0" />
                      </VBox.margin>
                   </HBox>
                   <HBox prefWidth="1024.0">
@@ -81,25 +94,38 @@
                               <Insets left="20.0" right="15.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="txFiAperturaParcial" promptText="yyyy-mm-dd hh:mm">
+                        <VBox>
+                           <children>
+                              <TextField fx:id="txFiAperturaParcial" promptText="yyyy-mm-dd hh:mm">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </TextField>
+                              <Label fx:id="lbErrorAperturaParcial" textFill="RED" wrapText="true" />
+                           </children>
                            <HBox.margin>
                               <Insets right="20.0" />
                            </HBox.margin>
-                        </TextField>
+                        </VBox>
                         <Label text="Fecha y hora Limite">
                            <HBox.margin>
                               <Insets right="15.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="txFiLimiteParcial" promptText="yyyy-mm-dd hh:mm" />
+                        <VBox>
+                           <children>
+                              <TextField fx:id="txFiLimiteParcial" promptText="yyyy-mm-dd hh:mm" />
+                              <Label fx:id="lbErrorLimiteParcial" textFill="RED" wrapText="true" />
+                           </children>
+                        </VBox>
                      </children>
                      <VBox.margin>
-                        <Insets bottom="50.0" />
+                        <Insets bottom="35.0" />
                      </VBox.margin>
                   </HBox>
                   <HBox prefWidth="1024.0">
                      <children>
-                        <Label text="Entrega de Documentos Finales">
+                        <Label prefHeight="17.0" prefWidth="247.0" text="Entrega de Documentos Finales">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="15.0" />
                            </font>
@@ -109,17 +135,26 @@
                               <Insets left="20.0" right="15.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="txFiAperturaFinal" promptText="yyyy-mm-dd hh:mm">
+                        <VBox>
+                           <children>
+                              <TextField fx:id="txFiAperturaFinal" promptText="yyyy-mm-dd hh:mm" />
+                              <Label fx:id="lbErrorAperturaFinal" textFill="RED" wrapText="true" />
+                           </children>
                            <HBox.margin>
                               <Insets right="20.0" />
                            </HBox.margin>
-                        </TextField>
+                        </VBox>
                         <Label text="Fecha y hora Limite">
                            <HBox.margin>
                               <Insets right="15.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="txFiLimiteFinal" promptText="yyyy-mm-dd hh:mm" />
+                        <VBox>
+                           <children>
+                              <TextField fx:id="txFiLimiteFinal" promptText="yyyy-mm-dd hh:mm" />
+                              <Label fx:id="lbErrorLimiteFinal" textFill="RED" wrapText="true" />
+                           </children>
+                        </VBox>
                      </children>
                      <VBox.margin>
                         <Insets bottom="50.0" />
@@ -129,6 +164,9 @@
                      <font>
                         <Font name="Arial Rounded MT Bold" size="15.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
                   </Label>
                   <HBox prefWidth="200.0">
                      <children>
@@ -241,7 +279,7 @@
                   </HBox>
                </children>
                <BorderPane.margin>
-                  <Insets left="10.0" right="10.0" />
+                  <Insets left="10.0" right="20.0" />
                </BorderPane.margin>
             </VBox>
          </center>
@@ -256,7 +294,7 @@
                         <Insets left="15.0" top="35.0" />
                      </VBox.margin>
                   </Label>
-                  <Label fx:id="lbNombreCU" text="Programar Entregas de Prácticas Profesionales">
+                  <Label text="Programar Entregas de Prácticas Profesionales">
                      <font>
                         <Font name="Arial Italic" size="18.0" />
                      </font>
