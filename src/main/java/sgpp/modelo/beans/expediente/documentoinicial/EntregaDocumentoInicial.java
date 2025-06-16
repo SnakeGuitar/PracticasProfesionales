@@ -14,19 +14,21 @@
 
 package sgpp.modelo.beans.expediente.documentoinicial;
 
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Locale;
 
 public class EntregaDocumentoInicial {
     private int idEntregaDocumentoInicial;
-    private Date fechaApertura;
-    private Date fechaLimite;
+    private LocalDateTime fechaApertura;
+    private LocalDateTime fechaLimite;
     private int idEstudiante;
     private int idPeriodo;
 
     public EntregaDocumentoInicial() {
     }
 
-    public EntregaDocumentoInicial(int idEntregaDocumentoInicial, Date fechaApertura, Date fechaLimite, int idEstudiante, int idPeriodo) {
+    public EntregaDocumentoInicial(int idEntregaDocumentoInicial, LocalDateTime fechaApertura, LocalDateTime fechaLimite, int idEstudiante, int idPeriodo) {
         this.idEntregaDocumentoInicial = idEntregaDocumentoInicial;
         this.fechaApertura = fechaApertura;
         this.fechaLimite = fechaLimite;
@@ -42,19 +44,19 @@ public class EntregaDocumentoInicial {
         this.idEntregaDocumentoInicial = idEntregaDocumentoInicial;
     }
 
-    public Date getFechaApertura() {
+    public LocalDateTime getFechaApertura() {
         return fechaApertura;
     }
 
-    public void setFechaApertura(Date fechaApertura) {
+    public void setFechaApertura(LocalDateTime fechaApertura) {
         this.fechaApertura = fechaApertura;
     }
 
-    public Date getFechaLimite() {
+    public LocalDateTime getFechaLimite() {
         return fechaLimite;
     }
 
-    public void setFechaLimite(Date fechaLimite) {
+    public void setFechaLimite(LocalDateTime fechaLimite) {
         this.fechaLimite = fechaLimite;
     }
 

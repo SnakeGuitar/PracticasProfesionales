@@ -39,8 +39,8 @@ public class EntregaDocumentoFinalDAO {
      * @return EntregaDocumentoFinal creada con el ID generado
      * @throws SQLException Si ocurre un error en la inserción
      */
-    public static EntregaDocumentoFinal registrarDocumentoFinal(Date fechaApertura, Date fechaLimite,
-                                                                int idEstudiante, int idPeriodo) throws SQLException {
+    public static EntregaDocumentoFinal registrarEntrega(Date fechaApertura, Date fechaLimite,
+                                                         int idEstudiante, int idPeriodo) throws SQLException {
         EntregaDocumentoFinal entregaDocumentoFinal = null;
         Connection conexionBD = null;
         PreparedStatement sentencia = null;

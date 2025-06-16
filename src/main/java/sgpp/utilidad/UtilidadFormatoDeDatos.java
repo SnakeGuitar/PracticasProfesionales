@@ -14,6 +14,10 @@
 
 package sgpp.utilidad;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
 public class UtilidadFormatoDeDatos {
     public static boolean esUnNumeroEntero(String numero) {
         try {
@@ -22,5 +26,15 @@ public class UtilidadFormatoDeDatos {
         } catch (NumberFormatException nfex) {
             return false;
         }
+    }
+
+    public static LocalDateTime stringToLocalDateTime(String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return LocalDateTime.parse(date, formatter);
+    }
+
+    public static String localDateTimeToString(LocalDateTime date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return date.format(formatter);
     }
 }
