@@ -339,7 +339,7 @@ public class EntregaDocumentoParcialDAO {
 
     private static EntregaDocumentoParcial convertirAEntrega(ResultSet resultado) throws SQLException {
         EntregaDocumentoParcial entrega = new EntregaDocumentoParcial();
-        entrega.setIdEntregaDocumentoParcial(resultado.getInt("ID_Entrega_Doc_Inicial"));
+        entrega.setIdEntregaDocumentoParcial(resultado.getInt("ID_Entrega_Doc_Parcial"));
         entrega.setFechaApertura(UtilidadFormatoDeDatos.stringToLocalDateTime(resultado.getString("fecha_apertura")));
         entrega.setFechaLimite(UtilidadFormatoDeDatos.stringToLocalDateTime(resultado.getString("fecha_limite")));
         entrega.setIdEstudiante(resultado.getInt("ID_Estudiante"));
