@@ -80,7 +80,6 @@
                         <Font name="Arial Rounded MT Bold" size="15.0" />
                      </font></Label>
                   <TextField fx:id="txFiNombre" prefHeight="31.0" prefWidth="552.0" GridPane.columnIndex="1" />
-                  <TextField fx:id="txFiObjetivo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <TextField fx:id="txFiMetodologia" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label text="Objetivo General" GridPane.halignment="LEFT" GridPane.rowIndex="1">
                      <font>
@@ -116,7 +115,7 @@
                         <Insets left="15.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="lbErrorMaxParticipantes" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                  <Label fx:id="lbErrorMaxParticipantes" textFill="RED" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
                      <padding>
                         <Insets left="15.0" />
                      </padding>
@@ -146,7 +145,7 @@
                               <Font name="Arial Rounded MT Bold" size="15.0" />
                            </font></Label>
                         <DatePicker fx:id="datePkFechaInicio" prefHeight="31.0" prefWidth="190.0" GridPane.columnIndex="1" />
-                        <Label fx:id="lbErrorFechaInicio" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="lbErrorFechaInicio" textFill="RED" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                   <GridPane GridPane.columnIndex="1" GridPane.rowIndex="6">
@@ -167,9 +166,10 @@
                               <Insets />
                            </GridPane.margin></Label>
                         <DatePicker fx:id="datePkFechaFin" prefHeight="31.0" prefWidth="190.0" GridPane.columnIndex="1" />
-                        <Label fx:id="lbErrorFechaFin" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="lbErrorFechaFin" textFill="RED" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
+                  <TextArea fx:id="txArObjetivo" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
                <BorderPane.margin>
                   <Insets left="20.0" right="20.0" />

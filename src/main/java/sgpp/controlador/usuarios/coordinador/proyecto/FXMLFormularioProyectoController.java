@@ -27,7 +27,9 @@ import sgpp.dominio.ResultadoValidacion;
 import sgpp.modelo.beans.OrganizacionVinculada;
 import sgpp.modelo.beans.Proyecto;
 import sgpp.modelo.beans.ResponsableTecnico;
+import sgpp.modelo.dao.ResultadoSQL;
 import sgpp.modelo.dao.entidades.OrganizacionVinculadaDAO;
+import sgpp.modelo.dao.entidades.ProyectoDAO;
 import sgpp.modelo.dao.entidades.ResponsableTecnicoDAO;
 import sgpp.utilidad.Utilidad;
 import sgpp.utilidad.UtilidadFormatoDeDatos;
@@ -44,7 +46,7 @@ public class FXMLFormularioProyectoController implements Initializable {
     @FXML
     private TextField txFiNombre;
     @FXML
-    private TextField txFiObjetivo;
+    private TextArea txArObjetivo;
     @FXML
     private TextField txFiMetodologia;
     @FXML
@@ -144,7 +146,7 @@ public class FXMLFormularioProyectoController implements Initializable {
     private void cargarInformacionEdicion() {
         if(proyectoEdicion != null) {
             txFiNombre.setText(proyectoEdicion.getNombre());
-            txFiObjetivo.setText(proyectoEdicion.getObjetivoGeneral());
+            txArObjetivo.setText(proyectoEdicion.getObjetivoGeneral());
             txFiMetodologia.setText(proyectoEdicion.getMetodologia());
             txFiMaxParticipantes.setText(String.valueOf(proyectoEdicion.getNumeroMaximoParticipantes()));
 
@@ -174,7 +176,7 @@ public class FXMLFormularioProyectoController implements Initializable {
     public void clicBtnGuardar(ActionEvent actionEvent) {
         if (validarCamposVacios()) {
             if (validarDatosParaBD()) {
-
+                guardarProyecto();
             }
         }
     }
@@ -182,10 +184,23 @@ public class FXMLFormularioProyectoController implements Initializable {
     private void guardarProyecto() {
         Proyecto candidato = construirProyectoCandidato();
         if (validarProyecto(candidato)) {
+            ResultadoSQL resultado = new ResultadoSQL();
             if (!esEdicion) {
-
+                resultado = ProyectoDAO.registrar(candidato);
+                if(!resultado.isError()) {
+                    Utilidad.crearAlerta(Alert.AlertType.INFORMATION, "Exito", resultado.getMensaje());
+                    cerrarVentana();
+                } else {
+                    Utilidad.crearAlerta(Alert.AlertType.ERROR, "Error", resultado.getMensaje());
+                }
             } else {
-
+                resultado = ProyectoDAO.actualizar(candidato);
+                if(!resultado.isError()) {
+                    Utilidad.crearAlerta(Alert.AlertType.INFORMATION, "Exito", resultado.getMensaje());
+                    cerrarVentana();
+                } else {
+                    Utilidad.crearAlerta(Alert.AlertType.ERROR, "Error", resultado.getMensaje());
+                }
             }
         }
     }
@@ -205,7 +220,7 @@ public class FXMLFormularioProyectoController implements Initializable {
             validos = false;
             lbErrorNombre.setText("*requerido");
         }
-        if (txFiObjetivo.getText().isEmpty()) {
+        if (txArObjetivo.getText().isEmpty()) {
             validos = false;
             lbErrorObjetivo.setText("*requerido");
         }
@@ -242,7 +257,7 @@ public class FXMLFormularioProyectoController implements Initializable {
             validos = false;
             lbErrorNombre.setText("*demasiado largo");
         }
-        if (txFiObjetivo.getText().length() > 100) {
+        if (txArObjetivo.getText().length() > 100) {
             validos = false;
             lbErrorObjetivo.setText("*demasiado largo");
         }
@@ -264,11 +279,15 @@ public class FXMLFormularioProyectoController implements Initializable {
         if (!validacion.isValido()) {
             lbErrorMaxParticipantes.setText(validacion.getMensaje());
         }
-        validacion = ProyectoDM.validarFechas(
-                LocalDate.parse(proyecto.getFechaInicio()),
-                LocalDate.parse(proyecto.getFechaFin()));
+        LocalDate fechaInicio = LocalDate.parse(proyecto.getFechaInicio());
+        LocalDate fechaFin = LocalDate.parse(proyecto.getFechaFin());
+        validacion = ProyectoDM.validarFechaInicio(fechaInicio, fechaFin);
         if (!validacion.isValido()) {
             lbErrorFechaInicio.setText(validacion.getMensaje());
+        }
+        validacion = ProyectoDM.validarFechaFin(fechaInicio, fechaFin);
+        if (!validacion.isValido()) {
+            lbErrorFechaFin.setText(validacion.getMensaje());
         }
         return validacion.isValido();
     }
@@ -277,11 +296,18 @@ public class FXMLFormularioProyectoController implements Initializable {
     private Proyecto construirProyectoCandidato() {
         Proyecto proyecto = new Proyecto();
         proyecto.setNombre(txFiNombre.getText());
-        proyecto.setObjetivoGeneral(txFiObjetivo.getText());
+        proyecto.setObjetivoGeneral(txArObjetivo.getText());
         proyecto.setMetodologia(txFiMetodologia.getText());
         proyecto.setNumeroMaximoParticipantes(Integer.parseInt(txFiMaxParticipantes.getText()));
         proyecto.setFechaInicio(datePkFechaInicio.getValue().toString());
         proyecto.setFechaFin(datePkFechaFin.getValue().toString());
+        proyecto.setIdOrganizacionVinculada(
+                comboOV.getSelectionModel().getSelectedItem().getIdOrganizacionVinculada());
+        proyecto.setIdResponsable(
+                comboResponsable.getSelectionModel().getSelectedItem().getIdResponsable());
+        if (esEdicion) {
+            proyecto.setIdProyecto(proyectoEdicion.getIdProyecto());
+        }
         return proyecto;
     }
 

@@ -102,6 +102,7 @@ public class FXMLProyectoController implements Initializable {
 
     public void clicBtnRegistrar(ActionEvent actionEvent) {
         irAFormularioProyecto(false, null);
+        cargarInformacion();
     }
 
     public void clicBtnActualizar(ActionEvent actionEvent) {
@@ -130,6 +131,7 @@ public class FXMLProyectoController implements Initializable {
             escenaFormulario.initModality(Modality.APPLICATION_MODAL);
             controlador.inicializarInformacion(esEdicion, proyectoEdicion);
             escenaFormulario.showAndWait();
+            cargarInformacion();
         } catch (IOException ioex) {
             Utilidad.crearAlerta(
                     Alert.AlertType.ERROR,
