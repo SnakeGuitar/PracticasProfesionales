@@ -1,6 +1,6 @@
 /*
  * Autor original: Luis Donaldo
- * Último autor: Luis Donaldo
+ * Último autor: Abel Hernandez Yong
  * Fecha de creación: 13-06-2025
  * Fecha de la última versión aprobada:
  * Fecha de la última modificación: 13-06-2025
@@ -9,7 +9,7 @@
 
 /*
  * Estado: En progreso
- * Modificaciones:
+ * Modificaciones: Agregado metodo toString para el CU07
  */
 
 package sgpp.modelo.beans;
@@ -130,5 +130,10 @@ public class Estudiante {
 
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s | Semestre: %s, Promedio: %s", matricula, semestre, promedio);
     }
 }
