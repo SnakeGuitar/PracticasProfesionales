@@ -21,6 +21,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -211,5 +212,17 @@ public class Utilidad {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static void cerrarRecursosSQL(Connection conn, PreparedStatement ps, ResultSet rs) throws SQLException {
+        conn.close();
+        ps.close();
+        rs.close();
+    }
+
+    public static void cerrarRecursosSQL(Connection conn, CallableStatement call, ResultSet rs) throws SQLException {
+        conn.close();
+        call.close();
+        rs.close();
     }
 }
