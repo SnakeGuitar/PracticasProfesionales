@@ -26,6 +26,7 @@ public class FXMLPrincipalCoordinadorController implements Initializable {
     private static final String RUTA_FXML_PROYECTO = "/sgpp/vista/usuarios/coordinador/proyecto/FXMLProyecto.fxml";
     private static final String RUTA_FXML_ORGANIZACION_VINCULDADA = "/sgpp/vista/usuarios/coordinador/organizacionvinculada/FXMLOrganizacionVinculada.fxml";
     private static final String RUTA_FXML_RESPONSABLE_TECNICO = "/sgpp/vista/usuarios/coordinador/responsabletecnico/FXMLPrincipalResponsableTecnico.fxml";
+    private static final String RUTA_FXML_ASIGNAR_PROYECTO = "/sgpp/vista/usuarios/coordinador/proyecto/FXMLAsignarProyecto.fxml";
     private static final String RUTA_FXML_DOCUMENTOS_ASIGNACION = "/sgpp/vista/usuarios/coordinador/documentos/FXMLGenerarDocumentoAsignacion.fxml";
     private static final String RUTA_FXML_PROGRAMAR_ENTREGAS = "/sgpp/vista/usuarios/coordinador/FXMLConfigurarEntregas.fxml";
 
@@ -51,5 +52,9 @@ public class FXMLPrincipalCoordinadorController implements Initializable {
 
     public void clicBtnProgramarEntregas(ActionEvent actionEvent) {
         Utilidad.crearEscenario(RUTA_FXML_PROGRAMAR_ENTREGAS, "Entregas de Practicas Profesionales");
+    }
+
+    public void clicBtnAsignarProyectos(ActionEvent actionEvent) {
+        Utilidad.crearEscenario(RUTA_FXML_ASIGNAR_PROYECTO, "Asignar Proyectos");
     }
 }
