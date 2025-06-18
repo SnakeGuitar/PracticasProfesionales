@@ -26,6 +26,7 @@ public class Proyecto {
     private int idResponsable;
     private String nombreOV;
     private String nombreResponsable;
+    private int lugaresDisponibles;
 
     public Proyecto() {
     }
@@ -130,5 +131,18 @@ public class Proyecto {
 
     public void setNombreResponsable(String nombreResponsable) {
         this.nombreResponsable = nombreResponsable;
+    }
+
+    public int getLugaresDisponibles() {
+        return lugaresDisponibles;
+    }
+
+    public void setLugaresDisponibles(int lugaresDisponibles) {
+        this.lugaresDisponibles = lugaresDisponibles;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s (Lugares: %s)", nombre, lugaresDisponibles);
     }
 }
