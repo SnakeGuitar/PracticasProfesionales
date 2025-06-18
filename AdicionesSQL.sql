@@ -84,3 +84,27 @@ CREATE TABLE oficio_asignacion (
 
 ALTER TABLE oficio_asignacion
     ADD CONSTRAINT uq_estudiante_periodo UNIQUE (ID_Estudiante, ID_Periodo);
+
+CREATE VIEW vista_estudiantes_asignados AS
+SELECT
+    e.ID_Estudiante, e.nombre AS 'estudiante', e.semestre, e.promedio,
+    p.ID_Proyecto, p.nombre AS 'proyecto', p.max_participantes FROM estudiante e
+JOIN proyecto p
+ON e.ID_Proyecto = p.ID_proyecto;
+
+CREATE VIEW vista_asignaciones_lugares AS
+SELECT ID_Proyecto, count(ID_Proyecto) AS num_asignaciones, max_participantes FROM vista_estudiantes_asignados
+GROUP BY ID_proyecto, max_participantes;
+
+CREATE VIEW vista_lugares_disponibles AS
+SELECT ID_Proyecto, max_participantes - num_asignaciones AS lugares_disponibles FROM vista_asignaciones_lugares;
+
+CREATE PROCEDURE consultar_proyectos_disponibles()
+SQL SECURITY INVOKER
+BEGIN
+SELECT p.ID_Proyecto, p.nombre, p.max_participantes, p.fecha_inicio, p.fecha_fin, vlp.lugares_disponibles FROM Proyecto p
+    JOIN vista_lugares_disponibles vlp
+    ON p.ID_Proyecto = vlp.ID_Proyecto
+    WHERE (NOW() BETWEEN fecha_inicio AND fecha_fin) AND lugares_disponibles > 0;
+END
+//
