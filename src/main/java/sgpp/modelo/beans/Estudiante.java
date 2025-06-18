@@ -134,6 +134,6 @@ public class Estudiante {
 
     @Override
     public String toString() {
-        return String.format("%s | Semestre: %s, Promedio: %s", matricula, semestre, promedio);
+        return String.format("%s | Semestre: %s, Promedio: %s", nombre, semestre, promedio);
     }
 }

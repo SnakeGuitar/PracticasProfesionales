@@ -29,7 +29,7 @@ public class EstudianteDAO {
             sentencia.setString(3, estudiante.getGenero());
             sentencia.setString(4, estudiante.getCorreo());
             sentencia.setString(5, estudiante.getTelefono());
-            sentencia.setInt(6, Integer.parseInt(estudiante.getSemestre()));
+            sentencia.setInt(6, estudiante.getSemestre());
             sentencia.setFloat(7, estudiante.getPromedio());
             sentencia.setBoolean(8, estudiante.isHablaIdiomaIndigena());
             sentencia.setInt(9, estudiante.getIdProyecto());
@@ -98,7 +98,7 @@ public class EstudianteDAO {
             sentencia.setString(1, estudiante.getNombre());
             sentencia.setString(2, estudiante.getCorreo());
             sentencia.setString(3, estudiante.getTelefono());
-            sentencia.setInt(4, Integer.parseInt(estudiante.getSemestre()));
+            sentencia.setInt(4, estudiante.getSemestre());
             sentencia.setFloat(5, estudiante.getPromedio());
             sentencia.setBoolean(6, estudiante.isHablaIdiomaIndigena());
             sentencia.setInt(7, estudiante.getIdEstudiante());
@@ -160,7 +160,6 @@ public class EstudianteDAO {
         String consulta = "SELECT * FROM estudiante";
 
         try {
-
             conexion = ConexionBD.abrirConexion();
             sentencia = conexion.prepareStatement(consulta);
             resultado = sentencia.executeQuery();
@@ -178,6 +177,27 @@ public class EstudianteDAO {
         return estudiantes;
     }
 
+    public static ArrayList<Estudiante> obtenerEstudiantesPendientesDeAsignacion() throws SQLException {
+        ArrayList<Estudiante> estudiantes = new ArrayList<Estudiante>();
+        Connection conexion = ConexionBD.abrirConexion();
+        if (conexion != null) {
+            String consulta = "SELECT ID_Estudiante, nombre, semestre, promedio FROM Estudiante WHERE ID_Proyecto is NULL";
+            PreparedStatement sentencia = conexion.prepareStatement(consulta);
+            ResultSet resultado = sentencia.executeQuery();
+            while (resultado.next()) {
+                Estudiante estudiante = new Estudiante();
+                estudiante.setIdEstudiante(resultado.getInt("ID_Estudiante"));
+                estudiante.setNombre(resultado.getString("nombre"));
+                estudiante.setSemestre(resultado.getInt("semestre"));
+                estudiante.setPromedio(resultado.getFloat("promedio"));
+                estudiantes.add(estudiante);
+            }
+        } else {
+            throw new SQLException();
+        }
+        return estudiantes;
+    }
+
     public static Estudiante convertirResultSetEstudiante(ResultSet resultado) throws SQLException {
         Estudiante estudiante = new Estudiante();
 
@@ -187,7 +207,7 @@ public class EstudianteDAO {
         estudiante.setGenero(resultado.getString("genero"));
         estudiante.setCorreo(resultado.getString("correo"));
         estudiante.setTelefono(resultado.getString("telefono"));
-        estudiante.setSemestre(String.valueOf(resultado.getInt("semestre")));
+        estudiante.setSemestre(resultado.getInt("semestre"));
         estudiante.setPromedio(resultado.getFloat("promedio"));
         estudiante.setHablaIdiomaIndigena(resultado.getBoolean("habla_idioma_indigena"));
         estudiante.setIdProyecto(resultado.getInt("ID_Proyecto"));
