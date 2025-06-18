@@ -21,7 +21,7 @@ public class Estudiante {
     private String genero;
     private String correo;
     private String telefono;
-    private String semestre;
+    private int semestre;
     private float promedio;
     private boolean hablaIdiomaIndigena;
     private int idProyecto;
@@ -30,7 +30,7 @@ public class Estudiante {
     public Estudiante() {
     }
 
-    public Estudiante(int idEstudiante, String matricula, String nombre, String genero, String correo, String telefono, String semestre, float promedio, boolean hablaIdiomaIndigena, int idProyecto, int idusuario) {
+    public Estudiante(int idEstudiante, String matricula, String nombre, String genero, String correo, String telefono, int semestre, float promedio, boolean hablaIdiomaIndigena, int idProyecto, int idusuario) {
         this.idEstudiante = idEstudiante;
         this.matricula = matricula;
         this.nombre = nombre;
@@ -92,11 +92,11 @@ public class Estudiante {
         this.telefono = telefono;
     }
 
-    public String getSemestre() {
+    public int getSemestre() {
         return semestre;
     }
 
-    public void setSemestre(String semestre) {
+    public void setSemestre(int semestre) {
         this.semestre = semestre;
     }
 
