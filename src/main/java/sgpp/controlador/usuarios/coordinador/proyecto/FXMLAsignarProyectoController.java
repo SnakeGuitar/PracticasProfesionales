@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import sgpp.modelo.beans.Estudiante;
 import sgpp.modelo.beans.Proyecto;
+import sgpp.modelo.dao.entidades.EstudianteDAO;
 import sgpp.modelo.dao.entidades.ProyectoDAO;
 import sgpp.utilidad.Utilidad;
 
@@ -32,7 +33,15 @@ public class FXMLAsignarProyectoController implements Initializable {
     }
 
     private void cargarEstudiantes() {
-
+        estudiantes = FXCollections.observableArrayList();
+        try {
+            List<Estudiante> estudiantesAux = EstudianteDAO.obtenerEstudiantesPendientesDeAsignacion();
+            estudiantes.addAll(estudiantesAux);
+            listEstudiantes.setItems(estudiantes);
+        } catch (SQLException sqlex) {
+            System.out.println("Error al obtener estudiantes: " + sqlex.getMessage());
+            Utilidad.crearAlerta(Alert.AlertType.ERROR, "Error", "No se pudo cargar los Estudiantes");
+        }
     }
 
     private void cargarProyectos() {
@@ -42,7 +51,7 @@ public class FXMLAsignarProyectoController implements Initializable {
             proyectos.addAll(proyectosAux);
             listProyectos.setItems(proyectos);
         } catch (SQLException sqlex) {
-            System.out.println(sqlex.getMessage());
+            System.out.println("Error al obtener los proyectos" + sqlex.getMessage());
             Utilidad.crearAlerta(Alert.AlertType.ERROR, "Error", "No se pudo cargar los proyectos");
         }
     }
