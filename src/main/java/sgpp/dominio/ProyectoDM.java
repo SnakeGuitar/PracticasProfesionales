@@ -45,7 +45,7 @@ public class ProyectoDM {
         ResultadoValidacion resultado = new ResultadoValidacion();
         if (fechaFin.isBefore(LocalDate.now()) || fechaFin.isEqual(LocalDate.now()) ) {
             resultado.setValido(false);
-            resultado.setMensaje("La fecha de finalizacion no puede ser igual o posterior a hoy");
+            resultado.setMensaje("La fecha de finalizacion no puede ser igual o anterior a hoy");
         } else  {
             resultado.setValido(true);
         }
