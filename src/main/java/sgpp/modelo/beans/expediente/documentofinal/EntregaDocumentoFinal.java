@@ -15,7 +15,6 @@
 package sgpp.modelo.beans.expediente.documentofinal;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class EntregaDocumentoFinal {
     private int idEntregaDocumentoFinal;
