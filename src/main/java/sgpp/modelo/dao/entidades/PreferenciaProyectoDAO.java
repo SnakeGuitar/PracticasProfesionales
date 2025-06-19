@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PreferenciaProyectoDAO {
-    public static List<PreferenciaProyecto> obtenerPreferenciasDelEstudiante(int idEstudiante) throws SQLException {
+
+    public static List<PreferenciaProyecto> obtenerPreferencias(int[] idsEstudiantes) throws SQLException {
         List<PreferenciaProyecto> preferencias = new ArrayList<PreferenciaProyecto>();
         Connection conexion = ConexionBD.abrirConexion();
         if (conexion != null) {
@@ -17,11 +18,13 @@ public class PreferenciaProyectoDAO {
             ResultSet resultado = null;
             try {
                 String consulta = "SELECT num_preferencia, ID_Proyecto, ID_Estudiante FROM Preferencia WHERE ID_Estudiante = ?";
-                sentencia = conexion.prepareStatement(consulta);
-                sentencia.setInt(1, idEstudiante);
-                resultado = sentencia.executeQuery();
-                while (resultado.next()) {
-                    preferencias.add(convertirPreferenciaProyecto(resultado));
+                for (int idEstudiante : idsEstudiantes) {
+                    sentencia = conexion.prepareStatement(consulta);
+                    sentencia.setInt(1, idEstudiante);
+                    resultado = sentencia.executeQuery();
+                    while (resultado.next()) {
+                        preferencias.add(convertirPreferenciaProyecto(resultado));
+                    }
                 }
             } finally {
                 Utilidad.cerrarRecursosSQL(conexion, sentencia, resultado);

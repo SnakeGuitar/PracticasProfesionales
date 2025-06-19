@@ -150,4 +150,32 @@ public class ProyectoDAO {
         }
         return proyectosDisponibles;
     }
+
+    public static List<Proyecto> nombreProyectos(int[] idsProyectos) throws SQLException {
+        List<Proyecto> proyectos = new ArrayList<>();
+        Connection conexion = ConexionBD.abrirConexion();
+        if (conexion != null) {
+            PreparedStatement sentencia = null;
+            ResultSet resultado = null;
+            try {
+                String consulta = "SELECT ID_Proyecto, nombre FROM Proyecto WHERE ID_Proyecto = ?";
+                for (int idProyecto : idsProyectos) {
+                    sentencia = conexion.prepareStatement(consulta);
+                    sentencia.setInt(1, idProyecto);
+                    resultado = sentencia.executeQuery();
+                    if (resultado.next()) {
+                        Proyecto proyecto = new Proyecto();
+                        proyecto.setIdProyecto(resultado.getInt("ID_Proyecto"));
+                        proyecto.setNombre(resultado.getString("nombre"));
+                        proyectos.add(proyecto);
+                    }
+                }
+            } finally {
+                Utilidad.cerrarRecursosSQL(conexion, sentencia, resultado);
+            }
+        } else {
+            throw new SQLException("Se ha perdido la conexion a la base de datos");
+        }
+        return proyectos;
+    }
 }
