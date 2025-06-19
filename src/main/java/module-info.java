@@ -13,6 +13,7 @@ module com.sgpp.sistemagestionpracticasprofesionales {
 
     opens sgpp.controlador.usuarios.coordinador.organizacionvinculada to javafx.fxml;
     opens sgpp.controlador.usuarios.coordinador.proyecto to javafx.fxml;
+    opens sgpp.controlador.usuarios.coordinador.responsabletecnico to javafx.fxml;
     opens sgpp.controlador.usuarios.estudiante.documentopracticas to javafx.fxml;
 
     opens sgpp.modelo.beans to javafx.base;
@@ -24,6 +25,7 @@ module com.sgpp.sistemagestionpracticasprofesionales {
 
     exports sgpp.controlador.usuarios.coordinador.organizacionvinculada to javafx.fxml;
     exports sgpp.controlador.usuarios.coordinador.proyecto to javafx.fxml;
+    exports sgpp.controlador.usuarios.coordinador.responsabletecnico to javafx.fxml;
     exports sgpp.controlador.usuarios.estudiante.documentopracticas to javafx.fxml;
 
     exports sgpp.modelo.beans to javafx.fxml;
