@@ -214,15 +214,21 @@ public class Utilidad {
         }
     }
 
-    public static void cerrarRecursosSQL(Connection conn, PreparedStatement ps, ResultSet rs) throws SQLException {
-        conn.close();
-        ps.close();
-        rs.close();
+    public static void cerrarRecursosSQL(Connection conexion, PreparedStatement sentencia, ResultSet resultado) throws SQLException {
+        if (resultado != null) {
+            resultado.close();
+        }
+        if (sentencia != null) {
+            sentencia.close();
+        }
+        if (conexion != null) {
+            conexion.close();
+        }
     }
 
-    public static void cerrarRecursosSQL(Connection conn, CallableStatement call, ResultSet rs) throws SQLException {
-        conn.close();
-        call.close();
-        rs.close();
+    public static void cerrarRecursosSQL(Connection conexion, CallableStatement llamada, ResultSet resultado) throws SQLException {
+        resultado.close();
+        llamada.close();
+        conexion.close();
     }
 }
