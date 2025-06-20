@@ -30,7 +30,7 @@ public class PeriodoDAO {
         Connection conexion = null;
         PreparedStatement sentencia = null;
         ResultSet resultado = null;
-        String consulta = "SELECT ID_Periodo, abreviatura, fecha_inicio, fecha_fin FROM periodo where NOW() BETWEEN fecha_inicio AND fecha_fin";
+        String consulta = "SELECT ID_Periodo, abreviatura, fecha_inicio, fecha_fin FROM periodo WHERE NOW() BETWEEN fecha_inicio AND fecha_fin";
 
         try {
             conexion = ConexionBD.abrirConexion();
