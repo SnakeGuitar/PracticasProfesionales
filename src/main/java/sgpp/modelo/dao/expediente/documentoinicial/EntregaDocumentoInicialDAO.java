@@ -39,7 +39,7 @@ public class EntregaDocumentoInicialDAO {
         try {
             conexionBD = ConexionBD.abrirConexion();
             if (conexionBD != null) {
-                String consulta = "INSERT INTO entrega_documento_inicial (fecha_apertura, fecha_limite, id_estudiante, id_periodo) VALUES (?, ?, ?, ?)";
+                String consulta = "INSERT INTO entrega_doc_inicial (fecha_apertura, fecha_limite, ID_Estudiante, ID_Periodo) VALUES (?, ?, ?, ?)";
                 sentencia = conexionBD.prepareStatement(consulta, PreparedStatement.RETURN_GENERATED_KEYS);
                 sentencia.setString(1, fechaApertura.toString());
                 sentencia.setString(2, fechaLimite.toString());
@@ -50,7 +50,12 @@ public class EntregaDocumentoInicialDAO {
                 if (filasAfectadas > 0) {
                     resultado = sentencia.getGeneratedKeys();
                     if (resultado.next()) {
-                        entregaDocumentoInicial = convertirAEntrega(resultado);
+                        entregaDocumentoInicial = new EntregaDocumentoInicial();
+                        entregaDocumentoInicial.setIdEntregaDocumentoInicial(resultado.getInt(1));
+                        entregaDocumentoInicial.setFechaApertura(fechaApertura);
+                        entregaDocumentoInicial.setFechaLimite(fechaLimite);
+                        entregaDocumentoInicial.setIdEstudiante(idEstudiante);
+                        entregaDocumentoInicial.setIdPeriodo(idPeriodo);
                     }
                 }
             } else {
@@ -79,7 +84,7 @@ public class EntregaDocumentoInicialDAO {
         try {
             conexionBD = ConexionBD.abrirConexion();
             if (conexionBD != null) {
-                String consulta = "SELECT * FROM entrega_documento_inicial WHERE id_entrega_documento_inicial = ?";
+                String consulta = "SELECT * FROM entrega_doc_inicial WHERE ID_Entrega_Doc_Inicialcol = ?";
                 sentencia = conexionBD.prepareStatement(consulta);
                 sentencia.setInt(1, idEntregaDocumentoInicial);
                 resultado = sentencia.executeQuery();
@@ -104,45 +109,31 @@ public class EntregaDocumentoInicialDAO {
         return entregaDocumentoInicial;
     }
 
-    public static List<EntregaDocumentoInicial> obtenerEntregasDisponibles(int idEstudiante, int idPeriodo) throws SQLException {
-        List<EntregaDocumentoInicial> entregas = new ArrayList<>();
-        Connection conexionBD = null;
-        PreparedStatement sentencia = null;
-        ResultSet resultado = null;
-
-        try {
-            conexionBD = ConexionBD.abrirConexion();
-            if (conexionBD != null) {
-                String consulta = "SELECT ID_Entrega_Doc_Inicialcol, fecha_apertura, fecha_limite, " +
-                        "ID_Estudiante, ID_Periodo " +
-                        "FROM entrega_doc_inicial " +
-                        "WHERE ID_Estudiante = ? AND ID_Periodo = ? " +
-                        "AND NOW() BETWEEN fecha_apertura AND fecha_limite " +
-                        "ORDER BY fecha_limite ASC";
-
+    public static EntregaDocumentoInicial obtenerEntregaDisponible(int idEstudiante, int idPeriodo) throws SQLException {
+        EntregaDocumentoInicial entrega = null;
+        Connection conexionBD = ConexionBD.abrirConexion();
+        if (conexionBD != null) {
+            String consulta = "SELECT * FROM entrega_doc_inicial WHERE ID_Estudiante = ? AND ID_Periodo = ?";
+            PreparedStatement sentencia = null;
+            ResultSet resultado = null;
+            try {
                 sentencia = conexionBD.prepareStatement(consulta);
                 sentencia.setInt(1, idEstudiante);
                 sentencia.setInt(2, idPeriodo);
                 resultado = sentencia.executeQuery();
-
-                while (resultado.next()) {
-                    entregas.add(convertirAEntrega(resultado));
+                if (resultado.next()) {
+                    System.out.println("Entrega encontrada para el estudiante con ID: " + idEstudiante + " y periodo con ID: " + idPeriodo);
+                    entrega = convertirAEntrega(resultado);
                 }
-            } else {
-                throw new SQLException("No se pudo establecer la conexión a la base de datos.");
+            } catch (SQLException e) {
+                throw new SQLException("Error al obtener la entrega de documento inicial: " + e.getMessage(), e);
+            } finally {
+                Utilidad.cerrarRecursosSQL(conexionBD, sentencia, resultado);
             }
-        } finally {
-            if (resultado != null) {
-                resultado.close();
-            }
-            if (sentencia != null) {
-                sentencia.close();
-            }
-            if (conexionBD != null) {
-                conexionBD.close();
-            }
+        } else {
+            throw new SQLException("No se pudo establecer la conexión a la base de datos.");
         }
-        return entregas;
+        return entrega;
     }
 
     public static List<EntregaDocumentoInicial> obtenerEntregasPorPeriodo(int idPeriodo) throws SQLException {

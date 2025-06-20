@@ -20,9 +20,10 @@ package sgpp.modelo.dao.expediente.documentoinicial;
 
 import sgpp.modelo.ConexionBD;
 import sgpp.modelo.beans.expediente.EstadoDocumento;
-import sgpp.modelo.beans.expediente.documentoinicial.DocumentoFinal;
+import sgpp.modelo.beans.expediente.documentoinicial.DocumentoInicial;
 import sgpp.modelo.beans.expediente.documentoinicial.TipoDocumentoInicial;
 import sgpp.utilidad.Utilidad;
+import sgpp.utilidad.UtilidadFormatoDeDatos;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -85,30 +86,29 @@ public class DocumentoInicialDAO {
      * @throws SQLException Si ocurre un error en la consulta
      */
 
-    public static List<DocumentoFinal> obtenerDocumentosInicialesPorExpediente(int idEstudiante, int idPeriodo) throws SQLException {
+    public static List<DocumentoInicial> obtenerDocumentosInicialesPorExpediente(int idEntregaDocInicial, int idPeriodo) throws SQLException {
         Connection conexion = null;
         PreparedStatement sentencia = null;
         ResultSet resultado = null;
 
-        List<DocumentoFinal> documentosIniciales = new ArrayList<>();
+        List<DocumentoInicial> documentosIniciales = new ArrayList<>();
 
         try {
             conexion = ConexionBD.abrirConexion();
             if (conexion != null) {
-                String consulta = "SELECT * FROM documento_inicial WHERE id_estudiante = ? AND id_periodo = ?";
+                String consulta = "SELECT * FROM documento_inicial WHERE id_entrega_doc_inicial = ?";
                 sentencia = conexion.prepareStatement(consulta);
-                sentencia.setInt(1, idEstudiante);
-                sentencia.setInt(2, idPeriodo);
+                sentencia.setInt(1, idEntregaDocInicial);
 
                 resultado = sentencia.executeQuery();
                 while (resultado.next()) {
-                    DocumentoFinal documentoInicial = new DocumentoFinal();
-                    documentoInicial.setIdDocumento(resultado.getInt("id_documento_inicial"));
-                    documentoInicial.setFechaEntrega(resultado.getDate("fecha_entrega"));
+                    DocumentoInicial documentoInicial = new DocumentoInicial();
+                    documentoInicial.setIdDocumento(resultado.getInt("id_doc_inicial"));
+                    documentoInicial.setFechaEntrega(UtilidadFormatoDeDatos.stringToLocalDateTime(resultado.getString("fecha_entrega")));
                     documentoInicial.setTipo(TipoDocumentoInicial.valueOf(resultado.getString("tipo")));
                     documentoInicial.setEstado(EstadoDocumento.valueOf(resultado.getString("estado")));
                     documentoInicial.setDocumento(resultado.getBytes("documento"));
-                    documentoInicial.setIdEntregaDocumento(resultado.getInt("id_entrega_documento_inicial"));
+                    documentoInicial.setIdEntregaDocumento(resultado.getInt("id_entrega_doc_inicial"));
                     documentosIniciales.add(documentoInicial);
                 }
             } else {
@@ -133,7 +133,7 @@ public class DocumentoInicialDAO {
      * @return true si la inserción fue exitosa, false en caso contrario
      * @throws SQLException Si ocurre un error en la inserción
      */
-    public static boolean subirDocumentoInicial(DocumentoFinal documentoInicial, int idEntregaDocumentoInicial, int idEstudiante, int idPeriodo) throws SQLException {
+    public static boolean subirDocumentoInicial(DocumentoInicial documentoInicial, int idEntregaDocumentoInicial, int idEstudiante, int idPeriodo) throws SQLException {
         Connection conexionBD = null;
         PreparedStatement sentencia = null;
         boolean exito = false;
@@ -141,15 +141,13 @@ public class DocumentoInicialDAO {
         try {
             conexionBD = ConexionBD.abrirConexion();
             if (conexionBD != null) {
-                String consulta = "INSERT INTO documento_inicial (fecha_entrega, tipo, estado, documento, id_entrega_documento_inicial, id_estudiante, id_periodo) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                String consulta = "INSERT INTO documento_inicial (fecha_entrega, tipo, estado, documento, id_entrega_doc_inicial) VALUES (?, ?, ?, ?, ?)";
                 sentencia = conexionBD.prepareStatement(consulta);
-                sentencia.setDate(1, new java.sql.Date(documentoInicial.getFechaEntrega().getTime()));
+                sentencia.setString(1, UtilidadFormatoDeDatos.localDateTimeToString(documentoInicial.getFechaEntrega()));
                 sentencia.setString(2, documentoInicial.getTipo().name());
                 sentencia.setString(3, documentoInicial.getEstado().name());
                 sentencia.setBytes(4, documentoInicial.getDocumento());
                 sentencia.setInt(5, idEntregaDocumentoInicial);
-                sentencia.setInt(6, idEstudiante);
-                sentencia.setInt(7, idPeriodo);
 
                 int filasAfectadas = sentencia.executeUpdate();
                 exito = filasAfectadas > 0;
@@ -197,16 +195,36 @@ public class DocumentoInicialDAO {
                 throw new SQLException("No se pudo establecer la conexión a la base de datos.");
             }
         } finally {
-            if (resultado != null) {
-                resultado.close();
-            }
-            if (sentencia != null) {
-                sentencia.close();
-            }
-            if (conexionBD != null) {
-                conexionBD.close();
-            }
+            Utilidad.cerrarRecursosSQL(conexionBD, sentencia, resultado);
         }
         return existe;
+    }
+
+    public static DocumentoInicial obtenerDocumentoInicialPorTipo(int idEntregaDocInicial, TipoDocumentoInicial tipo) throws SQLException {
+        DocumentoInicial documentoInicial = null;
+        Connection conexion = ConexionBD.abrirConexion();
+        if (conexion != null) {
+            String consulta = "SELECT * FROM documento_inicial WHERE id_entrega_doc_inicial = ? AND tipo = ?";
+            PreparedStatement sentencia = null;
+            ResultSet resultado = null;
+            try {
+                sentencia = conexion.prepareStatement(consulta);
+                sentencia.setInt(1, idEntregaDocInicial);
+                sentencia.setString(2, tipo.name());
+                resultado = sentencia.executeQuery();
+                if (resultado.next()) {
+                    documentoInicial = new DocumentoInicial();
+                    documentoInicial.setIdDocumento(resultado.getInt("id_doc_inicial"));
+                    documentoInicial.setFechaEntrega(UtilidadFormatoDeDatos.stringToLocalDateTime(resultado.getString("fecha_entrega")));
+                    documentoInicial.setTipo(TipoDocumentoInicial.valueOf(resultado.getString("tipo")));
+                    documentoInicial.setEstado(EstadoDocumento.valueOf(resultado.getString("estado")));
+                    documentoInicial.setDocumento(resultado.getBytes("documento"));
+                    documentoInicial.setIdEntregaDocumento(resultado.getInt("id_entrega_doc_inicial"));
+                }
+            } finally {
+                Utilidad.cerrarRecursosSQL(conexion, sentencia, resultado);
+            }
+        }
+        return documentoInicial;
     }
 }

@@ -9,10 +9,10 @@ package sgpp.modelo.dao.expediente.documentofinal;
 
 import sgpp.modelo.ConexionBD;
 import sgpp.modelo.beans.expediente.EstadoDocumento;
+import sgpp.modelo.beans.expediente.documentofinal.DocumentoFinal;
 import sgpp.modelo.beans.expediente.documentofinal.TipoDocumentoFinal;
-import sgpp.modelo.beans.expediente.documentoinicial.DocumentoFinal;
-import sgpp.modelo.beans.expediente.documentoinicial.TipoDocumentoInicial;
 import sgpp.utilidad.Utilidad;
+import sgpp.utilidad.UtilidadFormatoDeDatos;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,10 +28,13 @@ public class DocumentoFinalDAO {
      *
      * @param documentoFinal           Objeto DocumentoFinal con los datos
      * @param idEntregaDocumentoFinal  ID de entrega del documento final
+     * @param idEstudiante            ID del estudiante
+     * @param idPeriodo               ID del período
      * @return true si la inserción fue exitosa, false en caso contrario
      * @throws SQLException Si ocurre un error en la inserción
      */
-    public static boolean subirDocumentoFinal(sgpp.modelo.beans.expediente.documentofinal.DocumentoFinal documentoFinal, int idEntregaDocumentoFinal) throws SQLException {
+    public static boolean subirDocumentoFinal(DocumentoFinal documentoFinal, int idEntregaDocumentoFinal,
+                                              int idEstudiante, int idPeriodo) throws SQLException {
         Connection conexion = null;
         PreparedStatement sentencia = null;
         boolean exito = false;
@@ -39,58 +42,65 @@ public class DocumentoFinalDAO {
         try {
             conexion = ConexionBD.abrirConexion();
             if (conexion != null) {
-                String consulta = "INSERT INTO documento_final (fecha_entrega, tipo, estado, documento, ID_Entrega_Doc_Final) VALUES (?, ?, ?, ?, ?)";
+                String consulta = "INSERT INTO documento_final (fecha_entrega, tipo, estado, documento, " +
+                        "id_entrega_documento_final, id_estudiante, id_periodo) VALUES (?, ?, ?, ?, ?, ?, ?)";
                 sentencia = conexion.prepareStatement(consulta);
-                sentencia.setTimestamp(1, new java.sql.Timestamp(documentoFinal.getFechaEntrega().getTime()));
+                sentencia.setString(1, UtilidadFormatoDeDatos.localDateTimeToString(documentoFinal.getFechaEntrega()));
                 sentencia.setString(2, documentoFinal.getTipo().name());
                 sentencia.setString(3, documentoFinal.getEstado().name());
                 sentencia.setBytes(4, documentoFinal.getDocumento());
                 sentencia.setInt(5, idEntregaDocumentoFinal);
+                sentencia.setInt(6, idEstudiante);
+                sentencia.setInt(7, idPeriodo);
 
                 int filasAfectadas = sentencia.executeUpdate();
                 exito = filasAfectadas > 0;
             } else {
-                throw new SQLException();
+                throw new SQLException("No se pudo establecer la conexión a la base de datos.");
             }
-        } catch (SQLException e) {
-            Utilidad.mostrarErrorBD(true, e);
         } finally {
-            ConexionBD.cerrarConexion(conexion, sentencia, null);
+            if (sentencia != null) {
+                sentencia.close();
+            }
+            if (conexion != null) {
+                conexion.close();
+            }
         }
-
         return exito;
     }
 
     /**
-     * Obtiene los documentos finales por ID de entrega.
+     * Obtiene los documentos finales por expediente de estudiante y período.
      *
-     * @param idEntregaDocumentoFinal ID de entrega del documento final
+     * @param idEstudiante ID del estudiante
+     * @param idPeriodo    ID del período
      * @return Lista de documentos finales
      * @throws SQLException Si ocurre un error en la consulta
      */
-    public static List<sgpp.modelo.beans.expediente.documentofinal.DocumentoFinal> obtenerDocumentosFinales(int idEntregaDocumentoFinal) throws SQLException {
+    public static List<DocumentoFinal> obtenerDocumentosFinalesPorExpediente(int idEstudiante, int idPeriodo) throws SQLException {
         Connection conexion = null;
         PreparedStatement sentencia = null;
         ResultSet resultado = null;
 
-        List<sgpp.modelo.beans.expediente.documentofinal.DocumentoFinal> documentosFinales = new ArrayList<>();
+        List<DocumentoFinal> documentosFinales = new ArrayList<>();
 
         try {
             conexion = ConexionBD.abrirConexion();
             if (conexion != null) {
-                String consulta = "SELECT * FROM documento_final WHERE ID_Entrega_Doc_Final = ?";
+                String consulta = "SELECT * FROM documento_final WHERE id_estudiante = ? AND id_periodo = ?";
                 sentencia = conexion.prepareStatement(consulta);
-                sentencia.setInt(1, idEntregaDocumentoFinal);
+                sentencia.setInt(1, idEstudiante);
+                sentencia.setInt(2, idPeriodo);
 
                 resultado = sentencia.executeQuery();
                 while (resultado.next()) {
-                    sgpp.modelo.beans.expediente.documentofinal.DocumentoFinal documentoFinal = new sgpp.modelo.beans.expediente.documentofinal.DocumentoFinal();
-                    documentoFinal.setIdDocumento(resultado.getInt("ID_Doc_Final"));
-                    documentoFinal.setFechaEntrega(resultado.getDate("fecha_entrega"));
+                    DocumentoFinal documentoFinal = new DocumentoFinal();
+                    documentoFinal.setIdDocumento(resultado.getInt("id_documento_final"));
+                    documentoFinal.setFechaEntrega(UtilidadFormatoDeDatos.stringToLocalDateTime(resultado.getString("fecha_entrega")));
                     documentoFinal.setTipo(TipoDocumentoFinal.valueOf(resultado.getString("tipo")));
                     documentoFinal.setEstado(EstadoDocumento.valueOf(resultado.getString("estado")));
                     documentoFinal.setDocumento(resultado.getBytes("documento"));
-                    documentoFinal.setIdEntregaDocumento(resultado.getInt("ID_Entrega_Doc_Final"));
+                    documentoFinal.setIdEntregaDocumento(resultado.getInt("id_entrega_documento_final"));
                     documentosFinales.add(documentoFinal);
                 }
             } else {
@@ -106,13 +116,14 @@ public class DocumentoFinalDAO {
     }
 
     /**
-     * Verifica si existe un documento final por ID de entrega.
+     * Verifica si existe un documento final para un estudiante en un período específico.
      *
-     * @param idEntregaDocumentoFinal ID de entrega del documento final
+     * @param idEstudiante ID del estudiante
+     * @param idPeriodo    ID del período
      * @return true si existe al menos un documento, false en caso contrario
      * @throws SQLException Si ocurre un error en la consulta
      */
-    public static boolean existeDocumentoFinal(int idEntregaDocumentoFinal) throws SQLException {
+    public static boolean existeDocumentoFinal(int idEstudiante, int idPeriodo) throws SQLException {
         Connection conexion = null;
         PreparedStatement sentencia = null;
         ResultSet resultado = null;
@@ -121,13 +132,55 @@ public class DocumentoFinalDAO {
         try {
             conexion = ConexionBD.abrirConexion();
             if (conexion != null) {
-                String consulta = "SELECT COUNT(*) FROM documento_final WHERE ID_Entrega_Doc_Final = ?";
+                String consulta = "SELECT COUNT(*) FROM documento_final WHERE id_estudiante = ? AND id_periodo = ?";
                 sentencia = conexion.prepareStatement(consulta);
-                sentencia.setInt(1, idEntregaDocumentoFinal);
+                sentencia.setInt(1, idEstudiante);
+                sentencia.setInt(2, idPeriodo);
 
                 resultado = sentencia.executeQuery();
                 if (resultado.next()) {
                     existe = resultado.getInt(1) > 0;
+                }
+            } else {
+                throw new SQLException("No se pudo establecer la conexión a la base de datos.");
+            }
+        } finally {
+            Utilidad.cerrarRecursosSQL(conexion, sentencia, resultado);
+        }
+        return existe;
+    }
+
+    /**
+     * Obtiene los documentos finales por ID de entrega.
+     *
+     * @param idEntregaDocumentoFinal ID de entrega del documento final
+     * @return Lista de documentos finales
+     * @throws SQLException Si ocurre un error en la consulta
+     */
+    public static List<DocumentoFinal> obtenerDocumentosFinales(int idEntregaDocumentoFinal) throws SQLException {
+        Connection conexion = null;
+        PreparedStatement sentencia = null;
+        ResultSet resultado = null;
+
+        List<DocumentoFinal> documentosFinales = new ArrayList<>();
+
+        try {
+            conexion = ConexionBD.abrirConexion();
+            if (conexion != null) {
+                String consulta = "SELECT * FROM documento_final WHERE id_entrega_documento_final = ?";
+                sentencia = conexion.prepareStatement(consulta);
+                sentencia.setInt(1, idEntregaDocumentoFinal);
+
+                resultado = sentencia.executeQuery();
+                while (resultado.next()) {
+                    DocumentoFinal documentoFinal = new DocumentoFinal();
+                    documentoFinal.setIdDocumento(resultado.getInt("id_documento_final"));
+                    documentoFinal.setFechaEntrega(UtilidadFormatoDeDatos.stringToLocalDateTime(resultado.getString("fecha_entrega")));
+                    documentoFinal.setTipo(TipoDocumentoFinal.valueOf(resultado.getString("tipo")));
+                    documentoFinal.setEstado(EstadoDocumento.valueOf(resultado.getString("estado")));
+                    documentoFinal.setDocumento(resultado.getBytes("documento"));
+                    documentoFinal.setIdEntregaDocumento(resultado.getInt("id_entrega_documento_final"));
+                    documentosFinales.add(documentoFinal);
                 }
             } else {
                 throw new SQLException();
@@ -138,7 +191,7 @@ public class DocumentoFinalDAO {
             ConexionBD.cerrarConexion(conexion, sentencia, resultado);
         }
 
-        return existe;
+        return documentosFinales;
     }
 
     /**
@@ -157,7 +210,7 @@ public class DocumentoFinalDAO {
         try {
             conexion = ConexionBD.abrirConexion();
             if (conexion != null) {
-                String consulta = "UPDATE documento_final SET estado = ? WHERE ID_Doc_Final = ?";
+                String consulta = "UPDATE documento_final SET estado = ? WHERE id_documento_final = ?";
                 sentencia = conexion.prepareStatement(consulta);
                 sentencia.setString(1, nuevoEstado.name());
                 sentencia.setInt(2, idDocumentoFinal);
@@ -193,7 +246,7 @@ public class DocumentoFinalDAO {
             if (conexion != null) {
                 String consulta = "UPDATE documento_final " +
                         "SET documento = ?, estado = 'Entregado', fecha_entrega = NOW() " +
-                        "WHERE tipo = ? AND ID_Entrega_Doc_Final = ?";
+                        "WHERE tipo = ? AND id_entrega_documento_final = ?";
 
                 sentencia = conexion.prepareStatement(consulta);
                 sentencia.setBytes(1, pdfDocumento);
@@ -208,7 +261,7 @@ public class DocumentoFinalDAO {
                 if (filasAfectadas > 0) {
                     System.out.println("Documento final de tipo " + tipoDocumento.name() + " guardado correctamente en la base de datos.");
                 } else {
-                    throw new SQLException("No se encontró un documento tipo '" + tipoDocumento.name() + "' con ID_Entrega_Doc_Final = " + idEntregaDocumentoFinal);
+                    throw new SQLException("No se encontró un documento tipo '" + tipoDocumento.name() + "' con id_entrega_documento_final = " + idEntregaDocumentoFinal);
                 }
 
             } else {
@@ -228,28 +281,28 @@ public class DocumentoFinalDAO {
      * @return DocumentoFinal o null si no se encuentra
      * @throws SQLException Si ocurre un error en la consulta
      */
-    public static sgpp.modelo.beans.expediente.documentofinal.DocumentoFinal obtenerDocumentoFinalPorId(int idDocumentoFinal) throws SQLException {
+    public static DocumentoFinal obtenerDocumentoFinalPorId(int idDocumentoFinal) throws SQLException {
         Connection conexion = null;
         PreparedStatement sentencia = null;
         ResultSet resultado = null;
-        sgpp.modelo.beans.expediente.documentofinal.DocumentoFinal documentoFinal = null;
+        DocumentoFinal documentoFinal = null;
 
         try {
             conexion = ConexionBD.abrirConexion();
             if (conexion != null) {
-                String consulta = "SELECT * FROM documento_final WHERE ID_Doc_Final = ?";
+                String consulta = "SELECT * FROM documento_final WHERE id_documento_final = ?";
                 sentencia = conexion.prepareStatement(consulta);
                 sentencia.setInt(1, idDocumentoFinal);
 
                 resultado = sentencia.executeQuery();
                 if (resultado.next()) {
-                    documentoFinal = new sgpp.modelo.beans.expediente.documentofinal.DocumentoFinal();
-                    documentoFinal.setIdDocumento(resultado.getInt("ID_Doc_Final"));
-                    documentoFinal.setFechaEntrega(resultado.getDate("fecha_entrega"));
+                    documentoFinal = new DocumentoFinal();
+                    documentoFinal.setIdDocumento(resultado.getInt("id_documento_final"));
+                    documentoFinal.setFechaEntrega(UtilidadFormatoDeDatos.stringToLocalDateTime(resultado.getString("fecha_entrega")));
                     documentoFinal.setTipo(TipoDocumentoFinal.valueOf(resultado.getString("tipo")));
                     documentoFinal.setEstado(EstadoDocumento.valueOf(resultado.getString("estado")));
                     documentoFinal.setDocumento(resultado.getBytes("documento"));
-                    documentoFinal.setIdEntregaDocumento(resultado.getInt("ID_Entrega_Doc_Final"));
+                    documentoFinal.setIdEntregaDocumento(resultado.getInt("id_entrega_documento_final"));
                 }
             } else {
                 throw new SQLException();
@@ -261,45 +314,5 @@ public class DocumentoFinalDAO {
         }
 
         return documentoFinal;
-    }
-
-    public static List<DocumentoFinal> obtenerDocumentosFinalesPorExpediente(int idEstudiante, int idPeriodo) throws SQLException {
-        Connection conexion = null;
-        PreparedStatement sentencia = null;
-        ResultSet resultado = null;
-
-        List<DocumentoFinal> documentosFinales = new ArrayList<>();
-
-        try {
-            conexion = ConexionBD.abrirConexion();
-            if (conexion != null) {
-                String consulta = "SELECT * FROM documento_inicial WHERE id_estudiante = ? AND id_periodo = ?";
-                sentencia = conexion.prepareStatement(consulta);
-                sentencia.setInt(1, idEstudiante);
-                sentencia.setInt(2, idPeriodo);
-
-                resultado = sentencia.executeQuery();
-                while (resultado.next()) {
-                    DocumentoFinal documentoFinal = new DocumentoFinal();
-
-                    documentoFinal.setIdDocumento(resultado.getInt("id_documento_final"));
-                    documentoFinal.setFechaEntrega(resultado.getDate("fecha_entrega"));
-                    documentoFinal.setTipo(TipoDocumentoInicial.valueOf(resultado.getString("tipo")));
-                    documentoFinal.setEstado(EstadoDocumento.valueOf(resultado.getString("estado")));
-                    documentoFinal.setDocumento(resultado.getBytes("documento"));
-                    documentoFinal.setIdEntregaDocumento(resultado.getInt("id_entrega_documento_final"));
-
-                    documentosFinales.add(documentoFinal);
-                }
-            } else {
-                throw new SQLException();
-            }
-        } catch (SQLException e) {
-            Utilidad.mostrarErrorBD(true, e);
-        } finally {
-            ConexionBD.cerrarConexion(conexion, sentencia, resultado);
-        }
-
-        return documentosFinales;
     }
 }

@@ -12,6 +12,7 @@ import sgpp.modelo.beans.expediente.EstadoDocumento;
 import sgpp.modelo.beans.expediente.documentoparcial.DocumentoParcial;
 import sgpp.modelo.beans.expediente.documentoparcial.TipoDocumentoParcial;
 import sgpp.utilidad.Utilidad;
+import sgpp.utilidad.UtilidadFormatoDeDatos;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,7 +43,7 @@ public class DocumentoParcialDAO {
             if (conexion != null) {
                 String consulta = "INSERT INTO documento_parcial (fecha_entrega, tipo, estado, documento, ID_Entrega_Doc_Parcial) VALUES (?, ?, ?, ?, ?)";
                 sentencia = conexion.prepareStatement(consulta);
-                sentencia.setDate(1, new java.sql.Date(documentoParcial.getFechaEntrega().getTime()));
+                sentencia.setString(1, UtilidadFormatoDeDatos.localDateTimeToString(documentoParcial.getFechaEntrega()));
                 sentencia.setString(2, documentoParcial.getTipo().name());
                 sentencia.setString(3, documentoParcial.getEstado().name());
                 sentencia.setBytes(4, documentoParcial.getDocumento());
@@ -87,7 +88,7 @@ public class DocumentoParcialDAO {
                 while (resultado.next()) {
                     DocumentoParcial documentoParcial = new DocumentoParcial();
                     documentoParcial.setIdDocumento(resultado.getInt("ID_Doc_Parcial"));
-                    documentoParcial.setFechaEntrega(resultado.getDate("fecha_entrega"));
+                    documentoParcial.setFechaEntrega(UtilidadFormatoDeDatos.stringToLocalDateTime(resultado.getString("fecha_entrega")));
                     documentoParcial.setTipo(TipoDocumentoParcial.valueOf(resultado.getString("tipo")));
                     documentoParcial.setEstado(EstadoDocumento.valueOf(resultado.getString("estado")));
                     documentoParcial.setDocumento(resultado.getBytes("documento"));
@@ -111,10 +112,11 @@ public class DocumentoParcialDAO {
      * Verifica si existe un documento parcial por ID de entrega.
      *
      * @param idEntregaDocumentoParcial ID de entrega del documento parcial
+     * @param idPeriodo
      * @return true si existe al menos un documento, false en caso contrario
      * @throws SQLException Si ocurre un error en la consulta
      */
-    public static boolean existeDocumentoParcial(int idEntregaDocumentoParcial) throws SQLException {
+    public static boolean existeDocumentoParcial(int idEntregaDocumentoParcial, int idPeriodo) throws SQLException {
         Connection conexion = null;
         PreparedStatement sentencia = null;
         ResultSet resultado = null;
@@ -246,7 +248,7 @@ public class DocumentoParcialDAO {
                 if (resultado.next()) {
                     documentoParcial = new DocumentoParcial();
                     documentoParcial.setIdDocumento(resultado.getInt("ID_Doc_Parcial"));
-                    documentoParcial.setFechaEntrega(resultado.getDate("fecha_entrega"));
+                    documentoParcial.setFechaEntrega(UtilidadFormatoDeDatos.stringToLocalDateTime(resultado.getString("fecha_entrega")));
                     documentoParcial.setTipo(TipoDocumentoParcial.valueOf(resultado.getString("tipo")));
                     documentoParcial.setEstado(EstadoDocumento.valueOf(resultado.getString("estado")));
                     documentoParcial.setDocumento(resultado.getBytes("documento"));
@@ -283,7 +285,7 @@ public class DocumentoParcialDAO {
                 while (resultado.next()) {
                     DocumentoParcial documentoParcial = new DocumentoParcial();
                     documentoParcial.setIdDocumento(resultado.getInt("id_documento_parcial"));
-                    documentoParcial.setFechaEntrega(resultado.getDate("fecha_entrega"));
+                    documentoParcial.setFechaEntrega(UtilidadFormatoDeDatos.stringToLocalDateTime(resultado.getString("fecha_entrega")));
                     documentoParcial.setTipo(TipoDocumentoParcial.valueOf(resultado.getString("tipo")));
                     documentoParcial.setEstado(EstadoDocumento.valueOf(resultado.getString("estado")));
                     documentoParcial.setDocumento(resultado.getBytes("documento"));
