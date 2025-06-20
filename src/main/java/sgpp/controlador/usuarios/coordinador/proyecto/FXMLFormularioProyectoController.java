@@ -200,7 +200,10 @@ public class FXMLFormularioProyectoController implements Initializable {
         ResultadoSQL resultado = new ResultadoSQL();
         resultado = ProyectoDAO.registrar(candidato);
         if(!resultado.isError()) {
-            Utilidad.crearAlerta(Alert.AlertType.INFORMATION, "Exito", resultado.getMensaje());
+            Utilidad.crearAlerta(
+                    Alert.AlertType.INFORMATION,
+                    "Exito",
+                    "Proyecto Registrado Exitosamente");
             cerrarVentana();
         } else {
             Utilidad.crearAlerta(Alert.AlertType.ERROR, "Error", resultado.getMensaje());
@@ -213,7 +216,9 @@ public class FXMLFormularioProyectoController implements Initializable {
         if (confirmacion) {
             resultado = ProyectoDAO.actualizar(candidato);
             if(!resultado.isError()) {
-                Utilidad.crearAlerta(Alert.AlertType.INFORMATION, "Exito", resultado.getMensaje());
+                Utilidad.crearAlerta(
+                        Alert.AlertType.INFORMATION,
+                        "Exito", "Proyecto Actualizado Exitosamente");
                 cerrarVentana();
             } else {
                 Utilidad.crearAlerta(Alert.AlertType.ERROR, "Error", resultado.getMensaje());
