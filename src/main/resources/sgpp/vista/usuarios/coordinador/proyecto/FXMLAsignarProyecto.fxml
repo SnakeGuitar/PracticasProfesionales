@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefWidth="1024.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.coordinador.proyecto.FXMLAsignarProyectoController">
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.coordinador.proyecto.FXMLAsignarProyectoController">
    <children>
       <BorderPane>
          <top>
@@ -113,14 +113,17 @@
                         <Font name="Arial Rounded MT Bold" size="14.0" />
                      </font>
                   </Label>
-                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                  <VBox alignment="TOP_CENTER" prefHeight="239.0" prefWidth="184.0">
                      <children>
                         <Label fx:id="lbNombreEstudiante" text="Nombre del Estudiante" wrapText="true">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label text="Primera opción" />
+                        <Label text="Primera opción">
+                           <font>
+                              <Font name="Arial" size="12.0" />
+                           </font></Label>
                         <TextArea fx:id="txArPrimeraOpcion" editable="false" pickOnBounds="false" prefHeight="25.0" prefWidth="205.0" style="-fx-border-color: #ffd700;" wrapText="true">
                            <font>
                               <Font name="Arial" size="12.0" />
@@ -138,6 +141,15 @@
                               <Font name="Arial" size="12.0" />
                            </font>
                         </TextArea>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="*es posible que alguno(s) proyectos preferidos por el Estudiante ya no esten disponibles" wrapText="true">
+                                 <font>
+                                    <Font name="Calibri" size="10.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
                      </children>
                      <VBox.margin>
                         <Insets left="10.0" right="10.0" />

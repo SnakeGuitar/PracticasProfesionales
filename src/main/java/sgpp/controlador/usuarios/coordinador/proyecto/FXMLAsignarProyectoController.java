@@ -15,6 +15,7 @@ import javafx.scene.layout.VBox;
 import sgpp.modelo.beans.Estudiante;
 import sgpp.modelo.beans.PreferenciaProyecto;
 import sgpp.modelo.beans.Proyecto;
+import sgpp.modelo.dao.ResultadoSQL;
 import sgpp.modelo.dao.entidades.EstudianteDAO;
 import sgpp.modelo.dao.entidades.PreferenciaProyectoDAO;
 import sgpp.modelo.dao.entidades.ProyectoDAO;
@@ -52,6 +53,10 @@ public class FXMLAsignarProyectoController implements Initializable {
 
     public void initialize(URL url, ResourceBundle rb) {
         vboxPreferenciaProyecto.setVisible(false);
+        cargarDatos();
+    }
+
+    private void cargarDatos() {
         cargarEstudiantes();
         cargarProyectos();
         cargarPreferencias();
@@ -107,7 +112,7 @@ public class FXMLAsignarProyectoController implements Initializable {
 
     private void cargarNombresProyectosPreferidos() {
         try {
-            int[] ids = obtenerIDsProyectos();
+            int[] ids = obtenerIDsProyectosPorPreferencia();
             proyectosPreferidos = ProyectoDAO.nombreProyectos(ids);
         } catch (SQLException sqlex) {
             System.out.println("Error al obtener los proyectos preferidos: "+sqlex.getMessage());
@@ -127,7 +132,44 @@ public class FXMLAsignarProyectoController implements Initializable {
     }
 
     public void clicBtnAsignar(ActionEvent actionEvent) {
-        //TODO
+        Proyecto proyecto = listProyectos.getSelectionModel().getSelectedItem();
+        Estudiante estudiante = listEstudiantes.getSelectionModel().getSelectedItem();
+        if (proyecto != null && estudiante != null) {
+            boolean confirmacion = Utilidad.crearAlertaConfirmacion(
+                    "Confirmar",
+                    String.format("¿Asignar al Estudiante %s al Proyecto %s? Esta accion no se puede deshacer",
+                            estudiante.getNombre(), proyecto.getNombre()));
+            if (confirmacion) {
+                asignarProyecto(estudiante, proyecto);
+            }
+        } else {
+            Utilidad.crearAlerta(Alert.AlertType.INFORMATION,
+                    "Notificación",
+                    "Por favor seleccione un Estudiante y un Proyecto.");
+        }
+    }
+
+    private void asignarProyecto(Estudiante estudiante, Proyecto proyecto) {
+        try {
+            ResultadoSQL resultadoAsignacion = ProyectoDAO.asignarProyecto(
+                    proyecto.getIdProyecto(), estudiante.getIdEstudiante()
+            );
+            if (!resultadoAsignacion.isError()) {
+                Utilidad.crearAlerta(
+                        Alert.AlertType.INFORMATION,
+                        "Exito",
+                        "Asignación realizada exitosamente");
+                cargarDatos();
+                vboxPreferenciaProyecto.setVisible(false);
+            } else {
+                Utilidad.crearAlerta(Alert.AlertType.ERROR, "Error", resultadoAsignacion.getMensaje());
+            }
+        } catch (SQLException sqlex) {
+            System.out.println("Error al asignar proyecto: " + sqlex.getMessage());
+            Utilidad.crearAlerta(Alert.AlertType.ERROR,
+                    "Error",
+                    "Lo sentimos, por el momento no se pudo asignar el Proyecto, por favor intentelo más tarde");
+        }
     }
 
     public void clicListEstudiantes(MouseEvent mouseEvent) {
@@ -188,10 +230,10 @@ public class FXMLAsignarProyectoController implements Initializable {
         return ids;
     }
 
-    private int[] obtenerIDsProyectos() {
-        int[] ids = new int[proyectos.size()];
-        for (int i = 0; i < proyectos.size(); i++) {
-            ids[i] = proyectos.get(i).getIdProyecto();
+    private int[] obtenerIDsProyectosPorPreferencia() {
+        int[] ids = new int[preferencias.size()];
+        for (int i = 0; i < preferencias.size(); i++) {
+            ids[i] = preferencias.get(i).getIdProyecto();
         }
         return ids;
     }
