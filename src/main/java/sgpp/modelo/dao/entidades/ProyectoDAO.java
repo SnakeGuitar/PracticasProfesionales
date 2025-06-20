@@ -178,4 +178,33 @@ public class ProyectoDAO {
         }
         return proyectos;
     }
+
+    public static ResultadoSQL asignarProyecto(int idProyecto, int idEstudiante) throws SQLException {
+        ResultadoSQL resultadoAsignacion = new ResultadoSQL();
+        Connection conexion = ConexionBD.abrirConexion();
+        if (conexion != null) {
+            CallableStatement llamada = null;
+            try {
+                String consulta = "{CALL asignar_proyecto(?, ?, ?)}";
+                llamada = conexion.prepareCall(consulta);
+                llamada.setInt(1, idProyecto);
+                llamada.setInt(2, idEstudiante);
+                llamada.registerOutParameter(3, Types.BOOLEAN);
+                llamada.execute();
+                boolean exito = llamada.getBoolean("exito");
+                if (exito) {
+                    resultadoAsignacion.setError(false);
+                    resultadoAsignacion.setMensaje("Asignación realizada exitosamente");
+                } else {
+                    resultadoAsignacion.setError(true);
+                    resultadoAsignacion.setMensaje("Error al asignar el proyecto");
+                }
+            } finally {
+                Utilidad.cerrarRecursosSQL(conexion, llamada);
+            }
+        } else {
+            throw new SQLException("Se ha perdido la conexion a la base de datos");
+        }
+        return resultadoAsignacion;
+    }
 }
