@@ -17,11 +17,12 @@ package sgpp.modelo.beans.expediente.documentofinal;
 import sgpp.modelo.beans.expediente.Documento;
 import sgpp.modelo.beans.expediente.EstadoDocumento;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class DocumentoFinal extends Documento {
     private int idDocumentoFinal;
-    private Date fechaEntrega;
+    private LocalDateTime fechaEntrega;
     private TipoDocumentoFinal tipo;
     private EstadoDocumento estado;
     private byte[] documento;
@@ -29,7 +30,7 @@ public class DocumentoFinal extends Documento {
 
     public DocumentoFinal() {}
 
-    public DocumentoFinal(int idDocumentoFinal, Date fechaEntrega, TipoDocumentoFinal tipo, EstadoDocumento estado, byte[] documento, int idEntregaDocumentoFinal) {
+    public DocumentoFinal(int idDocumentoFinal, LocalDateTime fechaEntrega, TipoDocumentoFinal tipo, EstadoDocumento estado, byte[] documento, int idEntregaDocumentoFinal) {
         super(idDocumentoFinal, fechaEntrega, estado, documento, idEntregaDocumentoFinal);
         this.tipo = tipo;
     }

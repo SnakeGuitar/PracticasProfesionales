@@ -17,11 +17,11 @@ package sgpp.modelo.beans.expediente.documentoinicial;
 import sgpp.modelo.beans.expediente.Documento;
 import sgpp.modelo.beans.expediente.EstadoDocumento;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class DocumentoInicial extends Documento {
     private int idDocumentoInicial;
-    private Date fechaEntrega;
+    private LocalDateTime fechaEntrega;
     private TipoDocumentoInicial tipo;
     private EstadoDocumento estado;
     private byte[] documento;
@@ -29,7 +29,7 @@ public class DocumentoInicial extends Documento {
 
     public DocumentoInicial() {}
 
-    public DocumentoInicial(int idDocumentoInicial, Date fechaEntrega, TipoDocumentoInicial tipo, EstadoDocumento estado, byte[] documento, int idEntregaDocumentoInicial) {
+    public DocumentoInicial(int idDocumentoInicial, LocalDateTime fechaEntrega, TipoDocumentoInicial tipo, EstadoDocumento estado, byte[] documento, int idEntregaDocumentoInicial) {
         super(idDocumentoInicial, fechaEntrega, estado, documento, idEntregaDocumentoInicial);
         this.tipo = tipo;
     }

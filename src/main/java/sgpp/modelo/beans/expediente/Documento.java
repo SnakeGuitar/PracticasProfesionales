@@ -1,10 +1,11 @@
 package sgpp.modelo.beans.expediente;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public abstract class Documento {
     int idDocumento;
-    Date fechaEntrega;
+    LocalDateTime fechaEntrega;
     EstadoDocumento estado;
     // Enum tipo;
     byte[] documento;
@@ -12,7 +13,7 @@ public abstract class Documento {
 
     public Documento() {}
 
-    public Documento(int idDocumento, Date fechaEntrega, EstadoDocumento estado, byte[] documento, int idEntregaDocumento) {
+    public Documento(int idDocumento, LocalDateTime fechaEntrega, EstadoDocumento estado, byte[] documento, int idEntregaDocumento) {
         this.idEntregaDocumento = idEntregaDocumento;
         this.documento = documento;
         this.estado = estado;
@@ -28,11 +29,11 @@ public abstract class Documento {
         this.idDocumento = idDocumento;
     }
 
-    public Date getFechaEntrega() {
+    public LocalDateTime getFechaEntrega() {
         return fechaEntrega;
     }
 
-    public void setFechaEntrega(Date fechaEntrega) {
+    public void setFechaEntrega(LocalDateTime fechaEntrega) {
         this.fechaEntrega = fechaEntrega;
     }
 

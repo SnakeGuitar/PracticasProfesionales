@@ -15,20 +15,21 @@
 package sgpp.modelo.beans.expediente.reporte;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 public class EntregaReporte {
     private int idEntregaReporte;
     private int numeroReporte;
-    private Date fechaApertura;
-    private Date fechaLimite;
-    private Date fechaEntrega;
+    private LocalDateTime fechaApertura;
+    private LocalDateTime fechaLimite;
+    private LocalDateTime fechaEntrega;
     private int idEstudiante;
     private int idPeriodo;
 
     public EntregaReporte() {
     }
 
-    public EntregaReporte(int idEntregaReporte, int numeroReporte, Date fechaApertura, Date fechaLimite, Date fechaEntrega, int idEstudiante, int idPeriodo) {
+    public EntregaReporte(int idEntregaReporte, int numeroReporte, LocalDateTime fechaApertura, LocalDateTime fechaLimite, LocalDateTime fechaEntrega, int idEstudiante, int idPeriodo) {
         this.idEntregaReporte = idEntregaReporte;
         this.numeroReporte = numeroReporte;
         this.fechaApertura = fechaApertura;
@@ -54,27 +55,27 @@ public class EntregaReporte {
         this.numeroReporte = numeroReporte;
     }
 
-    public Date getFechaApertura() {
+    public LocalDateTime getFechaApertura() {
         return fechaApertura;
     }
 
-    public void setFechaApertura(Date fechaApertura) {
+    public void setFechaApertura(LocalDateTime fechaApertura) {
         this.fechaApertura = fechaApertura;
     }
 
-    public Date getFechaLimite() {
+    public LocalDateTime getFechaLimite() {
         return fechaLimite;
     }
 
-    public void setFechaLimite(Date fechaLimite) {
+    public void setFechaLimite(LocalDateTime fechaLimite) {
         this.fechaLimite = fechaLimite;
     }
 
-    public Date getFechaEntrega() {
+    public LocalDateTime getFechaEntrega() {
         return fechaEntrega;
     }
 
-    public void setFechaEntrega(Date fechaEntrega) {
+    public void setFechaEntrega(LocalDateTime fechaEntrega) {
         this.fechaEntrega = fechaEntrega;
     }
 

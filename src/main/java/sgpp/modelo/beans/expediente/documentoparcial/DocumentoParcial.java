@@ -17,11 +17,11 @@ package sgpp.modelo.beans.expediente.documentoparcial;
 import sgpp.modelo.beans.expediente.Documento;
 import sgpp.modelo.beans.expediente.EstadoDocumento;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class DocumentoParcial extends Documento {
     private int idDocumentoParcial;
-    private Date fechaEntrega;
+    private LocalDateTime fechaEntrega;
     private TipoDocumentoParcial tipo;
     private EstadoDocumento estado;
     private byte[] documento;
@@ -29,7 +29,7 @@ public class DocumentoParcial extends Documento {
 
     public DocumentoParcial() {}
 
-    public DocumentoParcial(int idDocumentoParcial, Date fechaEntrega, TipoDocumentoParcial tipo, EstadoDocumento estado, byte[] documento, int idEntregaDocumentoParcial) {
+    public DocumentoParcial(int idDocumentoParcial, LocalDateTime fechaEntrega, TipoDocumentoParcial tipo, EstadoDocumento estado, byte[] documento, int idEntregaDocumentoParcial) {
         super(idDocumentoParcial, fechaEntrega, estado, documento, idEntregaDocumentoParcial);
         this.tipo = tipo;
     }
