@@ -16,12 +16,11 @@ package sgpp.controlador.usuarios.estudiante.documentopracticas;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import sgpp.modelo.beans.Periodo;
 import sgpp.modelo.beans.expediente.EstadoDocumento;
 import sgpp.modelo.beans.expediente.documentofinal.DocumentoFinal;
 import sgpp.modelo.beans.expediente.documentofinal.EntregaDocumentoFinal;
@@ -32,6 +31,7 @@ import sgpp.modelo.beans.expediente.documentoinicial.TipoDocumentoInicial;
 import sgpp.modelo.beans.expediente.documentoparcial.DocumentoParcial;
 import sgpp.modelo.beans.expediente.documentoparcial.EntregaDocumentoParcial;
 import sgpp.modelo.beans.expediente.documentoparcial.TipoDocumentoParcial;
+import sgpp.modelo.dao.entidades.PeriodoDAO;
 import sgpp.modelo.dao.expediente.TipoDocumento;
 import sgpp.modelo.dao.expediente.documentofinal.DocumentoFinalDAO;
 import sgpp.modelo.dao.expediente.documentofinal.EntregaDocumentoFinalDAO;
@@ -47,13 +47,9 @@ import java.nio.file.Files;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initializable {
-
-    @FXML
-    private TextArea txArDescripcionEntrega;
 
     @FXML
     private Label nombreArchivoDocumento;
@@ -105,7 +101,7 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
 
     private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     private final int ID_ESTUDIANTE = 4;
-    private final int ID_PERIODO = 4;
+    private int idPeriodoActual;
 
     private TipoDocumento tipoDocumentoSeleccionado;
     private File archivoSeleccionado;
@@ -116,6 +112,26 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
     public void initialize(java.net.URL url, java.util.ResourceBundle rb) {
         // Inicialización de la vista para subir documentos de prácticas
         configurarInterfazInicial();
+        cargarPeriodo();
+    }
+
+    private void cargarEstudiante() {
+        //TODO
+        //Cargar el estudiante desde la sesión actual en la pantalla principal de estudiante
+    }
+
+    private void cargarPeriodo() {
+        try {
+            Periodo periodo = PeriodoDAO.obtenerPeriodoActual();
+            if (periodo != null) {
+                this.idPeriodoActual = periodo.getIdPeriodo();
+            } else {
+                Utilidad.crearAlertaAdvertencia("Sin período",
+                        "No se encontro un periodo activo.");
+            }
+        } catch (SQLException e) {
+            Utilidad.mostrarErrorBD(true, e);
+        }
     }
 
     @FXML
@@ -130,57 +146,57 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
 
     @FXML
     public void btnCartaAceptacion(ActionEvent actionEvent) {
-        manejarDocumentoInicial(TipoDocumentoInicial.CARTA_ACEPTACION, "Carta de Aceptación");
+        manejarDocumentoInicial(TipoDocumentoInicial.CartaAceptacion);
     }
 
     @FXML
     public void btnCronograma(ActionEvent actionEvent) {
-        manejarDocumentoInicial(TipoDocumentoInicial.CRONOGRAMA, "Cronograma de Actividades");
+        manejarDocumentoInicial(TipoDocumentoInicial.Cronograma);
     }
 
     @FXML
     public void btnOficioAsignacion(ActionEvent actionEvent) {
-        manejarDocumentoInicial(TipoDocumentoInicial.OFICIO_ASIGNACION, "Oficio de Asignación");
+        manejarDocumentoInicial(TipoDocumentoInicial.OficioAsignacion);
     }
 
     @FXML
     public void btnHorarioUV(ActionEvent actionEvent) {
-        manejarDocumentoInicial(TipoDocumentoInicial.HORARIO_UV, "Horario de Unidad de Vinculación");
+        manejarDocumentoInicial(TipoDocumentoInicial.HorarioUV);
     }
 
     @FXML
     public void btnConstanciaSeguro(ActionEvent actionEvent) {
-        manejarDocumentoInicial(TipoDocumentoInicial.CONSTANCIA_SEGURO, "Constancia de Seguro");
+        manejarDocumentoInicial(TipoDocumentoInicial.ConstanciaSeguro);
     }
 
     @FXML
     public void btnReporteParcial(ActionEvent actionEvent) {
-        manejarDocumentoParcial(TipoDocumentoParcial.REPORTE_PARCIAL, "Reporte Parcial de Actividades");
+        manejarDocumentoParcial(TipoDocumentoParcial.REPORTE_PARCIAL);
     }
 
     @FXML
     public void btnEvaluacionParcialOV(ActionEvent actionEvent) {
-        manejarDocumentoParcial(TipoDocumentoParcial.EVALUACION_PARCIAL_POR_OV, "Evaluación Parcial de la Unidad de Vinculación");
+        manejarDocumentoParcial(TipoDocumentoParcial.EVALUACION_PARCIAL_POR_OV);
     }
 
     @FXML
     public void btnReporteFinal(ActionEvent actionEvent) {
-        manejarDocumentoFinal(TipoDocumentoFinal.REPORTE_FINAL, "Reporte Final de Actividades");
+        manejarDocumentoFinal(TipoDocumentoFinal.REPORTE_FINAL);
     }
 
     @FXML
     public void btnAutoevaluacion(ActionEvent actionEvent) {
-        manejarDocumentoFinal(TipoDocumentoFinal.AUTOEVALUACION, "Autoevaluación del Estudiante");
+        manejarDocumentoFinal(TipoDocumentoFinal.AUTOEVALUACION);
     }
 
     @FXML
     public void btnEvaluacionFinalOV(ActionEvent actionEvent) {
-        manejarDocumentoFinal(TipoDocumentoFinal.EVALUACION_FINAL_POR_OV, "Evaluación Final de la Unidad de Vinculación");
+        manejarDocumentoFinal(TipoDocumentoFinal.EVALUACION_FINAL_POR_OV);
     }
 
     @FXML
     public void btnCartaLiberacion(ActionEvent actionEvent) {
-        manejarDocumentoFinal(TipoDocumentoFinal.CARTA_LIBERACION, "Carta de Liberación de Prácticas");
+        manejarDocumentoFinal(TipoDocumentoFinal.CARTA_LIBERACION);
     }
 
     public void seleccionarPDF(ActionEvent actionEvent) {
@@ -198,6 +214,7 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
 
     @FXML
     private void subirReporte(ActionEvent event) {
+        //TODO mover a CU subir reporte
         // Validaciones preliminares
         if (entregaSeleccionada == null) {
             Utilidad.crearAlertaAdvertencia("Sin entrega",
@@ -259,33 +276,40 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
         }
     }
 
-    private void manejarDocumentoInicial(TipoDocumentoInicial tipo, String descripcion) {
+    private void manejarDocumentoInicial(TipoDocumentoInicial tipo) {
         try {
-            List<EntregaDocumentoInicial> entregas = EntregaDocumentoInicialDAO.obtenerEntregasDisponibles(ID_ESTUDIANTE, ID_PERIODO);
-            EntregaDocumentoInicial entrega = entregas.isEmpty() ? null : entregas.get(0);
-
-            if (entrega == null) {
-                Utilidad.crearAlerta(Alert.AlertType.ERROR,
-                        "No se encontró la entrega para el tipo de documento seleccionado.",
-                        "Error al cargar entrega");
-
-                return;
-            }
-
-            if (validarVentanaEntrega(entrega.getFechaApertura(), entrega.getFechaLimite())) {
-                entregaSeleccionada = entrega;
-                tipoDocumentoSeleccionado = TipoDocumento.INICIAL;
-                tipoEspecificoSeleccionado = tipo;
-                actualizarInterfaz(entrega.getFechaApertura(), entrega.getFechaLimite(), descripcion);
+            System.out.println("ID Estudiante: " + ID_ESTUDIANTE);
+            System.out.println("ID Periodo Actual: " + idPeriodoActual);
+            EntregaDocumentoInicial entrega = EntregaDocumentoInicialDAO.obtenerEntregaDisponible(ID_ESTUDIANTE, idPeriodoActual);
+            if (entrega != null) {
+                DocumentoInicial documento = DocumentoInicialDAO.obtenerDocumentoInicialPorTipo(entrega.getIdEntregaDocumentoInicial(), tipo);
+                if (documento != null) {
+                    Utilidad.crearAlertaAdvertencia("Ya entregado",
+                            "Ya has entregado este documento: " + tipo.name());
+                } else {
+                    if (validarVentanaEntrega(entrega.getFechaApertura(), entrega.getFechaLimite())) {
+                        entregaSeleccionada = entrega;
+                        tipoDocumentoSeleccionado = TipoDocumento.INICIAL;
+                        tipoEspecificoSeleccionado = tipo;
+                        Utilidad.crearAlertaInformacion(
+                                "Entrega disponible",
+                                "Puedes entregar el documento: " + tipo.name());
+                        actualizarInterfaz(entrega.getFechaApertura(), entrega.getFechaLimite());
+                    }
+                }
+            } else {
+                Utilidad.crearAlertaAdvertencia(
+                        "Error",
+                        "No hay una fecha de entrega programada para entregar tus documentos iniciales.");
             }
         } catch (SQLException e) {
             Utilidad.mostrarErrorBD(true, e);
         }
     }
 
-    private void manejarDocumentoParcial(TipoDocumentoParcial tipo, String descripcion) {
+    private void manejarDocumentoParcial(TipoDocumentoParcial tipo) {
         try {
-            List<EntregaDocumentoParcial> entregas = EntregaDocumentoParcialDAO.obtenerEntregasDisponibles(ID_ESTUDIANTE, ID_PERIODO);
+            List<EntregaDocumentoParcial> entregas = EntregaDocumentoParcialDAO.obtenerEntregasDisponibles(ID_ESTUDIANTE, idPeriodoActual);
             EntregaDocumentoParcial entrega = entregas.isEmpty() ? null : entregas.get(0);
 
             if (entrega == null) {
@@ -298,16 +322,16 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
                 entregaSeleccionada = entrega;
                 tipoDocumentoSeleccionado = TipoDocumento.PARCIAL;
                 tipoEspecificoSeleccionado = tipo;
-                actualizarInterfaz(entrega.getFechaApertura(), entrega.getFechaLimite(), descripcion);
+                actualizarInterfaz(entrega.getFechaApertura(), entrega.getFechaLimite());
             }
         } catch (SQLException e) {
             Utilidad.mostrarErrorBD(true, e);
         }
     }
 
-    private void manejarDocumentoFinal(TipoDocumentoFinal tipo, String descripcion) {
+    private void manejarDocumentoFinal(TipoDocumentoFinal tipo) {
         try {
-            List<EntregaDocumentoFinal> entregas = EntregaDocumentoFinalDAO.obtenerEntregasDisponibles(ID_ESTUDIANTE, ID_PERIODO);
+            List<EntregaDocumentoFinal> entregas = EntregaDocumentoFinalDAO.obtenerEntregasDisponibles(ID_ESTUDIANTE, idPeriodoActual);
             EntregaDocumentoFinal entrega = entregas.isEmpty() ? null : entregas.get(0);
 
             if (entrega == null) {
@@ -320,7 +344,7 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
                 entregaSeleccionada = entrega;
                 tipoDocumentoSeleccionado = TipoDocumento.FINAL;
                 tipoEspecificoSeleccionado = tipo;
-                actualizarInterfaz(entrega.getFechaApertura(), entrega.getFechaLimite(), descripcion);
+                actualizarInterfaz(entrega.getFechaApertura(), entrega.getFechaLimite());
             }
         } catch (SQLException e) {
             Utilidad.mostrarErrorBD(true, e);
@@ -331,8 +355,8 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
         EntregaDocumentoInicial entrega = (EntregaDocumentoInicial) entregaSeleccionada;
 
         DocumentoInicial documento = new DocumentoInicial();
-        documento.setFechaEntrega(new Date());
-        documento.setEstado(EstadoDocumento.ENTREGADO);
+        documento.setFechaEntrega(LocalDateTime.now());
+        documento.setEstado(EstadoDocumento.Entregado);
         documento.setDocumento(pdf);
         documento.setTipo((TipoDocumentoInicial) tipoEspecificoSeleccionado);
 
@@ -340,7 +364,7 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
                 documento,
                 entrega.getIdEntregaDocumentoInicial(),
                 ID_ESTUDIANTE,
-                ID_PERIODO
+                idPeriodoActual
         );
     }
 
@@ -348,8 +372,8 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
         EntregaDocumentoParcial entrega = (EntregaDocumentoParcial) entregaSeleccionada;
 
         DocumentoParcial documento = new DocumentoParcial();
-        documento.setFechaEntrega(new Date());
-        documento.setEstado(EstadoDocumento.ENTREGADO);
+        documento.setFechaEntrega(LocalDateTime.now());
+        documento.setEstado(EstadoDocumento.Entregado);
         documento.setDocumento(pdf);
         documento.setTipo((TipoDocumentoParcial) tipoEspecificoSeleccionado);
 
@@ -357,7 +381,7 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
                 documento,
                 entrega.getIdEntregaDocumentoParcial(),
                 ID_ESTUDIANTE,
-                ID_PERIODO
+                idPeriodoActual
         );
     }
 
@@ -365,8 +389,8 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
         EntregaDocumentoFinal entrega = (EntregaDocumentoFinal) entregaSeleccionada;
 
         DocumentoFinal documento = new DocumentoFinal();
-        documento.setFechaEntrega(new Date());
-        documento.setEstado(EstadoDocumento.ENTREGADO);
+        documento.setFechaEntrega(LocalDateTime.now());
+        documento.setEstado(EstadoDocumento.Entregado);
         documento.setDocumento(pdf);
         documento.setTipo((TipoDocumentoFinal) tipoEspecificoSeleccionado);
 
@@ -374,7 +398,7 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
                 documento,
                 entrega.getIdEntregaDocumentoFinal(),
                 ID_ESTUDIANTE,
-                ID_PERIODO
+                idPeriodoActual
         );
     }
 
@@ -392,7 +416,7 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
         }
     }
 
-    private void actualizarInterfaz(LocalDateTime fechaApertura, LocalDateTime fechaLimite, String descripcion) {
+    private void actualizarInterfaz(LocalDateTime fechaApertura, LocalDateTime fechaLimite) {
         String textoFechas = "Apertura: " + FORMATO_FECHA.format(fechaApertura) +
                 "  |  Límite: " + FORMATO_FECHA.format(fechaLimite);
 
@@ -404,23 +428,21 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
         } else if (tipoDocumentoSeleccionado == TipoDocumento.FINAL) {
             lblFechas2.setText(textoFechas);
         }
-
-        txArDescripcionEntrega.setText(descripcion);
     }
 
     private boolean yaExisteDocumentoEspecifico() throws SQLException {
         // Verificar si ya existe el documento específico del tipo seleccionado
         switch (tipoDocumentoSeleccionado) {
             case INICIAL:
-                List<DocumentoInicial> docsIniciales = DocumentoInicialDAO.obtenerDocumentosInicialesPorExpediente(ID_ESTUDIANTE, ID_PERIODO);
+                List<DocumentoInicial> docsIniciales = DocumentoInicialDAO.obtenerDocumentosInicialesPorExpediente(ID_ESTUDIANTE, idPeriodoActual);
                 return docsIniciales.stream()
                         .anyMatch(doc -> doc.getTipo() == tipoEspecificoSeleccionado);
             case PARCIAL:
-                List<DocumentoParcial> docsParciales = DocumentoParcialDAO.obtenerDocumentosParcialesPorExpediente(ID_ESTUDIANTE, ID_PERIODO);
+                List<DocumentoParcial> docsParciales = DocumentoParcialDAO.obtenerDocumentosParcialesPorExpediente(ID_ESTUDIANTE, idPeriodoActual);
                 return docsParciales.stream()
                         .anyMatch(doc -> doc.getTipo() == tipoEspecificoSeleccionado);
             case FINAL:
-                List<DocumentoFinal> docsFinales = DocumentoFinalDAO.obtenerDocumentosFinalesPorExpediente(ID_ESTUDIANTE, ID_PERIODO);
+                List<DocumentoFinal> docsFinales = DocumentoFinalDAO.obtenerDocumentosFinalesPorExpediente(ID_ESTUDIANTE, idPeriodoActual);
                 return docsFinales.stream()
                         .anyMatch(doc -> doc.getTipo() == tipoEspecificoSeleccionado);
             default:
@@ -442,12 +464,6 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
             lblFechas3.setText("Estado: Sin información");
         }
 
-        if (txArDescripcionEntrega != null) {
-            txArDescripcionEntrega.setText("Selecciona un documento para ver su descripción");
-            txArDescripcionEntrega.setEditable(false);
-            txArDescripcionEntrega.setWrapText(true);
-        }
-
         if (nombreArchivoDocumento != null) {
             nombreArchivoDocumento.setText("Ningún archivo seleccionado");
         }
@@ -466,7 +482,6 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
         tipoDocumentoSeleccionado = null;
         tipoEspecificoSeleccionado = null;
         nombreArchivoDocumento.setText("Ningún archivo seleccionado");
-        txArDescripcionEntrega.setText("Selecciona un documento para ver su descripción");
         lblFechas.setText("Selecciona un documento inicial para ver su información de entrega");
         lblFechas1.setText("Selecciona un documento parcial para ver su información de entrega");
         lblFechas2.setText("Selecciona un documento final para ver su información de entrega");
