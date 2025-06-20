@@ -41,6 +41,7 @@ public class Utilidad {
         alerta.setTitle(titulo);
         alerta.setHeaderText(null);
         alerta.setContentText(contenido);
+        alerta.setResizable(true);
         alerta.showAndWait();
     }
 
@@ -49,6 +50,7 @@ public class Utilidad {
         alertaConfirmacion.setTitle(titulo);
         alertaConfirmacion.setHeaderText(null);
         alertaConfirmacion.setContentText(contenido);
+        alertaConfirmacion.setResizable(true);
         return alertaConfirmacion.showAndWait().get() == ButtonType.OK;
     }
 
@@ -227,8 +229,32 @@ public class Utilidad {
     }
 
     public static void cerrarRecursosSQL(Connection conexion, CallableStatement llamada, ResultSet resultado) throws SQLException {
-        resultado.close();
-        llamada.close();
-        conexion.close();
+        if (resultado != null) {
+            resultado.close();
+        }
+        if (llamada != null) {
+            llamada.close();
+        }
+        if (conexion != null) {
+            conexion.close();
+        }
+    }
+
+    public static void cerrarRecursosSQL(Connection conexion, PreparedStatement sentencia) throws SQLException {
+        if (sentencia != null) {
+            sentencia.close();
+        }
+        if (conexion != null) {
+            conexion.close();
+        }
+    }
+
+    public static void cerrarRecursosSQL(Connection conexion, CallableStatement llamada) throws SQLException {
+        if (llamada != null) {
+            llamada.close();
+        }
+        if (conexion != null) {
+            conexion.close();
+        }
     }
 }
