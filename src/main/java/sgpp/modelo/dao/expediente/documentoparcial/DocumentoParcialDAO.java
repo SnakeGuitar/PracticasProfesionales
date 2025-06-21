@@ -304,4 +304,31 @@ public class DocumentoParcialDAO {
         return documentosParciales;
     }
 
+    public static DocumentoParcial obtenerDocumentoParcialPorTipo(int idEntregaDocParcial, TipoDocumentoParcial tipo) throws SQLException {
+        DocumentoParcial documentoParcial = null;
+        Connection conexion = ConexionBD.abrirConexion();
+        if (conexion != null) {
+            String consulta = "SELECT * FROM documento_parcial WHERE id_entrega_doc_parcial = ? AND tipo = ?";
+            PreparedStatement sentencia = null;
+            ResultSet resultado = null;
+            try {
+                sentencia = conexion.prepareStatement(consulta);
+                sentencia.setInt(1, idEntregaDocParcial);
+                sentencia.setString(2, tipo.name());
+                resultado = sentencia.executeQuery();
+                if (resultado.next()) {
+                    documentoParcial = new DocumentoParcial();
+                    documentoParcial.setIdDocumento(resultado.getInt("id_doc_parcial"));
+                    documentoParcial.setFechaEntrega(UtilidadFormatoDeDatos.stringToLocalDateTime(resultado.getString("fecha_entrega")));
+                    documentoParcial.setTipo(TipoDocumentoParcial.valueOf(resultado.getString("tipo")));
+                    documentoParcial.setEstado(EstadoDocumento.valueOf(resultado.getString("estado")));
+                    documentoParcial.setDocumento(resultado.getBytes("documento"));
+                    documentoParcial.setIdEntregaDocumento(resultado.getInt("id_entrega_doc_parcial"));
+                }
+            } finally {
+                Utilidad.cerrarRecursosSQL(conexion, sentencia, resultado);
+            }
+        }
+        return documentoParcial;
+    }
 }
