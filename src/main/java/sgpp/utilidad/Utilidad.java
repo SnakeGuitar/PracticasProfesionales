@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import java.util.Objects;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -94,7 +95,7 @@ public class Utilidad {
     public static void crearEscenario(String URL, String tituloEscenario) {
         try {
             Stage nuevoEscenario = new Stage();
-            Parent vista = FXMLLoader.load(SistemaGestionPracticasProfesionales.class.getResource(URL));
+            Parent vista = FXMLLoader.load(Objects.requireNonNull(SistemaGestionPracticasProfesionales.class.getResource(URL)));
             Scene nuevaEscena = new Scene(vista);
             nuevoEscenario.setScene(nuevaEscena);
             nuevoEscenario.initModality(Modality.APPLICATION_MODAL);
@@ -108,6 +109,12 @@ public class Utilidad {
     public static void configurarRadioButton(RadioButton boton, ToggleGroup grupo, int valor) {
         boton.setToggleGroup(grupo);
         boton.setUserData(valor);
+    }
+
+    public static void configurarListener(ToggleGroup grupo, float[]valores, int indice) {
+        grupo.selectedToggleProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) valores[indice] = (int) newVal.getUserData();
+        });
     }
 
     public static void configurarListener(ToggleGroup grupo, int[]valores, int indice) {
