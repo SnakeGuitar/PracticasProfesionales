@@ -17,13 +17,8 @@
 package sgpp.modelo.dao.expediente.documentoparcial;
 
 import sgpp.modelo.ConexionBD;
-import sgpp.modelo.beans.expediente.EstadoDocumento;
-import sgpp.modelo.beans.expediente.documentoinicial.DocumentoInicial;
-import sgpp.modelo.beans.expediente.documentoinicial.TipoDocumentoInicial;
-import sgpp.modelo.beans.expediente.documentoparcial.DocumentoParcial;
 import sgpp.modelo.beans.expediente.documentoparcial.EntregaDocumentoParcial;
-import sgpp.modelo.beans.expediente.documentoparcial.TipoDocumentoParcial;
-import sgpp.utilidad.Utilidad;
+import sgpp.modelo.dao.ResultadoSQL;
 import sgpp.utilidad.UtilidadFormatoDeDatos;
 
 import java.sql.Connection;
@@ -157,7 +152,7 @@ public class EntregaDocumentoParcialDAO {
             } catch (SQLException e) {
                 throw new SQLException("Error al obtener la entrega de documento parcial: " + e.getMessage(), e);
             } finally {
-                Utilidad.cerrarRecursosSQL(conexionBD, sentencia, resultado);
+                ConexionBD.cerrarConexion(conexionBD, sentencia, resultado);
             }
         } else {
             throw new SQLException("No se pudo establecer la conexión a la base de datos.");
@@ -306,7 +301,7 @@ public class EntregaDocumentoParcialDAO {
         try {
             conexionBD = ConexionBD.abrirConexion();
             if (conexionBD != null) {
-                String consulta = "SELECT * FROM entrega_doc_parcial WHERE ID_Periodo = ?";
+                String consulta = "SELECT * FROM entrega_doc_parcial WHERE ID_Periodo = ? ORDER BY fecha_apertura ASC";
                 sentencia = conexionBD.prepareStatement(consulta);
                 sentencia.setInt(1, idPeriodo);
                 resultado = sentencia.executeQuery();
@@ -338,5 +333,37 @@ public class EntregaDocumentoParcialDAO {
         entrega.setIdEstudiante(resultado.getInt("ID_Estudiante"));
         entrega.setIdPeriodo(resultado.getInt("ID_Periodo"));
         return entrega;
+    }
+
+    public static ResultadoSQL programarEntregas(EntregaDocumentoParcial candidata, int idPeriodo) throws SQLException {
+        ResultadoSQL resultadoOperacion = new ResultadoSQL();
+        String fechaApertura = candidata.getFechaApertura().toString();
+        String fechaLimite = candidata.getFechaLimite().toString();
+        Connection conexion = ConexionBD.abrirConexion();
+        if (conexion != null) {
+            String consulta = "UPDATE entrega_doc_parcial SET fecha_apertura = ?, fecha_limite = ? WHERE ID_Periodo = ?";
+            PreparedStatement sentencia = null;
+            try {
+                sentencia = conexion.prepareStatement(consulta);
+                sentencia.setString(1, fechaApertura);
+                sentencia.setString(2, fechaLimite);
+                sentencia.setInt(3, idPeriodo);
+                int filasAfectadas = sentencia.executeUpdate();
+                if (filasAfectadas > 0) {
+                    resultadoOperacion.setError(false);
+                    resultadoOperacion.setMensaje("Entregas parciales del periodo programadas exitosamente");
+                } else {
+                    resultadoOperacion.setError(true);
+                    resultadoOperacion.setMensaje("No se pudo configurar las entregas parciales del periodo");
+                }
+            } catch (SQLException sqlex) {
+                System.out.println(sqlex.getMessage());
+            } finally {
+                ConexionBD.cerrarConexion(conexion, sentencia);
+            }
+        } else {
+            throw new SQLException("Se ha perdido la conexion con la Base de Datos");
+        }
+        return resultadoOperacion;
     }
 }
