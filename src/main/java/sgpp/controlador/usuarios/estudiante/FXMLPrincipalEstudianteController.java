@@ -53,4 +53,7 @@ public class FXMLPrincipalEstudianteController implements Initializable {
         Utilidad.crearEscenario(RUTA_FXML_SUBIR_DOCUMENTO, "Consultar Entregas");
 
     }
+
+    public void clicBtnExpediente(ActionEvent actionEvent) {
+    }
 }
