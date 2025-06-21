@@ -53,103 +53,29 @@ public class EstudianteDAO {
         return exitoso;
     }
 
-    public static Estudiante obtenerPorId(int id) throws SQLException {
-        Connection conexion = null;
-        PreparedStatement sentencia = null;
-        ResultSet resultado = null;
+    public static Estudiante obtenerPorIdUsuario(int idUsuario) throws SQLException {
         Estudiante estudiante = null;
-        String consulta = "SELECT * FROM estudiante WHERE ID_Estudiante = ?";
-
-        try  {
-            conexion = ConexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(consulta);
-
-            sentencia.setInt(1, id);
-
-            resultado = sentencia.executeQuery();
-
-            if (resultado.next()) {
-                estudiante = convertirResultSetEstudiante(resultado);
-            } else {
-                throw new SQLException();
+        Connection conexion = ConexionBD.abrirConexion();
+        if (conexion != null) {
+            String consulta = "SELECT * FROM Estudiante WHERE ID_Usuario = ?";
+            PreparedStatement sentencia = null;
+            ResultSet resultado = null;
+            try {
+                sentencia = conexion.prepareStatement(consulta);
+                sentencia.setInt(1, idUsuario);
+                resultado = sentencia.executeQuery();
+                if (resultado.next()) {
+                    estudiante = convertirResultSetEstudiante(resultado);
+                }
+            } catch (SQLException sqlex) {
+                System.out.println("Error al obtener al estudiante: "+sqlex.getMessage());
+            } finally {
+                ConexionBD.cerrarConexion(conexion, sentencia, resultado);
             }
-
-        } catch (SQLException e) {
-            Utilidad.mostrarErrorBD(true, e);
-        } finally {
-            ConexionBD.cerrarConexion(conexion, sentencia, resultado);
+        } else {
+            throw new SQLException("Se perdio la conexion con la Base de Datos");
         }
-
         return estudiante;
-    }
-
-    public static boolean actualizar(Estudiante estudiante) throws SQLException {
-        boolean exitoso = false;
-        Connection conexion = null;
-        PreparedStatement sentencia = null;
-
-        String consulta = "UPDATE estudiante SET nombre = ?, correo = ?, telefono = ?, semestre = ?, promedio = ?, habla_idioma_indigena = ? " +
-                "WHERE ID_Responsable = ?";
-
-        try {
-            conexion = ConexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(consulta);
-
-            sentencia.setString(1, estudiante.getNombre());
-            sentencia.setString(2, estudiante.getCorreo());
-            sentencia.setString(3, estudiante.getTelefono());
-            sentencia.setInt(4, estudiante.getSemestre());
-            sentencia.setFloat(5, estudiante.getPromedio());
-            sentencia.setBoolean(6, estudiante.isHablaIdiomaIndigena());
-            sentencia.setInt(7, estudiante.getIdEstudiante());
-
-            int filas = sentencia.executeUpdate();
-
-            if (filas > 0) {
-                Utilidad.crearAlertaInformacion("Modificación exitosa",
-                        "Estudiante modificado exitosamente.");
-                return true;
-            } else {
-                throw new SQLException();
-            }
-        } catch (SQLException e) {
-            Utilidad.mostrarErrorBD(true, e);
-        } finally {
-            ConexionBD.cerrarConexion(conexion, sentencia, null);
-        }
-
-        return exitoso;
-    }
-
-    public static boolean eliminar(int id) throws SQLException {
-        boolean exitoso = false;
-        Connection conexion = null;
-        PreparedStatement sentencia = null;
-
-        String consulta = "DELETE FROM estudiante WHERE ID_Estudiante = ?";
-
-        try {
-            conexion = ConexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(consulta);
-
-            sentencia.setInt(1, id);
-
-            int filas = sentencia.executeUpdate();
-
-            if (filas > 0) {
-                Utilidad.crearAlertaInformacion("Eliminación exitosa",
-                        "Estudiante eliminado exitosamente.");
-                return true;
-            } else {
-                throw new SQLException();
-            }
-        } catch (SQLException e) {
-            Utilidad.mostrarErrorBD(true, e);
-        } finally {
-            ConexionBD.cerrarConexion(conexion, sentencia, null);
-        }
-
-        return exitoso;
     }
 
     public static ArrayList<Estudiante> obtenerEstudiantes() throws SQLException {
@@ -215,5 +141,4 @@ public class EstudianteDAO {
 
         return estudiante;
     }
-
 }

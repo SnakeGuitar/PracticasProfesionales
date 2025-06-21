@@ -15,13 +15,25 @@
 package sgpp.controlador.usuarios.coordinador;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import sgpp.modelo.IControladorPrincipal;
+import sgpp.modelo.beans.Coordinador;
+import sgpp.modelo.beans.Usuario;
+import sgpp.modelo.dao.entidades.CoordinadorDAO;
 import sgpp.utilidad.Utilidad;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class FXMLPrincipalCoordinadorController implements Initializable {
+import static sgpp.utilidad.Utilidad.cerrarVentana;
+
+public class FXMLPrincipalCoordinadorController implements Initializable, IControladorPrincipal {
+    @FXML
+    private Label lbNombreCoordinador;
+    private Coordinador coordinador;
 
     private static final String RUTA_FXML_PROYECTO = "/sgpp/vista/usuarios/coordinador/proyecto/FXMLProyecto.fxml";
     private static final String RUTA_FXML_ORGANIZACION_VINCULDADA = "/sgpp/vista/usuarios/coordinador/organizacionvinculada/FXMLOrganizacionVinculada.fxml";
@@ -32,6 +44,26 @@ public class FXMLPrincipalCoordinadorController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resources) {
+    }
+
+    public void inicializarUsuario(Usuario sesion) {
+        try {
+            Coordinador coordinador = CoordinadorDAO.obtenerPorIdUsuario(sesion.getIdUsuario());
+            if (coordinador != null) {
+                this.coordinador = coordinador;
+                lbNombreCoordinador.setText(String.format("Bienvenid@, %s",  coordinador.getNombre()));
+            } else {
+                Utilidad.crearAlertaAdvertencia(
+                        "Notificación",
+                        "Lo sentimos, su usuario existe pero no pudimos encontrar su perfil, comuniquese con el administrador");
+                cerrarVentana(lbNombreCoordinador);
+            }
+        } catch (SQLException sqlex) {
+            Utilidad.crearAlertaError(
+                    "Error",
+                    "Lo sentimos, de momento no se pudo iniciar sesion por favor intentelo más tarde");
+            cerrarVentana(lbNombreCoordinador);
+        }
     }
 
     public void clicBtnProyectos(ActionEvent actionEvent) {

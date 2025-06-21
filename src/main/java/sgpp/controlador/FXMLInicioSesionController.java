@@ -1,15 +1,15 @@
 /*
  * Autor original: Abel Yong
- * Ultimo autor: Luis Donaldo
+ * Ultimo autor: Abel Yong
  * Fecha de creación: 09-06-2025
  * Fecha de la última versión aprobada:
- * Fecha de la última modificación: 10-06-2025
+ * Fecha de la última modificación: 21-06-2025
  * Descripción: Clase controlador para manejar las operaciones de la vista FXMLInicioSesion.fxml
  */
 
 /*
  * Estado: En progreso
- * Modificaciones:
+ * Modificaciones: Se extrajo el mostrar la ventana al metodo cargarPantallaPrincipal()
  */
 
 package sgpp.controlador;
@@ -107,7 +107,6 @@ public class FXMLInicioSesionController {
             Stage escenarioBase = Utilidad.getEscenarioComponente(tfUsuario);
             FXMLLoader cargador = null;
             String titulo = "";
-
             switch (sesionUsuario.getTipoUsuario()) {
                 case COORDINADOR:
                     cargador = new FXMLLoader(
@@ -126,36 +125,27 @@ public class FXMLInicioSesionController {
                             SistemaGestionPracticasProfesionales.class.getResource(
                                     "vista/usuarios/profesor/FXMLPrincipalProfesor.fxml"));
                     titulo = "Sistema de Prácticas Profesionales - Profesor";
-
-                    int idProfesor = ProfesorDAO.obtenerIdProfesorPorIdUsuario(sesionUsuario.getIdUsuario());
-
-                    FXMLPrincipalProfesorController controladorProfesor = cargador.getController();
-                    controladorProfesor.inicializarInformacion(idProfesor);
-
                     break;
                 default:
                     Utilidad.crearAlertaError("Error en tipo de usuario",
                             "Tipo de usuario no reconocido");
-
                     return;
             }
-
-            Parent vista = cargador.load();
-
-            Object controlador = cargador.getController();
-            if (controlador instanceof IControladorPrincipal) {
-                ((IControladorPrincipal) controlador).inicializarUsuario(sesionUsuario);
-            }
-
-            Scene escenaPrincipal = new Scene(vista);
-            escenarioBase.setScene(escenaPrincipal);
-            escenarioBase.setTitle(titulo);
-            escenarioBase.show();
+            cargarPantallaPrincipal(escenarioBase, cargador, sesionUsuario);
         } catch (IOException e) {
             Utilidad.mostrarError(true, e, "Error al cargar pantalla",
                     "No se pudo cargar la ventana principal");
-        } catch (SQLException e) {
-            Utilidad.mostrarErrorBD(true, e);
         }
+    }
+
+    private void cargarPantallaPrincipal(Stage escenarioBase, FXMLLoader cargador, Usuario sesionUsuario) throws IOException {
+        Parent vista = cargador.load();
+        Object controlador = cargador.getController();
+        if (controlador instanceof IControladorPrincipal) {
+            ((IControladorPrincipal) controlador).inicializarUsuario(sesionUsuario);
+        }
+        Scene escenaPrincipal = new Scene(vista);
+        escenarioBase.setScene(escenaPrincipal);
+        escenarioBase.show();
     }
 }

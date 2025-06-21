@@ -15,13 +15,26 @@
 package sgpp.controlador.usuarios.estudiante;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import sgpp.modelo.IControladorPrincipal;
+import sgpp.modelo.beans.Estudiante;
+import sgpp.modelo.beans.Usuario;
+import sgpp.modelo.dao.entidades.EstudianteDAO;
 import sgpp.utilidad.Utilidad;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class FXMLPrincipalEstudianteController implements Initializable {
+import static sgpp.utilidad.Utilidad.cerrarVentana;
+
+public class FXMLPrincipalEstudianteController implements Initializable, IControladorPrincipal {
+    @FXML
+    private Label lbNombreEstudiante;
+    private Estudiante estudiante;
+
     private static final String RUTA_FXML_SUBIR_DOCUMENTO = "/sgpp/vista/usuarios/estudiante/documentopracticas/FXMLSubirDocumentoPracticas.fxml";
     private static final String RUTA_FXML_CONSULTAR_AVANCE = "";
     private static final String RUTA_FXML_LLENAR_AUTOEVALUACION = "/sgpp/vista/usuarios/estudiante/FXMLAutoevaluacionEstudiante.fxml";
@@ -33,9 +46,28 @@ public class FXMLPrincipalEstudianteController implements Initializable {
         // Inicialización de la vista principal del estudiante
     }
 
+    public void inicializarUsuario(Usuario sesion) {
+        try {
+            Estudiante estudiante = EstudianteDAO.obtenerPorIdUsuario(sesion.getIdUsuario());
+            if (estudiante != null) {
+                this.estudiante = estudiante;
+                lbNombreEstudiante.setText(String.format("Bienvenid@, %s",  estudiante.getNombre()));
+            } else {
+                Utilidad.crearAlertaAdvertencia(
+                        "Notificación",
+                        "Lo sentimos, su usuario existe pero no pudimos encontrar su perfil, comuniquese con el administrador");
+                cerrarVentana(lbNombreEstudiante);
+            }
+        } catch (SQLException sqlex) {
+            Utilidad.crearAlertaError(
+                    "Error",
+                    "Lo sentimos, de momento no se pudo iniciar sesion por favor intentelo más tarde");
+            cerrarVentana(lbNombreEstudiante);
+        }
+    }
+
     public void clicBtnReporte(ActionEvent actionEvent) {
         Utilidad.crearEscenario(RUTA_FXML_SUBIR_REPORTE, "ReportesMensuales");
-        
     }
 
     public void clicBtnFormatoEvaluacion(ActionEvent actionEvent) {
