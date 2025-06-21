@@ -16,7 +16,7 @@ package sgpp.modelo.dao.expediente.documentoinicial;
 
 import sgpp.modelo.ConexionBD;
 import sgpp.modelo.beans.expediente.documentoinicial.EntregaDocumentoInicial;
-import sgpp.utilidad.Utilidad;
+import sgpp.modelo.dao.ResultadoSQL;
 import sgpp.utilidad.UtilidadFormatoDeDatos;
 
 import java.sql.Connection;
@@ -25,7 +25,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class EntregaDocumentoInicialDAO {
@@ -128,7 +127,7 @@ public class EntregaDocumentoInicialDAO {
             } catch (SQLException e) {
                 throw new SQLException("Error al obtener la entrega de documento inicial: " + e.getMessage(), e);
             } finally {
-                Utilidad.cerrarRecursosSQL(conexionBD, sentencia, resultado);
+                ConexionBD.cerrarConexion(conexionBD, sentencia, resultado);
             }
         } else {
             throw new SQLException("No se pudo establecer la conexión a la base de datos.");
@@ -144,7 +143,7 @@ public class EntregaDocumentoInicialDAO {
         try {
             conexionBD = ConexionBD.abrirConexion();
             if (conexionBD != null) {
-                String consulta = "SELECT * FROM entrega_doc_inicial WHERE ID_Periodo = ?";
+                String consulta = "SELECT * FROM entrega_doc_inicial WHERE ID_Periodo = ? ORDER BY fecha_apertura ASC";
                 sentencia = conexionBD.prepareStatement(consulta);
                 sentencia.setInt(1, idPeriodo);
                 resultado = sentencia.executeQuery();
@@ -166,6 +165,38 @@ public class EntregaDocumentoInicialDAO {
             }
         }
         return entregas;
+    }
+
+    public static ResultadoSQL programarEntregas(EntregaDocumentoInicial muestra, int idPeriodo) throws SQLException {
+        ResultadoSQL resultadoOperacion = new ResultadoSQL();
+        String fechaApertura = muestra.getFechaApertura().toString();
+        String fechaLimite = muestra.getFechaLimite().toString();
+        Connection conexion = ConexionBD.abrirConexion();
+        if (conexion != null) {
+            String consulta = "UPDATE entrega_doc_inicial SET fecha_apertura = ?, fecha_limite = ? WHERE ID_Periodo = ?";
+            PreparedStatement sentencia = null;
+            try {
+                sentencia = conexion.prepareStatement(consulta);
+                sentencia.setString(1, fechaApertura);
+                sentencia.setString(2, fechaLimite);
+                sentencia.setInt(3, idPeriodo);
+                int filasAfectadas = sentencia.executeUpdate();
+                if (filasAfectadas > 0) {
+                    resultadoOperacion.setError(false);
+                    resultadoOperacion.setMensaje("Entregas iniciales del periodo programadas exitosamente");
+                } else {
+                    resultadoOperacion.setError(true);
+                    resultadoOperacion.setMensaje("No se pudo configurar las entregas iniciales del periodo");
+                }
+            } catch (SQLException sqlex) {
+                System.out.println(sqlex.getMessage());
+            } finally {
+                ConexionBD.cerrarConexion(conexion, sentencia);
+            }
+        } else {
+            throw new SQLException("Se ha perdido la conexion a la Base de Datos");
+        }
+        return resultadoOperacion;
     }
 
     private static EntregaDocumentoInicial convertirAEntrega(ResultSet resultado) throws SQLException {

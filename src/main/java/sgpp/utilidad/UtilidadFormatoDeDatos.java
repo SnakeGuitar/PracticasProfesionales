@@ -16,7 +16,6 @@ package sgpp.utilidad;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 public class UtilidadFormatoDeDatos {
     public static boolean esUnNumeroEntero(String numero) {

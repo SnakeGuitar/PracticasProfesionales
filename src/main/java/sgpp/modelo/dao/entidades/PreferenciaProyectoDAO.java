@@ -2,7 +2,6 @@ package sgpp.modelo.dao.entidades;
 
 import sgpp.modelo.ConexionBD;
 import sgpp.modelo.beans.PreferenciaProyecto;
-import sgpp.utilidad.Utilidad;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ public class PreferenciaProyectoDAO {
                     }
                 }
             } finally {
-                Utilidad.cerrarRecursosSQL(conexion, sentencia, resultado);
+                ConexionBD.cerrarConexion(conexion, sentencia, resultado);
             }
         } else {
             throw new SQLException("Se ha perdido la conexion a la base de datos");

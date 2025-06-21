@@ -19,9 +19,6 @@ import javafx.stage.Stage;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -213,48 +210,6 @@ public class Utilidad {
         } catch (IOException e) {
             e.printStackTrace();
             return null;
-        }
-    }
-
-    public static void cerrarRecursosSQL(Connection conexion, PreparedStatement sentencia, ResultSet resultado) throws SQLException {
-        if (resultado != null) {
-            resultado.close();
-        }
-        if (sentencia != null) {
-            sentencia.close();
-        }
-        if (conexion != null) {
-            conexion.close();
-        }
-    }
-
-    public static void cerrarRecursosSQL(Connection conexion, CallableStatement llamada, ResultSet resultado) throws SQLException {
-        if (resultado != null) {
-            resultado.close();
-        }
-        if (llamada != null) {
-            llamada.close();
-        }
-        if (conexion != null) {
-            conexion.close();
-        }
-    }
-
-    public static void cerrarRecursosSQL(Connection conexion, PreparedStatement sentencia) throws SQLException {
-        if (sentencia != null) {
-            sentencia.close();
-        }
-        if (conexion != null) {
-            conexion.close();
-        }
-    }
-
-    public static void cerrarRecursosSQL(Connection conexion, CallableStatement llamada) throws SQLException {
-        if (llamada != null) {
-            llamada.close();
-        }
-        if (conexion != null) {
-            conexion.close();
         }
     }
 }

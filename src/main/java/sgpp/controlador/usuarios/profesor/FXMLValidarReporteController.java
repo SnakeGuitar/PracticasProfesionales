@@ -56,9 +56,9 @@ public class FXMLValidarReporteController implements Initializable {
     private static final int ID_PERIODO = 4;
     private static final DateTimeFormatter DF = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
-    private final ObservableList<EntregaReporteMensual> datos = FXCollections.observableArrayList();
-    private final Map<Integer, String> mapaEstudiantes = new HashMap<>();
-    private final Map<Integer, Integer> mapaHoras = new HashMap<>();
+    private final ObservableList<EntregaReporteMensual> DATOS = FXCollections.observableArrayList();
+    private final Map<Integer, String> MAPA_ESTUDIANTES = new HashMap<>();
+    private final Map<Integer, Integer> MAPA_HORAS = new HashMap<>();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -81,7 +81,7 @@ public class FXMLValidarReporteController implements Initializable {
     private void cargarMapaEstudiantes() {
         try {
             for (Estudiante e : EstudianteDAO.obtenerEstudiantes()) {
-                mapaEstudiantes.put(e.getIdEstudiante(), e.getNombre());
+                MAPA_ESTUDIANTES.put(e.getIdEstudiante(), e.getNombre());
             }
         } catch (SQLException ex) {
             Utilidad.mostrarErrorBD(true, ex);
@@ -94,7 +94,7 @@ public class FXMLValidarReporteController implements Initializable {
                      "SELECT ID_Entrega_Reporte, horas_reportadas FROM reporte_mensual")) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                mapaHoras.put(rs.getInt("ID_Entrega_Reporte"), rs.getInt("horas_reportadas"));
+                MAPA_HORAS.put(rs.getInt("ID_Entrega_Reporte"), rs.getInt("horas_reportadas"));
             }
         } catch (SQLException e) {
             Utilidad.mostrarErrorBD(true, e);
@@ -107,7 +107,7 @@ public class FXMLValidarReporteController implements Initializable {
         colReporte.setCellValueFactory(c -> new javafx.beans.property.ReadOnlyObjectWrapper<>(c.getValue().getNumReporte()));
 
         colEstudiante.setCellValueFactory(c -> {
-            String nombre = mapaEstudiantes.getOrDefault(c.getValue().getIdEstudiante(), "Desconocido");
+            String nombre = MAPA_ESTUDIANTES.getOrDefault(c.getValue().getIdEstudiante(), "Desconocido");
             return new javafx.beans.property.SimpleStringProperty(nombre);
         });
 
@@ -122,16 +122,16 @@ public class FXMLValidarReporteController implements Initializable {
         );
 
         colHoras.setCellValueFactory(c -> {
-            int horas = mapaHoras.getOrDefault(c.getValue().getIdEntregaReporte(), 0);
+            int horas = MAPA_HORAS.getOrDefault(c.getValue().getIdEntregaReporte(), 0);
             return new javafx.beans.property.ReadOnlyObjectWrapper<>(horas);
         });
     }
 
     private void cargarDatos() {
-        datos.clear();
+        DATOS.clear();
         try {
-            datos.addAll(EntregaReporteMensualDAO.obtenerPorPeriodo(ID_PERIODO));
-            tablaEntregas.setItems(datos);
+            DATOS.addAll(EntregaReporteMensualDAO.obtenerPorPeriodo(ID_PERIODO));
+            tablaEntregas.setItems(DATOS);
         } catch (SQLException ex) {
             Utilidad.mostrarErrorBD(true, ex);
         }
@@ -224,6 +224,7 @@ public class FXMLValidarReporteController implements Initializable {
         }
     }
     
+@FXML
 private void volverAtras(ActionEvent event) {
     ((Stage) tablaEntregas.getScene().getWindow()).close();
 }
