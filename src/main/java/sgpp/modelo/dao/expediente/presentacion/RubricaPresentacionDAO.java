@@ -30,7 +30,6 @@ public class RubricaPresentacionDAO {
             int filas = sentencia.executeUpdate();
 
             if (filas > 0) {
-                Utilidad.crearAlertaInformacion("Registro exitoso", "Rubrica registrada exitosamente.");
                 exitoso = true;
             } else {
                 throw new SQLException();

@@ -2,10 +2,7 @@ package sgpp.controlador.usuarios.profesor;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import sgpp.modelo.beans.Profesor;
 import sgpp.modelo.beans.expediente.presentacion.Evaluador;
 import sgpp.modelo.beans.expediente.presentacion.RubricaPresentacion;
@@ -28,25 +25,20 @@ public class FXMLCalificacionObservacionesController {
     public Button btnRegresar;
 
     @FXML
-    public TextField txFiCalificacion1;
-
-    @FXML
-    public TextField txFiCalificacion2;
-
-    @FXML
-    public TextField txFiCalificacion3;
-
-    @FXML
-    public TextField txFiCalificacion4;
-
-    @FXML
-    public TextField txFiCalificacion5;
-
-    @FXML
     public TextArea txArObservaciones;
 
     @FXML
     public Label lbPromedio;
+    @FXML
+    public Slider sldCalificacion1;
+    @FXML
+    public Slider sldCalificacion2;
+    @FXML
+    public Slider sldCalificacion3;
+    @FXML
+    public Slider sldCalificacion4;
+    @FXML
+    public Slider sldCalificacion5;
 
     private int[] calificaciones;
 
@@ -57,19 +49,30 @@ public class FXMLCalificacionObservacionesController {
         this.idProfesor = idProfesor;
         this.idPeriodo = idPeriodo;
 
-        calificaciones = valorCriterio;
+        this.calificaciones = valorCriterio;
 
-        txFiCalificacion1.setText(String.valueOf(calificaciones[0]));
-        txFiCalificacion2.setText(String.valueOf(calificaciones[1]));
-        txFiCalificacion3.setText(String.valueOf(calificaciones[2]));
-        txFiCalificacion4.setText(String.valueOf(calificaciones[3]));
-        txFiCalificacion5.setText(String.valueOf(calificaciones[4]));
+        Slider[] sliders = {sldCalificacion1, sldCalificacion2, sldCalificacion3, sldCalificacion4, sldCalificacion5};
+
+        for(int i = 0; i < sliders.length; i++) {
+            configurarSlider(sliders[i], calificaciones[i]);
+        }
 
         obtenerPromedio();
     }
 
+    private void configurarSlider(Slider slider, int valor) {
+        slider.setValue(valor);
+
+        slider.setMax(valor);
+        slider.setMin(valor - 1);
+
+        slider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            obtenerPromedio();
+        });
+    }
+
     private void obtenerPromedio() {
-        int promedio = 0;
+        float promedio = 0;
 
         for (int calificacion : calificaciones) {
             promedio += calificacion;
@@ -108,8 +111,6 @@ public class FXMLCalificacionObservacionesController {
                     "No se pudo registrar la rúbrica.");
         }
     }
-
-    // TODO: Listener por cada input en los TextField
 
     public void btnClicSubir(ActionEvent actionEvent) throws SQLException {
         boolean confirmado = Utilidad.crearAlertaConfirmacion(

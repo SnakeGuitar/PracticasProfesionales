@@ -15,7 +15,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sgpp.SistemaGestionPracticasProfesionales;
 import sgpp.modelo.beans.Estudiante;
-import sgpp.modelo.beans.Periodo;
 import sgpp.modelo.dao.entidades.EstudianteDAO;
 import sgpp.modelo.dao.entidades.PeriodoDAO;
 import sgpp.utilidad.Utilidad;
@@ -50,9 +49,9 @@ public class FXMLSeleccionEstudianteController implements Initializable {
 
     private ObservableList<Estudiante> estudiantes;
 
-    private boolean irRubrica;
+    private boolean irRubrica = false;
 
-    private int idProfesor;
+    private int idProfesor = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -153,10 +152,14 @@ public class FXMLSeleccionEstudianteController implements Initializable {
         int idPeriodo = PeriodoDAO.obtenerPeriodoActual().getIdPeriodo();
 
         if(idEstudiante != 0) {
-            if(irRubrica) { // Si la selección del estudiante es para evaluar presentación.
-                irRubricaPresentacion(idEstudiante, idProfesor, idPeriodo);
-            } else { // Si es para ver expediente.
-                irExpedienteEstudiante(idEstudiante, idPeriodo);
+            if(idPeriodo != 0) {
+                if(irRubrica) { // Si la selección del estudiante es para evaluar presentación.
+                    irRubricaPresentacion(idEstudiante, idProfesor, idPeriodo);
+                } else { // Si es para ver expediente.
+                    irExpedienteEstudiante(idEstudiante, idPeriodo);
+                }
+            } else {
+                Utilidad.crearAlertaError("Error periodo", "No se pudo recuperar el periodo");
             }
         } else {
             mostrarAlertaSeleccionEstudiante();

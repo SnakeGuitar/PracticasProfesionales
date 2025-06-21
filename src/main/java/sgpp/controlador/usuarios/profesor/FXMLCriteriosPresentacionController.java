@@ -92,9 +92,13 @@ public class FXMLCriteriosPresentacionController implements Initializable {
                         tgCriterio4,
                         tgCriterio5;
 
+    private ToggleGroup[] toggleGroups;
+
+    private RadioButton[][] radioButtons;
+
     private int[] valorCriterio;
 
-    private int idProfesor, idEstudiante, idPeriodo;
+    private int idProfesor = 0, idEstudiante = 0, idPeriodo = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -110,47 +114,31 @@ public class FXMLCriteriosPresentacionController implements Initializable {
     private void configurarCriterios() {
         valorCriterio = new int[5];
 
-        tgCriterio1 = new ToggleGroup();
-        tgCriterio2 = new ToggleGroup();
-        tgCriterio3 = new ToggleGroup();
-        tgCriterio4 = new ToggleGroup();
-        tgCriterio5 = new ToggleGroup();
+        toggleGroups = new ToggleGroup[]{
+                tgCriterio1 = new ToggleGroup(),
+                tgCriterio2 = new ToggleGroup(),
+                tgCriterio3 = new ToggleGroup(),
+                tgCriterio4 = new ToggleGroup(),
+                tgCriterio5 = new ToggleGroup()
+        };
 
-        configurarRadioButton(rdBtnCriterio11, tgCriterio1, 10);
-        configurarRadioButton(rdBtnCriterio12, tgCriterio1, 9);
-        configurarRadioButton(rdBtnCriterio13, tgCriterio1, 8);
-        configurarRadioButton(rdBtnCriterio14, tgCriterio1, 7);
-        configurarRadioButton(rdBtnCriterio15, tgCriterio1, 6);
+        radioButtons = new RadioButton[][]{
+                {rdBtnCriterio11, rdBtnCriterio12, rdBtnCriterio13, rdBtnCriterio14, rdBtnCriterio15},
+                {rdBtnCriterio21, rdBtnCriterio22, rdBtnCriterio23, rdBtnCriterio24, rdBtnCriterio25},
+                {rdBtnCriterio31, rdBtnCriterio32, rdBtnCriterio33, rdBtnCriterio34, rdBtnCriterio35},
+                {rdBtnCriterio41, rdBtnCriterio42, rdBtnCriterio43, rdBtnCriterio44, rdBtnCriterio45},
+                {rdBtnCriterio51, rdBtnCriterio52, rdBtnCriterio53, rdBtnCriterio54, rdBtnCriterio55}
+        };
 
-        configurarRadioButton(rdBtnCriterio21, tgCriterio2, 10);
-        configurarRadioButton(rdBtnCriterio22, tgCriterio2, 9);
-        configurarRadioButton(rdBtnCriterio23, tgCriterio2, 8);
-        configurarRadioButton(rdBtnCriterio24, tgCriterio2, 7);
-        configurarRadioButton(rdBtnCriterio25, tgCriterio2, 6);
+        for (int criterio = 0; criterio < 5; criterio++) {
+            for (int valorIndex = 0; valorIndex < 5; valorIndex++) {
+                configurarRadioButton(radioButtons[criterio][valorIndex],
+                        toggleGroups[criterio],
+                        10 - valorIndex); // 10, 9, 8, 7, 6
+            }
 
-        configurarRadioButton(rdBtnCriterio31, tgCriterio3, 10);
-        configurarRadioButton(rdBtnCriterio32, tgCriterio3, 9);
-        configurarRadioButton(rdBtnCriterio33, tgCriterio3, 8);
-        configurarRadioButton(rdBtnCriterio34, tgCriterio3, 7);
-        configurarRadioButton(rdBtnCriterio35, tgCriterio3, 6);
-
-        configurarRadioButton(rdBtnCriterio41, tgCriterio4, 10);
-        configurarRadioButton(rdBtnCriterio42, tgCriterio4, 9);
-        configurarRadioButton(rdBtnCriterio43, tgCriterio4, 8);
-        configurarRadioButton(rdBtnCriterio44, tgCriterio4, 7);
-        configurarRadioButton(rdBtnCriterio45, tgCriterio4, 6);
-
-        configurarRadioButton(rdBtnCriterio51, tgCriterio5, 10);
-        configurarRadioButton(rdBtnCriterio52, tgCriterio5, 9);
-        configurarRadioButton(rdBtnCriterio53, tgCriterio5, 8);
-        configurarRadioButton(rdBtnCriterio54, tgCriterio5, 7);
-        configurarRadioButton(rdBtnCriterio55, tgCriterio5, 6);
-
-        configurarListener(tgCriterio1, valorCriterio, 0);
-        configurarListener(tgCriterio2, valorCriterio, 1);
-        configurarListener(tgCriterio3, valorCriterio, 2);
-        configurarListener(tgCriterio4, valorCriterio, 3);
-        configurarListener(tgCriterio5, valorCriterio, 4);
+            configurarListener(toggleGroups[criterio], valorCriterio, criterio);
+        }
     }
 
     private void irCalificacionObservaciones() {
