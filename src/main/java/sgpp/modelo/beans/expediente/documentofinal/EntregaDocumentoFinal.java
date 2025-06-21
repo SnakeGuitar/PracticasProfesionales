@@ -14,9 +14,11 @@
 
 package sgpp.modelo.beans.expediente.documentofinal;
 
+import sgpp.modelo.beans.expediente.EntregaDocumento;
+
 import java.time.LocalDateTime;
 
-public class EntregaDocumentoFinal {
+public class EntregaDocumentoFinal extends EntregaDocumento {
     private int idEntregaDocumentoFinal;
     private LocalDateTime fechaApertura;
     private LocalDateTime fechaLimite;
@@ -27,11 +29,8 @@ public class EntregaDocumentoFinal {
     }
 
     public EntregaDocumentoFinal(int idEntregaDocumentoFinal, LocalDateTime fechaApertura, LocalDateTime fechaLimite, int idEstudiante, int idPeriodo) {
+        super(fechaApertura, fechaLimite, idEstudiante, idPeriodo);
         this.idEntregaDocumentoFinal = idEntregaDocumentoFinal;
-        this.fechaApertura = fechaApertura;
-        this.fechaLimite = fechaLimite;
-        this.idEstudiante = idEstudiante;
-        this.idPeriodo = idPeriodo;
     }
 
     public int getIdEntregaDocumentoFinal() {
@@ -40,37 +39,5 @@ public class EntregaDocumentoFinal {
 
     public void setIdEntregaDocumentoFinal(int idEntregaDocumentoFinal) {
         this.idEntregaDocumentoFinal = idEntregaDocumentoFinal;
-    }
-
-    public LocalDateTime getFechaApertura() {
-        return fechaApertura;
-    }
-
-    public void setFechaApertura(LocalDateTime fechaApertura) {
-        this.fechaApertura = fechaApertura;
-    }
-
-    public LocalDateTime getFechaLimite() {
-        return fechaLimite;
-    }
-
-    public void setFechaLimite(LocalDateTime fechaLimite) {
-        this.fechaLimite = fechaLimite;
-    }
-
-    public int getIdEstudiante() {
-        return idEstudiante;
-    }
-
-    public void setIdEstudiante(int idEstudiante) {
-        this.idEstudiante = idEstudiante;
-    }
-
-    public int getIdPeriodo() {
-        return idPeriodo;
-    }
-
-    public void setIdPeriodo(int idPeriodo) {
-        this.idPeriodo = idPeriodo;
     }
 }
