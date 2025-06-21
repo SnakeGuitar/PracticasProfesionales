@@ -11,6 +11,8 @@ import sgpp.modelo.ConexionBD;
 import sgpp.modelo.beans.expediente.EstadoDocumento;
 import sgpp.modelo.beans.expediente.documentofinal.DocumentoFinal;
 import sgpp.modelo.beans.expediente.documentofinal.TipoDocumentoFinal;
+import sgpp.modelo.beans.expediente.documentoinicial.DocumentoInicial;
+import sgpp.modelo.beans.expediente.documentoinicial.TipoDocumentoInicial;
 import sgpp.utilidad.Utilidad;
 import sgpp.utilidad.UtilidadFormatoDeDatos;
 
@@ -315,4 +317,34 @@ public class DocumentoFinalDAO {
 
         return documentoFinal;
     }
+
+    public static DocumentoFinal obtenerDocumentoFinalPorTipo(int idEntregaDocFinal, TipoDocumentoFinal tipo) throws SQLException {
+        DocumentoFinal documentoFinal = null;
+        Connection conexion = ConexionBD.abrirConexion();
+        if (conexion != null) {
+            String consulta = "SELECT * FROM documento_final WHERE id_entrega_doc_final = ? AND tipo = ?";
+            PreparedStatement sentencia = null;
+            ResultSet resultado = null;
+            try {
+                sentencia = conexion.prepareStatement(consulta);
+                sentencia.setInt(1, idEntregaDocFinal);
+                sentencia.setString(2, tipo.name());
+                resultado = sentencia.executeQuery();
+                if (resultado.next()) {
+                    documentoFinal = new DocumentoFinal();
+                    documentoFinal.setIdDocumento(resultado.getInt("id_doc_final"));
+                    documentoFinal.setFechaEntrega(UtilidadFormatoDeDatos.stringToLocalDateTime(resultado.getString("fecha_entrega")));
+                    documentoFinal.setTipo(TipoDocumentoFinal.valueOf(resultado.getString("tipo")));
+                    documentoFinal.setEstado(EstadoDocumento.valueOf(resultado.getString("estado")));
+                    documentoFinal.setDocumento(resultado.getBytes("documento"));
+                    documentoFinal.setIdEntregaDocumento(resultado.getInt("id_entrega_doc_final"));
+                }
+            } finally {
+                Utilidad.cerrarRecursosSQL(conexion, sentencia, resultado);
+            }
+        }
+        return documentoFinal;
+    }
+
+
 }

@@ -18,6 +18,7 @@ package sgpp.modelo.dao.expediente.documentofinal;
 
 import sgpp.modelo.ConexionBD;
 import sgpp.modelo.beans.expediente.documentofinal.EntregaDocumentoFinal;
+import sgpp.utilidad.Utilidad;
 import sgpp.utilidad.UtilidadFormatoDeDatos;
 
 import java.sql.Connection;
@@ -131,45 +132,62 @@ public class EntregaDocumentoFinalDAO {
      * @return Lista de entregas disponibles ordenadas por fecha límite
      * @throws SQLException Si ocurre un error en la consulta
      */
-    public static List<EntregaDocumentoFinal> obtenerEntregasDisponibles(int idEstudiante, int idPeriodo) throws SQLException {
-        List<EntregaDocumentoFinal> entregas = new ArrayList<>();
-        Connection conexionBD = null;
-        PreparedStatement sentencia = null;
-        ResultSet resultado = null;
 
-        try {
-            conexionBD = ConexionBD.abrirConexion();
-            if (conexionBD != null) {
-                String consulta = "SELECT ID_Entrega_Doc_Final, fecha_apertura, fecha_limite, " +
-                        "ID_Estudiante, ID_Periodo " +
-                        "FROM entrega_doc_final " +
-                        "WHERE ID_Estudiante = ? AND ID_Periodo = ? " +
-                        "AND NOW() BETWEEN fecha_apertura AND fecha_limite " +
-                        "ORDER BY fecha_limite ASC";
 
+    /*
+    public static EntregaDocumentoInicial obtenerEntregaDisponible(int idEstudiante, int idPeriodo) throws SQLException {
+        EntregaDocumentoInicial entrega = null;
+        Connection conexionBD = ConexionBD.abrirConexion();
+        if (conexionBD != null) {
+            String consulta = "SELECT * FROM entrega_doc_inicial WHERE ID_Estudiante = ? AND ID_Periodo = ?";
+            PreparedStatement sentencia = null;
+            ResultSet resultado = null;
+            try {
+                sentencia = conexionBD.prepareStatement(consulta);
+                sentencia.setInt(1, idEstudiante);
+                sentencia.setInt(2, idPeriodo);
+                resultado = sentencia.executeQuery();
+                if (resultado.next()) {
+                    System.out.println("Entrega encontrada para el estudiante con ID: " + idEstudiante + " y periodo con ID: " + idPeriodo);
+                    entrega = convertirAEntrega(resultado);
+                }
+            } catch (SQLException e) {
+                throw new SQLException("Error al obtener la entrega de documento inicial: " + e.getMessage(), e);
+            } finally {
+                Utilidad.cerrarRecursosSQL(conexionBD, sentencia, resultado);
+            }
+        } else {
+            throw new SQLException("No se pudo establecer la conexión a la base de datos.");
+        }
+        return entrega;
+    }
+     */
+    public static EntregaDocumentoFinal obtenerEntregaDisponible(int idEstudiante, int idPeriodo) throws SQLException {
+        EntregaDocumentoFinal entrega = null;
+        Connection conexionBD = ConexionBD.abrirConexion();
+        if (conexionBD != null) {
+            String consulta = "SELECT * FROM entrega_doc_final WHERE ID_Estudiante = ? AND ID_Periodo = ?";
+            PreparedStatement sentencia = null;
+            ResultSet resultado = null;
+            try {
                 sentencia = conexionBD.prepareStatement(consulta);
                 sentencia.setInt(1, idEstudiante);
                 sentencia.setInt(2, idPeriodo);
                 resultado = sentencia.executeQuery();
 
-                while (resultado.next()) {
-                    entregas.add(convertirAEntrega(resultado));
+                if (resultado.next()) {
+                    System.out.println("Entrega encontrada para el estudiante con ID: " + idEstudiante + " y periodo con ID: " + idPeriodo);
+                    entrega = convertirAEntrega(resultado);
                 }
-            } else {
-                throw new SQLException("No se pudo establecer la conexión a la base de datos.");
+            } catch (SQLException e) {
+                throw new SQLException("Error al obtener la entrega de documento final: " + e.getMessage(), e);
+            } finally {
+                Utilidad.cerrarRecursosSQL(conexionBD, sentencia, resultado);
             }
-        } finally {
-            if (resultado != null) {
-                resultado.close();
-            }
-            if (sentencia != null) {
-                sentencia.close();
-            }
-            if (conexionBD != null) {
-                conexionBD.close();
-            }
+        } else {
+            throw new SQLException("No se pudo establecer la conexión a la base de datos.");
         }
-        return entregas;
+        return entrega;
     }
 
     /**
