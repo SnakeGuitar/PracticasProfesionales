@@ -17,7 +17,6 @@ package sgpp.modelo.dao.entidades;
 import sgpp.modelo.ConexionBD;
 import sgpp.modelo.beans.Proyecto;
 import sgpp.modelo.dao.ResultadoSQL;
-import sgpp.utilidad.Utilidad;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -144,7 +143,7 @@ public class ProyectoDAO {
                 proyecto.setLugaresDisponibles(resultado.getInt("lugares_disponibles"));
                 proyectosDisponibles.add(proyecto);
             }
-            Utilidad.cerrarRecursosSQL(conexion, llamada, resultado);
+            ConexionBD.cerrarConexion(conexion, llamada, resultado);
         } else {
             throw new SQLException("Se ha perdido la conexion con la Base de Datos");
         }
@@ -171,7 +170,7 @@ public class ProyectoDAO {
                     }
                 }
             } finally {
-                Utilidad.cerrarRecursosSQL(conexion, sentencia, resultado);
+                ConexionBD.cerrarConexion(conexion, sentencia, resultado);
             }
         } else {
             throw new SQLException("Se ha perdido la conexion a la base de datos");
@@ -200,7 +199,7 @@ public class ProyectoDAO {
                     resultadoAsignacion.setMensaje("Error al asignar el proyecto");
                 }
             } finally {
-                Utilidad.cerrarRecursosSQL(conexion, llamada);
+                ConexionBD.cerrarConexion(conexion, llamada);
             }
         } else {
             throw new SQLException("Se ha perdido la conexion a la base de datos");
