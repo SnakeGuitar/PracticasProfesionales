@@ -14,9 +14,12 @@
 
 package sgpp.modelo;
 
-import sgpp.utilidad.Utilidad;
-
-import java.sql.*;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class ConexionBD {
     private static final String IP = "localhost";
@@ -53,52 +56,45 @@ public class ConexionBD {
         return conexionBD;
     }
 
-    public static void cerrarConexion(Connection conexion, PreparedStatement consulta, ResultSet resultado) {
-        try {
-            if(resultado != null) {
-                resultado.close();
-            }
-
-            if(consulta != null) {
-                consulta.close();
-            }
-
-            if(conexion != null) {
-                conexion.close();
-            }
-        } catch (SQLException e) {
-            System.err.println("Error al cerrar conexión con la base de datos");
-            e.printStackTrace();
+    public static void cerrarConexion(Connection conexion, PreparedStatement consulta, ResultSet resultado) throws SQLException {
+        if (resultado != null) {
+            resultado.close();
+        }
+        if (consulta != null) {
+            consulta.close();
+        }
+        if (conexion != null) {
+            conexion.close();
         }
     }
 
-    public static void cerrarConexion(Connection conexion, PreparedStatement consulta) {
-        try {
-            if(consulta != null) {
-                consulta.close();
-            }
-
-            if(conexion != null) {
-                conexion.close();
-            }
-        } catch (SQLException e) {
-            System.err.println("Error al cerrar conexión con la base de datos");
-            e.printStackTrace();
+    public static void cerrarConexion(Connection conexion, CallableStatement llamada, ResultSet resultado) throws SQLException {
+        if (resultado != null) {
+            resultado.close();
+        }
+        if (llamada != null) {
+            llamada.close();
+        }
+        if (conexion != null) {
+            conexion.close();
         }
     }
-    // Para DAOs que utilizen procedimientos almacenados.
-    public static void cerrarConexionProcedimiento(Connection conexion, CallableStatement consulta) {
-        try {
-            if(consulta != null) {
-                consulta.close();
-            }
 
-            if(conexion != null) {
-                conexion.close();
-            }
-        } catch (SQLException e) {
-            System.err.println("Error al cerrar conexión con la base de datos");
-            e.printStackTrace();
+    public static void cerrarConexion(Connection conexion, PreparedStatement sentencia) throws SQLException {
+        if (sentencia != null) {
+            sentencia.close();
+        }
+        if (conexion != null) {
+            conexion.close();
+        }
+    }
+
+    public static void cerrarConexion(Connection conexion, CallableStatement llamada) throws SQLException {
+        if (llamada != null) {
+            llamada.close();
+        }
+        if (conexion != null) {
+            conexion.close();
         }
     }
 }
