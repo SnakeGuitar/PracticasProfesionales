@@ -14,10 +14,11 @@
 
 package sgpp.modelo.beans.expediente.documentoparcial;
 
-import java.time.LocalDateTime;
-import java.util.Date;
+import sgpp.modelo.beans.expediente.EntregaDocumento;
 
-public class EntregaDocumentoParcial {
+import java.time.LocalDateTime;
+
+public class EntregaDocumentoParcial extends EntregaDocumento {
     private int idEntregaDocumentoParcial;
     private LocalDateTime fechaApertura;
     private LocalDateTime fechaLimite;
@@ -28,11 +29,8 @@ public class EntregaDocumentoParcial {
     }
 
     public EntregaDocumentoParcial(int idEntregaDocumentoParcial, LocalDateTime fechaApertura, LocalDateTime fechaLimite, int idEstudiante, int idPeriodo) {
+        super(fechaApertura, fechaLimite, idEstudiante, idPeriodo);
         this.idEntregaDocumentoParcial = idEntregaDocumentoParcial;
-        this.fechaApertura = fechaApertura;
-        this.fechaLimite = fechaLimite;
-        this.idEstudiante = idEstudiante;
-        this.idPeriodo = idPeriodo;
     }
 
     public int getIdEntregaDocumentoParcial() {
@@ -41,37 +39,5 @@ public class EntregaDocumentoParcial {
 
     public void setIdEntregaDocumentoParcial(int idEntregaDocumentoParcial) {
         this.idEntregaDocumentoParcial = idEntregaDocumentoParcial;
-    }
-
-    public LocalDateTime getFechaApertura() {
-        return fechaApertura;
-    }
-
-    public void setFechaApertura(LocalDateTime fechaApertura) {
-        this.fechaApertura = fechaApertura;
-    }
-
-    public LocalDateTime getFechaLimite() {
-        return fechaLimite;
-    }
-
-    public void setFechaLimite(LocalDateTime fechaLimite) {
-        this.fechaLimite = fechaLimite;
-    }
-
-    public int getIdEstudiante() {
-        return idEstudiante;
-    }
-
-    public void setIdEstudiante(int idEstudiante) {
-        this.idEstudiante = idEstudiante;
-    }
-
-    public int getIdPeriodo() {
-        return idPeriodo;
-    }
-
-    public void setIdPeriodo(int idPeriodo) {
-        this.idPeriodo = idPeriodo;
     }
 }
