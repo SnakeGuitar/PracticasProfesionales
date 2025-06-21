@@ -39,9 +39,7 @@
                   <Font size="13.0" />
                </font>
             </Label>
-            <Button fx:id="btnBorrar" disable="true" layoutX="280.0" layoutY="320.0" minWidth="54.0" mnemonicParsing="false" onAction="#btnClicBorrar" prefHeight="25.0" prefWidth="54.0" text="Borrar" />
-            <Button fx:id="btnActualizar" disable="true" layoutX="195.0" layoutY="320.0" minWidth="54.0" mnemonicParsing="false" onAction="#btnClicActualizar" prefHeight="25.0" prefWidth="75.0" text="Actualizar" />
-            <Button fx:id="btnDescargar" disable="true" layoutX="111.0" layoutY="320.0" minWidth="54.0" mnemonicParsing="false" onAction="#btnClicDescargar" prefHeight="25.0" prefWidth="75.0" text="Descargar" />
+            <Button fx:id="btnDescargar" disable="true" layoutX="260.0" layoutY="320.0" minWidth="54.0" mnemonicParsing="false" onAction="#btnClicDescargar" prefHeight="25.0" prefWidth="75.0" text="Descargar" />
          </children>
       </Pane>
    </children>

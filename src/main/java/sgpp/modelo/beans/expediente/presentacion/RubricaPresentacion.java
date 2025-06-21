@@ -20,6 +20,7 @@ import java.util.Date;
 public class RubricaPresentacion {
     private int idPresentacion;
     private LocalDateTime fechaHora;
+    private float[] criterios;
     private float calificacion;
     private String observaciones;
     private int idEstudiante;
@@ -31,7 +32,7 @@ public class RubricaPresentacion {
     }
 
     public RubricaPresentacion(int idPresentacion, LocalDateTime fechaHora, float calificacion, String observaciones,
-                               int idEstudiante, int idPeriodo, int idProfesor, Evaluador evaluador) {
+                               int idEstudiante, int idPeriodo, int idProfesor, Evaluador evaluador, float[] criterios) {
         this.idPresentacion = idPresentacion;
         this.fechaHora = fechaHora;
         this.calificacion = calificacion;
@@ -40,6 +41,7 @@ public class RubricaPresentacion {
         this.idPeriodo = idPeriodo;
         this.idProfesor = idProfesor;
         this.evaluador = evaluador;
+        this.criterios = criterios;
     }
 
     public int getIdPresentacion() {
@@ -104,5 +106,13 @@ public class RubricaPresentacion {
 
     public void setEvaluador(Evaluador evaluador) {
         this.evaluador = evaluador;
+    }
+
+    public float[] getCriterios() {
+        return criterios;
+    }
+
+    public void setCriterios(float[] criterios) {
+        this.criterios = criterios;
     }
 }

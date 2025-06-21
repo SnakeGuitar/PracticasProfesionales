@@ -35,17 +35,11 @@ public class FXMLExpedienteProfesorController implements Initializable {
     public Label lbHorasAcumuladas;
 
     @FXML
-    public Button btnBorrar;
-
-    @FXML
-    public Button btnActualizar;
-
-    @FXML
     public Button btnDescargar;
 
     private ObservableList<Documento> documentos;
 
-    private int idEstudiante, idPeriodo;
+    private int idEstudiante = 0, idPeriodo = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -80,12 +74,7 @@ public class FXMLExpedienteProfesorController implements Initializable {
         Utilidad.cerrarVentana(lbNombreEstudiante);
     }
 
-    public void btnClicBorrar(ActionEvent actionEvent) {
-    }
-
-    public void btnClicActualizar(ActionEvent actionEvent) {
-    }
-
     public void btnClicDescargar(ActionEvent actionEvent) {
+        // TODO: Averiguar cómo descargar documentos
     }
 }
