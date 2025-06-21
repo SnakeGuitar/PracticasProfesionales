@@ -309,20 +309,29 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
 
     private void manejarDocumentoParcial(TipoDocumentoParcial tipo) {
         try {
-            List<EntregaDocumentoParcial> entregas = EntregaDocumentoParcialDAO.obtenerEntregasDisponibles(ID_ESTUDIANTE, idPeriodoActual);
-            EntregaDocumentoParcial entrega = entregas.isEmpty() ? null : entregas.get(0);
-
-            if (entrega == null) {
-                Utilidad.crearAlertaAdvertencia("Sin datos",
-                        "No se encontró información para la entrega de " + tipo.name());
-                return;
-            }
-
-            if (validarVentanaEntrega(entrega.getFechaApertura(), entrega.getFechaLimite())) {
-                entregaSeleccionada = entrega;
-                tipoDocumentoSeleccionado = TipoDocumento.PARCIAL;
-                tipoEspecificoSeleccionado = tipo;
-                actualizarInterfaz(entrega.getFechaApertura(), entrega.getFechaLimite());
+            System.out.println("ID Estudiante: " + ID_ESTUDIANTE);
+            System.out.println("ID Periodo Actual: " + idPeriodoActual);
+            EntregaDocumentoParcial entrega = EntregaDocumentoParcialDAO.obtenerEntregaDisponible(ID_ESTUDIANTE, idPeriodoActual);
+            if (entrega != null) {
+                DocumentoParcial documento = DocumentoParcialDAO.obtenerDocumentoParcialPorTipo(entrega.getIdEntregaDocumentoParcial(), tipo);
+                if (documento != null) {
+                    Utilidad.crearAlertaAdvertencia("Ya entregado",
+                            "Ya has entregado este documento: " + tipo.name());
+                } else {
+                    if (validarVentanaEntrega(entrega.getFechaApertura(), entrega.getFechaLimite())) {
+                        entregaSeleccionada = entrega;
+                        tipoDocumentoSeleccionado = TipoDocumento.PARCIAL;
+                        tipoEspecificoSeleccionado = tipo;
+                        Utilidad.crearAlertaInformacion(
+                                "Entrega disponible",
+                                "Puedes entregar el documento: " + tipo.name());
+                        actualizarInterfaz(entrega.getFechaApertura(), entrega.getFechaLimite());
+                    }
+                }
+            } else {
+                Utilidad.crearAlertaAdvertencia(
+                        "Error",
+                        "No hay una fecha de entrega programada para entregar tus documentos parciales.");
             }
         } catch (SQLException e) {
             Utilidad.mostrarErrorBD(true, e);
@@ -331,20 +340,29 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
 
     private void manejarDocumentoFinal(TipoDocumentoFinal tipo) {
         try {
-            List<EntregaDocumentoFinal> entregas = EntregaDocumentoFinalDAO.obtenerEntregasDisponibles(ID_ESTUDIANTE, idPeriodoActual);
-            EntregaDocumentoFinal entrega = entregas.isEmpty() ? null : entregas.get(0);
-
-            if (entrega == null) {
-                Utilidad.crearAlertaAdvertencia("Sin datos",
-                        "No se encontró información para la entrega de " + tipo.name());
-                return;
-            }
-
-            if (validarVentanaEntrega(entrega.getFechaApertura(), entrega.getFechaLimite())) {
-                entregaSeleccionada = entrega;
-                tipoDocumentoSeleccionado = TipoDocumento.FINAL;
-                tipoEspecificoSeleccionado = tipo;
-                actualizarInterfaz(entrega.getFechaApertura(), entrega.getFechaLimite());
+            System.out.println("ID Estudiante: " + ID_ESTUDIANTE);
+            System.out.println("ID Periodo Actual: " + idPeriodoActual);
+            EntregaDocumentoFinal entrega = EntregaDocumentoFinalDAO.obtenerEntregaDisponible(ID_ESTUDIANTE, idPeriodoActual);
+            if (entrega != null) {
+                DocumentoFinal documento = DocumentoFinalDAO.obtenerDocumentoFinalPorTipo(entrega.getIdEntregaDocumentoFinal(), tipo);
+                if (documento != null) {
+                    Utilidad.crearAlertaAdvertencia("Ya entregado",
+                            "Ya has entregado este documento: " + tipo.name());
+                } else {
+                    if (validarVentanaEntrega(entrega.getFechaApertura(), entrega.getFechaLimite())) {
+                        entregaSeleccionada = entrega;
+                        tipoDocumentoSeleccionado = TipoDocumento.FINAL;
+                        tipoEspecificoSeleccionado = tipo;
+                        Utilidad.crearAlertaInformacion(
+                                "Entrega disponible",
+                                "Puedes entregar el documento: " + tipo.name());
+                        actualizarInterfaz(entrega.getFechaApertura(), entrega.getFechaLimite());
+                    }
+                }
+            } else {
+                Utilidad.crearAlertaAdvertencia(
+                        "Error",
+                        "No hay una fecha de entrega programada para entregar tus documentos finales.");
             }
         } catch (SQLException e) {
             Utilidad.mostrarErrorBD(true, e);
