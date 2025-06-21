@@ -40,11 +40,11 @@ public class FXMLCalificacionObservacionesController {
     @FXML
     public Slider sldCalificacion5;
 
-    private int[] calificaciones;
+    private float[] calificaciones;
 
     private int idEstudiante, idProfesor, idPeriodo;
 
-    public void inicializarInformacion(int[] valorCriterio, int idProfesor, int idEstudiante, int idPeriodo) {
+    public void inicializarInformacion(float[] valorCriterio, int idProfesor, int idEstudiante, int idPeriodo) {
         this.idEstudiante = idEstudiante;
         this.idProfesor = idProfesor;
         this.idPeriodo = idPeriodo;
@@ -60,7 +60,7 @@ public class FXMLCalificacionObservacionesController {
         obtenerPromedio();
     }
 
-    private void configurarSlider(Slider slider, int valor) {
+    private void configurarSlider(Slider slider, float valor) {
         slider.setValue(valor);
 
         slider.setMax(valor);
@@ -74,7 +74,7 @@ public class FXMLCalificacionObservacionesController {
     private void obtenerPromedio() {
         float promedio = 0;
 
-        for (int calificacion : calificaciones) {
+        for (float calificacion : calificaciones) {
             promedio += calificacion;
         }
 
@@ -92,6 +92,7 @@ public class FXMLCalificacionObservacionesController {
         rubrica.setIdEstudiante(idEstudiante);
         rubrica.setIdProfesor(idProfesor);
         rubrica.setIdPeriodo(idPeriodo);
+        rubrica.setCriterios(calificaciones);
 
         Profesor profesor = ProfesorDAO.obtenerPorId(idProfesor);
         Evaluador evaluador = new Evaluador();
