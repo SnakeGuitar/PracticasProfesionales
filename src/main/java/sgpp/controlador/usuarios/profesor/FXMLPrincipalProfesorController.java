@@ -27,7 +27,7 @@ public class FXMLPrincipalProfesorController implements Initializable, IControla
     private Label lbNombreProfesor;
     private Profesor profesor;
 
-    private static final String RUTA_FXML_SELECCIONAR_ESTUDIANTE = "/sgpp/vista/usuarios/profesor/FXMLSeleccionarEstudiante.fxml";
+    private static final String RUTA_FXML_SELECCION_ESTUDIANTE = "/sgpp/vista/usuarios/profesor/FXMLSeleccionEstudiante.fxml";
     private static final String RUTA_FXML_VALIDAR_DOCUMENTO = "/sgpp/vista/usuarios/profesor/FXMLValidarDocumento.fxml";
     private static final String RUTA_FXML_VALIDAR_REPORTE = "/sgpp/vista/usuarios/profesor/FXMLValidarReporte.fxml";
 
@@ -59,7 +59,7 @@ public class FXMLPrincipalProfesorController implements Initializable, IControla
     }
 
     public void clicBtnExpedienteEstudiante(ActionEvent actionEvent) {
-        Utilidad.crearEscenario(RUTA_FXML_SELECCIONAR_ESTUDIANTE, "Seleccionar Estudiante");
+        Utilidad.crearEscenario(RUTA_FXML_SELECCION_ESTUDIANTE, "Seleccionar Estudiante");
     }
 
     public void clicBtnValidarDocumento(ActionEvent actionEvent) {
@@ -74,7 +74,7 @@ public class FXMLPrincipalProfesorController implements Initializable, IControla
         try {
             Stage escenarioBase = new Stage();
             FXMLLoader cargador = new FXMLLoader(
-                    SistemaGestionPracticasProfesionales.class.getResource(RUTA_FXML_SELECCIONAR_ESTUDIANTE));
+                    SistemaGestionPracticasProfesionales.class.getResource(RUTA_FXML_SELECCION_ESTUDIANTE));
 
             Parent vista = cargador.load();
 
