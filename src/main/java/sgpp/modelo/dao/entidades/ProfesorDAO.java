@@ -9,37 +9,6 @@ import java.util.ArrayList;
 
 public class ProfesorDAO {
 
-    public static boolean insertar(Profesor profesor) throws SQLException {
-        boolean exitoso = false;
-        Connection conexion = null;
-        PreparedStatement sentencia = null;
-        ResultSet resultado = null;
-        String consulta = "INSERT INTO profesor (nombre, num_personal, ID_Usuario) VALUES (?, ?, ?)";
-
-        try {
-            conexion = ConexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(consulta);
-            sentencia.setString(1, profesor.getNombre());
-            sentencia.setInt(2, profesor.getNumeroPersonal());
-            sentencia.setInt(3, profesor.getIdUsuario());
-
-            int filas = sentencia.executeUpdate();
-
-            if (filas > 0) {
-                Utilidad.crearAlertaInformacion("Registro exitoso", "Profesor registrado exitosamente.");
-                exitoso = true;
-            } else {
-                throw new SQLException();
-            }
-        } catch (SQLException e) {
-            Utilidad.mostrarErrorBD(true, e);
-        } finally {
-            ConexionBD.cerrarConexion(conexion, sentencia, null);
-        }
-
-        return exitoso;
-    }
-
     public static Profesor obtenerPorId(int id) throws SQLException {
         Connection conexion = null;
         PreparedStatement sentencia = null;
@@ -67,31 +36,30 @@ public class ProfesorDAO {
         return profesor;
     }
 
-    public static int obtenerIdProfesorPorIdUsuario(int idUsuario) throws SQLException {
-        Connection conexion = null;
-        PreparedStatement sentencia = null;
-        ResultSet resultado = null;
-        int idProfesor = 0;
-        String consulta = "SELECT ID_Profesor FROM profesor WHERE ID_Usuario = ?";
-
-        try {
-            conexion = ConexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(consulta);
-            sentencia.setInt(1, idUsuario);
-            resultado = sentencia.executeQuery();
-
-            if (resultado.next()) {
-                idProfesor = resultado.getInt("ID_Profesor");
+    public static Profesor obtenerPorIdUsuario(int idUsuario) throws SQLException {
+        Profesor profesor = null;
+        Connection conexion = ConexionBD.abrirConexion();
+        if (conexion != null) {
+            String consulta = "SELECT * FROM profesor WHERE ID_Usuario = ?";
+            PreparedStatement sentencia = null;
+            ResultSet resultado = null;
+            try {
+                sentencia = conexion.prepareStatement(consulta);
+                sentencia.setInt(1, idUsuario);
+                resultado = sentencia.executeQuery();
+                if (resultado.next()) {
+                    profesor = convertirResultSetProfesor(resultado);
+                }
+            } catch (SQLException sqlex) {
+                System.out.println("Error al obtener el profesor: "+sqlex.getMessage());
+            } finally {
+                ConexionBD.cerrarConexion(conexion, sentencia, resultado);
             }
-        } catch (SQLException e) {
-            Utilidad.mostrarErrorBD(true, e);
-        } finally {
-            ConexionBD.cerrarConexion(conexion, sentencia, resultado);
+        } else {
+            throw new SQLException("Se ha perdido la conexion con la Base de Datos");
         }
-
-        return idProfesor;
+        return profesor;
     }
-
 
     public static ArrayList<Profesor> obtenerTodos() throws SQLException {
         Connection conexion = null;
@@ -115,65 +83,6 @@ public class ProfesorDAO {
         }
 
         return profesores;
-    }
-
-    public static boolean actualizar(Profesor profesor) throws SQLException {
-        boolean exitoso = false;
-        Connection conexion = null;
-        PreparedStatement sentencia = null;
-        String consulta = "UPDATE profesor SET nombre = ?, num_personal = ?, ID_Usuario = ? WHERE ID_Profesor = ?";
-
-        try {
-            conexion = ConexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(consulta);
-            sentencia.setString(1, profesor.getNombre());
-            sentencia.setInt(2, profesor.getNumeroPersonal());
-            sentencia.setInt(3, profesor.getIdUsuario());
-            sentencia.setInt(4, profesor.getIdProfesor());
-
-            int filas = sentencia.executeUpdate();
-
-            if (filas > 0) {
-                Utilidad.crearAlertaInformacion("Modificación exitosa", "Profesor modificado exitosamente.");
-                exitoso = true;
-            } else {
-                throw new SQLException();
-            }
-        } catch (SQLException e) {
-            Utilidad.mostrarErrorBD(true, e);
-        } finally {
-            ConexionBD.cerrarConexion(conexion, sentencia, null);
-        }
-
-        return exitoso;
-    }
-
-    public static boolean eliminar(int id) throws SQLException {
-        boolean exitoso = false;
-        Connection conexion = null;
-        PreparedStatement sentencia = null;
-        String consulta = "DELETE FROM profesor WHERE ID_Profesor = ?";
-
-        try {
-            conexion = ConexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(consulta);
-            sentencia.setInt(1, id);
-
-            int filas = sentencia.executeUpdate();
-
-            if (filas > 0) {
-                Utilidad.crearAlertaInformacion("Eliminación exitosa", "Profesor eliminado exitosamente.");
-                exitoso = true;
-            } else {
-                throw new SQLException();
-            }
-        } catch (SQLException e) {
-            Utilidad.mostrarErrorBD(true, e);
-        } finally {
-            ConexionBD.cerrarConexion(conexion, sentencia, null);
-        }
-
-        return exitoso;
     }
 
     public static Profesor convertirResultSetProfesor(ResultSet resultado) throws SQLException {

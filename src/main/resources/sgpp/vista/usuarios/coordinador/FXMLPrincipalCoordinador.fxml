@@ -13,7 +13,7 @@
             <Font name="Arial Bold Italic" size="24.0" />
          </font>
       </Label>
-      <Label layoutX="31.0" layoutY="73.0" prefHeight="27.0" prefWidth="115.0" text="Coordinador">
+      <Label fx:id="lbNombreCoordinador" layoutX="31.0" layoutY="73.0" prefHeight="27.0" text="Coordinador">
          <font>
             <Font name="Arial Italic" size="18.0" />
          </font>
