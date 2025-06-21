@@ -326,7 +326,7 @@ public class DocumentoParcialDAO {
                     documentoParcial.setIdEntregaDocumento(resultado.getInt("id_entrega_doc_parcial"));
                 }
             } finally {
-                Utilidad.cerrarRecursosSQL(conexion, sentencia, resultado);
+                ConexionBD.cerrarConexion(conexion, sentencia, resultado);
             }
         }
         return documentoParcial;

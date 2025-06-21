@@ -11,8 +11,6 @@ import sgpp.modelo.ConexionBD;
 import sgpp.modelo.beans.expediente.EstadoDocumento;
 import sgpp.modelo.beans.expediente.documentofinal.DocumentoFinal;
 import sgpp.modelo.beans.expediente.documentofinal.TipoDocumentoFinal;
-import sgpp.modelo.beans.expediente.documentoinicial.DocumentoInicial;
-import sgpp.modelo.beans.expediente.documentoinicial.TipoDocumentoInicial;
 import sgpp.utilidad.Utilidad;
 import sgpp.utilidad.UtilidadFormatoDeDatos;
 
@@ -147,7 +145,7 @@ public class DocumentoFinalDAO {
                 throw new SQLException("No se pudo establecer la conexión a la base de datos.");
             }
         } finally {
-            Utilidad.cerrarRecursosSQL(conexion, sentencia, resultado);
+            ConexionBD.cerrarConexion(conexion, sentencia, resultado);
         }
         return existe;
     }
@@ -340,7 +338,7 @@ public class DocumentoFinalDAO {
                     documentoFinal.setIdEntregaDocumento(resultado.getInt("id_entrega_doc_final"));
                 }
             } finally {
-                Utilidad.cerrarRecursosSQL(conexion, sentencia, resultado);
+                ConexionBD.cerrarConexion(conexion, sentencia, resultado);
             }
         }
         return documentoFinal;

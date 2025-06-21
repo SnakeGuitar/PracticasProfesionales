@@ -80,7 +80,6 @@ public class DocumentoInicialDAO {
     /**
      * Obtiene los documentos iniciales por expediente de estudiante y período.
      *
-     * @param idEstudiante ID del estudiante
      * @param idPeriodo    ID del período
      * @return Lista de documentos iniciales
      * @throws SQLException Si ocurre un error en la consulta
@@ -195,7 +194,7 @@ public class DocumentoInicialDAO {
                 throw new SQLException("No se pudo establecer la conexión a la base de datos.");
             }
         } finally {
-            Utilidad.cerrarRecursosSQL(conexionBD, sentencia, resultado);
+            ConexionBD.cerrarConexion(conexionBD, sentencia, resultado);
         }
         return existe;
     }
@@ -222,7 +221,7 @@ public class DocumentoInicialDAO {
                     documentoInicial.setIdEntregaDocumento(resultado.getInt("id_entrega_doc_inicial"));
                 }
             } finally {
-                Utilidad.cerrarRecursosSQL(conexion, sentencia, resultado);
+                ConexionBD.cerrarConexion(conexion, sentencia, resultado);
             }
         }
         return documentoInicial;
