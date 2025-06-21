@@ -96,7 +96,7 @@ public class FXMLCriteriosPresentacionController implements Initializable {
 
     private RadioButton[][] radioButtons;
 
-    private int[] valorCriterio;
+    private float[] valorCriterio;
 
     private int idProfesor = 0, idEstudiante = 0, idPeriodo = 0;
 
@@ -112,14 +112,18 @@ public class FXMLCriteriosPresentacionController implements Initializable {
     }
 
     private void configurarCriterios() {
-        valorCriterio = new int[5];
+        valorCriterio = new float[5];
+
+        tgCriterio1 = new ToggleGroup();
+        tgCriterio2 = new ToggleGroup();
+        tgCriterio3 = new ToggleGroup();
+        tgCriterio4 = new ToggleGroup();
+        tgCriterio5 = new ToggleGroup();
 
         toggleGroups = new ToggleGroup[]{
-                tgCriterio1 = new ToggleGroup(),
-                tgCriterio2 = new ToggleGroup(),
-                tgCriterio3 = new ToggleGroup(),
-                tgCriterio4 = new ToggleGroup(),
-                tgCriterio5 = new ToggleGroup()
+                tgCriterio1, tgCriterio2,
+                tgCriterio3, tgCriterio4,
+                tgCriterio5
         };
 
         radioButtons = new RadioButton[][]{
@@ -167,9 +171,10 @@ public class FXMLCriteriosPresentacionController implements Initializable {
     public void btnClicContinuar(ActionEvent actionEvent) {
         boolean criteriosSeleccionados = true;
 
-        for (int criterio : valorCriterio) {
+        for (float criterio : valorCriterio) {
             if (criterio == 0) {
                 criteriosSeleccionados = false;
+                break;
             }
         }
 
