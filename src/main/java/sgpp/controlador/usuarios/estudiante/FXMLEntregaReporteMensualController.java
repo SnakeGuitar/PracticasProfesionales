@@ -12,7 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
-import sgpp.modelo.beans.expediente.documentoparcial.EntregaReporteMensual;
+import sgpp.modelo.beans.expediente.reporte.EntregaReporteMensual;
 import sgpp.modelo.dao.expediente.documentoparcial.EntregaReporteMensualDAO;
 import sgpp.modelo.dao.expediente.documentoparcial.ReporteMensualDAO;
 import sgpp.utilidad.Utilidad;
@@ -140,5 +140,8 @@ public class FXMLEntregaReporteMensualController implements Initializable {
 
     @FXML
     private void btnRegresar(ActionEvent event) {
+    }
+
+    public void volverAtras(ActionEvent actionEvent) {
     }
 }
