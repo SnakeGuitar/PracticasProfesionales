@@ -134,20 +134,58 @@ public class EstudianteDAO {
         return estudiantes;
     }
 
+    public static ArrayList<Estudiante> obtenerEstudiantesPorPeriodo(int idPeriodoActual) throws SQLException {
+        ArrayList<Estudiante> estudiantes = new ArrayList<>();
+        Connection conexion = ConexionBD.abrirConexion();
+        if (conexion != null) {
+            String consulta = "SELECT es.ID_Estudiante, es.nombre, es.matricula, ex.ID_Periodo FROM Estudiante es " +
+                    "JOIN Expediente ex ON ex.ID_Estudiante = es.ID_Estudiante WHERE ex.ID_Periodo = ?";
+            PreparedStatement sentencia = null;
+            ResultSet resultado = null;
+            try {
+                sentencia = conexion.prepareStatement(consulta);
+                sentencia.setInt(1, idPeriodoActual);
+                resultado = sentencia.executeQuery();
+                while (resultado.next()) {
+                    Estudiante estudiante = new Estudiante();
+                    estudiante.setIdEstudiante(resultado.getInt(1));
+                    estudiante.setNombre(resultado.getString(2));
+                    estudiante.setMatricula(resultado.getString(3));
+                    estudiantes.add(estudiante);
+                }
+            } catch (SQLException sqlex) {
+                System.out.println("Error al obtener al estudiante: "+sqlex.getMessage());
+            } finally {
+                ConexionBD.cerrarConexion(conexion, sentencia, resultado);
+            }
+        } else {
+            throw new SQLException("Se ha perdido la conexion la base de datos");
+        }
+        return estudiantes;
+    }
+
     public static ArrayList<Estudiante> obtenerEstudiantesPendientesDeAsignacion() throws SQLException {
         ArrayList<Estudiante> estudiantes = new ArrayList<Estudiante>();
         Connection conexion = ConexionBD.abrirConexion();
         if (conexion != null) {
             String consulta = "SELECT ID_Estudiante, nombre, semestre, promedio FROM Estudiante WHERE ID_Proyecto is NULL";
-            PreparedStatement sentencia = conexion.prepareStatement(consulta);
-            ResultSet resultado = sentencia.executeQuery();
-            while (resultado.next()) {
-                Estudiante estudiante = new Estudiante();
-                estudiante.setIdEstudiante(resultado.getInt("ID_Estudiante"));
-                estudiante.setNombre(resultado.getString("nombre"));
-                estudiante.setSemestre(resultado.getInt("semestre"));
-                estudiante.setPromedio(resultado.getFloat("promedio"));
-                estudiantes.add(estudiante);
+            PreparedStatement sentencia = null;
+            ResultSet resultado = null;
+            try {
+                sentencia = conexion.prepareStatement(consulta);
+                resultado = sentencia.executeQuery();
+                while (resultado.next()) {
+                    Estudiante estudiante = new Estudiante();
+                    estudiante.setIdEstudiante(resultado.getInt("ID_Estudiante"));
+                    estudiante.setNombre(resultado.getString("nombre"));
+                    estudiante.setSemestre(resultado.getInt("semestre"));
+                    estudiante.setPromedio(resultado.getFloat("promedio"));
+                    estudiantes.add(estudiante);
+                }
+            } catch (SQLException sqlex) {
+                System.out.println("Error al obtener los estudiantes: "+sqlex.getMessage());
+            } finally {
+                ConexionBD.cerrarConexion(conexion, sentencia, resultado);
             }
         } else {
             throw new SQLException();
@@ -169,7 +207,6 @@ public class EstudianteDAO {
         estudiante.setHablaIdiomaIndigena(resultado.getBoolean("habla_idioma_indigena"));
         estudiante.setIdProyecto(resultado.getInt("ID_Proyecto"));
         estudiante.setIdUsuario(resultado.getInt("ID_Usuario"));
-
         return estudiante;
     }
 }

@@ -15,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sgpp.SistemaGestionPracticasProfesionales;
 import sgpp.modelo.beans.Estudiante;
+import sgpp.modelo.beans.Periodo;
 import sgpp.modelo.dao.entidades.EstudianteDAO;
 import sgpp.modelo.dao.entidades.PeriodoDAO;
 import sgpp.utilidad.Utilidad;
@@ -31,26 +32,19 @@ public class FXMLSeleccionEstudianteController implements Initializable {
 
     @FXML
     public Button btnRefrescar;
-
     @FXML
     public Button btnRegresar;
-
     @FXML
     public Button btnConsultar;
-
     @FXML
     public TableView<Estudiante> tblEstudiantes;
-
     @FXML
     public TableColumn colMatricula;
-
     @FXML
     public TableColumn colNombre;
-
     private ObservableList<Estudiante> estudiantes;
 
     private boolean irRubrica = false;
-
     private int idProfesor = 0;
 
     @Override
@@ -63,7 +57,6 @@ public class FXMLSeleccionEstudianteController implements Initializable {
         if(idProfesor != 0) {
             irRubrica = true;
             this.idProfesor = idProfesor;
-
             btnConsultar.setText("Evaluar");
         }
     }
@@ -75,8 +68,9 @@ public class FXMLSeleccionEstudianteController implements Initializable {
 
     private void cargarInformacion() {
         try {
+            int idPeriodoActual = PeriodoDAO.obtenerPeriodoActual().getIdPeriodo();
             estudiantes = FXCollections.observableArrayList();
-            ArrayList<Estudiante> estudiantesDAO = EstudianteDAO.obtenerEstudiantes();
+            ArrayList<Estudiante> estudiantesDAO = EstudianteDAO.obtenerEstudiantesPorPeriodo(idPeriodoActual);
             estudiantes.addAll(estudiantesDAO);
             tblEstudiantes.setItems(estudiantes);
         } catch (SQLException e) {
@@ -149,7 +143,9 @@ public class FXMLSeleccionEstudianteController implements Initializable {
 
     public void btnClicConsultar(ActionEvent actionEvent) throws SQLException {
         int idEstudiante = obtenerEstudianteDeTabla().getIdEstudiante();
+        System.out.println(idEstudiante);
         int idPeriodo = PeriodoDAO.obtenerPeriodoActual().getIdPeriodo();
+        System.out.println(idPeriodo);
 
         if(idEstudiante != 0) {
             if(idPeriodo != 0) {
