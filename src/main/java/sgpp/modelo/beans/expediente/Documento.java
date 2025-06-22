@@ -1,7 +1,6 @@
 package sgpp.modelo.beans.expediente;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public abstract class Documento {
     int idDocumento;
