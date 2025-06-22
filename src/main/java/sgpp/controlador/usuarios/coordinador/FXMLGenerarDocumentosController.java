@@ -186,7 +186,7 @@ public class FXMLGenerarDocumentosController {
                             String nombreArchivo = String.format("Asignacion_%s_%s.pdf",
                                     asignacion.getNombreEstudiante().replace(" ", "_"),
                                     asignacion.getMatricula());
-                            Path ruta = Path.of(System.getProperty("user.home"), "Documentos", nombreArchivo);
+                            Path ruta = Path.of(System.getProperty("user.home"), "Documents", nombreArchivo);
                             Files.write(ruta, pdf);
 
                             OficioAsignacion oficio = new OficioAsignacion();
