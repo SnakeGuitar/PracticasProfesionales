@@ -20,15 +20,14 @@ package sgpp.modelo.dao.expediente.documentoinicial;
 
 import sgpp.modelo.ConexionBD;
 import sgpp.modelo.beans.expediente.EstadoDocumento;
+import sgpp.modelo.beans.expediente.documentofinal.DocumentoFinal;
+import sgpp.modelo.beans.expediente.documentofinal.TipoDocumentoFinal;
 import sgpp.modelo.beans.expediente.documentoinicial.DocumentoInicial;
 import sgpp.modelo.beans.expediente.documentoinicial.TipoDocumentoInicial;
 import sgpp.utilidad.Utilidad;
 import sgpp.utilidad.UtilidadFormatoDeDatos;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -223,5 +222,62 @@ public class DocumentoInicialDAO {
             }
         }
         return documentoInicial;
+    }
+
+    public static List<DocumentoInicial> obtenerDocumentosInicialesPorPeriodo(int idPeriodo) throws SQLException {
+        List<DocumentoInicial> documentosIniciales = new ArrayList<>();
+        Connection conexion = null;
+        PreparedStatement sentencia = null;
+        ResultSet resultado = null;
+
+        String consulta = "SELECT di.id_doc_inicial, di.fecha_entrega, di.tipo, di.estado, " +
+                "di.documento, di.id_entrega_doc_inicial " +
+                "FROM documento_inicial di " +
+                "INNER JOIN entrega_doc_inicial edi ON di.id_entrega_doc_inicial = edi.id_entrega_doc_inicial " +
+                "WHERE edi.id_periodo = ?";
+
+        try {
+            conexion = ConexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(consulta);
+            sentencia.setInt(1, idPeriodo);
+            resultado = sentencia.executeQuery();
+
+            while (resultado.next()) {
+                DocumentoInicial documentoInicial = new DocumentoInicial();
+
+                documentoInicial.setIdDocumento(resultado.getInt("id_doc_inicial"));
+
+                Timestamp fechaEntrega = resultado.getTimestamp("fecha_entrega");
+                if (fechaEntrega != null) {
+                    documentoInicial.setFechaEntrega(fechaEntrega.toLocalDateTime());
+                }
+
+                String tipoStr = resultado.getString("tipo");
+                if (tipoStr != null) {
+                    documentoInicial.setTipo(TipoDocumentoInicial.valueOf(tipoStr));
+                }
+
+                String estadoStr = resultado.getString("estado");
+                if (estadoStr != null) {
+                    documentoInicial.setEstado(EstadoDocumento.valueOf(estadoStr));
+                }
+
+                byte[] documento = resultado.getBytes("documento");
+                if (documento != null) {
+                    documentoInicial.setDocumento(documento);
+                }
+
+                documentoInicial.setIdEntregaDocumento(resultado.getInt("id_entrega_documento_final"));
+
+                documentosIniciales.add(documentoInicial);
+            }
+
+        } catch (SQLException e) {
+            throw new SQLException("Error al obtener documentos finales por periodo: " + e.getMessage(), e);
+        } finally {
+            ConexionBD.cerrarConexion(conexion, sentencia, resultado);
+        }
+
+        return documentosIniciales;
     }
 }
