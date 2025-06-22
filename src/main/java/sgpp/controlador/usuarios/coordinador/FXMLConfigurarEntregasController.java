@@ -223,10 +223,11 @@ public class FXMLConfigurarEntregasController implements Initializable {
     private void programarEntregasIniciales() {
         try {
             ResultadoSQL resultado = EntregaDocumentoInicialDAO.programarEntregas(entregaInicial, idPeriodo);
-            if (resultado.isError()) {
+            if (!resultado.isError()) {
                 Utilidad.crearAlertaInformacion("Exito", "Entregas iniciales programadas exitosamente");
             } else {
-                Utilidad.crearAlertaError("Error", "Lo sentimos, por el momento no fue posible configurar las entregas iniciales");
+                Utilidad.crearAlertaError("Error",
+                        "Lo sentimos, por el momento no fue posible configurar las entregas iniciales");
             }
         } catch (SQLException sqlex) {
             System.out.println("Error: " + sqlex.getMessage());
