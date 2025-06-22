@@ -266,7 +266,7 @@ public class DocumentoParcialDAO {
         return documentoParcial;
     }
 
-    public static List<DocumentoParcial> obtenerDocumentosParcialesPorExpediente(int idEstudiante, int idPeriodo) throws SQLException {
+    public static List<DocumentoParcial> obtenerDocumentosParcialesPorExpediente(int idEntregaDocParcial) throws SQLException {
         Connection conexion = null;
         PreparedStatement sentencia = null;
         ResultSet resultado = null;
@@ -276,10 +276,9 @@ public class DocumentoParcialDAO {
         try {
             conexion = ConexionBD.abrirConexion();
             if (conexion != null) {
-                String consulta = "SELECT * FROM documento_parcial WHERE id_estudiante = ? AND id_periodo = ?";
+                String consulta = "SELECT * FROM documento_parcial WHERE id_entrega_doc_parcial = ?";
                 sentencia = conexion.prepareStatement(consulta);
-                sentencia.setInt(1, idEstudiante);
-                sentencia.setInt(2, idPeriodo);
+                sentencia.setInt(1, idEntregaDocParcial);
 
                 resultado = sentencia.executeQuery();
                 while (resultado.next()) {

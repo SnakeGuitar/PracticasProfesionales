@@ -72,12 +72,10 @@ public class DocumentoFinalDAO {
     /**
      * Obtiene los documentos finales por expediente de estudiante y período.
      *
-     * @param idEstudiante ID del estudiante
-     * @param idPeriodo    ID del período
      * @return Lista de documentos finales
      * @throws SQLException Si ocurre un error en la consulta
      */
-    public static List<DocumentoFinal> obtenerDocumentosFinalesPorExpediente(int idEstudiante, int idPeriodo) throws SQLException {
+    public static List<DocumentoFinal> obtenerDocumentosFinalesPorExpediente(int idEntregaDocFinal) throws SQLException {
         Connection conexion = null;
         PreparedStatement sentencia = null;
         ResultSet resultado = null;
@@ -87,20 +85,13 @@ public class DocumentoFinalDAO {
         try {
             conexion = ConexionBD.abrirConexion();
             if (conexion != null) {
-                String consulta = "SELECT * FROM documento_final WHERE id_estudiante = ? AND id_periodo = ?";
+                String consulta = "SELECT * FROM documento_final WHERE id_entrega_doc_final = ?";
                 sentencia = conexion.prepareStatement(consulta);
-                sentencia.setInt(1, idEstudiante);
-                sentencia.setInt(2, idPeriodo);
+                sentencia.setInt(1, idEntregaDocFinal);
 
                 resultado = sentencia.executeQuery();
                 while (resultado.next()) {
-                    DocumentoFinal documentoFinal = new DocumentoFinal();
-                    documentoFinal.setIdDocumento(resultado.getInt("id_documento_final"));
-                    documentoFinal.setFechaEntrega(UtilidadFormatoDeDatos.stringToLocalDateTime(resultado.getString("fecha_entrega")));
-                    documentoFinal.setTipo(TipoDocumentoFinal.valueOf(resultado.getString("tipo")));
-                    documentoFinal.setEstado(EstadoDocumento.valueOf(resultado.getString("estado")));
-                    documentoFinal.setDocumento(resultado.getBytes("documento"));
-                    documentoFinal.setIdEntregaDocumento(resultado.getInt("id_entrega_documento_final"));
+                    DocumentoFinal documentoFinal = convertirDocFinal(resultado);
                     documentosFinales.add(documentoFinal);
                 }
             } else {
@@ -113,6 +104,17 @@ public class DocumentoFinalDAO {
         }
 
         return documentosFinales;
+    }
+
+    private static DocumentoFinal convertirDocFinal(ResultSet resultado) throws SQLException {
+        DocumentoFinal documento = new DocumentoFinal();
+        documento.setIdDocumento(resultado.getInt("id_doc_final"));
+        documento.setFechaEntrega(UtilidadFormatoDeDatos.stringToLocalDateTime(resultado.getString("fecha_entrega")));
+        documento.setTipo(TipoDocumentoFinal.valueOf(resultado.getString("tipo")));
+        documento.setEstado(EstadoDocumento.valueOf(resultado.getString("estado")));
+        documento.setDocumento(resultado.getBytes("documento"));
+        documento.setIdEntregaDocumento(resultado.getInt("id_entrega_doc_final"));
+        return documento;
     }
 
     /**
@@ -286,7 +288,6 @@ public class DocumentoFinalDAO {
         PreparedStatement sentencia = null;
         ResultSet resultado = null;
         DocumentoFinal documentoFinal = null;
-
         try {
             conexion = ConexionBD.abrirConexion();
             if (conexion != null) {
@@ -296,13 +297,7 @@ public class DocumentoFinalDAO {
 
                 resultado = sentencia.executeQuery();
                 if (resultado.next()) {
-                    documentoFinal = new DocumentoFinal();
-                    documentoFinal.setIdDocumento(resultado.getInt("id_documento_final"));
-                    documentoFinal.setFechaEntrega(UtilidadFormatoDeDatos.stringToLocalDateTime(resultado.getString("fecha_entrega")));
-                    documentoFinal.setTipo(TipoDocumentoFinal.valueOf(resultado.getString("tipo")));
-                    documentoFinal.setEstado(EstadoDocumento.valueOf(resultado.getString("estado")));
-                    documentoFinal.setDocumento(resultado.getBytes("documento"));
-                    documentoFinal.setIdEntregaDocumento(resultado.getInt("id_entrega_documento_final"));
+                    documentoFinal = convertirDocFinal(resultado);
                 }
             } else {
                 throw new SQLException();
@@ -329,13 +324,7 @@ public class DocumentoFinalDAO {
                 sentencia.setString(2, tipo.name());
                 resultado = sentencia.executeQuery();
                 if (resultado.next()) {
-                    documentoFinal = new DocumentoFinal();
-                    documentoFinal.setIdDocumento(resultado.getInt("id_doc_final"));
-                    documentoFinal.setFechaEntrega(UtilidadFormatoDeDatos.stringToLocalDateTime(resultado.getString("fecha_entrega")));
-                    documentoFinal.setTipo(TipoDocumentoFinal.valueOf(resultado.getString("tipo")));
-                    documentoFinal.setEstado(EstadoDocumento.valueOf(resultado.getString("estado")));
-                    documentoFinal.setDocumento(resultado.getBytes("documento"));
-                    documentoFinal.setIdEntregaDocumento(resultado.getInt("id_entrega_doc_final"));
+                    documentoFinal = convertirDocFinal(resultado);
                 }
             } finally {
                 ConexionBD.cerrarConexion(conexion, sentencia, resultado);
@@ -343,6 +332,4 @@ public class DocumentoFinalDAO {
         }
         return documentoFinal;
     }
-
-
 }
