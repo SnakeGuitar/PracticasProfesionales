@@ -18,6 +18,7 @@ package sgpp.modelo.dao.expediente.documentofinal;
 
 import sgpp.modelo.ConexionBD;
 import sgpp.modelo.beans.expediente.documentofinal.EntregaDocumentoFinal;
+import sgpp.modelo.beans.expediente.documentoparcial.EntregaDocumentoParcial;
 import sgpp.modelo.dao.ResultadoSQL;
 import sgpp.utilidad.UtilidadFormatoDeDatos;
 
@@ -395,5 +396,30 @@ public class EntregaDocumentoFinalDAO {
             throw new SQLException("Se ha perdido la conexion con la Base de Datos");
         }
         return resultadoOperacion;
+    }
+
+    public static EntregaDocumentoFinal obtenerPrimeraEntregaPorPeriodo(int idPeriodo) throws SQLException {
+        EntregaDocumentoFinal entrega = null;
+        Connection conexion = ConexionBD.abrirConexion();
+        if (conexion != null) {
+            String consulta = "SELECT * FROM entrega_doc_final WHERE ID_Periodo = ? AND fecha_apertura IS NOT NULL ORDER BY fecha_apertura ASC";
+            PreparedStatement sentencia = null;
+            ResultSet resultado = null;
+            try {
+                sentencia = conexion.prepareStatement(consulta);
+                sentencia.setInt(1, idPeriodo);
+                resultado = sentencia.executeQuery();
+                if (resultado.next()) {
+                    entrega = convertirAEntrega(resultado);
+                }
+            } catch (SQLException sqlex) {
+                System.out.println("Error al obtener la entrega final: "+sqlex.getMessage());
+            } finally {
+                ConexionBD.cerrarConexion(conexion, sentencia, resultado);
+            }
+        } else {
+            throw new SQLException("Se ha perdido la conexion a la Base de Datos");
+        }
+        return entrega;
     }
 }

@@ -199,6 +199,31 @@ public class EntregaDocumentoInicialDAO {
         return resultadoOperacion;
     }
 
+    public static EntregaDocumentoInicial obtenerPrimeraEntregaPorPeriodo(int idPeriodo) throws SQLException {
+        EntregaDocumentoInicial entrega = null;
+        Connection conexion = ConexionBD.abrirConexion();
+        if (conexion != null) {
+            String consulta = "SELECT * FROM entrega_doc_inicial WHERE ID_Periodo = ? AND fecha_apertura IS NOT NULL ORDER BY fecha_apertura ASC";
+            PreparedStatement sentencia = null;
+            ResultSet resultado = null;
+            try {
+                sentencia = conexion.prepareStatement(consulta);
+                sentencia.setInt(1, idPeriodo);
+                resultado = sentencia.executeQuery();
+                if (resultado.next()) {
+                    entrega = convertirAEntrega(resultado);
+                }
+            } catch (SQLException sqlex) {
+                System.out.println("Error al obtener la entrega inicial: "+sqlex.getMessage());
+            } finally {
+                ConexionBD.cerrarConexion(conexion, sentencia, resultado);
+            }
+        } else {
+            throw new SQLException("Se ha perdido la conexion a la Base de Datos");
+        }
+        return entrega;
+    }
+
     private static EntregaDocumentoInicial convertirAEntrega(ResultSet resultado) throws SQLException {
         EntregaDocumentoInicial entrega = new EntregaDocumentoInicial();
         entrega.setIdEntregaDocumentoInicial(resultado.getInt("ID_Entrega_Doc_Inicial"));

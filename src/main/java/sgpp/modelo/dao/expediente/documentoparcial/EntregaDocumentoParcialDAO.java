@@ -366,4 +366,29 @@ public class EntregaDocumentoParcialDAO {
         }
         return resultadoOperacion;
     }
+
+    public static EntregaDocumentoParcial obtenerPrimeraEntregaPorPeriodo(int idPeriodo) throws SQLException {
+        EntregaDocumentoParcial entrega = null;
+        Connection conexion = ConexionBD.abrirConexion();
+        if (conexion != null) {
+            String consulta = "SELECT * FROM entrega_doc_parcial WHERE ID_Periodo = ? AND fecha_apertura IS NOT NULL ORDER BY fecha_apertura ASC";
+            PreparedStatement sentencia = null;
+            ResultSet resultado = null;
+            try {
+                sentencia = conexion.prepareStatement(consulta);
+                sentencia.setInt(1, idPeriodo);
+                resultado = sentencia.executeQuery();
+                if (resultado.next()) {
+                    entrega = convertirAEntrega(resultado);
+                }
+            } catch (SQLException sqlex) {
+                System.out.println("Error al obtener la entrega parcial: "+sqlex.getMessage());
+            } finally {
+                ConexionBD.cerrarConexion(conexion, sentencia, resultado);
+            }
+        } else {
+            throw new SQLException("Se ha perdido la conexion a la Base de Datos");
+        }
+        return entrega;
+    }
 }
