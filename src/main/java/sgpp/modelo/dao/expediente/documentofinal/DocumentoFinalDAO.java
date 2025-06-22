@@ -14,10 +14,7 @@ import sgpp.modelo.beans.expediente.documentofinal.TipoDocumentoFinal;
 import sgpp.utilidad.Utilidad;
 import sgpp.utilidad.UtilidadFormatoDeDatos;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -331,5 +328,62 @@ public class DocumentoFinalDAO {
             }
         }
         return documentoFinal;
+    }
+
+    public static List<DocumentoFinal> obtenerDocumentosFinalesPorPeriodo(int idPeriodo) throws SQLException {
+        List<DocumentoFinal> documentosFinales = new ArrayList<>();
+        Connection conexion = null;
+        PreparedStatement sentencia = null;
+        ResultSet resultado = null;
+
+        String consulta = "SELECT df.id_doc_final, df.fecha_entrega, df.tipo, df.estado, " +
+                "df.documento, df.id_entrega_doc_final " +
+                "FROM documento_final df " +
+                "INNER JOIN entrega_doc_final edf ON df.id_entrega_doc_final = edf.id_entrega_doc_final " +
+                "WHERE edf.id_periodo = ?";
+
+        try {
+            conexion = ConexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(consulta);
+            sentencia.setInt(1, idPeriodo);
+            resultado = sentencia.executeQuery();
+
+            while (resultado.next()) {
+                DocumentoFinal documentoFinal = new DocumentoFinal();
+
+                documentoFinal.setIdDocumento(resultado.getInt("id_documento_final"));
+
+                Timestamp fechaEntrega = resultado.getTimestamp("fecha_entrega");
+                if (fechaEntrega != null) {
+                    documentoFinal.setFechaEntrega(fechaEntrega.toLocalDateTime());
+                }
+
+                String tipoStr = resultado.getString("tipo");
+                if (tipoStr != null) {
+                    documentoFinal.setTipo(TipoDocumentoFinal.valueOf(tipoStr));
+                }
+
+                String estadoStr = resultado.getString("estado");
+                if (estadoStr != null) {
+                    documentoFinal.setEstado(EstadoDocumento.valueOf(estadoStr));
+                }
+
+                byte[] documento = resultado.getBytes("documento");
+                if (documento != null) {
+                    documentoFinal.setDocumento(documento);
+                }
+
+                documentoFinal.setIdEntregaDocumento(resultado.getInt("id_entrega_documento_final"));
+
+                documentosFinales.add(documentoFinal);
+            }
+
+        } catch (SQLException e) {
+            throw new SQLException("Error al obtener documentos finales por periodo: " + e.getMessage(), e);
+        } finally {
+            ConexionBD.cerrarConexion(conexion, sentencia, resultado);
+        }
+
+        return documentosFinales;
     }
 }
