@@ -39,9 +39,9 @@ public class FXMLSeleccionEstudianteController implements Initializable {
     @FXML
     public TableView<Estudiante> tblEstudiantes;
     @FXML
-    public TableColumn colMatricula;
+    public TableColumn<Estudiante, String> colMatricula;
     @FXML
-    public TableColumn colNombre;
+    public TableColumn<Estudiante, String> colNombre;
     private ObservableList<Estudiante> estudiantes;
 
     private boolean irRubrica = false;
@@ -78,7 +78,7 @@ public class FXMLSeleccionEstudianteController implements Initializable {
         }
     }
 
-    private void irExpedienteEstudiante(int idEstudiante, int idPeriodo) {
+    private void irExpedienteEstudiante(Estudiante estudiante, int idPeriodo) {
         try {
             Stage escenarioBase = Utilidad.getEscenarioComponente(btnConsultar);
             FXMLLoader cargador = new FXMLLoader(
@@ -88,14 +88,15 @@ public class FXMLSeleccionEstudianteController implements Initializable {
             Parent vista = cargador.load();
 
             FXMLExpedienteEstudianteController controlador = cargador.getController();
-            controlador.inicializarInformacion(idEstudiante, idPeriodo);
+            controlador.inicializarInformacion(estudiante, idPeriodo);
 
             Scene escenaPrincipal = new Scene(vista);
             escenarioBase.setScene(escenaPrincipal);
             escenarioBase.setTitle("Expediente de Estudiante");
             escenarioBase.show();
-        } catch (IOException | SQLException excepcion) {
-            Utilidad.mostrarError(true, excepcion,
+        } catch (IOException ioex) {
+            Utilidad.mostrarError(
+                    true, ioex,
                     "Error al cargar expediente",
                     "No se pudo cargar la ventana del expediente");
         }
@@ -142,23 +143,17 @@ public class FXMLSeleccionEstudianteController implements Initializable {
     }
 
     public void btnClicConsultar(ActionEvent actionEvent) throws SQLException {
-        int idEstudiante = obtenerEstudianteDeTabla().getIdEstudiante();
-        System.out.println(idEstudiante);
+        Estudiante estudianteSeleccionado = obtenerEstudianteDeTabla();
         int idPeriodo = PeriodoDAO.obtenerPeriodoActual().getIdPeriodo();
         System.out.println(idPeriodo);
-
-        if(idEstudiante != 0) {
-            if(idPeriodo != 0) {
-                if(irRubrica) { // Si la selección del estudiante es para evaluar presentación.
-                    irRubricaPresentacion(idEstudiante, idProfesor, idPeriodo);
-                } else { // Si es para ver expediente.
-                    irExpedienteEstudiante(idEstudiante, idPeriodo);
-                }
-            } else {
-                Utilidad.crearAlertaError("Error periodo", "No se pudo recuperar el periodo");
+        if(estudianteSeleccionado != null && idPeriodo >= 1) {
+            if(irRubrica) { // Si la selección del estudiante es para evaluar presentación.
+                irRubricaPresentacion(estudianteSeleccionado.getIdEstudiante(), idProfesor, idPeriodo);
+            } else { // Si es para ver expediente.
+                irExpedienteEstudiante(estudianteSeleccionado, idPeriodo);
             }
         } else {
-            mostrarAlertaSeleccionEstudiante();
+            Utilidad.crearAlertaError("Error", "No se pudo recuperar el periodo");
         }
     }
 }

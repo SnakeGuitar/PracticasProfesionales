@@ -100,5 +100,14 @@
             </Button>
          </children>
       </Pane>
+      <Pane layoutX="28.0" layoutY="438.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #6a92c8; -fx-background-radius: 10;">
+         <children>
+            <Button layoutX="14.0" layoutY="94.0" mnemonicParsing="false" onAction="#clicBtnEvaluarPresentacion" prefHeight="62.0" prefWidth="222.0" style="-fx-background-color: #6a92c8; -fx-font-weight: Bold;" text="Evaluar Presentación" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

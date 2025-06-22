@@ -99,7 +99,7 @@ public class FXMLPrincipalEstudianteController implements Initializable, IContro
             int idPeriodo = PeriodoDAO.obtenerPeriodoActual().getIdPeriodo();
 
             FXMLExpedienteEstudianteController controlador = cargador.getController();
-            controlador.inicializarInformacion(estudiante.getIdEstudiante(), idPeriodo);
+            controlador.inicializarInformacion(estudiante, idPeriodo);
 
             Scene escenaPrincipal = new Scene(vista);
             escenarioBase.setScene(escenaPrincipal);

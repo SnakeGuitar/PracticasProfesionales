@@ -14,7 +14,6 @@ import sgpp.modelo.beans.expediente.Documento;
 import sgpp.modelo.beans.expediente.documentofinal.EntregaDocumentoFinal;
 import sgpp.modelo.beans.expediente.documentoinicial.EntregaDocumentoInicial;
 import sgpp.modelo.beans.expediente.documentoparcial.EntregaDocumentoParcial;
-import sgpp.modelo.dao.entidades.EstudianteDAO;
 import sgpp.modelo.dao.expediente.ExpedienteDAO;
 import sgpp.modelo.dao.expediente.documentofinal.EntregaDocumentoFinalDAO;
 import sgpp.modelo.dao.expediente.documentoinicial.DocumentoInicialDAO;
@@ -33,7 +32,7 @@ public class FXMLExpedienteEstudianteController implements Initializable {
     @FXML
     public Button btnRegresar;
     @FXML
-    public ListView listDocumentosExpediente;
+    public ListView<Documento> listDocumentosExpediente;
     @FXML
     public Label lbNombreEstudiante;
     @FXML
@@ -43,7 +42,6 @@ public class FXMLExpedienteEstudianteController implements Initializable {
 
     private ObservableList<Documento> documentos;
 
-    private Estudiante estudiante;
     private int idEstudiante;
     private int idPeriodo;
     private int idEntregaDocInicial;
@@ -52,49 +50,68 @@ public class FXMLExpedienteEstudianteController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try {
-            cargarInformacion();
-            cargarIdsEntrega();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+
     }
 
-    public void inicializarInformacion(int idEstudiante, int idPeriodo) throws SQLException {
-        this.idEstudiante = idEstudiante;
+    public void inicializarInformacion(Estudiante estudiante, int idPeriodo) {
+        this.idEstudiante = estudiante.getIdEstudiante();
         this.idPeriodo = idPeriodo;
-        this.estudiante = EstudianteDAO.obtenerPorIdUsuario(idEstudiante);
-        int horasAcumuladas = ExpedienteDAO.obtenerPorId(idEstudiante, idPeriodo).getHorasAcumuladas();
-
         lbNombreEstudiante.setText(estudiante.getNombre());
+        int horasAcumuladas = 0;
+        try {
+             horasAcumuladas = ExpedienteDAO.obtenerPorId(idEstudiante, idPeriodo).getHorasAcumuladas();
+        } catch (SQLException sqlex) {
+            Utilidad.crearAlertaAdvertencia(
+                    "Notificación",
+                    "Lo sentimos, no fue posible recuperar las horas acumuladas del estudiante");
+        }
         lbHorasAcumuladas.setText(String.valueOf(horasAcumuladas));
+
+        cargarIdsEntrega();
+        cargarInformacion();
     }
 
     private void cargarIdsEntrega() {
         try {
-            System.out.println(idEstudiante);
-            System.out.println(idPeriodo);
             EntregaDocumentoInicial entregaInicial = EntregaDocumentoInicialDAO.obtenerEntregaDisponible(
                     idEstudiante, idPeriodo);
             EntregaDocumentoParcial entregaParcial = EntregaDocumentoParcialDAO.obtenerEntregaDisponible(
                     idEstudiante, idPeriodo);
             EntregaDocumentoFinal entregaFinal = EntregaDocumentoFinalDAO.obtenerEntregaDisponible(
                     idEstudiante, idPeriodo);
+            if (entregaInicial != null) {
+                idEntregaDocInicial = entregaInicial.getIdEntregaDocumentoInicial();
+            }
+            if (entregaParcial != null) {
+                idEntregaDocParcial = entregaParcial.getIdEntregaDocumentoParcial();
+            }
+            if (entregaFinal != null) {
+                idEntregaDocFinal = entregaFinal.getIdEntregaDocumentoFinal();
+            }
         } catch (SQLException e) {
             Utilidad.crearAlertaError("Error", "Lo sentimos, no hay entregas programadas para este estudiante");
         }
     }
 
-    private void cargarInformacion() throws SQLException {
-        listDocumentosExpediente.setCellFactory(new PropertyValueFactory("tipo"));
-
+    private void cargarInformacion() {
+        System.out.println("#cargando informacion#");
+        System.out.println(idEstudiante);
+        System.out.println(idPeriodo);
+        System.out.println(idEntregaDocInicial);
+        System.out.println(idEntregaDocParcial);
+        System.out.println(idEntregaDocFinal);
         documentos = FXCollections.observableArrayList();
 
         ArrayList<Documento> documentosDAO = new ArrayList<>();
-        documentosDAO.addAll(DocumentoInicialDAO.obtenerDocumentosInicialesPorExpediente(idEntregaDocInicial));
-        documentosDAO.addAll(DocumentoParcialDAO.obtenerDocumentosParcialesPorExpediente(idEntregaDocParcial));
-        documentosDAO.addAll(DocumentoFinalDAO.obtenerDocumentosFinalesPorExpediente(idEntregaDocFinal));
-
+        try {
+            documentosDAO.addAll(DocumentoInicialDAO.obtenerDocumentosInicialesPorExpediente(idEntregaDocInicial));
+            documentosDAO.addAll(DocumentoParcialDAO.obtenerDocumentosParcialesPorExpediente(idEntregaDocParcial));
+            documentosDAO.addAll(DocumentoFinalDAO.obtenerDocumentosFinalesPorExpediente(idEntregaDocFinal));
+        } catch (SQLException sqlex) {
+            Utilidad.crearAlertaAdvertencia(
+                    "Notificación",
+                    "Lo sentimos, no fue posible recuperar algunos de los documentos del estudiante");
+        }
         documentos.addAll(documentosDAO);
 
         listDocumentosExpediente.setItems(documentos);

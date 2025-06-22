@@ -43,6 +43,7 @@ public class FXMLPrincipalProfesorController implements Initializable, IControla
             Profesor profesor = ProfesorDAO.obtenerPorIdUsuario(sesion.getIdUsuario());
             if (profesor != null) {
                 this.profesor = profesor;
+                this.idProfesor = profesor.getIdProfesor();
                 lbNombreProfesor.setText(String.format("Bienvenid@, %s",  profesor.getNombre()));
             } else {
                 Utilidad.crearAlertaAdvertencia(
@@ -70,7 +71,7 @@ public class FXMLPrincipalProfesorController implements Initializable, IControla
         Utilidad.crearEscenario(RUTA_FXML_VALIDAR_REPORTE, "Validar Reporte");   
     }
 
-    public void blicBtnEvaluarPresentacion(ActionEvent actionEvent) {
+    public void clicBtnEvaluarPresentacion(ActionEvent actionEvent) {
         try {
             Stage escenarioBase = new Stage();
             FXMLLoader cargador = new FXMLLoader(
