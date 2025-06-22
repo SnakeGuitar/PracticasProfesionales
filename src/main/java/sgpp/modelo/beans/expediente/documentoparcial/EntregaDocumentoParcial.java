@@ -20,10 +20,6 @@ import java.time.LocalDateTime;
 
 public class EntregaDocumentoParcial extends EntregaDocumento {
     private int idEntregaDocumentoParcial;
-    private LocalDateTime fechaApertura;
-    private LocalDateTime fechaLimite;
-    private int idEstudiante;
-    private int idPeriodo;
 
     public EntregaDocumentoParcial() {
     }
