@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import sgpp.modelo.beans.Estudiante;
 import sgpp.modelo.beans.expediente.Documento;
 import sgpp.modelo.beans.expediente.documentofinal.EntregaDocumentoFinal;
 import sgpp.modelo.beans.expediente.documentoinicial.EntregaDocumentoInicial;
@@ -42,6 +43,7 @@ public class FXMLExpedienteEstudianteController implements Initializable {
 
     private ObservableList<Documento> documentos;
 
+    private Estudiante estudiante;
     private int idEstudiante;
     private int idPeriodo;
     private int idEntregaDocInicial;
@@ -61,10 +63,10 @@ public class FXMLExpedienteEstudianteController implements Initializable {
     public void inicializarInformacion(int idEstudiante, int idPeriodo) throws SQLException {
         this.idEstudiante = idEstudiante;
         this.idPeriodo = idPeriodo;
-
+        this.estudiante = EstudianteDAO.obtenerPorIdUsuario(idEstudiante);
         int horasAcumuladas = ExpedienteDAO.obtenerPorId(idEstudiante, idPeriodo).getHorasAcumuladas();
 
-        lbNombreEstudiante.setText("Expediente - " + EstudianteDAO.obtenerPorIdUsuario(idEstudiante).getNombre());
+        lbNombreEstudiante.setText(estudiante.getNombre());
         lbHorasAcumuladas.setText(String.valueOf(horasAcumuladas));
     }
 

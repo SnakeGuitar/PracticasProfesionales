@@ -15,7 +15,7 @@
 package sgpp.modelo.beans.expediente;
 
 public enum EstadoExpediente {
-    ACTIVO,
-    CONCLUIDO,
-    CANCELADO
+    Activo,
+    Concluido,
+    Cancelado
 }
