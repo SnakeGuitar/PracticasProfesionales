@@ -83,7 +83,7 @@ public class RubricaPresentacionDAO {
             conexion = ConexionBD.abrirConexion();
             sentencia = conexion.prepareStatement(consulta);
 
-            pasarDatosASentencia(sentencia, rubrica);
+            pasarDatosActualizacion(sentencia, rubrica);
 
             int filas = sentencia.executeUpdate();
 
@@ -150,6 +150,22 @@ public class RubricaPresentacionDAO {
         sentencia.setInt(9, rubrica.getIdEstudiante());
         sentencia.setInt(10, rubrica.getIdPeriodo());
         sentencia.setInt(11, rubrica.getIdProfesor());
+    }
+
+    private static void pasarDatosActualizacion(PreparedStatement sentencia, RubricaPresentacion rubrica) throws SQLException {
+        // Datos para el SET
+        sentencia.setTimestamp(1, Timestamp.valueOf(rubrica.getFechaHora()));
+
+        pasarCriterios(sentencia, rubrica); // Abarca índices 2 al 6
+
+        sentencia.setFloat(7, rubrica.getCalificacion());
+        sentencia.setString(8, rubrica.getObservaciones());
+
+        // Parámetros para la cláusula WHERE
+        sentencia.setInt(9, rubrica.getIdPresentacion());
+        sentencia.setInt(10, rubrica.getIdEstudiante());
+        sentencia.setInt(11, rubrica.getIdPeriodo());
+        sentencia.setInt(12, rubrica.getIdProfesor());
     }
 
     private static RubricaPresentacion convertirResultSetRubrica(ResultSet rs) throws SQLException {

@@ -49,8 +49,49 @@ public class ProyectoDAO {
         return proyectos;
     }
 
+    public static Proyecto obtenerPorId(int idProyecto) throws SQLException {
+        Proyecto proyecto = null;
+        Connection conexion = null;
+        PreparedStatement sentencia = null;
+        ResultSet resultado = null;
+
+        String consulta = "SELECT p.ID_Proyecto, p.nombre, p.objetivo_general, p.metodologia, " +
+                "p.max_participantes, p.fecha_inicio, p.fecha_fin, p.ID_Org_Vinculada, p.ID_Responsable, " +
+                "ov.nombre AS nombre_ov, rt.nombre AS nombre_responsable " +
+                "FROM proyecto p " +
+                "JOIN organizacion_vinculada ov ON p.ID_Org_Vinculada = ov.ID_Org_Vinculada " +
+                "JOIN responsable_tecnico rt ON p.ID_Responsable = rt.ID_Responsable " +
+                "WHERE p.ID_Proyecto = ?";
+
+        try {
+            conexion = ConexionBD.abrirConexion();
+            if (conexion != null) {
+                sentencia = conexion.prepareStatement(consulta);
+                sentencia.setInt(1, idProyecto);
+                resultado = sentencia.executeQuery();
+
+                if (resultado.next()) {
+                    proyecto = convertirProyecto(resultado);
+                } else {
+                    throw new SQLException("No se encontró el proyecto con ID: " + idProyecto);
+                }
+            } else {
+                throw new SQLException("Error: Se ha perdido la conexión con la Base de Datos");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error al obtener proyecto por ID: " + e.getMessage());
+            throw e;
+        } finally {
+            ConexionBD.cerrarConexion(conexion, sentencia, resultado);
+        }
+
+        return proyecto;
+    }
+
     private static Proyecto convertirProyecto(ResultSet rs) throws SQLException {
         Proyecto proyecto = new Proyecto();
+
         proyecto.setIdProyecto(rs.getInt("ID_Proyecto"));
         proyecto.setNombre(rs.getString("nombre"));
         proyecto.setObjetivoGeneral(rs.getString("objetivo_general"));
@@ -62,6 +103,7 @@ public class ProyectoDAO {
         proyecto.setIdResponsable(rs.getInt("ID_Responsable"));
         proyecto.setNombreOV(rs.getString("nombre_ov"));
         proyecto.setNombreResponsable(rs.getString("nombre_responsable"));
+
         return proyecto;
     }
 

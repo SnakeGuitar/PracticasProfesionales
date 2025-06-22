@@ -7,9 +7,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import sgpp.modelo.beans.Estudiante;
+import sgpp.modelo.beans.Proyecto;
+import sgpp.modelo.beans.ResponsableTecnico;
+import sgpp.modelo.beans.expediente.documentofinal.AutoEvaluacion;
+import sgpp.modelo.dao.entidades.*;
+import sgpp.modelo.dao.expediente.documentofinal.AutoEvaluacionDAO;
+import sgpp.modelo.dao.expediente.presentacion.RubricaPresentacionDAO;
 import sgpp.utilidad.Utilidad;
 
 import java.net.URL;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 import static sgpp.utilidad.Utilidad.configurarListener;
@@ -154,6 +163,8 @@ public class FXMLAutoevaluacionEstudianteController implements Initializable {
     public RadioButton rdBtnCriterio104;
     @FXML
     public RadioButton rdBtnCriterio105;
+    @FXML
+    public Label lbPuntuacionFinal;
 
     @FXML
     private ToggleGroup tgCriterio1,
@@ -167,15 +178,39 @@ public class FXMLAutoevaluacionEstudianteController implements Initializable {
                         tgCriterio9,
                         tgCriterio10;
 
+    private ToggleGroup[] toggleGroups;
+
+    private RadioButton[][] radioButtons;
+
     private int[] valorCriterio;
+
+    private int idEstudiante = 0, idOrganizacionVinculada = 0, idResponsable = 0, idProyecto = 0, idPeriodo = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarCriterios();
     }
 
+    public void inicializarInformacion(Estudiante estudiante) throws SQLException {
+        this.idEstudiante = estudiante.getIdEstudiante();
+        this.idPeriodo = PeriodoDAO.obtenerPeriodoActual().getIdPeriodo();
+        this.idProyecto = estudiante.getIdProyecto();
+
+        Proyecto proyecto = ProyectoDAO.obtenerPorId(idProyecto);
+
+        this.idOrganizacionVinculada = proyecto.getIdOrganizacionVinculada();
+        this.idResponsable = proyecto.getIdResponsable();
+
+        lbNombreAlumno.setText(estudiante.getNombre());
+        lbMatricula.setText(estudiante.getMatricula());
+        lbOV.setText(proyecto.getNombreOV());
+        lbDepartamento.setText(ResponsableTecnicoDAO.obtenerPorId(idResponsable).getDepartamento());
+        lbProyecto.setText(proyecto.getNombre());
+        lbResponsable.setText(proyecto.getNombreResponsable());
+    }
+
     private void configurarCriterios() {
-        valorCriterio = new int[9];
+        valorCriterio = new int[10];
 
         tgCriterio1 = new ToggleGroup();
         tgCriterio2 = new ToggleGroup();
@@ -188,83 +223,79 @@ public class FXMLAutoevaluacionEstudianteController implements Initializable {
         tgCriterio9 = new ToggleGroup();
         tgCriterio10 = new ToggleGroup();
 
-        configurarRadioButton(rdBtnCriterio11, tgCriterio1, 5);
-        configurarRadioButton(rdBtnCriterio12, tgCriterio1, 4);
-        configurarRadioButton(rdBtnCriterio13, tgCriterio1, 3);
-        configurarRadioButton(rdBtnCriterio14, tgCriterio1, 2);
-        configurarRadioButton(rdBtnCriterio15, tgCriterio1, 1);
+        toggleGroups = new ToggleGroup[] {
+                tgCriterio1, tgCriterio2,
+                tgCriterio3, tgCriterio4,
+                tgCriterio5, tgCriterio6,
+                tgCriterio7, tgCriterio8,
+                tgCriterio9, tgCriterio10
+        };
 
-        configurarRadioButton(rdBtnCriterio21, tgCriterio2, 5);
-        configurarRadioButton(rdBtnCriterio22, tgCriterio2, 4);
-        configurarRadioButton(rdBtnCriterio23, tgCriterio2, 3);
-        configurarRadioButton(rdBtnCriterio24, tgCriterio2, 2);
-        configurarRadioButton(rdBtnCriterio25, tgCriterio2, 1);
+        radioButtons = new RadioButton[][] {
+                {rdBtnCriterio11, rdBtnCriterio12, rdBtnCriterio13, rdBtnCriterio14, rdBtnCriterio15},
+                {rdBtnCriterio21, rdBtnCriterio22, rdBtnCriterio23, rdBtnCriterio24, rdBtnCriterio25},
+                {rdBtnCriterio31, rdBtnCriterio32, rdBtnCriterio33, rdBtnCriterio34, rdBtnCriterio35},
+                {rdBtnCriterio41, rdBtnCriterio42, rdBtnCriterio43, rdBtnCriterio44, rdBtnCriterio45},
+                {rdBtnCriterio51, rdBtnCriterio52, rdBtnCriterio53, rdBtnCriterio54, rdBtnCriterio55},
+                {rdBtnCriterio61, rdBtnCriterio62, rdBtnCriterio63, rdBtnCriterio64, rdBtnCriterio65},
+                {rdBtnCriterio71, rdBtnCriterio72, rdBtnCriterio73, rdBtnCriterio74, rdBtnCriterio75},
+                {rdBtnCriterio81, rdBtnCriterio82, rdBtnCriterio83, rdBtnCriterio84, rdBtnCriterio85},
+                {rdBtnCriterio91, rdBtnCriterio92, rdBtnCriterio93, rdBtnCriterio94, rdBtnCriterio95},
+                {rdBtnCriterio101, rdBtnCriterio102, rdBtnCriterio103, rdBtnCriterio104, rdBtnCriterio105}
+        };
 
-        configurarRadioButton(rdBtnCriterio31, tgCriterio3, 5);
-        configurarRadioButton(rdBtnCriterio32, tgCriterio3, 4);
-        configurarRadioButton(rdBtnCriterio33, tgCriterio3, 3);
-        configurarRadioButton(rdBtnCriterio34, tgCriterio3, 2);
-        configurarRadioButton(rdBtnCriterio35, tgCriterio3, 1);
+        for (int criterio = 0; criterio < 10; criterio++) {
+            for (int valorIndex = 0; valorIndex < 5; valorIndex++) {
+                configurarRadioButton(radioButtons[criterio][valorIndex],
+                        toggleGroups[criterio],
+                        5 - valorIndex); // 5, 4, 3, 2, 1
+            }
 
-        configurarRadioButton(rdBtnCriterio41, tgCriterio4, 5);
-        configurarRadioButton(rdBtnCriterio42, tgCriterio4, 4);
-        configurarRadioButton(rdBtnCriterio43, tgCriterio4, 3);
-        configurarRadioButton(rdBtnCriterio44, tgCriterio4, 2);
-        configurarRadioButton(rdBtnCriterio45, tgCriterio4, 1);
-
-        configurarRadioButton(rdBtnCriterio51, tgCriterio5, 5);
-        configurarRadioButton(rdBtnCriterio52, tgCriterio5, 4);
-        configurarRadioButton(rdBtnCriterio53, tgCriterio5, 3);
-        configurarRadioButton(rdBtnCriterio54, tgCriterio5, 2);
-        configurarRadioButton(rdBtnCriterio55, tgCriterio5, 1);
-
-        configurarRadioButton(rdBtnCriterio61, tgCriterio6, 5);
-        configurarRadioButton(rdBtnCriterio62, tgCriterio6, 4);
-        configurarRadioButton(rdBtnCriterio63, tgCriterio6, 3);
-        configurarRadioButton(rdBtnCriterio64, tgCriterio6, 2);
-        configurarRadioButton(rdBtnCriterio65, tgCriterio6, 1);
-
-        configurarRadioButton(rdBtnCriterio71, tgCriterio7, 5);
-        configurarRadioButton(rdBtnCriterio72, tgCriterio7, 4);
-        configurarRadioButton(rdBtnCriterio73, tgCriterio7, 3);
-        configurarRadioButton(rdBtnCriterio74, tgCriterio7, 2);
-        configurarRadioButton(rdBtnCriterio75, tgCriterio7, 1);
-
-        configurarRadioButton(rdBtnCriterio81, tgCriterio8, 5);
-        configurarRadioButton(rdBtnCriterio82, tgCriterio8, 4);
-        configurarRadioButton(rdBtnCriterio83, tgCriterio8, 3);
-        configurarRadioButton(rdBtnCriterio84, tgCriterio8, 2);
-        configurarRadioButton(rdBtnCriterio85, tgCriterio8, 1);
-
-        configurarRadioButton(rdBtnCriterio91, tgCriterio9, 5);
-        configurarRadioButton(rdBtnCriterio92, tgCriterio9, 4);
-        configurarRadioButton(rdBtnCriterio93, tgCriterio9, 3);
-        configurarRadioButton(rdBtnCriterio94, tgCriterio9, 2);
-        configurarRadioButton(rdBtnCriterio95, tgCriterio9, 1);
-
-        configurarRadioButton(rdBtnCriterio101, tgCriterio10, 5);
-        configurarRadioButton(rdBtnCriterio102, tgCriterio10, 4);
-        configurarRadioButton(rdBtnCriterio103, tgCriterio10, 3);
-        configurarRadioButton(rdBtnCriterio104, tgCriterio10, 2);
-        configurarRadioButton(rdBtnCriterio105, tgCriterio10, 1);
-
-        configurarListener(tgCriterio1, valorCriterio, 0);
-        configurarListener(tgCriterio2, valorCriterio, 1);
-        configurarListener(tgCriterio3, valorCriterio, 2);
-        configurarListener(tgCriterio4, valorCriterio, 3);
-        configurarListener(tgCriterio5, valorCriterio, 4);
-        configurarListener(tgCriterio6, valorCriterio, 5);
-        configurarListener(tgCriterio7, valorCriterio, 6);
-        configurarListener(tgCriterio8, valorCriterio, 7);
-        configurarListener(tgCriterio9, valorCriterio, 8);
-        configurarListener(tgCriterio10, valorCriterio, 9);
+            configurarListener(toggleGroups[criterio], valorCriterio, criterio);
+            configurarToggleGroup(toggleGroups[criterio]);
+        }
     }
 
-    private void guardarAutoevaluacion() {
-        // TODO
+    private void obtenerPuntuacionFinal() {
+        int puntuacionFinal = 0;
+
+        for (int puntaje : valorCriterio) {
+            puntuacionFinal += puntaje;
+        }
+
+        lbPuntuacionFinal.setText(String.valueOf(puntuacionFinal));
     }
 
-    public void btnClicSubir(ActionEvent actionEvent) {
+    private void configurarToggleGroup(ToggleGroup group) {
+        group.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            obtenerPuntuacionFinal();
+        });
+    }
+
+    private void guardarAutoevaluacion() throws SQLException {
+        AutoEvaluacion autoevaluacion = new AutoEvaluacion();
+
+        autoevaluacion.setFechaHora(LocalDateTime.now());
+        autoevaluacion.setPuntuacionFinal(Integer.parseInt(lbPuntuacionFinal.getText()));
+        autoevaluacion.setIdEstudiante(idEstudiante);
+        autoevaluacion.setIdOrganizacionVinculada(idOrganizacionVinculada);
+        autoevaluacion.setIdResponsable(idResponsable);
+        autoevaluacion.setIdProyecto(idProyecto);
+        autoevaluacion.setIdPeriodo(idPeriodo);
+        autoevaluacion.setCriterios(valorCriterio);
+
+        boolean exitoso = AutoEvaluacionDAO.insertar(autoevaluacion);
+
+        if(exitoso) {
+            Utilidad.crearAlertaInformacion("Registro exitoso",
+                    "Registro de autoevaluación exitosa.");
+        } else {
+            Utilidad.crearAlertaError("Error",
+                    "No se pudo registrar la autoevaluación.");
+        }
+    }
+
+    public void btnClicSubir(ActionEvent actionEvent) throws SQLException {
         boolean confirmado = Utilidad.crearAlertaConfirmacion(
                 "Subir autoevaluación",
                 "¿Estás seguro de que deseas subir la autoevaluación?\n" +
@@ -282,9 +313,5 @@ public class FXMLAutoevaluacionEstudianteController implements Initializable {
         if(confirmado) {
             Utilidad.cerrarVentana(btnCancelar);
         }
-    }
-
-    public void btnClicRegresar(ActionEvent actionEvent) {
-        Utilidad.cerrarVentana(lbDepartamento);
     }
 }

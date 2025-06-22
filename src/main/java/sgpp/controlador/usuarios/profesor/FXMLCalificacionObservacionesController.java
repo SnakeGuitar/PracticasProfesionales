@@ -42,7 +42,7 @@ public class FXMLCalificacionObservacionesController {
 
     private float[] calificaciones;
 
-    private int idEstudiante, idProfesor, idPeriodo;
+    private int idEstudiante = 0, idProfesor = 0, idPeriodo = 0;
 
     public void inicializarInformacion(float[] valorCriterio, int idProfesor, int idEstudiante, int idPeriodo) {
         this.idEstudiante = idEstudiante;

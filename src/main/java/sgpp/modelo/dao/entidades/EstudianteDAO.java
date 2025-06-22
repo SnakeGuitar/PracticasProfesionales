@@ -53,6 +53,37 @@ public class EstudianteDAO {
         return exitoso;
     }
 
+    public static Estudiante obtenerPorId(int idEstudiante) throws SQLException {
+        Connection conexion = null;
+        PreparedStatement sentencia = null;
+        ResultSet resultado = null;
+        Estudiante estudiante = null;
+
+        String consulta = "SELECT * FROM estudiante WHERE ID_Estudiante = ?";
+
+        try {
+            conexion = ConexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(consulta);
+
+            sentencia.setInt(1, idEstudiante);
+
+            resultado = sentencia.executeQuery();
+
+            if (resultado.next()) {
+                estudiante = convertirResultSetEstudiante(resultado);
+            } else {
+                throw new SQLException("No se encontró el estudiante con ID: " + idEstudiante);
+            }
+
+        } catch (SQLException e) {
+            Utilidad.mostrarErrorBD(true, e);
+        } finally {
+            ConexionBD.cerrarConexion(conexion, sentencia, resultado);
+        }
+
+        return estudiante;
+    }
+
     public static Estudiante obtenerPorIdUsuario(int idUsuario) throws SQLException {
         Estudiante estudiante = null;
         Connection conexion = ConexionBD.abrirConexion();

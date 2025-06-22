@@ -63,6 +63,31 @@ public class OrganizacionVinculadaDAO {
         }
     }
 
+    public static OrganizacionVinculada obtenerPorId(int idOrganizacion) throws SQLException {
+        OrganizacionVinculada organizacion = null;
+        String consulta = "SELECT * FROM organizacion_vinculada WHERE ID_Org_Vinculada = ?";
+
+        try (Connection conexionBD = ConexionBD.abrirConexion();
+             PreparedStatement sentencia = conexionBD.prepareStatement(consulta)) {
+
+            sentencia.setInt(1, idOrganizacion);
+
+            try (ResultSet resultado = sentencia.executeQuery()) {
+                if (resultado.next()) {
+                    organizacion = convertirResultSetAOV(resultado);
+                } else {
+                    throw new SQLException("No se encontró la organización vinculada con ID: " + idOrganizacion);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error al obtener organización vinculada por ID: " + e.getMessage());
+            throw e;
+        }
+
+        return organizacion;
+    }
+
     public static boolean actualizar(OrganizacionVinculada organizacion) throws SQLException {
         String consulta = "UPDATE organizacion_vinculada " +
                 "SET nombre = ?, " +
@@ -118,14 +143,16 @@ public class OrganizacionVinculadaDAO {
 
     private static OrganizacionVinculada convertirResultSetAOV(ResultSet resultado) throws SQLException {
         OrganizacionVinculada organizacion = new OrganizacionVinculada();
+
         organizacion.setIdOrganizacionVinculada(resultado.getInt("ID_Org_Vinculada"));
-        organizacion.setNombre(resultado.getString("Nombre"));
-        organizacion.setSector(resultado.getString("Sector"));
-        organizacion.setCorreo(resultado.getString("Correo"));
-        organizacion.setTelefono(resultado.getString("Telefono"));
-        organizacion.setDireccion(resultado.getString("Direccion"));
-        organizacion.setCiudad(resultado.getString("Ciudad"));
-        organizacion.setEstado(resultado.getString("Estado"));
+        organizacion.setNombre(resultado.getString("nombre"));
+        organizacion.setSector(resultado.getString("sector"));
+        organizacion.setCorreo(resultado.getString("correo"));
+        organizacion.setTelefono(resultado.getString("telefono"));
+        organizacion.setDireccion(resultado.getString("direccion"));
+        organizacion.setCiudad(resultado.getString("ciudad"));
+        organizacion.setEstado(resultado.getString("estado"));
+
         return organizacion;
     }
     
