@@ -9,15 +9,14 @@ package sgpp.modelo.dao.expediente.documentoparcial;
 
 import sgpp.modelo.ConexionBD;
 import sgpp.modelo.beans.expediente.EstadoDocumento;
+import sgpp.modelo.beans.expediente.documentofinal.DocumentoFinal;
+import sgpp.modelo.beans.expediente.documentofinal.TipoDocumentoFinal;
 import sgpp.modelo.beans.expediente.documentoparcial.DocumentoParcial;
 import sgpp.modelo.beans.expediente.documentoparcial.TipoDocumentoParcial;
 import sgpp.utilidad.Utilidad;
 import sgpp.utilidad.UtilidadFormatoDeDatos;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -329,5 +328,62 @@ public class DocumentoParcialDAO {
             }
         }
         return documentoParcial;
+    }
+
+    public static List<DocumentoParcial> obtenerDocumentosParcialesPorPeriodo(int idPeriodo) throws SQLException {
+        List<DocumentoParcial> documentosParciales = new ArrayList<>();
+        Connection conexion = null;
+        PreparedStatement sentencia = null;
+        ResultSet resultado = null;
+
+        String consulta = "SELECT dp.id_doc_parcial, dp.fecha_entrega, dp.tipo, dp.estado, " +
+                "dp.documento, dp.id_entrega_doc_parcial " +
+                "FROM documento_parcial dp " +
+                "INNER JOIN entrega_doc_parcial edp ON dp.id_entrega_doc_parcial = edp.id_entrega_doc_parcial " +
+                "WHERE edp.id_periodo = ?";
+
+        try {
+            conexion = ConexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(consulta);
+            sentencia.setInt(1, idPeriodo);
+            resultado = sentencia.executeQuery();
+
+            while (resultado.next()) {
+                DocumentoParcial documentoParcial = new DocumentoParcial();
+
+                documentoParcial.setIdDocumento(resultado.getInt("id_doc_parcial"));
+
+                Timestamp fechaEntrega = resultado.getTimestamp("fecha_entrega");
+                if (fechaEntrega != null) {
+                    documentoParcial.setFechaEntrega(fechaEntrega.toLocalDateTime());
+                }
+
+                String tipoStr = resultado.getString("tipo");
+                if (tipoStr != null) {
+                    documentoParcial.setTipo(TipoDocumentoParcial.valueOf(tipoStr));
+                }
+
+                String estadoStr = resultado.getString("estado");
+                if (estadoStr != null) {
+                    documentoParcial.setEstado(EstadoDocumento.valueOf(estadoStr));
+                }
+
+                byte[] documento = resultado.getBytes("documento");
+                if (documento != null) {
+                    documentoParcial.setDocumento(documento);
+                }
+
+                documentoParcial.setIdEntregaDocumento(resultado.getInt("id_entrega_documento_final"));
+
+                documentosParciales.add(documentoParcial);
+            }
+
+        } catch (SQLException e) {
+            throw new SQLException("Error al obtener documentos finales por periodo: " + e.getMessage(), e);
+        } finally {
+            ConexionBD.cerrarConexion(conexion, sentencia, resultado);
+        }
+
+        return documentosParciales;
     }
 }
