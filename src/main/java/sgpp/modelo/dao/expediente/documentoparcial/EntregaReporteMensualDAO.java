@@ -13,10 +13,13 @@
 package sgpp.modelo.dao.expediente.documentoparcial;
 
 import sgpp.modelo.ConexionBD;
-import sgpp.modelo.beans.expediente.documentoparcial.EntregaReporteMensual;
+import sgpp.modelo.beans.expediente.reporte.EntregaReporteMensual;
+import sgpp.modelo.dao.ResultadoSQL;
+import sgpp.utilidad.UtilidadFormatoDeDatos;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class EntregaReporteMensualDAO {
 
@@ -127,44 +130,100 @@ public class EntregaReporteMensualDAO {
  
 
     private static EntregaReporteMensual convertir(ResultSet rs) throws SQLException {
-        EntregaReporteMensual er = new EntregaReporteMensual();
-        er.setIdEntregaReporte(rs.getInt("ID_Entrega_Reporte"));
-        er.setNumReporte(rs.getInt("num_reporte"));
-        er.setFechaApertura(rs.getTimestamp("fecha_apertura").toLocalDateTime());
-        er.setFechaLimite(rs.getTimestamp("fecha_limite").toLocalDateTime());
-        Timestamp t = rs.getTimestamp("fecha_entrega");
-        er.setFechaEntrega(t != null ? t.toLocalDateTime() : null);
-        er.setIdEstudiante(rs.getInt("ID_Estudiante"));
-        er.setIdPeriodo(rs.getInt("ID_Periodo"));
-        return er;
+        EntregaReporteMensual entrega = new EntregaReporteMensual();
+        entrega.setIdEntregaReporte(rs.getInt("ID_Entrega_Reporte"));
+        entrega.setNumReporte(rs.getInt("num_reporte"));
+        entrega.setFechaApertura(UtilidadFormatoDeDatos.stringToLocalDateTime(rs.getString("fecha_apertura")));
+        entrega.setFechaLimite(UtilidadFormatoDeDatos.stringToLocalDateTime(rs.getString("fecha_limite")));
+        String fechaEntrega = rs.getString("fecha_entrega");
+        entrega.setFechaEntrega(fechaEntrega != null ? UtilidadFormatoDeDatos.stringToLocalDateTime(fechaEntrega) : null);
+        entrega.setIdEstudiante(rs.getInt("ID_Estudiante"));
+        entrega.setIdPeriodo(rs.getInt("ID_Periodo"));
+        return entrega;
     }
     
     public static boolean marcarComoEntregado(int idEntregaReporte) throws SQLException {
-    String sql = "UPDATE entrega_reporte SET fecha_entrega = NOW() WHERE ID_Entrega_Reporte = ?";
+        String sql = "UPDATE entrega_reporte SET fecha_entrega = NOW() WHERE ID_Entrega_Reporte = ?";
 
-    try (Connection con = ConexionBD.abrirConexion();
-         PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = ConexionBD.abrirConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
 
-        ps.setInt(1, idEntregaReporte);
-        return ps.executeUpdate() > 0;
-    }
-    
-    
-}
-
-    public static ArrayList<EntregaReporteMensual> obtenerPorPeriodo(int idPeriodo) throws SQLException {
-    ArrayList<EntregaReporteMensual> lista = new ArrayList<>();
-    String sql = "SELECT * FROM entrega_reporte WHERE ID_Periodo = ? ORDER BY num_reporte";
-
-    try (Connection con = ConexionBD.abrirConexion();
-         PreparedStatement ps = con.prepareStatement(sql)) {
-
-        ps.setInt(1, idPeriodo);
-        try (ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) lista.add(convertir(rs));
+            ps.setInt(1, idEntregaReporte);
+            return ps.executeUpdate() > 0;
         }
     }
-    return lista;
-}
 
+    public static EntregaReporteMensual obtenerPrimeraEntregaPorPeriodo(int numReporte, int idPeriodo) throws SQLException {
+        EntregaReporteMensual entrega = null;
+        Connection conexion = ConexionBD.abrirConexion();
+        if (conexion != null) {
+            String consulta = "SELECT * FROM entrega_reporte WHERE num_reporte = ? AND ID_Periodo = ? AND fecha_apertura IS NOT NULL ORDER BY fecha_apertura ASC LIMIT 1";
+            PreparedStatement sentencia = null;
+            ResultSet resultado = null;
+            try {
+                sentencia = conexion.prepareStatement(consulta);
+                sentencia.setInt(1, numReporte);
+                sentencia.setInt(2, idPeriodo);
+                resultado = sentencia.executeQuery();
+                if (resultado.next()) {
+                    entrega = convertir(resultado);
+                }
+            } catch (SQLException sqlex) {
+                System.out.println("Error al recuperar la entrega "+sqlex.getMessage());
+            } finally {
+                ConexionBD.cerrarConexion(conexion, sentencia, resultado);
+            }
+        } else {
+            throw new SQLException(String.format("No se pudo obtener la entraga %s del periodo", numReporte));
+        }
+        return entrega;
+    }
+
+    public static List<EntregaReporteMensual> obtenerPorPeriodo(int idPeriodo) throws SQLException {
+        ArrayList<EntregaReporteMensual> lista = new ArrayList<>();
+        String sql = "SELECT * FROM entrega_reporte WHERE ID_Periodo = ? ORDER BY num_reporte ASC";
+
+        try (Connection con = ConexionBD.abrirConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idPeriodo);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) lista.add(convertir(rs));
+            }
+        }
+        return lista;
+    }
+
+    public static ResultadoSQL programarEntregas(EntregaReporteMensual entregaReporte, int idPeriodo) throws SQLException {
+        ResultadoSQL resultadoOperacion = new ResultadoSQL();
+        Connection conexion = ConexionBD.abrirConexion();
+        if (conexion != null) {
+            String consulta = "UPDATE entrega_reporte SET fecha_apertura = ?, fecha_limite = ? WHERE ID_Periodo = ? AND num_reporte = ?";
+            PreparedStatement sentencia = null;
+            try {
+                sentencia = conexion.prepareStatement(consulta);
+                sentencia.setString(1, entregaReporte.getFechaApertura().toString());
+                sentencia.setString(2, entregaReporte.getFechaLimite().toString());
+                sentencia.setInt(3, idPeriodo);
+                sentencia.setInt(4, entregaReporte.getNumReporte());
+                int filasAfectadas = sentencia.executeUpdate();
+                if (filasAfectadas > 0) {
+                    resultadoOperacion.setError(false);
+                    resultadoOperacion.setMensaje(String.format(
+                            "Entrega del reporte %s configurada exitosamente", entregaReporte.getNumReporte()));
+                } else {
+                    resultadoOperacion.setError(true);
+                    resultadoOperacion.setMensaje(String.format(
+                            "No se pudo configurar la entrega del reporte %s", entregaReporte.getNumReporte()));
+                }
+            } catch (SQLException sqlex) {
+                System.out.println("Error al configurar la entrega: "+sqlex.getMessage());
+            } finally {
+                ConexionBD.cerrarConexion(conexion, sentencia);
+            }
+        } else {
+            throw new SQLException("Se ha perdido la conexion a la Base de Datos");
+        }
+        return resultadoOperacion;
+    }
 }
