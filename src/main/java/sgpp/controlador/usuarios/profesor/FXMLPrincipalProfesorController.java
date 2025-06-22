@@ -27,7 +27,7 @@ public class FXMLPrincipalProfesorController implements Initializable, IControla
     private Label lbNombreProfesor;
     private Profesor profesor;
 
-    private static final String RUTA_FXML_SELECCION_ESTUDIANTE = "/sgpp/vista/usuarios/profesor/FXMLSeleccionEstudiante.fxml";
+    private static final String RUTA_FXML_SELECCION_ESTUDIANTE = "/sgpp/vista/usuarios/FXMLSeleccionEstudiante.fxml";
     private static final String RUTA_FXML_VALIDAR_DOCUMENTO = "/sgpp/vista/usuarios/profesor/FXMLValidarDocumento.fxml";
     private static final String RUTA_FXML_VALIDAR_REPORTE = "/sgpp/vista/usuarios/profesor/FXMLValidarReporte.fxml";
 

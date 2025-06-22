@@ -14,8 +14,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sgpp.SistemaGestionPracticasProfesionales;
+import sgpp.controlador.usuarios.FXMLExpedienteEstudianteController;
 import sgpp.modelo.beans.Estudiante;
-import sgpp.modelo.beans.Periodo;
 import sgpp.modelo.dao.entidades.EstudianteDAO;
 import sgpp.modelo.dao.entidades.PeriodoDAO;
 import sgpp.utilidad.Utilidad;
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class FXMLSeleccionEstudianteController implements Initializable {
-    private static final String RUTA_FXML_EXPEDIENTE_PROFESOR = "/sgpp/vista/usuarios/profesor/FXMLExpedienteProfesor.fxml";
+    private static final String RUTA_FXML_EXPEDIENTE_ESTUDIANTE = "/sgpp/vista/usuarios/FXMLExpedienteEstudiante.fxml";
     private static final String RUTA_FXML_RUBRICA_PRESENTACION = "/sgpp/vista/usuarios/profesor/FXMLCriteriosPresentacion.fxml";
 
     @FXML
@@ -83,18 +83,18 @@ public class FXMLSeleccionEstudianteController implements Initializable {
             Stage escenarioBase = Utilidad.getEscenarioComponente(btnConsultar);
             FXMLLoader cargador = new FXMLLoader(
                     SistemaGestionPracticasProfesionales.class.getResource(
-                            RUTA_FXML_EXPEDIENTE_PROFESOR));
+                            RUTA_FXML_EXPEDIENTE_ESTUDIANTE));
 
             Parent vista = cargador.load();
 
-            FXMLExpedienteProfesorController controlador = cargador.getController();
+            FXMLExpedienteEstudianteController controlador = cargador.getController();
             controlador.inicializarInformacion(idEstudiante, idPeriodo);
 
             Scene escenaPrincipal = new Scene(vista);
             escenarioBase.setScene(escenaPrincipal);
             escenarioBase.setTitle("Expediente de Estudiante");
             escenarioBase.show();
-        } catch (IOException excepcion) {
+        } catch (IOException | SQLException excepcion) {
             Utilidad.mostrarError(true, excepcion,
                     "Error al cargar expediente",
                     "No se pudo cargar la ventana del expediente");

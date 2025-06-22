@@ -32,5 +32,7 @@ module com.sgpp.sistemagestionpracticasprofesionales {
 
     // Paquete de aplicación principal
     exports sgpp;
+    exports sgpp.controlador.usuarios to javafx.fxml;
+    opens sgpp.controlador.usuarios to javafx.fxml;
     requires org.apache.pdfbox;
 }
