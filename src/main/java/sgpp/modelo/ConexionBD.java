@@ -3,13 +3,13 @@
  * Ultimo autor: Luis Donaldo
  * Fecha de creación: 10-06-2025
  * Fecha de la última versión aprobada:
- * Fecha de la última modificación: 11-06-2025
+ * Fecha de la última modificación: 21-06-2025
  * Descripción: Clase DAO para manejar las operaciones de la entidad OrganizacionVinculada.
  */
 
 /*
  * Estado: En progreso
- * Modificaciones:
+ * Modificaciones: Agregadas sobrecargas para el metodo cerrarConexion
  */
 
 package sgpp.modelo;
@@ -24,7 +24,7 @@ import java.sql.SQLException;
 public class ConexionBD {
     private static final String IP = "localhost";
     private static final String PUERTO = "3306";
-    private static final String NOMBRE_BD = "practicasprofesionales1";
+    private static final String NOMBRE_BD = "practicasprofesionales";
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String URL = String.format(
             "jdbc:mysql://%s:%s/%s?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8", IP, PUERTO, NOMBRE_BD);

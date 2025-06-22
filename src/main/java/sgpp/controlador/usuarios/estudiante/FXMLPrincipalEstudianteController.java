@@ -16,14 +16,22 @@ package sgpp.controlador.usuarios.estudiante;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import sgpp.SistemaGestionPracticasProfesionales;
+import sgpp.controlador.usuarios.estudiante.documentopracticas.FXMLSubirDocumentoPracticasController;
 import sgpp.modelo.IControladorPrincipal;
 import sgpp.modelo.beans.Estudiante;
 import sgpp.modelo.beans.Usuario;
 import sgpp.modelo.dao.entidades.EstudianteDAO;
 import sgpp.utilidad.Utilidad;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -82,8 +90,19 @@ public class FXMLPrincipalEstudianteController implements Initializable, IContro
     }
 
     public void clicBtnSubirDocumento(ActionEvent actionEvent) {
-        Utilidad.crearEscenario(RUTA_FXML_SUBIR_DOCUMENTO, "Consultar Entregas");
-
+        try {
+            FXMLLoader cargador = new FXMLLoader(getClass().getResource(RUTA_FXML_SUBIR_DOCUMENTO));
+            Parent vista = cargador.load();
+            FXMLSubirDocumentoPracticasController controlador = cargador.getController();
+            controlador.cargarEstudiante(estudiante);
+            Stage escenario = new Stage();
+            escenario.setScene(new Scene(vista));
+            escenario.setTitle("Consultar Entregas");
+            escenario.initModality(Modality.APPLICATION_MODAL);
+            escenario.showAndWait();
+        } catch (IOException ioex) {
+            Utilidad.crearAlertaError("Error", "No se pudo cargar la ventana");
+        }
     }
 
     public void clicBtnExpediente(ActionEvent actionEvent) {

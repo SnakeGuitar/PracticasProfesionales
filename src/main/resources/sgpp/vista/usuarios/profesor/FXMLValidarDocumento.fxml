@@ -1,14 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sgpp.controlador.usuarios.profesor.FXMLValidarDocumentoController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.profesor.FXMLValidarDocumentoController">
+   <children>
+      <TableView fx:id="tblEntregas" layoutX="29.0" layoutY="177.0" prefHeight="517.0" prefWidth="965.0" style="-fx-background-radius: 10;">
+        <columns>
+          <TableColumn fx:id="colEstudiante" prefWidth="302.0" text="Estudiante" />
+          <TableColumn fx:id="colDocumento" prefWidth="239.0" text="Documento" />
+            <TableColumn fx:id="colFechaEntrega" prefWidth="285.0" text="Fecha Entrega" />
+            <TableColumn fx:id="colEstado" prefWidth="138.0" text="Estado" />
+        </columns>
+      </TableView>
+      <Button layoutX="29.0" layoutY="710.0" mnemonicParsing="false" onAction="#clicBtnActualizarLista" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #6a92c8;" text="Actualizar lista" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="193.0" layoutY="710.0" mnemonicParsing="false" onAction="#clicBtnValidar" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #6a92c8;" text="Validar" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="356.0" layoutY="710.0" mnemonicParsing="false" onAction="#clicBtnRechazar" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #a3b4d4;" text="Rechazar" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="15.0" />
+         </font>
+      </Button>
+      <Pane prefHeight="115.0" prefWidth="1024.0" style="-fx-background-color: #6a92c8;">
+         <children>
+            <Label layoutX="28.0" layoutY="31.0" prefHeight="27.0" prefWidth="710.0" text="Sistema de Gestion de Practicas Profesionales">
+               <effect>
+                  <Bloom threshold="0.08" />
+               </effect>
+               <font>
+                  <Font name="Arial Bold Italic" size="24.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop color="#e1e1e1" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+            <Label fx:id="lbNombreProfesor" layoutX="28.0" layoutY="67.0" prefHeight="27.0" text="Profesor">
+               <font>
+                  <Font name="Arial Italic" size="18.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="0.4368932038834952" endY="1.0">
+                     <stops>
+                        <Stop color="#bfbfbf" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+         </children>
+      </Pane>
+      <Button layoutX="842.0" layoutY="710.0" mnemonicParsing="false" onAction="#clicBtnCancelar" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-font-family: Arial; -fx-font-weight: Bold; -fx-border-radius: 5;" text="Cancelar" />
+      <Button layoutX="29.0" layoutY="131.0" mnemonicParsing="false" onAction="#clicBtnVerIniciales" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #6a92c8;" text="Iniciales" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="193.0" layoutY="131.0" mnemonicParsing="false" onAction="#clicBtnVerParciales" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #6a92c8;" text="Parciales" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="356.0" layoutY="131.0" mnemonicParsing="false" onAction="#clicBtnVerFinales" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #6a92c8;" text="Finales" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="15.0" />
+         </font>
+      </Button>
+   </children>
 </AnchorPane>

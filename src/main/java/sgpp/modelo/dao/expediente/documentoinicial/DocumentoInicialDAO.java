@@ -79,13 +79,11 @@ public class DocumentoInicialDAO {
 
     /**
      * Obtiene los documentos iniciales por expediente de estudiante y período.
-     *
-     * @param idPeriodo    ID del período
      * @return Lista de documentos iniciales
      * @throws SQLException Si ocurre un error en la consulta
      */
 
-    public static List<DocumentoInicial> obtenerDocumentosInicialesPorExpediente(int idEntregaDocInicial, int idPeriodo) throws SQLException {
+    public static List<DocumentoInicial> obtenerDocumentosInicialesPorExpediente(int idEntregaDocInicial) throws SQLException {
         Connection conexion = null;
         PreparedStatement sentencia = null;
         ResultSet resultado = null;

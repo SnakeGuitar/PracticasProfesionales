@@ -20,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import sgpp.modelo.beans.Estudiante;
 import sgpp.modelo.beans.Periodo;
 import sgpp.modelo.beans.expediente.EstadoDocumento;
 import sgpp.modelo.beans.expediente.documentofinal.DocumentoFinal;
@@ -100,7 +101,10 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
     private Label lblFechas3;
 
     private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-    private final int ID_ESTUDIANTE = 4;
+    private int idEstudiante;
+    private int idEntregaInicial;
+    private int idEntregaParcial;
+    private int idEntregaFinal;
     private int idPeriodoActual;
 
     private TipoDocumento tipoDocumentoSeleccionado;
@@ -115,9 +119,8 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
         cargarPeriodo();
     }
 
-    private void cargarEstudiante() {
-        //TODO
-        //Cargar el estudiante desde la sesión actual en la pantalla principal de estudiante
+    public void cargarEstudiante(Estudiante estudiante) {
+        this.idEstudiante = estudiante.getIdEstudiante();
     }
 
     private void cargarPeriodo() {
@@ -278,10 +281,9 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
 
     private void manejarDocumentoInicial(TipoDocumentoInicial tipo) {
         try {
-            System.out.println("ID Estudiante: " + ID_ESTUDIANTE);
-            System.out.println("ID Periodo Actual: " + idPeriodoActual);
-            EntregaDocumentoInicial entrega = EntregaDocumentoInicialDAO.obtenerEntregaDisponible(ID_ESTUDIANTE, idPeriodoActual);
+            EntregaDocumentoInicial entrega = EntregaDocumentoInicialDAO.obtenerEntregaDisponible(idEstudiante, idPeriodoActual);
             if (entrega != null) {
+                idEntregaInicial = entrega.getIdEntregaDocumentoInicial();
                 DocumentoInicial documento = DocumentoInicialDAO.obtenerDocumentoInicialPorTipo(entrega.getIdEntregaDocumentoInicial(), tipo);
                 if (documento != null) {
                     Utilidad.crearAlertaAdvertencia("Ya entregado",
@@ -309,10 +311,9 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
 
     private void manejarDocumentoParcial(TipoDocumentoParcial tipo) {
         try {
-            System.out.println("ID Estudiante: " + ID_ESTUDIANTE);
-            System.out.println("ID Periodo Actual: " + idPeriodoActual);
-            EntregaDocumentoParcial entrega = EntregaDocumentoParcialDAO.obtenerEntregaDisponible(ID_ESTUDIANTE, idPeriodoActual);
+            EntregaDocumentoParcial entrega = EntregaDocumentoParcialDAO.obtenerEntregaDisponible(idEstudiante, idPeriodoActual);
             if (entrega != null) {
+                idEntregaParcial = entrega.getIdEntregaDocumentoParcial();
                 DocumentoParcial documento = DocumentoParcialDAO.obtenerDocumentoParcialPorTipo(entrega.getIdEntregaDocumentoParcial(), tipo);
                 if (documento != null) {
                     Utilidad.crearAlertaAdvertencia("Ya entregado",
@@ -340,10 +341,9 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
 
     private void manejarDocumentoFinal(TipoDocumentoFinal tipo) {
         try {
-            System.out.println("ID Estudiante: " + ID_ESTUDIANTE);
-            System.out.println("ID Periodo Actual: " + idPeriodoActual);
-            EntregaDocumentoFinal entrega = EntregaDocumentoFinalDAO.obtenerEntregaDisponible(ID_ESTUDIANTE, idPeriodoActual);
+            EntregaDocumentoFinal entrega = EntregaDocumentoFinalDAO.obtenerEntregaDisponible(idEstudiante, idPeriodoActual);
             if (entrega != null) {
+                idEntregaFinal = entrega.getIdEntregaDocumentoFinal();
                 DocumentoFinal documento = DocumentoFinalDAO.obtenerDocumentoFinalPorTipo(entrega.getIdEntregaDocumentoFinal(), tipo);
                 if (documento != null) {
                     Utilidad.crearAlertaAdvertencia("Ya entregado",
@@ -381,7 +381,7 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
         return DocumentoInicialDAO.subirDocumentoInicial(
                 documento,
                 entrega.getIdEntregaDocumentoInicial(),
-                ID_ESTUDIANTE,
+                idEstudiante,
                 idPeriodoActual
         );
     }
@@ -398,7 +398,7 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
         return DocumentoParcialDAO.subirDocumentoParcial(
                 documento,
                 entrega.getIdEntregaDocumentoParcial(),
-                ID_ESTUDIANTE,
+                idEstudiante,
                 idPeriodoActual
         );
     }
@@ -415,7 +415,7 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
         return DocumentoFinalDAO.subirDocumentoFinal(
                 documento,
                 entrega.getIdEntregaDocumentoFinal(),
-                ID_ESTUDIANTE,
+                idEstudiante,
                 idPeriodoActual
         );
     }
@@ -452,15 +452,15 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
         // Verificar si ya existe el documento específico del tipo seleccionado
         switch (tipoDocumentoSeleccionado) {
             case INICIAL:
-                List<DocumentoInicial> docsIniciales = DocumentoInicialDAO.obtenerDocumentosInicialesPorExpediente(ID_ESTUDIANTE, idPeriodoActual);
+                List<DocumentoInicial> docsIniciales = DocumentoInicialDAO.obtenerDocumentosInicialesPorExpediente(idEntregaInicial);
                 return docsIniciales.stream()
                         .anyMatch(doc -> doc.getTipo() == tipoEspecificoSeleccionado);
             case PARCIAL:
-                List<DocumentoParcial> docsParciales = DocumentoParcialDAO.obtenerDocumentosParcialesPorExpediente(ID_ESTUDIANTE, idPeriodoActual);
+                List<DocumentoParcial> docsParciales = DocumentoParcialDAO.obtenerDocumentosParcialesPorExpediente(idEntregaParcial);
                 return docsParciales.stream()
                         .anyMatch(doc -> doc.getTipo() == tipoEspecificoSeleccionado);
             case FINAL:
-                List<DocumentoFinal> docsFinales = DocumentoFinalDAO.obtenerDocumentosFinalesPorExpediente(ID_ESTUDIANTE, idPeriodoActual);
+                List<DocumentoFinal> docsFinales = DocumentoFinalDAO.obtenerDocumentosFinalesPorExpediente(idEntregaFinal);
                 return docsFinales.stream()
                         .anyMatch(doc -> doc.getTipo() == tipoEspecificoSeleccionado);
             default:
