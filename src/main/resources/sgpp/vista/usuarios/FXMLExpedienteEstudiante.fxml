@@ -4,17 +4,15 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="491.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.estudiante.FXMLExpedienteEstudianteController">
+<AnchorPane prefHeight="397.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.FXMLExpedienteEstudianteController">
    <children>
       <ButtonBar prefHeight="40.0" prefWidth="75.0">
          <buttons>
-            <Button fx:id="btnRegresar" mnemonicParsing="false" text="Regresar" />
+            <Button fx:id="btnRegresar" mnemonicParsing="false" onAction="#btnClicRegresar" text="Regresar" />
          </buttons>
       </ButtonBar>
       <Pane layoutY="40.0" prefHeight="348.0" prefWidth="350.0">
@@ -41,23 +39,7 @@
                   <Font size="13.0" />
                </font>
             </Label>
-            <Button fx:id="btnAbrir" disable="true" layoutX="281.0" layoutY="320.0" minWidth="54.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="54.0" text="Abrir" />
-         </children>
-      </Pane>
-      <Pane layoutY="404.0" prefHeight="88.0" prefWidth="350.0">
-         <children>
-            <Label layoutX="14.0" text="Generar Documentos">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Label layoutX="14.0" layoutY="27.0" text="Formato de evaluación para OV">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </Label>
-            <Button fx:id="btnGenerar" layoutX="14.0" layoutY="53.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Generar" />
-            <Separator layoutX="-16.0" layoutY="-20.0" prefHeight="29.0" prefWidth="368.0" />
+            <Button fx:id="btnDescargar" disable="true" layoutX="260.0" layoutY="320.0" minWidth="54.0" mnemonicParsing="false" onAction="#btnClicDescargar" prefHeight="25.0" prefWidth="75.0" text="Descargar" />
          </children>
       </Pane>
    </children>

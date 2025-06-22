@@ -24,11 +24,13 @@ import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sgpp.SistemaGestionPracticasProfesionales;
+import sgpp.controlador.usuarios.FXMLExpedienteEstudianteController;
 import sgpp.controlador.usuarios.estudiante.documentopracticas.FXMLSubirDocumentoPracticasController;
 import sgpp.modelo.IControladorPrincipal;
 import sgpp.modelo.beans.Estudiante;
 import sgpp.modelo.beans.Usuario;
 import sgpp.modelo.dao.entidades.EstudianteDAO;
+import sgpp.modelo.dao.entidades.PeriodoDAO;
 import sgpp.utilidad.Utilidad;
 
 import java.io.IOException;
@@ -44,7 +46,7 @@ public class FXMLPrincipalEstudianteController implements Initializable, IContro
     private Estudiante estudiante;
 
     private static final String RUTA_FXML_SUBIR_DOCUMENTO = "/sgpp/vista/usuarios/estudiante/documentopracticas/FXMLSubirDocumentoPracticas.fxml";
-    private static final String RUTA_FXML_CONSULTAR_AVANCE = "";
+    private static final String RUTA_FXML_CONSULTAR_AVANCE = "/sgpp/vista/usuarios/FXMLExpedienteEstudiante.fxml";
     private static final String RUTA_FXML_LLENAR_AUTOEVALUACION = "/sgpp/vista/usuarios/estudiante/FXMLAutoevaluacionEstudiante.fxml";
     private static final String RUTA_FXML_FORMATO_EVALUACION = "";
     private static final String RUTA_FXML_SUBIR_REPORTE = "/sgpp/vista/usuarios/estudiante/FXMLEntregaReporteMensual.fxml";
@@ -87,6 +89,27 @@ public class FXMLPrincipalEstudianteController implements Initializable, IContro
     }
 
     public void clicBtnAvance(ActionEvent actionEvent) {
+        try {
+            Stage escenarioBase = new Stage();
+            FXMLLoader cargador = new FXMLLoader(
+                    SistemaGestionPracticasProfesionales.class.getResource(RUTA_FXML_CONSULTAR_AVANCE));
+
+            Parent vista = cargador.load();
+
+            int idPeriodo = PeriodoDAO.obtenerPeriodoActual().getIdPeriodo();
+
+            FXMLExpedienteEstudianteController controlador = cargador.getController();
+            controlador.inicializarInformacion(estudiante.getIdEstudiante(), idPeriodo);
+
+            Scene escenaPrincipal = new Scene(vista);
+            escenarioBase.setScene(escenaPrincipal);
+            escenarioBase.setTitle("Expediente de estudiante");
+            escenarioBase.show();
+        } catch (IOException | SQLException excepcion) {
+            Utilidad.mostrarError(true, excepcion,
+                    "Error al cargar lista de estudiantes",
+                    "No se pudo cargar la ventana de lista de estudiantes");
+        }
     }
 
     public void clicBtnSubirDocumento(ActionEvent actionEvent) {
