@@ -47,4 +47,15 @@ public class DocumentoFinal extends Documento {
     public Enum<?> getTipoDocumento() {
         return tipo;
     }
+
+    @Override
+    public String toString() {
+        return switch (tipo) {
+            case REPORTE_FINAL -> "Reporte Final";
+            case AUTOEVALUACION -> "Autoevaluación";
+            case CARTA_LIBERACION -> "Carta de Liberación";
+            case EVALUACION_FINAL_POR_OV -> "Evaluación Final por OV";
+            default -> super.toString();
+        };
+    }
 }

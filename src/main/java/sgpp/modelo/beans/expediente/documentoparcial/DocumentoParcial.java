@@ -46,4 +46,13 @@ public class DocumentoParcial extends Documento {
     public Enum<?> getTipoDocumento() {
         return tipo;
     }
+
+    @Override
+    public String toString() {
+        return switch (tipo) {
+            case REPORTE_PARCIAL -> "Reporte Parcial";
+            case EVALUACION_PARCIAL_POR_OV -> "Evaluacion parcial por OV";
+            default -> super.toString();
+        };
+    }
 }

@@ -9,6 +9,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import sgpp.modelo.beans.Estudiante;
 import sgpp.modelo.beans.expediente.Documento;
 import sgpp.modelo.beans.expediente.documentofinal.EntregaDocumentoFinal;
@@ -23,6 +26,9 @@ import sgpp.modelo.dao.expediente.documentofinal.DocumentoFinalDAO;
 import sgpp.modelo.dao.expediente.documentoparcial.EntregaDocumentoParcialDAO;
 import sgpp.utilidad.Utilidad;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -42,6 +48,7 @@ public class FXMLExpedienteEstudianteController implements Initializable {
 
     private ObservableList<Documento> documentos;
 
+    private Estudiante estudiante;
     private int idEstudiante;
     private int idPeriodo;
     private int idEntregaDocInicial;
@@ -54,6 +61,7 @@ public class FXMLExpedienteEstudianteController implements Initializable {
     }
 
     public void inicializarInformacion(Estudiante estudiante, int idPeriodo) {
+        this.estudiante = estudiante;
         this.idEstudiante = estudiante.getIdEstudiante();
         this.idPeriodo = idPeriodo;
         lbNombreEstudiante.setText(estudiante.getNombre());
@@ -121,7 +129,60 @@ public class FXMLExpedienteEstudianteController implements Initializable {
         Utilidad.cerrarVentana(lbNombreEstudiante);
     }
 
+    public void clicListDocumentos(MouseEvent mouseEvent) {
+        if (listDocumentosExpediente.getSelectionModel().getSelectedItem() != null) {
+            btnDescargar.setDisable(false);
+        }
+    }
+
     public void btnClicDescargar(ActionEvent actionEvent) {
-        // TODO: Averiguar cómo descargar documentos
+        Documento documento = listDocumentosExpediente.getSelectionModel().getSelectedItem();
+        if (documento != null) {
+            if (documento.getDocumento() != null) {
+                descargarArchivo(documento);
+            } else {
+                Utilidad.crearAlertaAdvertencia(
+                        "Error",
+                        "No se pudo descargar este archivo por que no tiene contenido"
+                );
+            }
+        } else {
+            Utilidad.crearAlertaInformacion(
+                    "Accion Requerida",
+                    "Primero seleccione un documento");
+        }
+    }
+
+    private void descargarArchivo(Documento documento) {
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Descargar documento");
+
+            //Generar un nombre apropiado
+            String nombreSugerido = String.format(
+                    "%s_%s.pdf",
+                    documento.toString().replace(" ", "_"),
+                    estudiante.getNombre().replace(" ", "_"));
+            //Configurar el filechooser
+            fileChooser.setInitialFileName(nombreSugerido);
+            fileChooser.getExtensionFilters().add(
+                    new FileChooser.ExtensionFilter("Documento PDF", "*.pdf"));
+
+            Stage stage = Utilidad.getEscenarioComponente(lbNombreEstudiante);
+            File destino = fileChooser.showSaveDialog(stage);
+
+            //Guardar el archivo en el destino
+            try (FileOutputStream fos = new FileOutputStream(destino)) {
+                fos.write(documento.getDocumento());
+            }
+            Utilidad.crearAlertaInformacion(
+                    "Exito",
+                    "Documento descargado exitosamente a: \n"+destino.getAbsolutePath()
+            );
+        } catch (IOException ioex) {
+            Utilidad.crearAlertaError(
+                    "Error",
+                    "Lo sentimos, no fue posible descargar el documento, intentelo más  tarde");
+        }
     }
 }

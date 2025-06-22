@@ -46,4 +46,16 @@ public class DocumentoInicial extends Documento {
     public Enum<?> getTipoDocumento() {
         return tipo;
     }
+
+    @Override
+    public String toString() {
+        return switch (tipo) {
+            case CartaAceptacion -> "Carta de Aceptacion";
+            case HorarioUV -> "Horario UV";
+            case Cronograma -> "Cronograma";
+            case ConstanciaSeguro -> "Constancia de Seguro";
+            case OficioAsignacion -> "Oficio de Asignacion";
+            default -> super.toString();
+        };
+    }
 }

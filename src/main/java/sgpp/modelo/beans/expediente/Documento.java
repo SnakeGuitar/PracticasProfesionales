@@ -61,4 +61,9 @@ public abstract class Documento {
     }
 
     public abstract Enum<?> getTipoDocumento();
+
+    @Override
+    public String toString() {
+        return "Documento de tipo desconocido";
+    }
 }
