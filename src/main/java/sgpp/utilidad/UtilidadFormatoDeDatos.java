@@ -14,6 +14,7 @@
 
 package sgpp.utilidad;
 
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -33,7 +34,13 @@ public class UtilidadFormatoDeDatos {
     }
 
     public static String localDateTimeToString(LocalDateTime date) {
+        String fecha = "";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        return date.format(formatter);
+        try {
+             fecha = date.format(formatter);
+        } catch (DateTimeException | NullPointerException ex) {
+            fecha = "";
+        }
+        return fecha;
     }
 }

@@ -40,9 +40,11 @@ public class EntregaDM {
             if (entrega.getFechaApertura().isAfter(entregaPrevia.getFechaLimite())) {
                 resultado.setValido(true);
             } else {
+                System.out.println("fecha limite entrega previa: "+entregaPrevia.getFechaLimite());
+                System.out.println("fecha apertura entrega a validar "+entrega.getFechaApertura());
                 resultado.setValido(false);
                 resultado.setMensaje(
-                        "La fecha de apertura de esta entrega no puede ser posterior a la fecha limite de la entrega previa"
+                        "La fecha de apertura de esta entrega no puede ser previa a la fecha limite de la entrega previa"
                 );
             }
         } else {

@@ -13,11 +13,13 @@ import sgpp.modelo.beans.expediente.EntregaDocumento;
 import sgpp.modelo.beans.expediente.documentofinal.EntregaDocumentoFinal;
 import sgpp.modelo.beans.expediente.documentoinicial.EntregaDocumentoInicial;
 import sgpp.modelo.beans.expediente.documentoparcial.EntregaDocumentoParcial;
+import sgpp.modelo.beans.expediente.reporte.EntregaReporteMensual;
 import sgpp.modelo.dao.ResultadoSQL;
 import sgpp.modelo.dao.entidades.PeriodoDAO;
 import sgpp.modelo.dao.expediente.documentofinal.EntregaDocumentoFinalDAO;
 import sgpp.modelo.dao.expediente.documentoinicial.EntregaDocumentoInicialDAO;
 import sgpp.modelo.dao.expediente.documentoparcial.EntregaDocumentoParcialDAO;
+import sgpp.modelo.dao.expediente.documentoparcial.EntregaReporteMensualDAO;
 import sgpp.utilidad.Utilidad;
 import sgpp.utilidad.UtilidadFormatoDeDatos;
 
@@ -26,7 +28,6 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class FXMLConfigurarEntregasController implements Initializable {
@@ -57,29 +58,48 @@ public class FXMLConfigurarEntregasController implements Initializable {
     @FXML
     private TextField txFiAperturaReporteUno;
     @FXML
+    private Label lbErrorAperturaReporteUno;
+    @FXML
     private TextField txFiLimiteReporteUno;
+    @FXML
+    private Label lbErrorLimiteReporteUno;
     @FXML
     private TextField txFiAperturaReporteDos;
     @FXML
+    private Label lbErrorAperturaReporteDos;
+    @FXML
     private TextField txFiLimiteReporteDos;
+    @FXML
+    private Label lbErrorLimiteReporteDos;
     @FXML
     private TextField txFiAperturaReporteTres;
     @FXML
+    private Label lbErrorAperturaReporteTres;
+    @FXML
     private TextField txFiLimiteReporteTres;
+    @FXML
+    private Label lbErrorLimiteReporteTres;
     @FXML
     private TextField txFiAperturaReporteCuatro;
     @FXML
+    private Label lbErrorAperturaReporteCuatro;
+    @FXML
     private TextField txFiLimiteReporteCuatro;
+    @FXML
+    private Label lbErrorLimiteReporteCuatro;
 
-    private Periodo periodoActual;
+    private final int NUM_REPORTE_UNO = 1;
+    private final int NUM_REPORTE_DOS = 2;
+    private final int NUM_REPORTE_TRES = 3;
+    private final int NUM_REPORTE_CUATRO = 4;
     private int idPeriodo;
-    private List<EntregaDocumentoInicial> entregasIniciales;
     private EntregaDocumentoInicial entregaInicial;
-    private List<EntregaDocumentoParcial> entregasParciales;
     private EntregaDocumentoParcial entregaParcial;
-    private List<EntregaDocumentoFinal> entregasFinales;
     private EntregaDocumentoFinal entregaFinal;
-    private boolean ignorarParciales;
+    private EntregaReporteMensual entregaReporteUno;
+    private EntregaReporteMensual entregaReporteDos;
+    private EntregaReporteMensual entregaReporteTres;
+    private EntregaReporteMensual entregaReporteCuatro;
 
     public void initialize(URL url, ResourceBundle rb) {
         recuperarEntregas();
@@ -88,28 +108,23 @@ public class FXMLConfigurarEntregasController implements Initializable {
 
     private void recuperarEntregas() {
         try {
-            periodoActual = PeriodoDAO.obtenerPeriodoActual();
+            Periodo periodoActual = PeriodoDAO.obtenerPeriodoActual();
             idPeriodo = periodoActual.getIdPeriodo();
-            entregasIniciales = EntregaDocumentoInicialDAO.obtenerEntregasPorPeriodo(idPeriodo);
-            entregasParciales = EntregaDocumentoParcialDAO.obtenerEntregasPorPeriodo(idPeriodo);
-            entregasFinales = EntregaDocumentoFinalDAO.obtenerEntregasPorPeriodo(idPeriodo);
-            cargarEntregasIndividuales();
+            entregaInicial = EntregaDocumentoInicialDAO.obtenerPrimeraEntregaPorPeriodo(idPeriodo);
+            entregaParcial = EntregaDocumentoParcialDAO.obtenerPrimeraEntregaPorPeriodo(idPeriodo);
+            entregaFinal = EntregaDocumentoFinalDAO.obtenerPrimeraEntregaPorPeriodo(idPeriodo);
+            entregaReporteUno = EntregaReporteMensualDAO.
+                    obtenerPrimeraEntregaPorPeriodo(1, idPeriodo);
+            entregaReporteDos = EntregaReporteMensualDAO.
+                    obtenerPrimeraEntregaPorPeriodo(2, idPeriodo);
+            entregaReporteTres = EntregaReporteMensualDAO.
+                    obtenerPrimeraEntregaPorPeriodo(3, idPeriodo);
+            entregaReporteCuatro = EntregaReporteMensualDAO.
+                    obtenerPrimeraEntregaPorPeriodo(4, idPeriodo);
             cargarEntregasEnCampos();
         } catch (SQLException sqlex) {
             System.out.println("Error: " + sqlex.getMessage());
             Utilidad.crearAlertaError("Error", "No se pudo cargar las entregas");
-        }
-    }
-
-    private void cargarEntregasIndividuales() {
-        if (entregasIniciales != null && !entregasIniciales.isEmpty()) {
-            entregaInicial = entregasIniciales.getFirst();
-        }
-        if (entregasParciales != null && !entregasParciales.isEmpty()) {
-            entregaParcial = entregasParciales.getFirst();
-        }
-        if (entregasFinales != null && !entregasFinales.isEmpty()) {
-            entregaFinal = entregasFinales.getFirst();
         }
     }
 
@@ -125,6 +140,22 @@ public class FXMLConfigurarEntregasController implements Initializable {
         if (entregaFinal != null) {
             txFiAperturaFinal.setText(UtilidadFormatoDeDatos.localDateTimeToString(entregaFinal.getFechaApertura()));
             txFiLimiteFinal.setText(UtilidadFormatoDeDatos.localDateTimeToString(entregaFinal.getFechaLimite()));
+        }
+        if (entregaReporteUno != null) {
+            txFiAperturaReporteUno.setText(UtilidadFormatoDeDatos.localDateTimeToString(entregaReporteUno.getFechaApertura()));
+            txFiLimiteReporteUno.setText(UtilidadFormatoDeDatos.localDateTimeToString(entregaReporteUno.getFechaLimite()));
+        }
+        if (entregaReporteDos != null) {
+            txFiAperturaReporteDos.setText(UtilidadFormatoDeDatos.localDateTimeToString(entregaReporteDos.getFechaApertura()));
+            txFiLimiteReporteDos.setText(UtilidadFormatoDeDatos.localDateTimeToString(entregaReporteDos.getFechaLimite()));
+        }
+        if (entregaReporteTres != null) {
+            txFiAperturaReporteTres.setText(UtilidadFormatoDeDatos.localDateTimeToString(entregaReporteTres.getFechaApertura()));
+            txFiLimiteReporteTres.setText(UtilidadFormatoDeDatos.localDateTimeToString(entregaReporteTres.getFechaLimite()));
+        }
+        if (entregaReporteCuatro != null) {
+            txFiAperturaReporteCuatro.setText(UtilidadFormatoDeDatos.localDateTimeToString(entregaReporteCuatro.getFechaApertura()));
+            txFiLimiteReporteCuatro.setText(UtilidadFormatoDeDatos.localDateTimeToString(entregaReporteCuatro.getFechaLimite()));
         }
     }
 
@@ -154,9 +185,27 @@ public class FXMLConfigurarEntregasController implements Initializable {
         if (!finalExito) {
             return;
         }
+        boolean reporteUnoExito = configurarEntregaReporteUno();
+        if (!reporteUnoExito) {
+            return;
+        }
+        boolean reporteDosExito = configurarEntregaReporteDos();
+        if (!reporteDosExito) {
+            return;
+        }
+        boolean reporteTresExito = configurarEntregaReporteTres();
+        if (!reporteTresExito) {
+            return;
+        }
+        boolean reporteCuatroExito = configurarEntregaReporteCuatro();
+        if (!reporteCuatroExito) {
+            return;
+        }
+        //Si todas fueron validas,
         programarEntregasIniciales();
         programarEntregasParciales();
         programarEntregasFinales();
+        programarEntregasReportes();
     }
 
     private boolean configurarEntregaInicial() {
@@ -174,7 +223,7 @@ public class FXMLConfigurarEntregasController implements Initializable {
     private void programarEntregasIniciales() {
         try {
             ResultadoSQL resultado = EntregaDocumentoInicialDAO.programarEntregas(entregaInicial, idPeriodo);
-            if (!resultado.isError()) {
+            if (resultado.isError()) {
                 Utilidad.crearAlertaInformacion("Exito", "Entregas iniciales programadas exitosamente");
             } else {
                 Utilidad.crearAlertaError("Error", "Lo sentimos, por el momento no fue posible configurar las entregas iniciales");
@@ -246,6 +295,91 @@ public class FXMLConfigurarEntregasController implements Initializable {
         }
     }
 
+    private boolean configurarEntregaReporteUno() {
+        EntregaReporteMensual candidato = validarEntregaReporte(
+                NUM_REPORTE_UNO,null, txFiAperturaReporteUno, lbErrorAperturaReporteUno, txFiLimiteReporteUno, lbErrorLimiteReporteUno
+        );
+        if (candidato != null) {
+            candidato.setNumReporte(NUM_REPORTE_UNO);
+            this.entregaReporteUno = candidato;
+            System.out.println("La entrega uno es valida");
+            System.out.println("fecha de apertura "+entregaReporteUno.getFechaApertura());
+            System.out.println("fecha limite "+entregaReporteUno.getFechaLimite());
+            return true;
+        } else {
+            this.entregaReporteUno = null;
+            return false;
+        }
+    }
+
+    private boolean configurarEntregaReporteDos() {
+        System.out.println(entregaReporteUno.getFechaLimite().toString());
+        EntregaReporteMensual candidato = validarEntregaReporte(
+                NUM_REPORTE_DOS, entregaReporteUno, txFiAperturaReporteDos, lbErrorAperturaReporteDos, txFiLimiteReporteDos, lbErrorLimiteReporteDos
+        );
+        if (candidato != null) {
+            candidato.setNumReporte(NUM_REPORTE_DOS);
+            this.entregaReporteDos = candidato;
+            return true;
+        } else {
+            this.entregaReporteDos = null;
+            return false;
+        }
+    }
+
+    private boolean configurarEntregaReporteTres() {
+        EntregaReporteMensual candidato = validarEntregaReporte(
+                NUM_REPORTE_TRES, entregaReporteDos, txFiAperturaReporteTres, lbErrorAperturaReporteTres, txFiLimiteReporteTres, lbErrorLimiteReporteTres
+        );
+        if (candidato != null) {
+            candidato.setNumReporte(NUM_REPORTE_TRES);
+            this.entregaReporteTres = candidato;
+            return true;
+        } else {
+            this.entregaReporteTres = null;
+            return false;
+        }
+    }
+
+    private boolean configurarEntregaReporteCuatro() {
+        EntregaReporteMensual candidato = validarEntregaReporte(
+                NUM_REPORTE_CUATRO, entregaReporteTres, txFiAperturaReporteCuatro, lbErrorAperturaReporteCuatro, txFiLimiteReporteCuatro, lbErrorLimiteReporteCuatro
+        );
+        if (candidato != null) {
+            candidato.setNumReporte(NUM_REPORTE_CUATRO);
+            this.entregaReporteCuatro = candidato;
+            return true;
+        } else {
+            this.entregaReporteCuatro = null;
+            return false;
+        }
+    }
+
+    private void programarEntregasReportes() {
+        try {
+            ResultadoSQL resultado = new ResultadoSQL();
+            resultado = EntregaReporteMensualDAO.programarEntregas(entregaReporteUno, idPeriodo);
+            if (resultado.isError()) {
+                Utilidad.crearAlertaError("Error", "Lo sentimos no se pudo programar la entrega del reporte uno");
+            }
+            resultado = EntregaReporteMensualDAO.programarEntregas(entregaReporteDos, idPeriodo);
+            if (resultado.isError()) {
+                Utilidad.crearAlertaError("Error", "Lo sentimos no se pudo programar la entrega del reporte dos");
+            }
+            resultado = EntregaReporteMensualDAO.programarEntregas(entregaReporteTres, idPeriodo);
+            if (resultado.isError()) {
+                Utilidad.crearAlertaError("Error", "Lo sentimos no se pudo programar la entrega del reporte tres");
+            }
+            resultado = EntregaReporteMensualDAO.programarEntregas(entregaReporteCuatro, idPeriodo);
+            if (resultado.isError()) {
+                Utilidad.crearAlertaError("Error", "Lo sentimos no se pudo programar la entrega del reporte cuatro");
+            }
+        } catch (SQLException sqlex) {
+            System.out.println("Error: " + sqlex.getMessage());
+            Utilidad.crearAlertaError("Error", sqlex.getMessage());
+        }
+    }
+
     private EntregaDocumento validarEntrega(TipoEntrega tipo, EntregaDocumento entregaPrevia, TextField txFiFechaApertura, Label errorApertura, TextField txFiFechaLimite, Label errorLimite) {
         ResultadoValidacion validacion = new ResultadoValidacion();
         EntregaDocumento candidata = null;
@@ -267,6 +401,29 @@ public class FXMLConfigurarEntregasController implements Initializable {
             }
         }
         return (validacion.isValido() ? candidata : null);
+    }
+
+    private EntregaReporteMensual validarEntregaReporte(int numReporte, EntregaReporteMensual entregaPrevia, TextField txFiFechaApertura, Label errorApertura, TextField txFiFechaLimite, Label errorLimite) {
+        ResultadoValidacion validacion = new ResultadoValidacion();
+        EntregaReporteMensual candidato = null;
+        boolean formatoValido = validarFormatoDeFechas(txFiFechaApertura, errorApertura, txFiFechaLimite, errorLimite);
+        if (formatoValido) {
+            candidato = construirEntregaReporte(numReporte);
+            validacion = EntregaDM.esUnRangoCorrecto(candidato);
+            if (!validacion.isValido()) {
+                errorApertura.setText("*fecha invalida");
+                Utilidad.crearAlerta(Alert.AlertType.WARNING, "Error", validacion.getMensaje());
+                return null; //No fue valida, no proceder a la siguiente validacion
+            }
+            if (candidato != null && entregaPrevia != null) {
+                validacion = EntregaDM.validarRespectoAEntregaPrevia(entregaPrevia, candidato);
+                if (!validacion.isValido()) {
+                    errorApertura.setText("*fecha invalida");
+                    Utilidad.crearAlerta(Alert.AlertType.WARNING, "Error", validacion.getMensaje());
+                }
+            }
+        }
+        return (validacion.isValido() ? candidato : null);
     }
 
     private boolean validarFormatoDeFechas(TextField txFiFechaApertura, Label errorApertura, TextField txFiFechaLimite, Label errorLimite) {
@@ -342,6 +499,35 @@ public class FXMLConfigurarEntregasController implements Initializable {
         }
     }
 
+    private EntregaReporteMensual construirEntregaReporte(int numReporte) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        EntregaReporteMensual entrega = null;
+        switch (numReporte) {
+            case 1:
+                entrega = new EntregaReporteMensual();
+                entrega.setFechaApertura(LocalDateTime.parse(txFiAperturaReporteUno.getText(), formatter));
+                entrega.setFechaLimite(LocalDateTime.parse(txFiLimiteReporteUno.getText(), formatter));
+                return entrega;
+            case 2:
+                entrega = new EntregaReporteMensual();
+                entrega.setFechaApertura(LocalDateTime.parse(txFiAperturaReporteDos.getText(), formatter));
+                entrega.setFechaLimite(LocalDateTime.parse(txFiLimiteReporteDos.getText(), formatter));
+                return entrega;
+            case 3:
+                entrega = new EntregaReporteMensual();
+                entrega.setFechaApertura(LocalDateTime.parse(txFiAperturaReporteTres.getText(), formatter));
+                entrega.setFechaLimite(LocalDateTime.parse(txFiLimiteReporteTres.getText(), formatter));
+                return entrega;
+            case 4:
+                entrega = new EntregaReporteMensual();
+                entrega.setFechaApertura(LocalDateTime.parse(txFiAperturaReporteCuatro.getText(), formatter));
+                entrega.setFechaLimite(LocalDateTime.parse(txFiLimiteReporteCuatro.getText(), formatter));
+                return entrega;
+            default:
+                return null;
+        }
+    }
+
     private enum TipoEntrega {
         INICIAL,
         PARCIAL,
@@ -355,5 +541,13 @@ public class FXMLConfigurarEntregasController implements Initializable {
         lbErrorLimiteParcial.setText("");
         lbErrorAperturaFinal.setText("");
         lbErrorLimiteFinal.setText("");
+        lbErrorAperturaReporteUno.setText("");
+        lbErrorLimiteReporteUno.setText("");
+        lbErrorAperturaReporteDos.setText("");
+        lbErrorLimiteReporteDos.setText("");
+        lbErrorAperturaReporteTres.setText("");
+        lbErrorLimiteReporteTres.setText("");
+        lbErrorAperturaReporteCuatro.setText("");
+        lbErrorLimiteReporteCuatro.setText("");
     }
 }

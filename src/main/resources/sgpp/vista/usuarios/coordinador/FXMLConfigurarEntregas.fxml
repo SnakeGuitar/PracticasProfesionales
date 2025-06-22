@@ -16,12 +16,12 @@
          <bottom>
             <HBox alignment="BOTTOM_LEFT" prefHeight="51.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" onAction="#clicBtnCancelar" text="Cancelar">
+                  <Button mnemonicParsing="false" onAction="#clicBtnCancelar" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-border-radius: 5;" text="Cancelar">
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#clicBtnGuardar" style="-fx-background-color: #5b6fd4;" text="Guardar" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#clicBtnGuardar" prefWidth="100.0" style="-fx-background-color: #5b6fd4;" text="Guardar" textFill="WHITE">
                      <HBox.margin>
                         <Insets bottom="10.0" />
                      </HBox.margin>
@@ -170,7 +170,7 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </Label>
-                  <HBox prefWidth="200.0">
+                  <HBox prefHeight="2.0" prefWidth="994.0">
                      <children>
                         <Label text="Reporte #1">
                            <font>
@@ -182,23 +182,32 @@
                               <Insets left="20.0" right="15.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="txFiAperturaReporteUno" promptText="yyyy-mm-dd hh:mm">
+                        <VBox prefHeight="64.0" prefWidth="146.0">
+                           <children>
+                              <TextField fx:id="txFiAperturaReporteUno" promptText="yyyy-mm-dd hh:mm" />
+                              <Label fx:id="lbErrorAperturaReporteUno" textFill="RED" wrapText="true" />
+                           </children>
                            <HBox.margin>
                               <Insets right="20.0" />
                            </HBox.margin>
-                        </TextField>
+                        </VBox>
                         <Label text="Fecha y hora Limite">
                            <HBox.margin>
                               <Insets right="15.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="txFiLimiteReporteUno" promptText="yyyy-mm-dd hh:mm" />
+                        <VBox prefHeight="64.0" prefWidth="163.0">
+                           <children>
+                              <TextField fx:id="txFiLimiteReporteUno" promptText="yyyy-mm-dd hh:mm" />
+                              <Label fx:id="lbErrorLimiteReporteUno" textFill="RED" wrapText="true" />
+                           </children>
+                        </VBox>
                      </children>
                      <VBox.margin>
-                        <Insets bottom="50.0" />
+                        <Insets bottom="30.0" />
                      </VBox.margin>
                   </HBox>
-                  <HBox prefWidth="200.0">
+                  <HBox prefHeight="26.0" prefWidth="994.0">
                      <children>
                         <Label text="Reporte #2">
                            <font>
@@ -210,20 +219,26 @@
                               <Insets left="20.0" right="15.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="txFiAperturaReporteDos" promptText="yyyy-mm-dd hh:mm">
-                           <HBox.margin>
-                              <Insets right="20.0" />
-                           </HBox.margin>
-                        </TextField>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <TextField fx:id="txFiAperturaReporteDos" promptText="yyyy-mm-dd hh:mm" />
+                              <Label fx:id="lbErrorAperturaReporteDos" textFill="RED" wrapText="true" />
+                           </children>
+                        </VBox>
                         <Label text="Fecha y hora Limite">
                            <HBox.margin>
                               <Insets right="15.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="txFiLimiteReporteDos" promptText="yyyy-mm-dd hh:mm" />
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <TextField fx:id="txFiLimiteReporteDos" promptText="yyyy-mm-dd hh:mm" />
+                              <Label fx:id="lbErrorLimiteReporteDos" textFill="RED" wrapText="true" />
+                           </children>
+                        </VBox>
                      </children>
                      <VBox.margin>
-                        <Insets bottom="50.0" />
+                        <Insets bottom="30.0" />
                      </VBox.margin>
                   </HBox>
                   <HBox prefWidth="1024.0">
@@ -238,20 +253,26 @@
                               <Insets left="20.0" right="15.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="txFiAperturaReporteTres" promptText="yyyy-mm-dd hh:mm">
-                           <HBox.margin>
-                              <Insets right="20.0" />
-                           </HBox.margin>
-                        </TextField>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <TextField fx:id="txFiAperturaReporteTres" promptText="yyyy-mm-dd hh:mm" />
+                              <Label fx:id="lbErrorAperturaReporteTres" textFill="RED" wrapText="true" />
+                           </children>
+                        </VBox>
                         <Label text="Fecha y hora Limite">
                            <HBox.margin>
                               <Insets right="15.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="txFiLimiteReporteTres" promptText="yyyy-mm-dd hh:mm" />
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <TextField fx:id="txFiLimiteReporteTres" promptText="yyyy-mm-dd hh:mm" />
+                              <Label fx:id="lbErrorLimiteReporteTres" textFill="RED" wrapText="true" />
+                           </children>
+                        </VBox>
                      </children>
                      <VBox.margin>
-                        <Insets bottom="50.0" />
+                        <Insets bottom="30.0" />
                      </VBox.margin>
                   </HBox>
                   <HBox prefWidth="1024.0">
@@ -266,17 +287,23 @@
                               <Insets left="20.0" right="15.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="txFiAperturaReporteCuatro" promptText="yyyy-mm-dd hh:mm">
-                           <HBox.margin>
-                              <Insets right="20.0" />
-                           </HBox.margin>
-                        </TextField>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <TextField fx:id="txFiAperturaReporteCuatro" promptText="yyyy-mm-dd hh:mm" />
+                              <Label fx:id="lbErrorAperturaReporteCuatro" textFill="RED" wrapText="true" />
+                           </children>
+                        </VBox>
                         <Label text="Fecha y hora Limite">
                            <HBox.margin>
                               <Insets right="15.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="txFiLimiteReporteCuatro" promptText="yyyy-mm-dd hh:mm" />
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <TextField fx:id="txFiLimiteReporteCuatro" promptText="yyyy-mm-dd hh:mm" />
+                              <Label fx:id="lbErrorLimiteReporteCuatro" textFill="RED" wrapText="true" />
+                           </children>
+                        </VBox>
                      </children>
                   </HBox>
                </children>
