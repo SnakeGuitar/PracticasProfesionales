@@ -17,7 +17,12 @@ import sgpp.modelo.beans.expediente.reporte.EntregaReporteMensual;
 import sgpp.modelo.dao.ResultadoSQL;
 import sgpp.utilidad.UtilidadFormatoDeDatos;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -174,7 +179,34 @@ public class EntregaReporteMensualDAO {
                 ConexionBD.cerrarConexion(conexion, sentencia, resultado);
             }
         } else {
-            throw new SQLException(String.format("No se pudo obtener la entraga %s del periodo", numReporte));
+            throw new SQLException(String.format("No se pudo obtener la entrega %s del periodo", numReporte));
+        }
+        return entrega;
+    }
+
+    public static EntregaReporteMensual obtenerEntregaReporteDisponible(int idEstudiante, int idPeriodo, int numReporte) throws SQLException {
+        EntregaReporteMensual entrega = null;
+        Connection conexion = ConexionBD.abrirConexion();
+        if (conexion != null) {
+            String consulta = "SELECT * FROM entrega_reporte WHERE ID_Estudiante = ? AND ID_Periodo = ? AND num_reporte = ?";
+            PreparedStatement sentencia = null;
+            ResultSet resultado = null;
+            try {
+                sentencia = conexion.prepareStatement(consulta);
+                sentencia.setInt(1, idEstudiante);
+                sentencia.setInt(2, idPeriodo);
+                sentencia.setInt(3, numReporte);
+                resultado = sentencia.executeQuery();
+                if (resultado.next()) {
+                    entrega = convertir(resultado);
+                }
+            } catch (SQLException sqlex) {
+                System.out.println("Error al recuperar la entrega de reporte "+numReporte+" "+sqlex.getMessage());
+            } finally {
+                ConexionBD.cerrarConexion(conexion, sentencia, resultado);
+            }
+        } else {
+            throw new SQLException("Se ha perdido la conexion a la base de datos");
         }
         return entrega;
     }

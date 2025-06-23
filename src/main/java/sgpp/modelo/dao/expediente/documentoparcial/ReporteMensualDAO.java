@@ -15,12 +15,16 @@ package sgpp.modelo.dao.expediente.documentoparcial;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
 import sgpp.modelo.ConexionBD;
+import sgpp.modelo.beans.expediente.EstadoDocumento;
+import sgpp.modelo.beans.expediente.reporte.Mes;
+import sgpp.modelo.beans.expediente.reporte.ReporteMensual;
 
 /**
  *
@@ -85,5 +89,37 @@ public class ReporteMensualDAO {
 
             return ps.executeUpdate() == 1;
         }
+    }
+
+    public static ReporteMensual obtenerReportePorExpediente(int idEntregaReporte) throws SQLException {
+        ReporteMensual reporte = null;
+        Connection conexion = ConexionBD.abrirConexion();
+        if (conexion != null) {
+            String consulta = "SELECT * FROM Reporte_Mensual WHERE ID_Entrega_Reporte = ? AND reporte IS NOT NULL";
+            PreparedStatement sentencia = null;
+            ResultSet resultado = null;
+            try {
+                sentencia = conexion.prepareStatement(consulta);
+                sentencia.setInt(1, idEntregaReporte);
+                resultado = sentencia.executeQuery();
+                if (resultado.next()) {
+                    reporte = new ReporteMensual();
+                    reporte.setIdReporteMensual(resultado.getInt("ID_Reporte_Mensual"));
+                    reporte.setMes(Mes.valueOf(resultado.getString("mes")));
+                    reporte.setHorasReportadas(resultado.getInt("horas_reportadas"));
+                    reporte.setEstado(EstadoDocumento.valueOf(resultado.getString("estado")));
+                    reporte.setObservaciones(resultado.getString("observaciones"));
+                    reporte.setReporte(resultado.getBytes("reporte"));
+                    reporte.setIdEntregaReporte(resultado.getInt("ID_Entrega_Reporte"));
+                }
+            } catch (SQLException sqlex) {
+                System.out.println("Error al obtener los reportes mensuales "+sqlex.getMessage());
+            } finally {
+                ConexionBD.cerrarConexion(conexion, sentencia, resultado);
+            }
+        } else {
+            throw new SQLException("Se ha perdido la conexion a la Base de Datos");
+        }
+        return reporte;
     }
 }
