@@ -178,6 +178,7 @@ public class FXMLExpedienteEstudianteController implements Initializable {
         Utilidad.cerrarVentana(lbNombreEstudiante);
     }
 
+    //Requerido para que el boton descargar se habilite, no borrar
     public void clicListDocumentos(MouseEvent mouseEvent) {
         if (listDocumentosExpediente.getSelectionModel().getSelectedItem() != null) {
             btnDescargar.setDisable(false);
