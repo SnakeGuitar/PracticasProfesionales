@@ -26,6 +26,9 @@ import sgpp.utilidad.Utilidad;
 
 import java.sql.SQLException;
 
+import static sgpp.dominio.OrganizacionVinculadaDM.validarSector;
+import static sgpp.dominio.OrganizacionVinculadaDM.validarTelefono;
+
 public class FXMLActualizarOVController implements javafx.fxml.Initializable {
 
     @FXML
@@ -74,8 +77,18 @@ public class FXMLActualizarOVController implements javafx.fxml.Initializable {
                 OrganizacionVinculada organizacionActualizada = new OrganizacionVinculada();
                 organizacionActualizada.setIdOrganizacionVinculada(organizacionVinculada.getIdOrganizacionVinculada());
                 organizacionActualizada.setNombre(txfiNombre.getText());
+
+                if (!validarSector(txfiSector.getText().trim())) {
+                    return; // Si el sector no es válido, no continuar con la actualización
+                }
+
                 organizacionActualizada.setSector(txfiSector.getText().trim());
                 organizacionActualizada.setCorreo(txfiCorreo.getText().trim());
+
+                if (!validarTelefono(txFiTelefono.getText().trim())) {
+                    return; // Si el teléfono no es válido, no continuar con la actualización
+                }
+
                 organizacionActualizada.setTelefono(txFiTelefono.getText().trim());
                 organizacionActualizada.setDireccion(txfiDireccion.getText().trim());
                 organizacionActualizada.setCiudad(txfiCiudad.getText().trim());
@@ -104,6 +117,7 @@ public class FXMLActualizarOVController implements javafx.fxml.Initializable {
 
     private boolean validarCampos() {
         boolean camposValidos = true;
+
         if (txfiNombre.getText().isEmpty() || txfiSector.getText().isEmpty() || txfiCorreo.getText().isEmpty() ||
             txFiTelefono.getText().isEmpty() || txfiDireccion.getText().isEmpty() ||
             txfiCiudad.getText().isEmpty() || txfiEstado.getText().isEmpty()) {
