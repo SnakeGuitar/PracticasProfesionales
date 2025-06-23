@@ -1,14 +1,25 @@
 package sgpp.utilidad;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 import org.apache.pdfbox.pdmodel.interactive.form.PDTextField;
 import org.apache.pdfbox.pdmodel.interactive.form.PDCheckBox;
+import sgpp.modelo.beans.Proyecto;
 import sgpp.modelo.beans.expediente.presentacion.RubricaPresentacion;
+import sgpp.modelo.dao.entidades.EstudianteDAO;
+import sgpp.modelo.dao.entidades.OrganizacionVinculadaDAO;
+import sgpp.modelo.dao.entidades.PeriodoDAO;
+import sgpp.modelo.dao.entidades.ProyectoDAO;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 
 // TODO: Adaptar para cualquier rúbrica.
@@ -18,47 +29,71 @@ public class DocumentoRubrica {
     /**
      * Llena un formulario PDF existente con los datos de la rúbrica
      */
-    public static void llenarFormularioPDF(String archivoOriginal, String archivoDestino, RubricaPresentacion rubrica) throws IOException {
-        try (PDDocument document = PDDocument.load(new File(archivoOriginal))) {
-            PDAcroForm acroForm = document.getDocumentCatalog().getAcroForm();
+    public static byte[] generarRubricaEvaluacion(RubricaPresentacion rubrica) throws IOException {
+        try (PDDocument document = new PDDocument();
+             ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            PDPage page = new PDPage(PDRectangle.LETTER);
+            document.addPage(page);
 
-            if (acroForm != null) {
-                // Llenar campos de texto básicos
-                llenarCampoTexto(acroForm, "alumno", "Nombre del estudiante"); // Necesitarías obtener el nombre
-                llenarCampoTexto(acroForm, "organizacion", "Organización vinculada");
-                llenarCampoTexto(acroForm, "proyecto", "Nombre del proyecto");
-                llenarCampoTexto(acroForm, "periodo", "Período: " + rubrica.getIdPeriodo());
-                llenarCampoTexto(acroForm, "fecha", rubrica.getFechaHora().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+            PDPageContentStream content = new PDPageContentStream(document, page);
 
-                // Llenar evaluador
-                if (rubrica.getEvaluador() != null) {
-                    llenarCampoTexto(acroForm, "evaluador", rubrica.getEvaluador().getNombre());
-                }
+            content.beginText();
+            content.setFont(PDType1Font.HELVETICA, 11);
+            content.setLeading(14.5f);
+            content.newLineAtOffset(50, 700);
 
-                // Llenar calificaciones de criterios
-                float[] criterios = rubrica.getCriterios();
-                if (criterios != null && criterios.length >= 5) {
-                    llenarCampoTexto(acroForm, "criterio1", String.format("%.1f", criterios[0]));
-                    llenarCampoTexto(acroForm, "criterio2", String.format("%.1f", criterios[1]));
-                    llenarCampoTexto(acroForm, "criterio3", String.format("%.1f", criterios[2]));
-                    llenarCampoTexto(acroForm, "criterio4", String.format("%.1f", criterios[3]));
-                    llenarCampoTexto(acroForm, "criterio5", String.format("%.1f", criterios[4]));
-                }
+            String[] encabezado = {
+                    "FACULTAD DE ESTADÍSTICA E INFORMÁTICA",
+                    "Licenciatura en Ingenería de Software",
+                    "Formato: RÚBRICA DE PRESENTACIÓN ORAL DEL INFORME PARCIAL EE Prácticas de Ingeniería de Software"
+            };
+            escribirLineaPorLinea(content, encabezado);
 
-                // Llenar calificación promedio
-                llenarCampoTexto(acroForm, "promedio", String.format("%.1f", rubrica.getCalificacion()));
+            int idProyecto = recuperarIdProyecto(rubrica.getIdEstudiante());
+            String[] datosDelProyecto = {
+                    "Datos del Proyecto",
+                    "Alumno(a): "+recuperarNombreDeEstudiante(rubrica.getIdEstudiante()),
+                    "Proyecto: "+recuperarNombreDeProyecto(rubrica.getIdEstudiante()),
+                    "Organizacion Vinculada: "+recuperarNombreDeOV(idProyecto),
+                    "Periodo del reporte: "+recuperarAbreviaturaPerido(rubrica.getIdPeriodo()),
+                    "Fecha del reporte: "+rubrica.getFechaHora().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")),
+                    "Evaluador(a): "+rubrica.getEvaluador().getNombre()
+            };
+            content.newLine();
+            escribirLineaPorLinea(content, datosDelProyecto);
 
-                // Llenar observaciones
-                llenarCampoTexto(acroForm, "observaciones", rubrica.getObservaciones());
+            float[] criterios = rubrica.getCriterios();
+            if (criterios != null && criterios.length == 5) {
+                String criterioIS = determinarNivel(criterios[0]);
+                String criterioRequisitos = determinarNivel(criterios[1]);
+                String criterioDominio = determinarNivel(criterios[2]);
+                String criterioContenido = determinarNivel(criterios[3]);
+                String criterioOrtografia = determinarNivel(criterios[4]);
 
-                // Marcar checkboxes según calificaciones (si existen)
-                marcarNivelCalificacion(acroForm, criterios);
-
-                // Aplanar el formulario (opcional - hace los campos no editables)
-                // acroForm.flatten();
+                String[] evaluacionCriterios = {
+                        String.format("USO DE MÉTODOS Y TÉCNICAS DE LA IS: %s (%s)", criterioIS, criterios[0]),
+                        String.format("REQUISITOS (Objetivo, metodología, cronograma, resultados, retos/estrategias): %s (%s)",
+                                criterioRequisitos, criterios[1]),
+                        String.format("SEGURIDAD Y DOMINIO: %s (%s)", criterioDominio, criterios[2]),
+                        String.format("CONTENIDO: %s (%s)", criterioContenido, criterios[3]),
+                        String.format("ORTOGRAFÍA Y REDACCIÓN: %s (%s)", criterioOrtografia, criterios[4])
+                };
+                content.newLine();
+                escribirLineaPorLinea(content, evaluacionCriterios);
             }
 
-            document.save(archivoDestino);
+            content.newLine();
+            String[] cierre = {
+                    String.format("PROMEDIO: %s", rubrica.getCalificacion()),
+                    "OBSERVACIONES Y COMENTARIOS",
+                    rubrica.getObservaciones()
+            };
+            escribirLineaPorLinea(content, cierre);
+
+            content.endText();
+            content.close();
+            document.save(baos);
+            return baos.toByteArray();
         }
     }
 
@@ -92,11 +127,11 @@ public class DocumentoRubrica {
     }
 
     private static String determinarNivel(float calificacion) {
-        if (calificacion >= 9.1) return "competente";
-        else if (calificacion >= 8.1) return "independiente";
-        else if (calificacion >= 7.1) return "basico_avanzado";
-        else if (calificacion >= 6.0) return "basico_umbral";
-        else return "no_competente";
+        if (calificacion >= 9.1) return "COMPETENTE";
+        else if (calificacion >= 8.1) return "INDEPENDIENTE";
+        else if (calificacion >= 7.1) return "BÁSICO AVANZADO";
+        else if (calificacion >= 6.0) return "BÁSICO UMBRAL";
+        else return "NO COMPETENTE";
     }
 
     /**
@@ -117,5 +152,69 @@ public class DocumentoRubrica {
                 System.out.println("El PDF no contiene formularios AcroForm.");
             }
         }
+    }
+
+    private static void escribirLineaPorLinea(PDPageContentStream content, String[] lineas) throws IOException {
+        for (String linea : lineas) {
+            content.showText(linea);
+            content.newLine();
+        }
+    }
+
+    private static String recuperarNombreDeEstudiante(int idEstudiante) {
+        String nombreEstudiante = "";
+        try {
+            nombreEstudiante = EstudianteDAO.obtenerPorId(idEstudiante).getNombre();
+        } catch (SQLException sqlex) {
+            System.err.println("Error al recuperar el nombre del estudiante: " + sqlex.getMessage());
+        }
+        return nombreEstudiante;
+    }
+
+    private static String recuperarNombreDeOV(int idProyecto) {
+        String nombreOV = "";
+        try {
+
+            nombreOV = OrganizacionVinculadaDAO.obtenerPorAsocionAProyecto(idProyecto).getNombre();
+        } catch (SQLException sqlex) {
+            System.err.println("Error al recuperar el nombre de la OV "+sqlex.getMessage());
+        }
+        return nombreOV;
+    }
+
+    private static String recuperarNombreDeProyecto(int idEstudiante) {
+        String nombreProyecto = "";
+        try {
+            Proyecto proyecto = ProyectoDAO.obtenerPorAsociacionEstudiante(idEstudiante);
+            if (proyecto != null) {
+                nombreProyecto = proyecto.getNombre();
+            }
+        } catch (SQLException sqlex) {
+            System.err.println("Error al recuperar el nombre del proyecto "+sqlex.getMessage());
+        }
+        return nombreProyecto;
+    }
+
+    private static int recuperarIdProyecto(int idEstudiante) {
+        int idProyecto = 0;
+        try {
+            Proyecto proyecto = ProyectoDAO.obtenerPorAsociacionEstudiante(idEstudiante);
+            if (proyecto != null) {
+                idProyecto = proyecto.getIdProyecto();
+            }
+        } catch (SQLException sqlex) {
+            System.err.println("Error al recuperar el ID del proyecto "+sqlex.getMessage());
+        }
+        return idProyecto;
+    }
+
+    private static String recuperarAbreviaturaPerido(int idPeriodo) {
+        String abreviatura = "";
+        try {
+            abreviatura = PeriodoDAO.recuperarPeriodoPorId(idPeriodo).getAbreviatura();
+        } catch (SQLException sqlex) {
+            System.err.println("Error al recuperar la abreviatura del periodo "+sqlex.getMessage());
+        }
+        return abreviatura;
     }
 }

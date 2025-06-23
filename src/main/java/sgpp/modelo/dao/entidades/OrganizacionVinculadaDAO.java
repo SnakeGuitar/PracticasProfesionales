@@ -178,4 +178,32 @@ public class OrganizacionVinculadaDAO {
 
         return organizaciones;
     }
+
+    public static OrganizacionVinculada obtenerPorAsocionAProyecto(int idProyecto) throws SQLException {
+        OrganizacionVinculada ov = null;
+        Connection conexion = ConexionBD.abrirConexion();
+        if (conexion != null) {
+            String consulta =
+                    "SELECT ov.ID_Org_Vinculada, ov.nombre, ov.sector, ov.correo, ov.telefono, ov.direccion, ov.ciudad, ov.estado FROM Organizacion_Vinculada ov " +
+                    "JOIN proyecto p ON ov.ID_Org_Vinculada = p.ID_Org_Vinculada " +
+                    "WHERE p.ID_Proyecto = ?";
+            PreparedStatement sentencia = null;
+            ResultSet resultado = null;
+            try {
+                sentencia = conexion.prepareStatement(consulta);
+                sentencia.setInt(1, idProyecto);
+                resultado = sentencia.executeQuery();
+                if (resultado.next()) {
+                    ov = convertirResultSetAOV(resultado);
+                }
+            } catch (SQLException sqlex) {
+                System.out.println("Error al recuperar la OV: "+sqlex.getMessage());
+            } finally {
+                ConexionBD.cerrarConexion(conexion, sentencia, resultado);
+            }
+        } else {
+            throw new SQLException("Se ha perdido la conexion a la Base de Datos");
+        }
+        return ov;
+    }
 }

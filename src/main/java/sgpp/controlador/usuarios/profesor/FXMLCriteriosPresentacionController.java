@@ -99,7 +99,9 @@ public class FXMLCriteriosPresentacionController implements Initializable {
 
     private float[] valorCriterio;
 
-    private int idProfesor = 0, idEstudiante = 0, idPeriodo = 0;
+    private int idProfesor;
+    private int idEstudiante;
+    private int idPeriodo;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -179,7 +181,6 @@ public class FXMLCriteriosPresentacionController implements Initializable {
                 break;
             }
         }
-
         if(criteriosSeleccionados) {
             irCalificacionObservaciones();
         } else {

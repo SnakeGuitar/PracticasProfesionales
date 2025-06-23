@@ -35,4 +35,5 @@ module com.sgpp.sistemagestionpracticasprofesionales {
     exports sgpp.controlador.usuarios to javafx.fxml;
     opens sgpp.controlador.usuarios to javafx.fxml;
     requires org.apache.pdfbox;
+    requires kernel;
 }

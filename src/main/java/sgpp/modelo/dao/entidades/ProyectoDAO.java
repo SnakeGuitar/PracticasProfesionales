@@ -248,4 +248,35 @@ public class ProyectoDAO {
         }
         return resultadoAsignacion;
     }
+
+    public static Proyecto obtenerPorAsociacionEstudiante(int idEstudiante) throws SQLException {
+        Proyecto proyecto = null;
+        Connection conexion = ConexionBD.abrirConexion();
+        if (conexion != null) {
+            String consulta =
+                    "SELECT p.ID_Proyecto, p.nombre, p.objetivo_general, p.ID_Org_Vinculada FROM Proyecto p " +
+                    "JOIN estudiante e on e.ID_Proyecto = p.ID_Proyecto WHERE ID_Estudiante = ?";
+            PreparedStatement sentencia = null;
+            ResultSet resultado = null;
+            try {
+                sentencia = conexion.prepareStatement(consulta);
+                sentencia.setInt(1, idEstudiante);
+                resultado = sentencia.executeQuery();
+                if (resultado.next()) {
+                    proyecto = new Proyecto();
+                    proyecto.setIdProyecto(resultado.getInt("ID_Proyecto"));
+                    proyecto.setNombre(resultado.getString("nombre"));
+                    proyecto.setObjetivoGeneral(resultado.getString("objetivo_general"));
+                    proyecto.setIdOrganizacionVinculada(resultado.getInt("ID_Org_Vinculada"));
+                }
+            } catch (SQLException sqlex) {
+                System.out.println("Error al obtener el proyecto "+sqlex.getMessage());
+            } finally {
+                ConexionBD.cerrarConexion(conexion, sentencia, resultado);
+            }
+        } else {
+            throw new SQLException("Se ha perdido la conexion con la Base de Datos");
+        }
+        return proyecto;
+    }
 }

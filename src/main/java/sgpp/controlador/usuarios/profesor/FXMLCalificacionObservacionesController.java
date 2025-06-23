@@ -3,14 +3,20 @@ package sgpp.controlador.usuarios.profesor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import sgpp.modelo.beans.Profesor;
 import sgpp.modelo.beans.expediente.presentacion.Evaluador;
 import sgpp.modelo.beans.expediente.presentacion.RubricaPresentacion;
 import sgpp.modelo.dao.entidades.ProfesorDAO;
 import sgpp.modelo.dao.expediente.presentacion.RubricaPresentacionDAO;
+import sgpp.utilidad.DocumentoRubrica;
 import sgpp.utilidad.Utilidad;
 import sgpp.utilidad.UtilidadFormatoDeDatos;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
@@ -133,6 +139,7 @@ public class FXMLCalificacionObservacionesController {
             // TODO: Generar y descargar documento.
             Utilidad.crearAlertaInformacion("Registro exitoso",
                     "Registro de rúbrica exitosa.");
+            descargarRubrica(rubrica);
             Utilidad.cerrarVentana(lbPromedio);
         } else {
             Utilidad.crearAlertaError("Error",
@@ -149,6 +156,38 @@ public class FXMLCalificacionObservacionesController {
 
         if(confirmado) {
             guardarRubricaPresentacion();
+        }
+    }
+
+    private void descargarRubrica(RubricaPresentacion rubrica) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Descargar documento");
+
+        //Generar un nombre apropiado
+        String nombreSugerido = String.format(
+                "RubricaEvaluacion_%s.pdf",
+                rubrica.getFechaHora().toString().replace(" ", "_").replace("-", ""));
+        //Configurar el filechooser
+        fileChooser.setInitialFileName(nombreSugerido);
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Documento PDF", "*.pdf"));
+
+        Stage stage = Utilidad.getEscenarioComponente(lbPromedio);
+        File destino = fileChooser.showSaveDialog(stage);
+
+        //Guardar el archivo en el destino
+        try {
+            byte[] pdf = DocumentoRubrica.generarRubricaEvaluacion(rubrica);
+            Files.write(destino.toPath(), pdf);
+            Utilidad.crearAlertaInformacion(
+                    "Exito",
+                    "Documento descargado exitosamente a: \n"+destino.getAbsolutePath()
+            );
+        } catch (IOException ioex) {
+            System.out.println(ioex.getMessage());
+            Utilidad.crearAlertaError(
+                    "Error",
+                    "Lo sentimos, no fue posible guardar la rubrica en su dispositivo");
         }
     }
 

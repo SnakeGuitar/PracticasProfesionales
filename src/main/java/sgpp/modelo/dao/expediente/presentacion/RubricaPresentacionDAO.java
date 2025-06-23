@@ -88,10 +88,7 @@ public class RubricaPresentacionDAO {
 
             if (resultado.next()) {
                 rubrica = convertirResultSetRubrica(resultado);
-            } else {
-                throw new SQLException();
             }
-
         } catch (SQLException e) {
             Utilidad.mostrarErrorBD(true, e);
         } finally {
