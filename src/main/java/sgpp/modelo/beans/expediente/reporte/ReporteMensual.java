@@ -14,11 +14,15 @@
 
 package sgpp.modelo.beans.expediente.reporte;
 
-public class ReporteMensual {
+import sgpp.modelo.beans.expediente.Documento;
+import sgpp.modelo.beans.expediente.EstadoDocumento;
+import sgpp.modelo.dao.expediente.TipoDocumento;
+
+public class ReporteMensual extends Documento {
     private int idReporteMensual;
     private Mes mes;
     private int horasReportadas;
-    private EstadoReporte estado;
+    private EstadoDocumento estado;
     private String observaciones;
     private byte[] reporte;
     private int idEntregaReporte;
@@ -26,7 +30,7 @@ public class ReporteMensual {
     public ReporteMensual() {
     }
 
-    public ReporteMensual(int idReporteMensual, Mes mes, int horasReportadas, EstadoReporte estado, String observaciones, byte[] reporte, int idEntregaReporte) {
+    public ReporteMensual(int idReporteMensual, Mes mes, int horasReportadas, EstadoDocumento estado, String observaciones, byte[] reporte, int idEntregaReporte) {
         this.idReporteMensual = idReporteMensual;
         this.mes = mes;
         this.horasReportadas = horasReportadas;
@@ -60,11 +64,11 @@ public class ReporteMensual {
         this.horasReportadas = horasReportadas;
     }
 
-    public EstadoReporte getEstado() {
+    public EstadoDocumento getEstado() {
         return estado;
     }
 
-    public void setEstado(EstadoReporte estado) {
+    public void setEstado(EstadoDocumento estado) {
         this.estado = estado;
     }
 
@@ -76,7 +80,10 @@ public class ReporteMensual {
         this.observaciones = observaciones;
     }
 
-    public byte[] getReporte() {
+    //En este caso, su getter se tiene un nombre distinto para permitir la compatibilidad para descarga
+    //con otros tipos de Documento
+    @Override
+    public byte[] getDocumento() {
         return reporte;
     }
 
@@ -90,5 +97,15 @@ public class ReporteMensual {
 
     public void setIdEntregaReporte(int idEntregaReporte) {
         this.idEntregaReporte = idEntregaReporte;
+    }
+
+    @Override
+    public TipoDocumento getTipoDocumento() {
+        return TipoDocumento.REPORTE_MENSUAL;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Reporte Mensual - %s", mes.toString());
     }
 }

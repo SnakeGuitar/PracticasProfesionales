@@ -15,16 +15,16 @@
 package sgpp.modelo.beans.expediente.reporte;
 
 public enum Mes {
-    ENERO,
-    FEBRERO,
-    MARZO,
-    ABRIL,
-    MAYO,
-    JUNIO,
-    JULIO,
-    AGOSTO,
-    SEPTIEMBRE,
-    OCTUBRE,
-    NOVIEMBRE,
-    DICIEMBRE
+    Ene,
+    Feb,
+    Mar,
+    Abr,
+    May,
+    Jun,
+    Jul,
+    Ago,
+    Sep,
+    Oct,
+    Nov,
+    Dic
 }

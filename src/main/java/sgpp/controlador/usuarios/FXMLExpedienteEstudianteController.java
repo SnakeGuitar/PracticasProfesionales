@@ -8,7 +8,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -17,13 +16,18 @@ import sgpp.modelo.beans.expediente.Documento;
 import sgpp.modelo.beans.expediente.documentofinal.EntregaDocumentoFinal;
 import sgpp.modelo.beans.expediente.documentoinicial.EntregaDocumentoInicial;
 import sgpp.modelo.beans.expediente.documentoparcial.EntregaDocumentoParcial;
+import sgpp.modelo.beans.expediente.reporte.EntregaReporteMensual;
+import sgpp.modelo.beans.expediente.reporte.ReporteMensual;
 import sgpp.modelo.dao.expediente.ExpedienteDAO;
+import sgpp.modelo.dao.expediente.TipoDocumento;
 import sgpp.modelo.dao.expediente.documentofinal.EntregaDocumentoFinalDAO;
 import sgpp.modelo.dao.expediente.documentoinicial.DocumentoInicialDAO;
 import sgpp.modelo.dao.expediente.documentoinicial.EntregaDocumentoInicialDAO;
 import sgpp.modelo.dao.expediente.documentoparcial.DocumentoParcialDAO;
 import sgpp.modelo.dao.expediente.documentofinal.DocumentoFinalDAO;
 import sgpp.modelo.dao.expediente.documentoparcial.EntregaDocumentoParcialDAO;
+import sgpp.modelo.dao.expediente.documentoparcial.EntregaReporteMensualDAO;
+import sgpp.modelo.dao.expediente.documentoparcial.ReporteMensualDAO;
 import sgpp.utilidad.Utilidad;
 
 import java.io.File;
@@ -54,6 +58,10 @@ public class FXMLExpedienteEstudianteController implements Initializable {
     private int idEntregaDocInicial;
     private int idEntregaDocParcial;
     private int idEntregaDocFinal;
+    private int idEntregaReporteUno;
+    private int idEntregaReporteDos;
+    private int idEntregaReporteTres;
+    private int idEntregaReporteCuatro;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -80,6 +88,10 @@ public class FXMLExpedienteEstudianteController implements Initializable {
     }
 
     private void cargarIdsEntrega() {
+        final int NUM_REPORTE_UNO = 1;
+        final int NUM_REPORTE_DOS = 2;
+        final int NUM_REPORTE_TRES = 3;
+        final int NUM_REPORTE_CUATRO = 4;
         try {
             EntregaDocumentoInicial entregaInicial = EntregaDocumentoInicialDAO.obtenerEntregaDisponible(
                     idEstudiante, idPeriodo);
@@ -87,6 +99,18 @@ public class FXMLExpedienteEstudianteController implements Initializable {
                     idEstudiante, idPeriodo);
             EntregaDocumentoFinal entregaFinal = EntregaDocumentoFinalDAO.obtenerEntregaDisponible(
                     idEstudiante, idPeriodo);
+            EntregaReporteMensual entregaReporteUno = EntregaReporteMensualDAO.obtenerEntregaReporteDisponible(
+                    idEstudiante, idPeriodo, NUM_REPORTE_UNO
+            );
+            EntregaReporteMensual entregaReporteDos = EntregaReporteMensualDAO.obtenerEntregaReporteDisponible(
+                    idEstudiante, idPeriodo, NUM_REPORTE_DOS
+            );
+            EntregaReporteMensual entregaReporteTres = EntregaReporteMensualDAO.obtenerEntregaReporteDisponible(
+                    idEstudiante, idPeriodo, NUM_REPORTE_TRES
+            );
+            EntregaReporteMensual entregaReporteCuatro = EntregaReporteMensualDAO.obtenerEntregaReporteDisponible(
+                    idEstudiante, idPeriodo, NUM_REPORTE_CUATRO
+            );
             if (entregaInicial != null) {
                 idEntregaDocInicial = entregaInicial.getIdEntregaDocumentoInicial();
             }
@@ -96,25 +120,50 @@ public class FXMLExpedienteEstudianteController implements Initializable {
             if (entregaFinal != null) {
                 idEntregaDocFinal = entregaFinal.getIdEntregaDocumentoFinal();
             }
+            if (entregaReporteUno != null) {
+                idEntregaReporteUno = entregaReporteUno.getIdEntregaReporte();
+            }
+            if (entregaReporteDos != null) {
+                idEntregaReporteDos = entregaReporteDos.getIdEntregaReporte();
+            }
+            if (entregaReporteTres != null) {
+                idEntregaReporteTres = entregaReporteTres.getIdEntregaReporte();
+            }
+            if (entregaReporteCuatro != null) {
+                idEntregaReporteCuatro = entregaReporteCuatro.getIdEntregaReporte();
+            }
         } catch (SQLException e) {
             Utilidad.crearAlertaError("Error", "Lo sentimos, no hay entregas programadas para este estudiante");
         }
     }
 
     private void cargarInformacion() {
-        System.out.println("#cargando informacion#");
-        System.out.println(idEstudiante);
-        System.out.println(idPeriodo);
-        System.out.println(idEntregaDocInicial);
-        System.out.println(idEntregaDocParcial);
-        System.out.println(idEntregaDocFinal);
         documentos = FXCollections.observableArrayList();
 
         ArrayList<Documento> documentosDAO = new ArrayList<>();
         try {
+            //Entregas generales
             documentosDAO.addAll(DocumentoInicialDAO.obtenerDocumentosInicialesPorExpediente(idEntregaDocInicial));
             documentosDAO.addAll(DocumentoParcialDAO.obtenerDocumentosParcialesPorExpediente(idEntregaDocParcial));
             documentosDAO.addAll(DocumentoFinalDAO.obtenerDocumentosFinalesPorExpediente(idEntregaDocFinal));
+
+            //Reportes mensuales
+            ReporteMensual reporteUno = ReporteMensualDAO.obtenerReportePorExpediente(idEntregaReporteUno);
+            if (reporteUno != null) {
+                documentosDAO.add(reporteUno);
+            }
+            ReporteMensual reporteDos = ReporteMensualDAO.obtenerReportePorExpediente(idEntregaReporteDos);
+            if (reporteDos != null) {
+                documentosDAO.add(reporteDos);
+            }
+            ReporteMensual reporteTres = ReporteMensualDAO.obtenerReportePorExpediente(idEntregaReporteTres);
+            if (reporteTres != null) {
+                documentosDAO.add(reporteTres);
+            }
+            ReporteMensual reporteCuatro = ReporteMensualDAO.obtenerReportePorExpediente(idEntregaReporteCuatro);
+            if (reporteCuatro != null) {
+                documentosDAO.add(reporteCuatro);
+            }
         } catch (SQLException sqlex) {
             Utilidad.crearAlertaAdvertencia(
                     "Notificación",
@@ -161,7 +210,7 @@ public class FXMLExpedienteEstudianteController implements Initializable {
             //Generar un nombre apropiado
             String nombreSugerido = String.format(
                     "%s_%s.pdf",
-                    documento.toString().replace(" ", "_"),
+                    documento.toString().replace(" ", "_").replace("-", ""),
                     estudiante.getNombre().replace(" ", "_"));
             //Configurar el filechooser
             fileChooser.setInitialFileName(nombreSugerido);

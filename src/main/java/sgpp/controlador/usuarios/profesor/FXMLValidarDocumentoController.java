@@ -185,12 +185,19 @@ public class FXMLValidarDocumentoController implements Initializable {
         confirmacion.setContentText("Esta acción cambiará el estado del documento a 'Aceptado'");
 
         if (confirmacion.showAndWait().get() == ButtonType.OK) {
-            documentoSeleccionado.setEstado(EstadoDocumento.Aceptado);
+            try {
+                documentoSeleccionado.setEstado(EstadoDocumento.Aceptado);
+                actualizarDocumento(documentoSeleccionado); // IMPORTANTE: Actualizar en BD
 
-            Utilidad.crearAlertaInformacion(
-                    "Documento validado",
-                    "El documento ha sido validado y su estado ha sido actualizado a 'Aceptado'.");
-            clicBtnActualizarLista(null);
+                Utilidad.crearAlertaInformacion(
+                        "Documento validado",
+                        "El documento ha sido validado y su estado ha sido actualizado a 'Aceptado'.");
+                clicBtnActualizarLista(null);
+            } catch (SQLException e) {
+                Utilidad.crearAlertaError(
+                        "Error al validar",
+                        "No se pudo actualizar el documento en la base de datos: " + e.getMessage());
+            }
         }
     }
 
@@ -224,12 +231,19 @@ public class FXMLValidarDocumentoController implements Initializable {
                 return;
             }
 
-            documentoSeleccionado.setEstado(EstadoDocumento.Rechazado);
+            try {
+                documentoSeleccionado.setEstado(EstadoDocumento.Rechazado);
+                actualizarDocumento(documentoSeleccionado); // IMPORTANTE: Actualizar en BD
 
-            Utilidad.crearAlertaInformacion(
-                    "Documento rechazado",
-                    "El documento ha sido rechazado y su estado ha sido actualizado a 'Rechazado'. Razón: " + razon);
-            clicBtnActualizarLista(null);
+                Utilidad.crearAlertaInformacion(
+                        "Documento rechazado",
+                        "El documento ha sido rechazado y su estado ha sido actualizado a 'Rechazado'. Razón: " + razon);
+                clicBtnActualizarLista(null);
+            } catch (SQLException e) {
+                Utilidad.crearAlertaError(
+                        "Error al rechazar",
+                        "No se pudo actualizar el documento en la base de datos: " + e.getMessage());
+            }
         });
     }
 
@@ -331,6 +345,19 @@ public class FXMLValidarDocumentoController implements Initializable {
         }
     }
 
+    private void actualizarDocumento(Documento documento) throws SQLException {
+        switch (tipoDocumentoActual) {
+            case INICIAL:
+                DocumentoInicialDAO.actualizarDocumentoInicial((DocumentoInicial) documento);
+                break;
+            case PARCIAL:
+                DocumentoParcialDAO.actualizarDocumentoParcial((DocumentoParcial) documento);
+                break;
+            case FINAL:
+                DocumentoFinalDAO.actualizarDocumentoFinal((DocumentoFinal) documento);
+                break;
+        }
+    }
 
     private void actualizarTituloTabla(String titulo) {
         lblDocumentosActuales.setText(titulo);
