@@ -287,6 +287,7 @@ public class FXMLAutoevaluacionEstudianteController implements Initializable {
         boolean exitoso = AutoEvaluacionDAO.insertar(autoevaluacion);
 
         if(exitoso) {
+            // TODO: Generar y descargar documento.
             Utilidad.crearAlertaInformacion("Registro exitoso",
                     "Registro de autoevaluación exitosa.");
             Utilidad.cerrarVentana(lbOV);

@@ -150,8 +150,13 @@ public class FXMLSeleccionEstudianteController implements Initializable {
                 if(rubrica == null) {
                     irRubricaPresentacion(idEstudiante, idProfesor, idPeriodo);
                 } else {
-                    Utilidad.crearAlertaAdvertencia("Rubrica encontrada",
-                            "El estudiante ya cuenta con una rúbrica de evaluación.");
+                    boolean descargar = Utilidad.crearAlertaConfirmacion("Rúbrica encontrada",
+                            "El estudiante ya cuenta con una rúbrica de presentación evaluada.\n" +
+                                    "¿Deseas descargarla?");
+
+                    if(descargar) {
+                        // TODO: Generar y descargar documento.
+                    }
                 }
             } else { // Si es para ver expediente.
                 irExpedienteEstudiante(estudianteSeleccionado, idPeriodo);

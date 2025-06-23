@@ -115,8 +115,13 @@ public class FXMLPrincipalEstudianteController implements Initializable, IContro
         if(autoEvaluacion == null) {
             irAutoevaluacion();
         } else {
-            Utilidad.crearAlertaAdvertencia("Autoevaluación encontrada",
-                    "El estudiante ya cuenta con una autoevaluación.");
+            boolean descargar = Utilidad.crearAlertaConfirmacion("Autoevaluación encontrada",
+                    "El estudiante ya cuenta con una autoevaluación.\n" +
+                            "¿Deseas descargarla?");
+
+            if(descargar) {
+                // TODO: Generar y descargar documento.
+            }
         }
     }
 

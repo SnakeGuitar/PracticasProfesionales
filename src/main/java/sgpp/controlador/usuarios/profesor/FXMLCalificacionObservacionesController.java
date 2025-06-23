@@ -130,6 +130,7 @@ public class FXMLCalificacionObservacionesController {
         boolean exitoso = RubricaPresentacionDAO.insertar(rubrica);
 
         if(exitoso) {
+            // TODO: Generar y descargar documento.
             Utilidad.crearAlertaInformacion("Registro exitoso",
                     "Registro de rúbrica exitosa.");
             Utilidad.cerrarVentana(lbPromedio);
