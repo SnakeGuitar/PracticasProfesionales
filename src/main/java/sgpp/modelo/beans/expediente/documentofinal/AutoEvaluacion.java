@@ -14,7 +14,7 @@
 
 package sgpp.modelo.beans.expediente.documentofinal;
 
-import sgpp.modelo.beans.expediente.presentacion.Evaluador;
+import sgpp.modelo.beans.Profesor;
 
 import java.time.LocalDateTime;
 
@@ -28,6 +28,7 @@ public class AutoEvaluacion {
     private int idResponsable;
     private int idProyecto;
     private int idPeriodo;
+    private Profesor evaluador;
 
     public AutoEvaluacion() {}
 

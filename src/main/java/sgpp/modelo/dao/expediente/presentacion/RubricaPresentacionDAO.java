@@ -2,6 +2,7 @@ package sgpp.modelo.dao.expediente.presentacion;
 
 import sgpp.modelo.ConexionBD;
 import sgpp.modelo.beans.expediente.presentacion.RubricaPresentacion;
+import sgpp.modelo.dao.entidades.ProfesorDAO;
 import sgpp.utilidad.Utilidad;
 
 import java.sql.*;
@@ -98,68 +99,6 @@ public class RubricaPresentacionDAO {
         return rubrica;
     }
 
-    public static boolean actualizar(RubricaPresentacion rubrica) throws SQLException {
-        boolean exitoso = false;
-        Connection conexion = null;
-        PreparedStatement sentencia = null;
-
-        String consulta = "UPDATE rubrica_presentacion SET fecha_hora = ?, " +
-                "criterio1 = ?, criterio2 = ?, criterio3 = ?, criterio4 = ?, criterio5 = ?, " +
-                "calificacion = ?, observaciones = ? " +
-                "WHERE ID_Presentacion = ? AND ID_Estudiante = ? AND ID_Periodo = ? AND ID_Profesor = ?";
-        try {
-            conexion = ConexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(consulta);
-
-            pasarDatosActualizacion(sentencia, rubrica);
-
-            int filas = sentencia.executeUpdate();
-
-            if (filas > 0) {
-                // TODO: Mostrar alerta en controlador.
-                exitoso = true;
-            } else {
-                throw new SQLException();
-            }
-        } catch (SQLException e) {
-            Utilidad.mostrarErrorBD(true, e);
-        } finally {
-            ConexionBD.cerrarConexion(conexion, sentencia, null);
-        }
-
-        return exitoso;
-    }
-
-    public static boolean eliminar(int id) throws SQLException {
-        boolean exitoso = false;
-        Connection conexion = null;
-        PreparedStatement sentencia = null;
-
-        String consulta = "DELETE FROM rubrica_presentacion WHERE ID_Presentacion = ?";
-
-        try {
-            conexion = ConexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(consulta);
-
-            sentencia.setInt(1, id);
-
-            int filas = sentencia.executeUpdate();
-
-            if (filas > 0) {
-                Utilidad.crearAlertaInformacion("Eliminación exitosa", "Rubrica eliminada exitosamente.");
-                exitoso = true;
-            } else {
-                throw new SQLException();
-            }
-        } catch (SQLException e) {
-            Utilidad.mostrarErrorBD(true, e);
-        } finally {
-            ConexionBD.cerrarConexion(conexion, sentencia, null);
-        }
-
-        return exitoso;
-    }
-
     private static void pasarCriterios(PreparedStatement sentencia, RubricaPresentacion rubrica) throws SQLException {
         float[] criterios = rubrica.getCriterios();
 
@@ -180,22 +119,6 @@ public class RubricaPresentacionDAO {
         sentencia.setInt(11, rubrica.getIdProfesor());
     }
 
-    private static void pasarDatosActualizacion(PreparedStatement sentencia, RubricaPresentacion rubrica) throws SQLException {
-        // Datos para el SET
-        sentencia.setTimestamp(1, Timestamp.valueOf(rubrica.getFechaHora()));
-
-        pasarCriterios(sentencia, rubrica); // Abarca índices 2 al 6
-
-        sentencia.setFloat(7, rubrica.getCalificacion());
-        sentencia.setString(8, rubrica.getObservaciones());
-
-        // Parámetros para la cláusula WHERE
-        sentencia.setInt(9, rubrica.getIdPresentacion());
-        sentencia.setInt(10, rubrica.getIdEstudiante());
-        sentencia.setInt(11, rubrica.getIdPeriodo());
-        sentencia.setInt(12, rubrica.getIdProfesor());
-    }
-
     private static RubricaPresentacion convertirResultSetRubrica(ResultSet rs) throws SQLException {
         RubricaPresentacion rubrica = new RubricaPresentacion();
 
@@ -206,6 +129,7 @@ public class RubricaPresentacionDAO {
         rubrica.setIdEstudiante(rs.getInt("ID_Estudiante"));
         rubrica.setIdPeriodo(rs.getInt("ID_Periodo"));
         rubrica.setIdProfesor(rs.getInt("ID_Profesor"));
+        rubrica.setEvaluador(ProfesorDAO.obtenerPorId(rubrica.getIdProfesor()));
 
         float[] criterios = {
                 rs.getFloat("criterio1"),

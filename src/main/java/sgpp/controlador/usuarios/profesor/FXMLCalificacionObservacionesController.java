@@ -2,25 +2,20 @@ package sgpp.controlador.usuarios.profesor;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextArea;
 import sgpp.modelo.beans.Profesor;
-import sgpp.modelo.beans.expediente.presentacion.Evaluador;
 import sgpp.modelo.beans.expediente.presentacion.RubricaPresentacion;
-import sgpp.modelo.dao.entidades.EstudianteDAO;
 import sgpp.modelo.dao.entidades.ProfesorDAO;
 import sgpp.modelo.dao.expediente.presentacion.RubricaPresentacionDAO;
 import sgpp.utilidad.DocumentoRubrica;
 import sgpp.utilidad.Utilidad;
 import sgpp.utilidad.UtilidadFormatoDeDatos;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class FXMLCalificacionObservacionesController {
 
@@ -128,20 +123,15 @@ public class FXMLCalificacionObservacionesController {
         rubrica.setCriterios(calificaciones);
 
         Profesor profesor = ProfesorDAO.obtenerPorId(idProfesor);
-        Evaluador evaluador = new Evaluador();
-        evaluador.setIdEvaluador(profesor.getIdProfesor());
-        evaluador.setNombre(profesor.getNombre());
-        evaluador.setNumeroPersonal(profesor.getNumeroPersonal());
 
-        rubrica.setEvaluador(evaluador);
+        rubrica.setEvaluador(profesor);
 
         boolean exitoso = RubricaPresentacionDAO.insertar(rubrica);
 
         if(exitoso) {
-            // TODO: Generar y descargar documento.
             Utilidad.crearAlertaInformacion("Registro exitoso",
                     "Registro de rúbrica exitosa.");
-            descargarRubrica(rubrica);
+            DocumentoRubrica.descargarRubrica(rubrica, lbPromedio, idEstudiante);
             Utilidad.cerrarVentana(lbPromedio);
         } else {
             Utilidad.crearAlertaError("Error",
@@ -162,40 +152,6 @@ public class FXMLCalificacionObservacionesController {
         }
     }
 
-    private void descargarRubrica(RubricaPresentacion rubrica) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Descargar documento");
-
-        //Generar un nombre apropiado
-
-        String nombreSugerido = String.format(
-                "Evaluacion_%s_%s.pdf",
-                recuperarNombreEstudiante().replace(" ", ""),
-                rubrica.getFechaHora().format(DateTimeFormatter.ofPattern("dd_MM_yyyy")));
-        //Configurar el filechooser
-        fileChooser.setInitialFileName(nombreSugerido);
-        fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Documento PDF", "*.pdf"));
-
-        Stage stage = Utilidad.getEscenarioComponente(lbPromedio);
-        File destino = fileChooser.showSaveDialog(stage);
-
-        //Guardar el archivo en el destino
-        try {
-            byte[] pdf = DocumentoRubrica.generarRubricaEvaluacion(rubrica);
-            Files.write(destino.toPath(), pdf);
-            Utilidad.crearAlertaInformacion(
-                    "Exito",
-                    "Documento descargado exitosamente a: \n"+destino.getAbsolutePath()
-            );
-        } catch (IOException ioex) {
-            System.out.println(ioex.getMessage());
-            Utilidad.crearAlertaError(
-                    "Error",
-                    "Lo sentimos, no fue posible guardar la rubrica en su dispositivo");
-        }
-    }
-
     public void btnClicCancelar(ActionEvent actionEvent) {
         boolean confirmado = Utilidad.confirmarCancelar();
         if(confirmado) {
@@ -205,15 +161,5 @@ public class FXMLCalificacionObservacionesController {
 
     public void btnClicRegresar(ActionEvent actionEvent) {
         Utilidad.cerrarVentana(lbPromedio);
-    }
-
-    private String recuperarNombreEstudiante () {
-        String nombreEstudiante = "NombreFaltante";
-        try {
-            nombreEstudiante = EstudianteDAO.obtenerPorId(idEstudiante).getNombre();
-        } catch (SQLException sqlex) {
-            System.out.println("Error al recuperar el nombre del estudiante "+sqlex.getMessage());
-        }
-        return nombreEstudiante;
     }
 }

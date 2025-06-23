@@ -1,5 +1,8 @@
 package sgpp.utilidad;
 
+import javafx.scene.control.Control;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -19,17 +22,50 @@ import sgpp.modelo.dao.entidades.ProyectoDAO;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 
-// TODO: Adaptar para cualquier rúbrica.
-// TODO: Tomar de base para AutoEvaluacion.
 public class DocumentoRubrica {
 
+    public static void descargarRubrica(RubricaPresentacion rubrica, Control componente, int idEstudiante) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Descargar documento");
+
+        //Generar un nombre apropiado
+
+        String nombreSugerido = String.format(
+                "Evaluacion_%s_%s.pdf",
+                recuperarNombreDeEstudiante(idEstudiante).replace(" ", ""),
+                rubrica.getFechaHora().format(DateTimeFormatter.ofPattern("dd_MM_yyyy")));
+        //Configurar el filechooser
+        fileChooser.setInitialFileName(nombreSugerido);
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Documento PDF", "*.pdf"));
+
+        Stage stage = Utilidad.getEscenarioComponente(componente);
+        File destino = fileChooser.showSaveDialog(stage);
+
+        //Guardar el archivo en el destino
+        try {
+            byte[] pdf = DocumentoRubrica.generarRubricaEvaluacion(rubrica);
+            Files.write(destino.toPath(), pdf);
+            Utilidad.crearAlertaInformacion(
+                    "Exito",
+                    "Documento descargado exitosamente a: \n"+destino.getAbsolutePath()
+            );
+        } catch (IOException ioex) {
+            System.out.println(ioex.getMessage());
+            Utilidad.crearAlertaError(
+                    "Error",
+                    "Lo sentimos, no fue posible guardar la rubrica en su dispositivo");
+        }
+    }
+
     /**
-     * Llena un formulario PDF existente con los datos de la rúbrica
+     * Convierta la rubrica en un PDF
      */
-    public static byte[] generarRubricaEvaluacion(RubricaPresentacion rubrica) throws IOException {
+    private static byte[] generarRubricaEvaluacion(RubricaPresentacion rubrica) throws IOException {
         try (PDDocument document = new PDDocument();
              ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             PDPage page = new PDPage(PDRectangle.LETTER);
@@ -133,26 +169,6 @@ public class DocumentoRubrica {
         else if (calificacion >= 7.1) return "BÁSICO AVANZADO";
         else if (calificacion >= 6.0) return "BÁSICO UMBRAL";
         else return "NO COMPETENTE";
-    }
-
-    /**
-     * Lista todos los campos disponibles en un formulario PDF
-     */
-    public static void listarCamposFormulario(String archivoPDF) throws IOException {
-        try (PDDocument document = PDDocument.load(new File(archivoPDF))) {
-            PDAcroForm acroForm = document.getDocumentCatalog().getAcroForm();
-
-            if (acroForm != null) {
-                System.out.println("Campos encontrados en el formulario:");
-                for (PDField field : acroForm.getFields()) {
-                    System.out.println("- Nombre: " + field.getFullyQualifiedName() +
-                            ", Tipo: " + field.getClass().getSimpleName() +
-                            ", Valor actual: " + field.getValueAsString());
-                }
-            } else {
-                System.out.println("El PDF no contiene formularios AcroForm.");
-            }
-        }
     }
 
     private static void escribirLineaPorLinea(PDPageContentStream content, String[] lineas) throws IOException {

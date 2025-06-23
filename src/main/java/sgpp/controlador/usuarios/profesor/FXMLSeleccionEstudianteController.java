@@ -21,6 +21,7 @@ import sgpp.modelo.beans.expediente.presentacion.RubricaPresentacion;
 import sgpp.modelo.dao.entidades.EstudianteDAO;
 import sgpp.modelo.dao.entidades.PeriodoDAO;
 import sgpp.modelo.dao.expediente.presentacion.RubricaPresentacionDAO;
+import sgpp.utilidad.DocumentoRubrica;
 import sgpp.utilidad.Utilidad;
 
 import java.io.IOException;
@@ -152,9 +153,8 @@ public class FXMLSeleccionEstudianteController implements Initializable {
                     boolean descargar = Utilidad.crearAlertaConfirmacion("Rúbrica encontrada",
                             "El estudiante ya cuenta con una rúbrica de presentación evaluada.\n" +
                                     "¿Deseas descargarla?");
-
                     if(descargar) {
-                        // TODO: Generar y descargar documento.
+                        DocumentoRubrica.descargarRubrica(rubrica, btnConsultar, idEstudiante);
                     }
                 }
             } else { // Si es para ver expediente.
