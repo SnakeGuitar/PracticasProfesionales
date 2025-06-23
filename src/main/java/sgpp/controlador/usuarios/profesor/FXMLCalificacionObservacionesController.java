@@ -9,6 +9,7 @@ import sgpp.modelo.beans.expediente.presentacion.RubricaPresentacion;
 import sgpp.modelo.dao.entidades.ProfesorDAO;
 import sgpp.modelo.dao.expediente.presentacion.RubricaPresentacionDAO;
 import sgpp.utilidad.Utilidad;
+import sgpp.utilidad.UtilidadFormatoDeDatos;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -39,6 +40,8 @@ public class FXMLCalificacionObservacionesController {
     public Slider sldCalificacion4;
     @FXML
     public Slider sldCalificacion5;
+    @FXML
+    public Label lbContadorCaracteres;
 
     private float[] calificaciones;
 
@@ -54,21 +57,43 @@ public class FXMLCalificacionObservacionesController {
         Slider[] sliders = {sldCalificacion1, sldCalificacion2, sldCalificacion3, sldCalificacion4, sldCalificacion5};
 
         for(int i = 0; i < sliders.length; i++) {
-            configurarSlider(sliders[i], calificaciones[i]);
+            configurarSlider(sliders[i], calificaciones[i], i);
         }
 
         obtenerPromedio();
+        configurarTextArea(txArObservaciones, lbContadorCaracteres);
     }
 
-    private void configurarSlider(Slider slider, float valor) {
+    public void configurarTextArea(TextArea textArea, Label labelContador) {
+        this.txArObservaciones = textArea;
+        this.lbContadorCaracteres = labelContador;
+
+        UtilidadFormatoDeDatos.configurarTextAreaConFormatter(txArObservaciones, lbContadorCaracteres, 500);
+    }
+
+    private void configurarSlider(Slider slider, float valor, int indice) {
         slider.setValue(valor);
 
         slider.setMax(valor);
         slider.setMin(valor - 1);
 
         slider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            float valorRedondeado = redondearValor(newValue.floatValue(), valor);
+
+            calificaciones[indice] = valorRedondeado;
+
             obtenerPromedio();
         });
+    }
+
+    private float redondearValor(float valor, float valorMaximo) {
+        if (valor >= valorMaximo - 0.25) {
+            return valorMaximo;
+        } else if (valor >= valorMaximo - 0.75) {
+            return (float) (valorMaximo - 0.5);
+        } else {
+            return valorMaximo - 1;
+        }
     }
 
     private void obtenerPromedio() {
@@ -78,9 +103,9 @@ public class FXMLCalificacionObservacionesController {
             promedio += calificacion;
         }
 
-        promedio /= 5;
+        promedio /= calificaciones.length;
 
-        lbPromedio.setText(String.valueOf(promedio));
+        lbPromedio.setText(String.format("%.2f", promedio));
     }
 
     private void guardarRubricaPresentacion() throws SQLException {
@@ -107,6 +132,7 @@ public class FXMLCalificacionObservacionesController {
         if(exitoso) {
             Utilidad.crearAlertaInformacion("Registro exitoso",
                     "Registro de rúbrica exitosa.");
+            Utilidad.cerrarVentana(lbPromedio);
         } else {
             Utilidad.crearAlertaError("Error",
                     "No se pudo registrar la rúbrica.");

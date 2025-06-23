@@ -15,7 +15,6 @@
 package sgpp.modelo.beans.expediente.presentacion;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class RubricaPresentacion {
     private int idPresentacion;

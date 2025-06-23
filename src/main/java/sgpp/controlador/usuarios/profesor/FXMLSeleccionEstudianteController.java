@@ -12,12 +12,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sgpp.SistemaGestionPracticasProfesionales;
 import sgpp.controlador.usuarios.FXMLExpedienteEstudianteController;
 import sgpp.modelo.beans.Estudiante;
+import sgpp.modelo.beans.expediente.presentacion.RubricaPresentacion;
 import sgpp.modelo.dao.entidades.EstudianteDAO;
 import sgpp.modelo.dao.entidades.PeriodoDAO;
+import sgpp.modelo.dao.expediente.presentacion.RubricaPresentacionDAO;
 import sgpp.utilidad.Utilidad;
 
 import java.io.IOException;
@@ -93,6 +96,7 @@ public class FXMLSeleccionEstudianteController implements Initializable {
             Scene escenaPrincipal = new Scene(vista);
             escenarioBase.setScene(escenaPrincipal);
             escenarioBase.setTitle("Expediente de Estudiante");
+            escenarioBase.initModality(Modality.APPLICATION_MODAL);
             escenarioBase.show();
         } catch (IOException ioex) {
             Utilidad.mostrarError(
@@ -104,7 +108,7 @@ public class FXMLSeleccionEstudianteController implements Initializable {
 
     private void irRubricaPresentacion(int idEstudiante, int idProfesor, int idPeriodo) {
         try {
-            Stage escenarioBase = Utilidad.getEscenarioComponente(btnConsultar);
+            Stage escenarioBase = new Stage();
             FXMLLoader cargador = new FXMLLoader(
                     SistemaGestionPracticasProfesionales.class.getResource(
                             RUTA_FXML_RUBRICA_PRESENTACION));
@@ -117,6 +121,7 @@ public class FXMLSeleccionEstudianteController implements Initializable {
             Scene escenaPrincipal = new Scene(vista);
             escenarioBase.setScene(escenaPrincipal);
             escenarioBase.setTitle("Criterios de Presentación");
+            escenarioBase.initModality(Modality.APPLICATION_MODAL);
             escenarioBase.show();
         } catch (IOException excepcion) {
             Utilidad.mostrarError(true, excepcion,
@@ -128,6 +133,32 @@ public class FXMLSeleccionEstudianteController implements Initializable {
     private void mostrarAlertaSeleccionEstudiante() {
         Utilidad.crearAlertaAdvertencia("Selecciona un estudiante",
                 "Selecciona un estudiante para continuar.");
+    }
+
+    private void definirSiguienteVentana() throws SQLException {
+        Estudiante estudianteSeleccionado = obtenerEstudianteDeTabla();
+        int idPeriodo = PeriodoDAO.obtenerPeriodoActual().getIdPeriodo();
+
+        System.out.println(idPeriodo);
+
+        if(estudianteSeleccionado != null && idPeriodo >= 1) {
+            int idEstudiante = estudianteSeleccionado.getIdEstudiante();
+
+            if(irRubrica) { // Si la selección del estudiante es para evaluar presentación.
+                RubricaPresentacion rubrica = RubricaPresentacionDAO.obtenerPorEstudiante(idEstudiante);
+
+                if(rubrica == null) {
+                    irRubricaPresentacion(idEstudiante, idProfesor, idPeriodo);
+                } else {
+                    Utilidad.crearAlertaAdvertencia("Rubrica encontrada",
+                            "El estudiante ya cuenta con una rúbrica de evaluación.");
+                }
+            } else { // Si es para ver expediente.
+                irExpedienteEstudiante(estudianteSeleccionado, idPeriodo);
+            }
+        } else {
+            Utilidad.crearAlertaError("Error", "No se pudo recuperar el periodo");
+        }
     }
 
     private Estudiante obtenerEstudianteDeTabla() {
@@ -143,17 +174,6 @@ public class FXMLSeleccionEstudianteController implements Initializable {
     }
 
     public void btnClicConsultar(ActionEvent actionEvent) throws SQLException {
-        Estudiante estudianteSeleccionado = obtenerEstudianteDeTabla();
-        int idPeriodo = PeriodoDAO.obtenerPeriodoActual().getIdPeriodo();
-        System.out.println(idPeriodo);
-        if(estudianteSeleccionado != null && idPeriodo >= 1) {
-            if(irRubrica) { // Si la selección del estudiante es para evaluar presentación.
-                irRubricaPresentacion(estudianteSeleccionado.getIdEstudiante(), idProfesor, idPeriodo);
-            } else { // Si es para ver expediente.
-                irExpedienteEstudiante(estudianteSeleccionado, idPeriodo);
-            }
-        } else {
-            Utilidad.crearAlertaError("Error", "No se pudo recuperar el periodo");
-        }
+        definirSiguienteVentana();
     }
 }

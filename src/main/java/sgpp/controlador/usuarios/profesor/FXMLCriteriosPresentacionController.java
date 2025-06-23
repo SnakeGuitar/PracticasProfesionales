@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sgpp.SistemaGestionPracticasProfesionales;
 import sgpp.utilidad.Utilidad;
@@ -147,7 +148,7 @@ public class FXMLCriteriosPresentacionController implements Initializable {
 
     private void irCalificacionObservaciones() {
         try {
-            Stage escenarioBase = Utilidad.getEscenarioComponente(btnContinuar);
+            Stage escenarioBase = new Stage();
             FXMLLoader cargador = new FXMLLoader(
                     SistemaGestionPracticasProfesionales.class.getResource(
                             RUTA_FXML_CALIFICACION_OBSERVACIONES));
@@ -160,6 +161,7 @@ public class FXMLCriteriosPresentacionController implements Initializable {
             Scene escenaPrincipal = new Scene(vista);
             escenarioBase.setScene(escenaPrincipal);
             escenarioBase.setTitle("Calificaciones y Observaciones");
+            escenarioBase.initModality(Modality.APPLICATION_MODAL);
             escenarioBase.show();
         } catch (IOException excepcion) {
             Utilidad.mostrarError(true, excepcion,

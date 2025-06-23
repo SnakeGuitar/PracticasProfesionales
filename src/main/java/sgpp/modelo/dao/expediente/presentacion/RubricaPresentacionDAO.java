@@ -70,6 +70,37 @@ public class RubricaPresentacionDAO {
         return rubrica;
     }
 
+    public static RubricaPresentacion obtenerPorEstudiante(int idEstudiante) throws SQLException {
+        Connection conexion = null;
+        PreparedStatement sentencia = null;
+        ResultSet resultado = null;
+        RubricaPresentacion rubrica = null;
+
+        String consulta = "SELECT * FROM rubrica_presentacion WHERE ID_Estudiante = ?";
+
+        try {
+            conexion = ConexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(consulta);
+
+            sentencia.setInt(1, idEstudiante);
+
+            resultado = sentencia.executeQuery();
+
+            if (resultado.next()) {
+                rubrica = convertirResultSetRubrica(resultado);
+            } else {
+                throw new SQLException();
+            }
+
+        } catch (SQLException e) {
+            Utilidad.mostrarErrorBD(true, e);
+        } finally {
+            ConexionBD.cerrarConexion(conexion, sentencia, resultado);
+        }
+
+        return rubrica;
+    }
+
     public static boolean actualizar(RubricaPresentacion rubrica) throws SQLException {
         boolean exitoso = false;
         Connection conexion = null;
