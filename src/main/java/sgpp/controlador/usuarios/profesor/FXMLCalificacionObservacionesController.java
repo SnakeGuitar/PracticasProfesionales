@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import sgpp.modelo.beans.Profesor;
 import sgpp.modelo.beans.expediente.presentacion.Evaluador;
 import sgpp.modelo.beans.expediente.presentacion.RubricaPresentacion;
+import sgpp.modelo.dao.entidades.EstudianteDAO;
 import sgpp.modelo.dao.entidades.ProfesorDAO;
 import sgpp.modelo.dao.expediente.presentacion.RubricaPresentacionDAO;
 import sgpp.utilidad.DocumentoRubrica;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class FXMLCalificacionObservacionesController {
 
@@ -144,6 +146,7 @@ public class FXMLCalificacionObservacionesController {
         } else {
             Utilidad.crearAlertaError("Error",
                     "No se pudo registrar la rúbrica.");
+            Utilidad.cerrarVentana(lbPromedio);
         }
     }
 
@@ -164,9 +167,11 @@ public class FXMLCalificacionObservacionesController {
         fileChooser.setTitle("Descargar documento");
 
         //Generar un nombre apropiado
+
         String nombreSugerido = String.format(
-                "RubricaEvaluacion_%s.pdf",
-                rubrica.getFechaHora().toString().replace(" ", "_").replace("-", ""));
+                "Evaluacion_%s_%s.pdf",
+                recuperarNombreEstudiante().replace(" ", ""),
+                rubrica.getFechaHora().format(DateTimeFormatter.ofPattern("dd_MM_yyyy")));
         //Configurar el filechooser
         fileChooser.setInitialFileName(nombreSugerido);
         fileChooser.getExtensionFilters().add(
@@ -193,7 +198,6 @@ public class FXMLCalificacionObservacionesController {
 
     public void btnClicCancelar(ActionEvent actionEvent) {
         boolean confirmado = Utilidad.confirmarCancelar();
-
         if(confirmado) {
             Utilidad.cerrarVentana(lbPromedio);
         }
@@ -201,5 +205,15 @@ public class FXMLCalificacionObservacionesController {
 
     public void btnClicRegresar(ActionEvent actionEvent) {
         Utilidad.cerrarVentana(lbPromedio);
+    }
+
+    private String recuperarNombreEstudiante () {
+        String nombreEstudiante = "NombreFaltante";
+        try {
+            nombreEstudiante = EstudianteDAO.obtenerPorId(idEstudiante).getNombre();
+        } catch (SQLException sqlex) {
+            System.out.println("Error al recuperar el nombre del estudiante "+sqlex.getMessage());
+        }
+        return nombreEstudiante;
     }
 }

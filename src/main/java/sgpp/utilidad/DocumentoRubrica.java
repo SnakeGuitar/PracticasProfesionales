@@ -45,7 +45,8 @@ public class DocumentoRubrica {
             String[] encabezado = {
                     "FACULTAD DE ESTADÍSTICA E INFORMÁTICA",
                     "Licenciatura en Ingenería de Software",
-                    "Formato: RÚBRICA DE PRESENTACIÓN ORAL DEL INFORME PARCIAL EE Prácticas de Ingeniería de Software"
+                    "Formato: RÚBRICA DE PRESENTACIÓN ORAL DEL INFORME PARCIAL",
+                    "EE PRÁCTICAS PROFESIONALES DE INGENIERÍA DE SOFTWARE"
             };
             escribirLineaPorLinea(content, encabezado);
 
