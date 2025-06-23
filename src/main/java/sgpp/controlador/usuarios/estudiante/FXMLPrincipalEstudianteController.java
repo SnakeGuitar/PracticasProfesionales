@@ -1,15 +1,15 @@
 /*
  * Autor original: Luis Donaldo
- * Último autor: Luis Donaldo
+ * Último autor: Abel Yong
  * Fecha de creación: 13-06-2025
  * Fecha de la última versión aprobada:
- * Fecha de la última modificación: 15-06-2025
+ * Fecha de la última modificación: 22-06-2025
  * Descripción: Clase controller para gestionar la vista principal del estudiante
  */
 
 /*
  * Estado: En progreso
- * Modificaciones:
+ * Modificaciones: Eliminados metodos sin utilizar
  */
 
 package sgpp.controlador.usuarios.estudiante;
@@ -84,10 +84,6 @@ public class FXMLPrincipalEstudianteController implements Initializable, IContro
         Utilidad.crearEscenario(RUTA_FXML_SUBIR_REPORTE, "ReportesMensuales");
     }
 
-    public void clicBtnFormatoEvaluacion(ActionEvent actionEvent) {
-
-    }
-
     public void clicBtnAutoevaluacion(ActionEvent actionEvent) {
         Utilidad.crearEscenario(RUTA_FXML_LLENAR_AUTOEVALUACION, "Llenar Autoevaluación");
     }
@@ -130,9 +126,6 @@ public class FXMLPrincipalEstudianteController implements Initializable, IContro
         } catch (IOException ioex) {
             Utilidad.crearAlertaError("Error", "No se pudo cargar la ventana");
         }
-    }
-
-    public void clicBtnExpediente(ActionEvent actionEvent) {
     }
 
     public void clicImgViCerrarSesion(MouseEvent mouseEvent) {
