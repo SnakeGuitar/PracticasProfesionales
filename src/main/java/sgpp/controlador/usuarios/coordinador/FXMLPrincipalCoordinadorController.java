@@ -16,12 +16,19 @@ package sgpp.controlador.usuarios.coordinador;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
+import sgpp.SistemaGestionPracticasProfesionales;
+import sgpp.controlador.FXMLInicioSesionController;
 import sgpp.modelo.IControladorPrincipal;
 import sgpp.modelo.beans.Coordinador;
 import sgpp.modelo.beans.Usuario;
 import sgpp.modelo.dao.entidades.CoordinadorDAO;
+import sgpp.utilidad.ResultadoFXML;
+import sgpp.utilidad.UtilFXML;
 import sgpp.utilidad.Utilidad;
 
 import java.net.URL;
@@ -35,6 +42,7 @@ public class FXMLPrincipalCoordinadorController implements Initializable, IContr
     private Label lbNombreCoordinador;
     private Coordinador coordinador;
 
+    private static final String RUTA_FXML_INICIAR_SESION = "/sgpp/vista/FXMLInicioSesion.fxml";
     private static final String RUTA_FXML_PROYECTO = "/sgpp/vista/usuarios/coordinador/proyecto/FXMLProyecto.fxml";
     private static final String RUTA_FXML_ORGANIZACION_VINCULDADA = "/sgpp/vista/usuarios/coordinador/organizacionvinculada/FXMLOrganizacionVinculada.fxml";
     private static final String RUTA_FXML_RESPONSABLE_TECNICO = "/sgpp/vista/usuarios/coordinador/responsabletecnico/FXMLPrincipalResponsableTecnico.fxml";
@@ -88,5 +96,17 @@ public class FXMLPrincipalCoordinadorController implements Initializable, IContr
 
     public void clicBtnAsignarProyectos(ActionEvent actionEvent) {
         Utilidad.crearEscenario(RUTA_FXML_ASIGNAR_PROYECTO, "Asignar Proyectos");
+    }
+
+    public void clicImgViCerrarSesion(MouseEvent mouseEvent) {
+        boolean confirmacion = Utilidad.crearAlertaConfirmacion(
+                "Cerrar Sesión", "¿Está seguro(a) que quiere cerrar sesión?");
+        if (confirmacion) {
+            new UtilFXML().abrirFXML(
+                    RUTA_FXML_INICIAR_SESION,
+                    "Sistema de Gestión de Prácticas Profesionales",
+                    FXMLInicioSesionController.class);
+            Utilidad.getEscenarioComponente(lbNombreCoordinador).close();
+        }
     }
 }

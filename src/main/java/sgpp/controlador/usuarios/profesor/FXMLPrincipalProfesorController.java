@@ -7,12 +7,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import sgpp.SistemaGestionPracticasProfesionales;
+import sgpp.controlador.FXMLInicioSesionController;
 import sgpp.modelo.IControladorPrincipal;
 import sgpp.modelo.beans.Profesor;
 import sgpp.modelo.beans.Usuario;
 import sgpp.modelo.dao.entidades.ProfesorDAO;
+import sgpp.utilidad.UtilFXML;
 import sgpp.utilidad.Utilidad;
 
 import java.io.IOException;
@@ -27,6 +30,7 @@ public class FXMLPrincipalProfesorController implements Initializable, IControla
     private Label lbNombreProfesor;
     private Profesor profesor;
 
+    private static final String RUTA_FXML_INICIAR_SESION = "/sgpp/vista/FXMLInicioSesion.fxml";
     private static final String RUTA_FXML_SELECCION_ESTUDIANTE = "/sgpp/vista/usuarios/profesor/FXMLSeleccionEstudiante.fxml";
     private static final String RUTA_FXML_VALIDAR_DOCUMENTO = "/sgpp/vista/usuarios/profesor/FXMLValidarDocumento.fxml";
     private static final String RUTA_FXML_VALIDAR_REPORTE = "/sgpp/vista/usuarios/profesor/FXMLValidarReporte.fxml";
@@ -90,6 +94,19 @@ public class FXMLPrincipalProfesorController implements Initializable, IControla
             Utilidad.mostrarError(true, excepcion,
                     "Error al cargar lista de estudiantes",
                     "No se pudo cargar la ventana de lista de estudiantes");
+        }
+    }
+
+
+    public void clicImgViCerrarSesion(MouseEvent mouseEvent) {
+        boolean confirmacion = Utilidad.crearAlertaConfirmacion(
+                "Cerrar Sesión", "¿Está seguro(a) que quiere cerrar sesión?");
+        if (confirmacion) {
+            new UtilFXML().abrirFXML(
+                    RUTA_FXML_INICIAR_SESION,
+                    "Sistema de Gestión de Prácticas Profesionales",
+                    FXMLInicioSesionController.class);
+            Utilidad.getEscenarioComponente(lbNombreProfesor).close();
         }
     }
 }

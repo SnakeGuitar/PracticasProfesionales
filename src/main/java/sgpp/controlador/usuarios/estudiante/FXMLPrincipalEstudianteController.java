@@ -21,9 +21,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sgpp.SistemaGestionPracticasProfesionales;
+import sgpp.controlador.FXMLInicioSesionController;
 import sgpp.controlador.usuarios.FXMLExpedienteEstudianteController;
 import sgpp.controlador.usuarios.estudiante.documentopracticas.FXMLSubirDocumentoPracticasController;
 import sgpp.modelo.IControladorPrincipal;
@@ -31,6 +33,7 @@ import sgpp.modelo.beans.Estudiante;
 import sgpp.modelo.beans.Usuario;
 import sgpp.modelo.dao.entidades.EstudianteDAO;
 import sgpp.modelo.dao.entidades.PeriodoDAO;
+import sgpp.utilidad.UtilFXML;
 import sgpp.utilidad.Utilidad;
 
 import java.io.IOException;
@@ -45,6 +48,7 @@ public class FXMLPrincipalEstudianteController implements Initializable, IContro
     private Label lbNombreEstudiante;
     private Estudiante estudiante;
 
+    private static final String RUTA_FXML_INICIAR_SESION = "/sgpp/vista/FXMLInicioSesion.fxml";
     private static final String RUTA_FXML_SUBIR_DOCUMENTO = "/sgpp/vista/usuarios/estudiante/documentopracticas/FXMLSubirDocumentoPracticas.fxml";
     private static final String RUTA_FXML_CONSULTAR_AVANCE = "/sgpp/vista/usuarios/FXMLExpedienteEstudiante.fxml";
     private static final String RUTA_FXML_LLENAR_AUTOEVALUACION = "/sgpp/vista/usuarios/estudiante/FXMLAutoevaluacionEstudiante.fxml";
@@ -129,5 +133,17 @@ public class FXMLPrincipalEstudianteController implements Initializable, IContro
     }
 
     public void clicBtnExpediente(ActionEvent actionEvent) {
+    }
+
+    public void clicImgViCerrarSesion(MouseEvent mouseEvent) {
+        boolean confirmacion = Utilidad.crearAlertaConfirmacion(
+                "Cerrar Sesión", "¿Está seguro(a) que quiere cerrar sesión?");
+        if (confirmacion) {
+            new UtilFXML().abrirFXML(
+                    RUTA_FXML_INICIAR_SESION,
+                    "Sistema de Gestión de Prácticas Profesionales",
+                    FXMLInicioSesionController.class);
+            Utilidad.getEscenarioComponente(lbNombreEstudiante).close();
+        }
     }
 }
