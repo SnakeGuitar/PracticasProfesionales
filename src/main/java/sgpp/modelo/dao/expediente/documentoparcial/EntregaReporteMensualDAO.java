@@ -49,31 +49,6 @@ public class EntregaReporteMensualDAO {
         return entregas;
     }
 
-    public static boolean insertar(EntregaReporteMensual entrega) throws SQLException {
-        String sql = """
-            INSERT INTO entrega_reporte
-            (num_reporte, fecha_apertura, fecha_limite, fecha_entrega, ID_Estudiante, ID_Periodo)
-            VALUES (?, ?, ?, ?, ?, ?)
-        """;
-
-        try (Connection con = ConexionBD.abrirConexion();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-
-            ps.setInt(1, entrega.getNumReporte());
-            ps.setTimestamp(2, Timestamp.valueOf(entrega.getFechaApertura()));
-            ps.setTimestamp(3, Timestamp.valueOf(entrega.getFechaLimite()));
-            if (entrega.getFechaEntrega() != null) {
-                ps.setTimestamp(4, Timestamp.valueOf(entrega.getFechaEntrega()));
-            } else {
-                ps.setNull(4, Types.TIMESTAMP);
-            }
-            ps.setInt(5, entrega.getIdEstudiante());
-            ps.setInt(6, entrega.getIdPeriodo());
-
-            return ps.executeUpdate() > 0;
-        }
-    }
-
     public static EntregaReporteMensual obtenerEntrega(int numReporte, int idPeriodo) {
         String sql = "SELECT * FROM entrega_reporte WHERE num_reporte = ? AND ID_Periodo = ?";
         EntregaReporteMensual entrega = null;
