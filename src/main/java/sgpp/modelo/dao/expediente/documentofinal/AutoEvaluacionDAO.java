@@ -75,6 +75,37 @@ public class AutoEvaluacionDAO {
         return autoEvaluacion;
     }
 
+    public static AutoEvaluacion obtenerPorIdEstudiante(int id) throws SQLException {
+        Connection conexion = null;
+        PreparedStatement sentencia = null;
+        ResultSet resultado = null;
+        AutoEvaluacion autoEvaluacion = null;
+
+        String consulta = "SELECT * FROM autoevaluacion WHERE ID_Estudiante = ?";
+
+        try {
+            conexion = ConexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(consulta);
+
+            sentencia.setInt(1, id);
+
+            resultado = sentencia.executeQuery();
+
+            if (resultado.next()) {
+                autoEvaluacion = convertirResultSetAutoEvaluacion(resultado);
+            } else {
+                throw new SQLException();
+            }
+
+        } catch (SQLException e) {
+            Utilidad.mostrarErrorBD(true, e);
+        } finally {
+            ConexionBD.cerrarConexion(conexion, sentencia, resultado);
+        }
+
+        return autoEvaluacion;
+    }
+
     public static boolean actualizar(AutoEvaluacion autoEvaluacion) throws SQLException {
         boolean exitoso = false;
         Connection conexion = null;
@@ -143,7 +174,7 @@ public class AutoEvaluacionDAO {
         int[] criterios = autoEvaluacion.getCriterios();
 
         for (int i = 0; i < criterios.length; i++) {
-            sentencia.setInt(i + 3, criterios[i]);
+            sentencia.setInt(i + 2, criterios[i]);
         }
     }
 

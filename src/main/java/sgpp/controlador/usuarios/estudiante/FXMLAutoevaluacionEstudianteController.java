@@ -289,6 +289,7 @@ public class FXMLAutoevaluacionEstudianteController implements Initializable {
         if(exitoso) {
             Utilidad.crearAlertaInformacion("Registro exitoso",
                     "Registro de autoevaluación exitosa.");
+            Utilidad.cerrarVentana(lbOV);
         } else {
             Utilidad.crearAlertaError("Error",
                     "No se pudo registrar la autoevaluación.");

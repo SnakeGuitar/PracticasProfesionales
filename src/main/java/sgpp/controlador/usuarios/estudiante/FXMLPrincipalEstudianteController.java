@@ -31,8 +31,10 @@ import sgpp.controlador.usuarios.estudiante.documentopracticas.FXMLSubirDocument
 import sgpp.modelo.IControladorPrincipal;
 import sgpp.modelo.beans.Estudiante;
 import sgpp.modelo.beans.Usuario;
+import sgpp.modelo.beans.expediente.documentofinal.AutoEvaluacion;
 import sgpp.modelo.dao.entidades.EstudianteDAO;
 import sgpp.modelo.dao.entidades.PeriodoDAO;
+import sgpp.modelo.dao.expediente.documentofinal.AutoEvaluacionDAO;
 import sgpp.utilidad.UtilFXML;
 import sgpp.utilidad.Utilidad;
 
@@ -80,12 +82,42 @@ public class FXMLPrincipalEstudianteController implements Initializable, IContro
         }
     }
 
+    private void irAutoevaluacion() {
+        try {
+            Stage escenarioBase = new Stage();
+            FXMLLoader cargador = new FXMLLoader(
+                    SistemaGestionPracticasProfesionales.class.getResource(RUTA_FXML_LLENAR_AUTOEVALUACION));
+
+            Parent vista = cargador.load();
+
+            FXMLAutoevaluacionEstudianteController controlador = cargador.getController();
+            controlador.inicializarInformacion(estudiante);
+
+            Scene escenaPrincipal = new Scene(vista);
+            escenarioBase.setScene(escenaPrincipal);
+            escenarioBase.setTitle("Expediente de estudiante");
+            escenarioBase.initModality(Modality.APPLICATION_MODAL);
+            escenarioBase.show();
+        } catch (IOException | SQLException excepcion) {
+            Utilidad.mostrarError(true, excepcion,
+                    "Error al cargar autoevaluación",
+                    "No se pudo cargar la ventana de autoevaluación");
+        }
+    }
+
     public void clicBtnReporte(ActionEvent actionEvent) {
         Utilidad.crearEscenario(RUTA_FXML_SUBIR_REPORTE, "ReportesMensuales");
     }
 
-    public void clicBtnAutoevaluacion(ActionEvent actionEvent) {
-        Utilidad.crearEscenario(RUTA_FXML_LLENAR_AUTOEVALUACION, "Llenar Autoevaluación");
+    public void clicBtnAutoevaluacion(ActionEvent actionEvent) throws SQLException {
+        AutoEvaluacion autoEvaluacion = AutoEvaluacionDAO.obtenerPorIdEstudiante(estudiante.getIdEstudiante());
+
+        if(autoEvaluacion == null) {
+            irAutoevaluacion();
+        } else {
+            Utilidad.crearAlertaAdvertencia("Autoevaluación encontrada",
+                    "El estudiante ya cuenta con una autoevaluación.");
+        }
     }
 
     public void clicBtnAvance(ActionEvent actionEvent) {
