@@ -331,6 +331,19 @@ public class FXMLValidarDocumentoController implements Initializable {
         }
     }
 
+    private void actualizarDocumento(Documento documento) throws SQLException {
+        switch (tipoDocumentoActual) {
+            case INICIAL:
+                DocumentoInicialDAO.actualizarDocumentoInicial((DocumentoInicial) documento);
+                break;
+            case PARCIAL:
+                DocumentoParcialDAO.actualizarDocumentoParcial((DocumentoParcial) documento);
+                break;
+            case FINAL:
+                DocumentoFinalDAO.actualizarDocumentoFinal((DocumentoFinal) documento);
+                break;
+        }
+    }
 
     private void actualizarTituloTabla(String titulo) {
         lblDocumentosActuales.setText(titulo);
