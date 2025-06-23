@@ -25,6 +25,9 @@ import sgpp.utilidad.Utilidad;
 
 import java.sql.SQLException;
 
+import static sgpp.dominio.OrganizacionVinculadaDM.validarSector;
+import static sgpp.dominio.OrganizacionVinculadaDM.validarTelefono;
+
 public class FXMLRegistrarOVController implements javafx.fxml.Initializable {
     @FXML
     public TextField txfiNombre;
@@ -51,7 +54,17 @@ public class FXMLRegistrarOVController implements javafx.fxml.Initializable {
             try {
                 OrganizacionVinculada organizacion = new OrganizacionVinculada();
                 organizacion.setNombre(txfiNombre.getText());
+
+                if (!validarSector(txfiSector.getText().trim())) {
+                    return; // Si el sector no es válido, no continuar con la actualización
+                }
+
                 organizacion.setSector(txfiSector.getText());
+
+                if (!validarTelefono(txFiTelefono.getText().trim())) {
+                    return; // Si el teléfono no es válido, no continuar con la actualización
+                }
+
                 organizacion.setTelefono(txFiTelefono.getText());
                 organizacion.setCorreo(txfiCorreo.getText());
                 organizacion.setDireccion(txfiDireccion.getText());
