@@ -2,39 +2,81 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="786.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.estudiante.FXMLAutoevaluacionEstudianteController">
+<AnchorPane prefHeight="950.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.estudiante.FXMLAutoevaluacionEstudianteController">
    <children>
-      <Pane prefHeight="232.0" prefWidth="458.0">
+      <!-- Header con diseño estandarizado -->
+      <Pane prefHeight="115.0" prefWidth="800.0" style="-fx-background-color: #6a92c8;">
          <children>
-            <GridPane gridLinesVisible="true" layoutX="12.0" layoutY="41.0" prefHeight="180.0" prefWidth="435.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="219.0" minWidth="10.0" prefWidth="157.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="293.0" minWidth="10.0" prefWidth="278.0" />
-              </columnConstraints>
-              <rowConstraints>
+            <Label layoutX="28.0" layoutY="31.0" prefHeight="27.0" prefWidth="710.0" text="Sistema de Gestion de Practicas Profesionales">
+               <effect>
+                  <Bloom threshold="0.08" />
+               </effect>
+               <font>
+                  <Font name="Arial Bold Italic" size="24.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop color="#e1e1e1" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+            <Label fx:id="lbNombreEstudiante" layoutX="28.0" layoutY="67.0" prefHeight="27.0" text="Estudiante - Autoevaluación">
+               <font>
+                  <Font name="Arial Italic" size="18.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="0.4368932038834952" endY="1.0">
+                     <stops>
+                        <Stop color="#bfbfbf" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+         </children>
+      </Pane>
+
+      <!-- Sección de Datos Generales -->
+      <Pane layoutX="30.0" layoutY="130.0" prefHeight="240.0" prefWidth="460.0" style="-fx-background-radius: 10; -fx-background-color: #f8f9fa; -fx-border-color: #dee2e6; -fx-border-radius: 10;">
+         <children>
+            <Label layoutX="15.0" layoutY="10.0" text="Datos Generales" textFill="#6a92c8">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+            <GridPane gridLinesVisible="false" layoutX="15.0" layoutY="40.0" prefHeight="180.0" prefWidth="430.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="168.0" minWidth="10.0" prefWidth="168.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="270.0" minWidth="10.0" prefWidth="262.0" />
+               </columnConstraints>
+               <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
                <children>
                   <Label text="Nombre del alumno:">
                      <font>
-                        <Font size="13.0" />
+                        <Font name="Arial Bold" size="13.0" />
                      </font>
                      <GridPane.margin>
                         <Insets left="10.0" right="5.0" />
@@ -42,13 +84,46 @@
                   </Label>
                   <Label text="Matrícula:" GridPane.rowIndex="1">
                      <font>
-                        <Font size="13.0" />
+                        <Font name="Arial Bold" size="13.0" />
                      </font>
                      <GridPane.margin>
                         <Insets left="10.0" right="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label layoutX="10.0" layoutY="46.0" text="Organización Vinculada:" GridPane.rowIndex="2">
+                  <Label text="Organización Vinculada:" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="Arial Bold" size="13.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" right="5.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label text="Departamento:" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="Arial Bold" size="13.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" right="5.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label text="Nombre de Proyecto:" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="Arial Bold" size="13.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" right="5.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label text="Responsable:" GridPane.rowIndex="5">
+                     <font>
+                        <Font name="Arial Bold" size="13.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" right="5.0" />
+                     </GridPane.margin>
+                  </Label>
+
+                  <Label fx:id="lbNombreAlumno" text="Label" GridPane.columnIndex="1">
                      <font>
                         <Font size="13.0" />
                      </font>
@@ -56,7 +131,7 @@
                         <Insets left="10.0" right="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label layoutX="10.0" layoutY="76.0" text="Departamento:" GridPane.rowIndex="3">
+                  <Label fx:id="lbMatricula" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font size="13.0" />
                      </font>
@@ -64,7 +139,7 @@
                         <Insets left="10.0" right="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label layoutX="10.0" layoutY="106.0" text="Nombre de Proyecto:" GridPane.rowIndex="4">
+                  <Label fx:id="lbOV" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font size="13.0" />
                      </font>
@@ -72,7 +147,7 @@
                         <Insets left="10.0" right="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label layoutX="10.0" layoutY="136.0" text="Responsable" GridPane.rowIndex="5">
+                  <Label fx:id="lbDepartamento" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
                         <Font size="13.0" />
                      </font>
@@ -80,7 +155,7 @@
                         <Insets left="10.0" right="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label fx:id="lbNombreAlumno" layoutX="10.0" layoutY="166.0" text="Label" GridPane.columnIndex="1">
+                  <Label fx:id="lbProyecto" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <font>
                         <Font size="13.0" />
                      </font>
@@ -88,39 +163,7 @@
                         <Insets left="10.0" right="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label fx:id="lbMatricula" layoutX="172.0" layoutY="16.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="10.0" right="5.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label fx:id="lbOV" layoutX="172.0" layoutY="46.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="10.0" right="5.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label fx:id="lbDepartamento" layoutX="172.0" layoutY="76.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="10.0" right="5.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label fx:id="lbProyecto" layoutX="172.0" layoutY="106.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets left="10.0" right="5.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label fx:id="lbResponsable" layoutX="172.0" layoutY="136.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                  <Label fx:id="lbResponsable" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <font>
                         <Font size="13.0" />
                      </font>
@@ -130,20 +173,21 @@
                   </Label>
                </children>
             </GridPane>
-            <Label layoutX="12.0" layoutY="14.0" text="Datos Generales">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Separator layoutX="455.0" orientation="VERTICAL" prefHeight="232.0" prefWidth="14.0" />
          </children>
       </Pane>
-      <Pane layoutX="460.0" prefHeight="232.0" prefWidth="240.0">
+
+      <!-- Sección de Criterios -->
+      <Pane layoutX="510.0" layoutY="130.0" prefHeight="240.0" prefWidth="260.0" style="-fx-background-radius: 10; -fx-background-color: #f8f9fa; -fx-border-color: #dee2e6; -fx-border-radius: 10;">
          <children>
-            <GridPane gridLinesVisible="true" layoutX="14.0" layoutY="41.0" prefHeight="180.0" prefWidth="213.0">
+            <Label layoutX="15.0" layoutY="10.0" text="Criterios de Evaluación" textFill="#6a92c8">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+            <GridPane gridLinesVisible="true" layoutX="15.0" layoutY="40.0" prefHeight="180.0" prefWidth="230.0">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="199.0" minWidth="10.0" prefWidth="182.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="157.0" minWidth="10.0" prefWidth="31.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.0" minWidth="10.0" prefWidth="180.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="10.0" prefWidth="50.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -155,7 +199,7 @@
                <children>
                   <Label text="Totalmente de Acuerdo">
                      <font>
-                        <Font name="System Bold" size="13.0" />
+                        <Font name="Arial Bold" size="12.0" />
                      </font>
                      <GridPane.margin>
                         <Insets left="10.0" right="5.0" />
@@ -163,99 +207,97 @@
                   </Label>
                   <Label text="De Acuerdo" GridPane.rowIndex="1">
                      <font>
-                        <Font name="System Bold" size="13.0" />
+                        <Font name="Arial Bold" size="12.0" />
                      </font>
                      <GridPane.margin>
                         <Insets left="10.0" right="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label layoutX="10.0" layoutY="46.0" text="Indeciso/Neutral" GridPane.rowIndex="2">
+                  <Label text="Indeciso/Neutral" GridPane.rowIndex="2">
                      <font>
-                        <Font name="System Bold" size="13.0" />
+                        <Font name="Arial Bold" size="12.0" />
                      </font>
                      <GridPane.margin>
                         <Insets left="10.0" right="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label layoutX="10.0" layoutY="76.0" text="En Desacuerdo" GridPane.rowIndex="3">
+                  <Label text="En Desacuerdo" GridPane.rowIndex="3">
                      <font>
-                        <Font name="System Bold" size="13.0" />
+                        <Font name="Arial Bold" size="12.0" />
                      </font>
                      <GridPane.margin>
                         <Insets left="10.0" right="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label layoutX="10.0" layoutY="106.0" text="Totalmente en Desacuerdo" GridPane.rowIndex="4">
+                  <Label text="Totalmente en Desacuerdo" GridPane.rowIndex="4">
                      <font>
-                        <Font name="System Bold" size="13.0" />
+                        <Font name="Arial Bold" size="12.0" />
                      </font>
                      <GridPane.margin>
                         <Insets left="10.0" right="5.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label layoutX="10.0" layoutY="166.0" text="5" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+
+                  <Label text="5" textFill="#6a92c8" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                      <font>
-                        <Font name="System Bold" size="13.0" />
+                        <Font name="Arial Bold" size="14.0" />
                      </font>
-                     <GridPane.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </GridPane.margin>
                   </Label>
-                  <Label layoutX="172.0" layoutY="16.0" text="4" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                  <Label text="4" textFill="#6a92c8" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <font>
-                        <Font name="System Bold" size="13.0" />
+                        <Font name="Arial Bold" size="14.0" />
                      </font>
-                     <GridPane.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </GridPane.margin>
                   </Label>
-                  <Label layoutX="172.0" layoutY="46.0" text="3" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                  <Label text="3" textFill="#6a92c8" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                      <font>
-                        <Font name="System Bold" size="13.0" />
+                        <Font name="Arial Bold" size="14.0" />
                      </font>
-                     <GridPane.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </GridPane.margin>
                   </Label>
-                  <Label layoutX="172.0" layoutY="76.0" text="2" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                  <Label text="2" textFill="#6a92c8" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                      <font>
-                        <Font name="System Bold" size="13.0" />
+                        <Font name="Arial Bold" size="14.0" />
                      </font>
-                     <GridPane.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </GridPane.margin>
                   </Label>
-                  <Label layoutX="172.0" layoutY="106.0" text="1" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                  <Label text="1" textFill="#6a92c8" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                      <font>
-                        <Font name="System Bold" size="13.0" />
+                        <Font name="Arial Bold" size="14.0" />
                      </font>
-                     <GridPane.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </GridPane.margin>
                   </Label>
                </children>
             </GridPane>
-            <Label layoutX="14.0" layoutY="14.0" text="Criterios">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
          </children>
       </Pane>
-      <Separator layoutY="230.0" prefHeight="5.0" prefWidth="700.0" />
-      <Pane layoutY="232.0" prefHeight="554.0" prefWidth="700.0">
+
+      <!-- Sección de Afirmaciones -->
+      <Pane layoutX="30.0" layoutY="390.0" prefHeight="492.0" prefWidth="740.0" style="-fx-background-radius: 10; -fx-background-color: #f8f9fa; -fx-border-color: #dee2e6; -fx-border-radius: 10;">
          <children>
-            <Label layoutX="13.0" layoutY="13.0" text="Afirmaciones">
+            <Label layoutX="15.0" layoutY="10.0" text="Evaluación de Afirmaciones" textFill="#6a92c8">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="Arial Bold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="13.0" layoutY="40.0" text="Responde a cada una de las afirmaciones presentadas, marcando la casilla correspondiente de acuerdo a los criterios." />
-            <GridPane gridLinesVisible="true" layoutX="13.0" layoutY="63.0" prefHeight="395.0" prefWidth="675.0">
+            <Label layoutX="15.0" layoutY="35.0" text="Responde a cada una de las afirmaciones presentadas, marcando la casilla correspondiente de acuerdo a los criterios.">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+
+            <!-- Puntuación Final -->
+            <Label layoutX="14.0" layoutY="460.0" text="Puntuación Final:" textFill="#6a92c8">
+               <font>
+                  <Font name="Arial Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbPuntuacionFinal" layoutX="156.0" layoutY="460.0" text="0.0" textFill="#6a92c8">
+               <font>
+                  <Font name="Arial Bold" size="16.0" />
+               </font>
+            </Label>
+            <GridPane gridLinesVisible="true" layoutX="15.0" layoutY="56.0" prefHeight="395.0" prefWidth="710.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="35.0" minWidth="10.0" prefWidth="36.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="473.0" minWidth="10.0" prefWidth="457.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="35.0" minWidth="0.0" prefWidth="35.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="501.0" minWidth="10.0" prefWidth="501.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="35.0" minWidth="0.0" prefWidth="7.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="35.0" minWidth="10.0" prefWidth="293.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="35.0" minWidth="10.0" prefWidth="293.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="35.0" minWidth="10.0" prefWidth="293.0" />
@@ -439,7 +481,8 @@
                   <RadioButton fx:id="rdBtnCriterio11" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <toggleGroup>
                         <ToggleGroup fx:id="tgCriterio1" />
-                     </toggleGroup></RadioButton>
+                     </toggleGroup>
+                  </RadioButton>
                   <Label text="5" GridPane.columnIndex="2" GridPane.halignment="CENTER">
                      <font>
                         <Font name="System Bold" size="13.0" />
@@ -472,7 +515,8 @@
                   <RadioButton fx:id="rdBtnCriterio21" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                      <toggleGroup>
                         <ToggleGroup fx:id="tgCriterio2" />
-                     </toggleGroup></RadioButton>
+                     </toggleGroup>
+                  </RadioButton>
                   <RadioButton fx:id="rdBtnCriterio22" mnemonicParsing="false" toggleGroup="$tgCriterio2" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                   <RadioButton fx:id="rdBtnCriterio23" mnemonicParsing="false" toggleGroup="$tgCriterio2" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                   <RadioButton fx:id="rdBtnCriterio24" mnemonicParsing="false" toggleGroup="$tgCriterio2" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
@@ -480,7 +524,8 @@
                   <RadioButton fx:id="rdBtnCriterio31" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                      <toggleGroup>
                         <ToggleGroup fx:id="tgCriterio3" />
-                     </toggleGroup></RadioButton>
+                     </toggleGroup>
+                  </RadioButton>
                   <RadioButton fx:id="rdBtnCriterio32" mnemonicParsing="false" toggleGroup="$tgCriterio3" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                   <RadioButton fx:id="rdBtnCriterio33" mnemonicParsing="false" toggleGroup="$tgCriterio3" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                   <RadioButton fx:id="rdBtnCriterio34" mnemonicParsing="false" toggleGroup="$tgCriterio3" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
@@ -488,7 +533,8 @@
                   <RadioButton fx:id="rdBtnCriterio41" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                      <toggleGroup>
                         <ToggleGroup fx:id="tgCriterio4" />
-                     </toggleGroup></RadioButton>
+                     </toggleGroup>
+                  </RadioButton>
                   <RadioButton fx:id="rdBtnCriterio42" mnemonicParsing="false" toggleGroup="$tgCriterio4" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
                   <RadioButton fx:id="rdBtnCriterio43" mnemonicParsing="false" toggleGroup="$tgCriterio4" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
                   <RadioButton fx:id="rdBtnCriterio44" mnemonicParsing="false" toggleGroup="$tgCriterio4" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
@@ -496,7 +542,8 @@
                   <RadioButton fx:id="rdBtnCriterio51" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                      <toggleGroup>
                         <ToggleGroup fx:id="tgCriterio5" />
-                     </toggleGroup></RadioButton>
+                     </toggleGroup>
+                  </RadioButton>
                   <RadioButton fx:id="rdBtnCriterio52" mnemonicParsing="false" toggleGroup="$tgCriterio5" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
                   <RadioButton fx:id="rdBtnCriterio53" mnemonicParsing="false" toggleGroup="$tgCriterio5" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
                   <RadioButton fx:id="rdBtnCriterio54" mnemonicParsing="false" toggleGroup="$tgCriterio5" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
@@ -504,7 +551,8 @@
                   <RadioButton fx:id="rdBtnCriterio61" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                      <toggleGroup>
                         <ToggleGroup fx:id="tgCriterio6" />
-                     </toggleGroup></RadioButton>
+                     </toggleGroup>
+                  </RadioButton>
                   <RadioButton fx:id="rdBtnCriterio62" mnemonicParsing="false" toggleGroup="$tgCriterio6" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
                   <RadioButton fx:id="rdBtnCriterio63" mnemonicParsing="false" toggleGroup="$tgCriterio6" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
                   <RadioButton fx:id="rdBtnCriterio64" mnemonicParsing="false" toggleGroup="$tgCriterio6" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
@@ -512,7 +560,8 @@
                   <RadioButton fx:id="rdBtnCriterio71" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7">
                      <toggleGroup>
                         <ToggleGroup fx:id="tgCriterio7" />
-                     </toggleGroup></RadioButton>
+                     </toggleGroup>
+                  </RadioButton>
                   <RadioButton fx:id="rdBtnCriterio72" mnemonicParsing="false" toggleGroup="$tgCriterio7" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
                   <RadioButton fx:id="rdBtnCriterio73" mnemonicParsing="false" toggleGroup="$tgCriterio7" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
                   <RadioButton fx:id="rdBtnCriterio74" mnemonicParsing="false" toggleGroup="$tgCriterio7" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
@@ -520,7 +569,8 @@
                   <RadioButton fx:id="rdBtnCriterio81" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="8">
                      <toggleGroup>
                         <ToggleGroup fx:id="tgCriterio8" />
-                     </toggleGroup></RadioButton>
+                     </toggleGroup>
+                  </RadioButton>
                   <RadioButton fx:id="rdBtnCriterio82" mnemonicParsing="false" toggleGroup="$tgCriterio8" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
                   <RadioButton fx:id="rdBtnCriterio83" mnemonicParsing="false" toggleGroup="$tgCriterio8" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
                   <RadioButton fx:id="rdBtnCriterio84" mnemonicParsing="false" toggleGroup="$tgCriterio8" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
@@ -528,7 +578,8 @@
                   <RadioButton fx:id="rdBtnCriterio91" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="9">
                      <toggleGroup>
                         <ToggleGroup fx:id="tgCriterio9" />
-                     </toggleGroup></RadioButton>
+                     </toggleGroup>
+                  </RadioButton>
                   <RadioButton fx:id="rdBtnCriterio92" mnemonicParsing="false" toggleGroup="$tgCriterio9" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
                   <RadioButton fx:id="rdBtnCriterio93" mnemonicParsing="false" toggleGroup="$tgCriterio9" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
                   <RadioButton fx:id="rdBtnCriterio94" mnemonicParsing="false" toggleGroup="$tgCriterio9" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
@@ -536,30 +587,25 @@
                   <RadioButton fx:id="rdBtnCriterio101" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="10">
                      <toggleGroup>
                         <ToggleGroup fx:id="tgCriterio10" />
-                     </toggleGroup></RadioButton>
+                     </toggleGroup>
+                  </RadioButton>
                   <RadioButton fx:id="rdBtnCriterio102" mnemonicParsing="false" toggleGroup="$tgCriterio10" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
                   <RadioButton fx:id="rdBtnCriterio103" mnemonicParsing="false" toggleGroup="$tgCriterio10" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
                   <RadioButton fx:id="rdBtnCriterio104" mnemonicParsing="false" toggleGroup="$tgCriterio10" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
                   <RadioButton fx:id="rdBtnCriterio105" mnemonicParsing="false" toggleGroup="$tgCriterio10" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
                </children>
             </GridPane>
-            <ButtonBar layoutX="496.0" layoutY="515.0" prefHeight="28.0" prefWidth="192.0">
-               <buttons>
-                  <Button fx:id="btnSubir" mnemonicParsing="false" onAction="#btnClicSubir" text="Subir" />
-                  <Button fx:id="btnCancelar" layoutX="429.0" layoutY="18.0" mnemonicParsing="false" onAction="#btnClicCancelar" text="Cancelar" />
-               </buttons>
-            </ButtonBar>
-            <Label layoutX="13.0" layoutY="465.0" text="Puntuación Final:">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Label fx:id="lbPuntuacionFinal" layoutX="169.0" layoutY="465.0" text="0.0">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
          </children>
       </Pane>
+
+      <!-- Botones de acción -->
+      <Button fx:id="btnSubir" layoutX="520.0" layoutY="900.0" mnemonicParsing="false" onAction="#btnClicSubir" prefHeight="31.0" prefWidth="120.0" style="-fx-background-color: #6a92c8;" text="Subir" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="15.0" />
+         </font>
+      </Button>
+
+      <Button fx:id="btnCancelar" layoutX="650.0" layoutY="900.0" mnemonicParsing="false" onAction="#btnClicCancelar" prefHeight="31.0" prefWidth="120.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-font-family: Arial; -fx-font-weight: Bold; -fx-border-radius: 5;" text="Cancelar" />
+
    </children>
 </AnchorPane>
