@@ -93,8 +93,6 @@ public class AutoEvaluacionDAO {
 
             if (resultado.next()) {
                 autoEvaluacion = convertirResultSetAutoEvaluacion(resultado);
-            } else {
-                throw new SQLException();
             }
 
         } catch (SQLException e) {

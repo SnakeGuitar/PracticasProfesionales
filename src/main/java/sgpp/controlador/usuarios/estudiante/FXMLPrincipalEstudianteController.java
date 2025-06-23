@@ -109,19 +109,24 @@ public class FXMLPrincipalEstudianteController implements Initializable, IContro
         Utilidad.crearEscenario(RUTA_FXML_SUBIR_REPORTE, "ReportesMensuales");
     }
 
-    public void clicBtnAutoevaluacion(ActionEvent actionEvent) throws SQLException {
-        AutoEvaluacion autoEvaluacion = AutoEvaluacionDAO.obtenerPorIdEstudiante(estudiante.getIdEstudiante());
-
-        if(autoEvaluacion == null) {
-            irAutoevaluacion();
-        } else {
-            boolean descargar = Utilidad.crearAlertaConfirmacion("Autoevaluación encontrada",
-                    "El estudiante ya cuenta con una autoevaluación.\n" +
-                            "¿Deseas descargarla?");
-
-            if(descargar) {
-                // TODO: Generar y descargar documento.
+    public void clicBtnAutoevaluacion(ActionEvent actionEvent) {
+        try {
+            AutoEvaluacion autoEvaluacion = AutoEvaluacionDAO.obtenerPorIdEstudiante(estudiante.getIdEstudiante());
+            if(autoEvaluacion == null) {
+                irAutoevaluacion();
+            } else {
+                boolean descargar = Utilidad.crearAlertaConfirmacion("Autoevaluación encontrada",
+                        "El estudiante ya cuenta con una autoevaluación.\n" +
+                                "¿Deseas descargarla?");
+                if(descargar) {
+                    // TODO: Generar y descargar documento.
+                }
             }
+        } catch (SQLException sqlex) {
+            System.out.println("Error al recuperar la autoevaluacion "+sqlex.getMessage());
+            Utilidad.crearAlertaError(
+                    "Error",
+                    "No fue posible recuperar la autoevaluacion");
         }
     }
 

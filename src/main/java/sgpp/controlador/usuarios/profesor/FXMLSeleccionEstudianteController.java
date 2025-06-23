@@ -96,7 +96,6 @@ public class FXMLSeleccionEstudianteController implements Initializable {
             Scene escenaPrincipal = new Scene(vista);
             escenarioBase.setScene(escenaPrincipal);
             escenarioBase.setTitle("Expediente de Estudiante");
-            escenarioBase.initModality(Modality.APPLICATION_MODAL);
             escenarioBase.show();
         } catch (IOException ioex) {
             Utilidad.mostrarError(
