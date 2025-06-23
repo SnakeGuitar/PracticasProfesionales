@@ -83,7 +83,7 @@ public class EntregaDocumentoInicialDAO {
         try {
             conexionBD = ConexionBD.abrirConexion();
             if (conexionBD != null) {
-                String consulta = "SELECT * FROM entrega_doc_inicial WHERE ID_Entrega_Doc_Inicialcol = ?";
+                String consulta = "SELECT * FROM entrega_doc_inicial WHERE ID_Entrega_Doc_Inicial = ?";
                 sentencia = conexionBD.prepareStatement(consulta);
                 sentencia.setInt(1, idEntregaDocumentoInicial);
                 resultado = sentencia.executeQuery();

@@ -267,13 +267,13 @@ public class DocumentoInicialDAO {
                     documentoInicial.setDocumento(documento);
                 }
 
-                documentoInicial.setIdEntregaDocumento(resultado.getInt("id_entrega_documento_final"));
+                documentoInicial.setIdEntregaDocumento(resultado.getInt("id_entrega_doc_inicial"));
 
                 documentosIniciales.add(documentoInicial);
             }
 
         } catch (SQLException e) {
-            throw new SQLException("Error al obtener documentos finales por periodo: " + e.getMessage(), e);
+            throw new SQLException("Error al obtener documentos iniciales por periodo: " + e.getMessage(), e);
         } finally {
             ConexionBD.cerrarConexion(conexion, sentencia, resultado);
         }
