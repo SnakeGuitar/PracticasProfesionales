@@ -386,4 +386,32 @@ public class DocumentoFinalDAO {
 
         return documentosFinales;
     }
+
+    public static void actualizarDocumentoFinal(DocumentoFinal documentoFinal) throws SQLException {
+        Connection conexion = null;
+        PreparedStatement sentencia = null;
+
+        String consulta = "UPDATE documento_final SET estado = ? WHERE id_doc_final = ?";
+
+        try {
+            conexion = ConexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(consulta);
+
+            // Establecer parámetros
+            sentencia.setString(1, documentoFinal.getEstado().toString());
+            sentencia.setInt(2, documentoFinal.getIdDocumento());
+
+            int filasAfectadas = sentencia.executeUpdate();
+
+            if (filasAfectadas == 0) {
+                throw new SQLException("No se encontró el documento final con ID: " +
+                        documentoFinal.getIdDocumento());
+            }
+
+        } catch (SQLException e) {
+            throw new SQLException("Error al actualizar el estado del documento final: " + e.getMessage(), e);
+        } finally {
+            ConexionBD.cerrarConexion(conexion, sentencia, null);
+        }
+    }
 }
