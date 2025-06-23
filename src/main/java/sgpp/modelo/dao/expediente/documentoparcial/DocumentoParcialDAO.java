@@ -386,4 +386,32 @@ public class DocumentoParcialDAO {
 
         return documentosParciales;
     }
+
+    public static void actualizarDocumentoParcial(DocumentoParcial documentoParcial) throws SQLException {
+        Connection conexion = null;
+        PreparedStatement sentencia = null;
+
+        String consulta = "UPDATE documento_parcial SET estado = ? WHERE id_doc_parcial = ?";
+
+        try {
+            conexion = ConexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(consulta);
+
+            // Establecer parámetros
+            sentencia.setString(1, documentoParcial.getEstado().toString());
+            sentencia.setInt(2, documentoParcial.getIdDocumento());
+
+            int filasAfectadas = sentencia.executeUpdate();
+
+            if (filasAfectadas == 0) {
+                throw new SQLException("No se encontró el documento parcial con ID: " +
+                        documentoParcial.getIdDocumento());
+            }
+
+        } catch (SQLException e) {
+            throw new SQLException("Error al actualizar el estado del documento parcial: " + e.getMessage(), e);
+        } finally {
+            ConexionBD.cerrarConexion(conexion, sentencia, null);
+        }
+    }
 }
