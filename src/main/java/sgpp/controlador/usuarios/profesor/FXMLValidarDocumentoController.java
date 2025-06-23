@@ -231,12 +231,19 @@ public class FXMLValidarDocumentoController implements Initializable {
                 return;
             }
 
-            documentoSeleccionado.setEstado(EstadoDocumento.Rechazado);
+            try {
+                documentoSeleccionado.setEstado(EstadoDocumento.Rechazado);
+                actualizarDocumento(documentoSeleccionado); // IMPORTANTE: Actualizar en BD
 
-            Utilidad.crearAlertaInformacion(
-                    "Documento rechazado",
-                    "El documento ha sido rechazado y su estado ha sido actualizado a 'Rechazado'. Razón: " + razon);
-            clicBtnActualizarLista(null);
+                Utilidad.crearAlertaInformacion(
+                        "Documento rechazado",
+                        "El documento ha sido rechazado y su estado ha sido actualizado a 'Rechazado'. Razón: " + razon);
+                clicBtnActualizarLista(null);
+            } catch (SQLException e) {
+                Utilidad.crearAlertaError(
+                        "Error al rechazar",
+                        "No se pudo actualizar el documento en la base de datos: " + e.getMessage());
+            }
         });
     }
 
