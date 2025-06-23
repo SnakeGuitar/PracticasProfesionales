@@ -185,12 +185,19 @@ public class FXMLValidarDocumentoController implements Initializable {
         confirmacion.setContentText("Esta acción cambiará el estado del documento a 'Aceptado'");
 
         if (confirmacion.showAndWait().get() == ButtonType.OK) {
-            documentoSeleccionado.setEstado(EstadoDocumento.Aceptado);
+            try {
+                documentoSeleccionado.setEstado(EstadoDocumento.Aceptado);
+                actualizarDocumento(documentoSeleccionado); // IMPORTANTE: Actualizar en BD
 
-            Utilidad.crearAlertaInformacion(
-                    "Documento validado",
-                    "El documento ha sido validado y su estado ha sido actualizado a 'Aceptado'.");
-            clicBtnActualizarLista(null);
+                Utilidad.crearAlertaInformacion(
+                        "Documento validado",
+                        "El documento ha sido validado y su estado ha sido actualizado a 'Aceptado'.");
+                clicBtnActualizarLista(null);
+            } catch (SQLException e) {
+                Utilidad.crearAlertaError(
+                        "Error al validar",
+                        "No se pudo actualizar el documento en la base de datos: " + e.getMessage());
+            }
         }
     }
 
