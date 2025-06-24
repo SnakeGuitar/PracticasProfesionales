@@ -59,7 +59,8 @@
                         <Bloom threshold="0.81" />
                      </effect>
                   </Label>
-               </children></Pane>
+               </children>
+            </Pane>
             <Pane layoutX="111.0" layoutY="168.0" opacity="0.67" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #121c84; -fx-background-radius: 16;">
                <children>
                   <Button layoutX="14.0" layoutY="110.0" mnemonicParsing="false" onAction="#clicBtnProyectos" prefHeight="31.0" prefWidth="99.0" style="-fx-background-color: #121c84; -fx-font-weight: Bold;" text="Proyectos" textFill="WHITE">

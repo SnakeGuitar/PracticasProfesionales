@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.paint.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -8,58 +15,93 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.estudiante.FXMLPrincipalEstudianteController">
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.estudiante.FXMLPrincipalEstudianteController">
    <children>
-      <Pane layoutX="588.0" layoutY="143.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #6a92c8; -fx-background-radius: 10;">
+      <Pane prefHeight="768.0" prefWidth="1024.0" styleClass="gradient-background-estudiante" stylesheets="@../../styles.css">
          <children>
-            <Button layoutX="14.0" layoutY="110.0" mnemonicParsing="false" onAction="#clicBtnReporte" prefHeight="31.0" prefWidth="122.0" style="-fx-background-color: #6a92c8; -fx-font-weight: Bold;" text="Subir Reporte" textFill="WHITE">
+            <Pane layoutX="18.0" layoutY="107.0" prefHeight="638.0" prefWidth="988.0" style="-fx-background-color: #ffffff; -fx-background-radius: 30;">
+               <children>
+                  <Label layoutX="410.0" layoutY="609.0" opacity="0.34" text="Universidad Veracruzana" textFill="#374a5a">
+                     <effect>
+                        <Bloom threshold="0.81" />
+                     </effect>
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Label>
+                  <Pane layoutX="90.0" layoutY="335.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-radius: 16;" styleClass="gradient-background-estudiante" stylesheets="@../../styles.css">
+                     <children>
+                        <Button blendMode="LIGHTEN" layoutX="14.0" layoutY="110.0" mnemonicParsing="false" onAction="#clicBtnAutoevaluacion" prefHeight="31.0" prefWidth="185.0" style="-fx-font-weight: Bold;" styleClass="gradient-background-estudiante" stylesheets="@../../styles.css" text="Llenar Autoevaluacion" textFill="WHITE">
+                           <font>
+                              <Font name="Arial" size="15.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Pane>
+                  <Pane layoutX="90.0" layoutY="56.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-radius: 16;" styleClass="gradient-background-estudiante" stylesheets="@../../styles.css">
+                     <children>
+                        <Button blendMode="LIGHTEN" layoutX="14.0" layoutY="97.0" mnemonicParsing="false" onAction="#clicBtnSubirDocumento" prefHeight="57.0" prefWidth="195.0" style="-fx-font-weight: Bold;" styleClass="gradient-background-estudiante" stylesheets="@../../styles.css" text="Subir Documentos de Prácticas Profesionales" textFill="WHITE" wrapText="true">
+                           <font>
+                              <Font name="Arial" size="15.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Pane>
+                  <Pane layoutX="370.0" layoutY="56.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-radius: 16;" styleClass="gradient-background-estudiante" stylesheets="@../../styles.css">
+                     <children>
+                        <Button blendMode="LIGHTEN" layoutX="14.0" layoutY="110.0" mnemonicParsing="false" onAction="#clicBtnAvance" prefHeight="31.0" prefWidth="159.0" style="-fx-font-weight: Bold;" styleClass="gradient-background-estudiante" stylesheets="@../../styles.css" text="Consultar Avance" textFill="WHITE">
+                           <font>
+                              <Font name="Arial" size="15.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Pane>
+                  <Pane layoutX="648.0" layoutY="56.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-radius: 16;" styleClass="gradient-background-estudiante" stylesheets="@../../styles.css">
+                     <children>
+                        <Button blendMode="LIGHTEN" layoutX="14.0" layoutY="110.0" mnemonicParsing="false" onAction="#clicBtnReporte" prefHeight="31.0" prefWidth="122.0" style="-fx-font-weight: Bold;" styleClass="gradient-background-estudiante" stylesheets="@../../styles.css" text="Subir Reporte" textFill="WHITE">
+                           <font>
+                              <Font name="Arial" size="15.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+            <Label layoutX="28.0" layoutY="31.0" prefHeight="27.0" prefWidth="710.0" text="Sistema de Gestion de Practicas Profesionales">
+               <effect>
+                  <Bloom threshold="0.08" />
+               </effect>
                <font>
-                  <Font name="Arial" size="15.0" />
+                  <Font name="Arial Bold Italic" size="24.0" />
                </font>
-            </Button>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop color="#e1e1e1" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+            <Label fx:id="lbNombreEstudiante" layoutX="28.0" layoutY="67.0" prefHeight="27.0" text="Estudiante">
+               <font>
+                  <Font name="Arial Italic" size="18.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="0.4368932038834952" endY="1.0">
+                     <stops>
+                        <Stop color="#bfbfbf" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+            <ImageView fitHeight="39.0" fitWidth="41.0" layoutX="965.0" layoutY="26.0" onMouseClicked="#clicImgViCerrarSesion" opacity="0.75" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../imagenes/logout_icon_no_background.png" />
+               </image>
+            </ImageView>
          </children>
       </Pane>
-      <Pane layoutX="30.0" layoutY="422.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #6a92c8; -fx-background-radius: 10;">
-         <children>
-            <Button layoutX="14.0" layoutY="110.0" mnemonicParsing="false" onAction="#clicBtnAutoevaluacion" prefHeight="31.0" prefWidth="185.0" style="-fx-background-color: #6a92c8; -fx-font-weight: Bold;" text="Llenar Autoevaluacion" textFill="WHITE">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </Button>
-         </children>
-      </Pane>
-      <Pane layoutX="310.0" layoutY="143.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #6a92c8; -fx-background-radius: 10;">
-         <children>
-            <Button layoutX="14.0" layoutY="110.0" mnemonicParsing="false" onAction="#clicBtnAvance" prefHeight="31.0" prefWidth="159.0" style="-fx-background-color: #6a92c8; -fx-font-weight: Bold;" text="Consultar Avance" textFill="WHITE">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </Button>
-         </children>
-      </Pane>
-      <Pane layoutX="30.0" layoutY="143.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #6a92c8; -fx-background-radius: 10;">
-         <children>
-            <Button layoutX="14.0" layoutY="97.0" mnemonicParsing="false" onAction="#clicBtnSubirDocumento" prefHeight="57.0" prefWidth="195.0" style="-fx-background-color: #6a92c8; -fx-font-weight: Bold;" text="Subir Documentos de Prácticas Profesionales" textFill="WHITE" wrapText="true">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </Button>
-         </children>
-      </Pane>
-      <Label fx:id="lbNombreEstudiante" layoutX="30.0" layoutY="70.0" prefHeight="27.0" text="Estudiante">
-         <font>
-            <Font name="Arial Italic" size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="30.0" layoutY="34.0" prefHeight="27.0" prefWidth="710.0" text="Sistema de Gestion de Practicas Profesionales">
-         <font>
-            <Font name="Arial Bold Italic" size="24.0" />
-         </font>
-      </Label>
-      <ImageView fitHeight="74.0" fitWidth="81.0" layoutX="895.0" layoutY="73.0" onMouseClicked="#clicImgViCerrarSesion" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../imagenes/logout_icon.png" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>
