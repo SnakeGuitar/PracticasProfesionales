@@ -21,6 +21,7 @@ import java.nio.file.Path;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
@@ -226,5 +227,10 @@ public class FXMLGenerarDocumentosController {
                     "No se pudo verificar duplicados o recuperar el periodo activo.");
             e.printStackTrace();
         }
+    }
+
+    public void clicBtnCancelar(ActionEvent actionEvent) {
+        Stage stage = (Stage) btnGenerar.getScene().getWindow();
+        stage.close();
     }
 }
