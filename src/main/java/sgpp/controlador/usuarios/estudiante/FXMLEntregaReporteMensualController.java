@@ -159,10 +159,7 @@ public class FXMLEntregaReporteMensualController implements Initializable {
         return idPeriodo;
     }
 
-    @FXML
-    private void btnRegresar(ActionEvent event) {
-    }
-
-    public void volverAtras(ActionEvent actionEvent) {
+    public void clicBtnRegresar(ActionEvent actionEvent) {
+        Utilidad.cerrarVentana(lblFechas);
     }
 }
