@@ -19,7 +19,6 @@ import sgpp.modelo.beans.expediente.documentoparcial.EntregaDocumentoParcial;
 import sgpp.modelo.beans.expediente.reporte.EntregaReporteMensual;
 import sgpp.modelo.beans.expediente.reporte.ReporteMensual;
 import sgpp.modelo.dao.expediente.ExpedienteDAO;
-import sgpp.modelo.dao.expediente.TipoDocumento;
 import sgpp.modelo.dao.expediente.documentofinal.EntregaDocumentoFinalDAO;
 import sgpp.modelo.dao.expediente.documentoinicial.DocumentoInicialDAO;
 import sgpp.modelo.dao.expediente.documentoinicial.EntregaDocumentoInicialDAO;
@@ -174,7 +173,7 @@ public class FXMLExpedienteEstudianteController implements Initializable {
         listDocumentosExpediente.setItems(documentos);
     }
 
-    public void btnClicRegresar(ActionEvent actionEvent) {
+    public void clicBtnRegresar(ActionEvent actionEvent) {
         Utilidad.cerrarVentana(lbNombreEstudiante);
     }
 
@@ -185,7 +184,7 @@ public class FXMLExpedienteEstudianteController implements Initializable {
         }
     }
 
-    public void btnClicDescargar(ActionEvent actionEvent) {
+    public void clicBtnDescargar(ActionEvent actionEvent) {
         Documento documento = listDocumentosExpediente.getSelectionModel().getSelectedItem();
         if (documento != null) {
             if (documento.getDocumento() != null) {
@@ -221,14 +220,17 @@ public class FXMLExpedienteEstudianteController implements Initializable {
             Stage stage = Utilidad.getEscenarioComponente(lbNombreEstudiante);
             File destino = fileChooser.showSaveDialog(stage);
 
-            //Guardar el archivo en el destino
-            try (FileOutputStream fos = new FileOutputStream(destino)) {
-                fos.write(documento.getDocumento());
+            //Proceder si se selecciono una ubicacion
+            if (destino != null) {
+                //Guardar el archivo en el destino
+                try (FileOutputStream fos = new FileOutputStream(destino)) {
+                    fos.write(documento.getDocumento());
+                }
+                Utilidad.crearAlertaInformacion(
+                        "Exito",
+                        "Documento descargado exitosamente a: \n"+destino.getAbsolutePath()
+                );
             }
-            Utilidad.crearAlertaInformacion(
-                    "Exito",
-                    "Documento descargado exitosamente a: \n"+destino.getAbsolutePath()
-            );
         } catch (IOException ioex) {
             Utilidad.crearAlertaError(
                     "Error",
