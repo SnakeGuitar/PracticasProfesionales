@@ -49,18 +49,20 @@ public class Impresora {
         File destino = fileChooser.showSaveDialog(stage);
 
         //Guardar el archivo en el destino
-        try {
-            byte[] pdf = Impresora.generarRubricaEvaluacion(rubrica);
-            Files.write(destino.toPath(), pdf);
-            Utilidad.crearAlertaInformacion(
-                    "Exito",
-                    "Documento descargado exitosamente a: \n"+destino.getAbsolutePath()
-            );
-        } catch (IOException ioex) {
-            System.out.println(ioex.getMessage());
-            Utilidad.crearAlertaError(
-                    "Error",
-                    "Lo sentimos, no fue posible guardar la rubrica en su dispositivo");
+        if (destino != null) {
+            try {
+                byte[] pdf = Impresora.generarRubricaEvaluacion(rubrica);
+                Files.write(destino.toPath(), pdf);
+                Utilidad.crearAlertaInformacion(
+                        "Exito",
+                        "Documento descargado exitosamente a: \n"+destino.getAbsolutePath()
+                );
+            } catch (IOException ioex) {
+                System.out.println(ioex.getMessage());
+                Utilidad.crearAlertaError(
+                        "Error",
+                        "Lo sentimos, no fue posible guardar la rubrica en su dispositivo");
+            }
         }
     }
 
@@ -158,19 +160,21 @@ public class Impresora {
         Stage stage = Utilidad.getEscenarioComponente(componente);
         File destino = fileChooser.showSaveDialog(stage);
 
-        //Guardar el archivo en el destino
-        try {
-            byte[] pdf = Impresora.generarAutoEvaluacion(autoEvaluacion);
-            Files.write(destino.toPath(), pdf);
-            Utilidad.crearAlertaInformacion(
-                    "Exito",
-                    "Documento descargado exitosamente a: \n"+destino.getAbsolutePath()
-            );
-        } catch (IOException ioex) {
-            System.out.println(ioex.getMessage());
-            Utilidad.crearAlertaError(
-                    "Error",
-                    "Lo sentimos, no fue posible guardar la autoevaluación en su dispositivo");
+        if (destino != null) {
+            //Guardar el archivo en el destino
+            try {
+                byte[] pdf = Impresora.generarAutoEvaluacion(autoEvaluacion);
+                Files.write(destino.toPath(), pdf);
+                Utilidad.crearAlertaInformacion(
+                        "Exito",
+                        "Documento descargado exitosamente a: \n"+destino.getAbsolutePath()
+                );
+            } catch (IOException ioex) {
+                System.out.println(ioex.getMessage());
+                Utilidad.crearAlertaError(
+                        "Error",
+                        "Lo sentimos, no fue posible guardar la autoevaluación en su dispositivo");
+            }
         }
     }
 
@@ -273,35 +277,6 @@ public class Impresora {
         fileChooser.setInitialFileName(nombreSugerido);
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("Documento PDF", "*.pdf"));
-    }
-
-    private static void llenarCampoTexto(PDAcroForm acroForm, String nombreCampo, String valor) {
-        try {
-            PDField field = acroForm.getField(nombreCampo);
-            if (field instanceof PDTextField && valor != null) {
-                field.setValue(valor);
-            }
-        } catch (IOException e) {
-            System.err.println("Error al llenar campo " + nombreCampo + ": " + e.getMessage());
-        }
-    }
-
-    private static void marcarNivelCalificacion(PDAcroForm acroForm, float[] criterios) {
-        // Ejemplo de cómo marcar checkboxes según el nivel de calificación
-        for (int i = 0; i < criterios.length; i++) {
-            float calificacion = criterios[i];
-            String nivel = determinarNivel(calificacion);
-            String nombreCheckbox = "criterio" + (i + 1) + "_" + nivel;
-
-            try {
-                PDField field = acroForm.getField(nombreCheckbox);
-                if (field instanceof PDCheckBox) {
-                    ((PDCheckBox) field).check();
-                }
-            } catch (IOException e) {
-                System.err.println("Error al marcar checkbox " + nombreCheckbox + ": " + e.getMessage());
-            }
-        }
     }
 
     private static String determinarNivel(float calificacion) {
