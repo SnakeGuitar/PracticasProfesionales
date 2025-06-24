@@ -87,7 +87,8 @@ public class FXMLPrincipalCoordinadorController implements Initializable, IContr
     }
 
     public void clicBtnDocumentosAsignacion(ActionEvent actionEvent) {
-        Utilidad.crearEscenario(RUTA_FXML_DOCUMENTOS_ASIGNACION, "Coordinador");
+        Utilidad.crearEscenario(RUTA_FXML_DOCUMENTOS_ASIGNACION, "Generar Documentos de Asignación", coordinador);
+
     }
 
     public void clicBtnProgramarEntregas(ActionEvent actionEvent) {

@@ -11,7 +11,6 @@
  * - Incluye fecha_inicio, dirección, puesto y departamento del responsable
  *   gracias a la vista actualizada.
  */
-
 package sgpp.modelo.dao.entidades;
 
 import javafx.collections.FXCollections;
@@ -23,12 +22,6 @@ import java.sql.*;
 
 public class TablaAsignacionDAO {
 
-    /**
-     * Obtiene todas las asignaciones disponibles.
-     *
-     * @return lista observable con objetos TablaAsignacion
-     * @throws SQLException si ocurre un error de conexión/consulta
-     */
     public static ObservableList<TablaAsignacion> obtenerAsignaciones() throws SQLException {
         ObservableList<TablaAsignacion> lista = FXCollections.observableArrayList();
 
@@ -45,8 +38,12 @@ public class TablaAsignacionDAO {
                     ID_Responsable,
                     nombre_responsable,
                     puesto_responsable,
-                    departamento_responsable
+                    departamento_responsable,
+                    ID_Periodo
             FROM vista_estudiante_proyecto_ov_responsable
+            WHERE ID_Periodo = (
+                SELECT MAX(ID_Periodo) FROM vista_estudiante_proyecto_ov_responsable
+            )
         """;
 
         try (Connection conexion = ConexionBD.abrirConexion();
@@ -63,18 +60,19 @@ public class TablaAsignacionDAO {
                         rs.getString("direccion"),
                         rs.getInt("ID_Proyecto"),
                         rs.getString("nombre_proyecto"),
-                        rs.getDate("fecha_inicio").toLocalDate(),   // <-- nuevo
+                        rs.getDate("fecha_inicio").toLocalDate(),
                         rs.getInt("ID_Responsable"),
                         rs.getString("nombre_responsable"),
                         rs.getString("puesto_responsable"),
-                        rs.getString("departamento_responsable")
+                        rs.getString("departamento_responsable"),
+                        rs.getInt("ID_Periodo")
                 );
                 lista.add(asignacion);
             }
 
         } catch (SQLException e) {
-            System.err.println("❌ Error al obtener las asignaciones: " + e.getMessage());
-            throw e; // Propagar para manejar arriba
+            System.err.println(" Error al obtener las asignaciones: " + e.getMessage());
+            throw e;
         }
 
         return lista;

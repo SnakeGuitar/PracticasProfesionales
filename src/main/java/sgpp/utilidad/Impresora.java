@@ -12,6 +12,7 @@ import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 import org.apache.pdfbox.pdmodel.interactive.form.PDTextField;
 import org.apache.pdfbox.pdmodel.interactive.form.PDCheckBox;
+import sgpp.modelo.beans.Coordinador;
 import sgpp.modelo.beans.Proyecto;
 import sgpp.modelo.beans.expediente.documentofinal.AutoEvaluacion;
 import sgpp.modelo.beans.expediente.documentoinicial.TablaAsignacion;
@@ -422,7 +423,7 @@ public class Impresora {
         return abreviatura;
     }
 
-    public static byte[] generarDocumentoAsignacion(TablaAsignacion a) {
+    public static byte[] generarDocumentoAsignacion(TablaAsignacion a, Coordinador coordinador) {
         try (PDDocument document = new PDDocument(); ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             PDPage page = new PDPage(PDRectangle.LETTER);
             document.addPage(page);
@@ -499,7 +500,7 @@ public class Impresora {
             content.showText("Atentamente,");
             content.newLine();
             content.newLine();
-            content.showText("Dr. Ángel Juárez Sánchez García");
+            content.showText(String.format("%s", coordinador.getNombre().toUpperCase()));
             content.newLine();
             content.showText("Coordinador de Servicio Social y Prácticas Profesionales");
             content.newLine();

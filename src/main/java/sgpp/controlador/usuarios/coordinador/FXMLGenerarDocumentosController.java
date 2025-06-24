@@ -27,6 +27,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import sgpp.modelo.beans.Coordinador;
 import sgpp.modelo.beans.Periodo;
 import sgpp.modelo.beans.expediente.documentoinicial.OficioAsignacion;
 import sgpp.modelo.beans.expediente.documentoinicial.TablaAsignacion;
@@ -51,6 +52,8 @@ public class FXMLGenerarDocumentosController {
 
     private final ObservableList<TablaAsignacion> listaAsignaciones = FXCollections.observableArrayList();
 
+    private Coordinador coordinador;
+
     @FXML
     public void initialize() {
         configurarTabla();
@@ -58,6 +61,9 @@ public class FXMLGenerarDocumentosController {
         configurarDobleClick();
     }
 
+    public void inicializarCoordinador(Coordinador coordinador) {
+        this.coordinador = coordinador;
+    }
     private void configurarTabla() {
         tablaAsignaciones.setEditable(true);
         colSeleccion.setEditable(true);
@@ -179,7 +185,7 @@ public class FXMLGenerarDocumentosController {
                     .filter(TablaAsignacion::isSeleccionado)
                     .forEach(asignacion -> {
                         try {
-                            byte[] pdf = Impresora.generarDocumentoAsignacion(asignacion);
+                            byte[] pdf = Impresora.generarDocumentoAsignacion(asignacion,coordinador);
                             if (pdf == null) {
                                 System.err.println("No se generó PDF para: " + asignacion.getNombreEstudiante());
                                 return;

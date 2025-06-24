@@ -16,6 +16,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sgpp.controlador.usuarios.coordinador.FXMLGenerarDocumentosController;
+import sgpp.modelo.beans.Coordinador;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -93,6 +95,30 @@ public class Utilidad {
             mostrarError(true, excepcion, "Error al cargar la vista", "No se pudo cargar la vista: " + URL);
         }
     }
+
+    // sobrecarga del metodo anterior que permite seguir usando la utilidad pero usar controladores.
+    public static void crearEscenario(String URL, String tituloEscenario, Coordinador coordinador) {
+        try {
+            Stage nuevoEscenario = new Stage();
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(SistemaGestionPracticasProfesionales.class.getResource(URL)));
+            Parent vista = loader.load();
+            Object controlador = loader.getController();
+
+
+            if (controlador instanceof FXMLGenerarDocumentosController) {
+                ((FXMLGenerarDocumentosController) controlador).inicializarCoordinador(coordinador);
+            }
+
+            Scene nuevaEscena = new Scene(vista);
+            nuevoEscenario.setScene(nuevaEscena);
+            nuevoEscenario.initModality(Modality.APPLICATION_MODAL);
+            nuevoEscenario.setTitle(tituloEscenario);
+            nuevoEscenario.showAndWait();
+        } catch (IOException excepcion) {
+            mostrarError(true, excepcion, "Error al cargar la vista", "No se pudo cargar la vista: " + URL);
+        }
+    }
+
 
     public static void configurarRadioButton(RadioButton boton, ToggleGroup grupo, int valor) {
         boton.setToggleGroup(grupo);
