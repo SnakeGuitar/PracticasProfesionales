@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.coordinador.proyecto.FXMLProyectoController">
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.coordinador.proyecto.FXMLProyectoController">
    <children>
       <Pane prefHeight="117.0" prefWidth="1144.0" styleClass="gradient-background-coordinador" stylesheets="@../../../styles.css">
          <children>
@@ -49,10 +50,10 @@
                   <TableColumn fx:id="colObjetivoGeneral" prefWidth="117.0" text="Objetivo" />
                   <TableColumn fx:id="colMetodologia" prefWidth="112.0" text="Metodología" />
                   <TableColumn fx:id="colNombreOV" prefWidth="147.0" text="Organización" />
-                  <TableColumn fx:id="colNombreResponsable" prefWidth="138.0" text="Responsable" />
-                  <TableColumn fx:id="colMaxParticipantes" prefWidth="84.0" text="Max Participantes" />
-                  <TableColumn fx:id="colFechaInicio" prefWidth="136.0" text="Fecha Inicio" />
-                  <TableColumn fx:id="colFechaFin" prefWidth="218.0" text="Fecha Finalización" />
+                  <TableColumn fx:id="colNombreResponsable" prefWidth="161.5999755859375" text="Responsable" />
+                  <TableColumn fx:id="colMaxParticipantes" prefWidth="148.0" text="Máximo de Participantes" />
+                  <TableColumn fx:id="colFechaInicio" prefWidth="138.39996337890625" text="Fecha Inicio" />
+                  <TableColumn fx:id="colFechaFin" prefWidth="129.60003662109375" text="Fecha Finalización" />
                </columns>
             </TableView>
          </children>
