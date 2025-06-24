@@ -14,6 +14,7 @@
 
 package sgpp.controlador;
 
+import javafx.scene.control.PasswordField;
 import sgpp.SistemaGestionPracticasProfesionales;
 import sgpp.controlador.usuarios.profesor.FXMLPrincipalProfesorController;
 import sgpp.modelo.IControladorPrincipal;
@@ -43,17 +44,17 @@ public class FXMLInicioSesionController {
     @FXML
     public TextField tfUsuario;
     @FXML
-    public TextField tfContrasena;
-    @FXML
     public Label lbUsuarioRequerido;
     @FXML
     public Label lbContrasenaRequerida;
+    @FXML
+    public PasswordField passFiContrasena;
 
     @FXML
     public void btnIniciarSesion(ActionEvent actionEvent) {
         if (validarCampos()) {
             String username = tfUsuario.getText();
-            String password = tfContrasena.getText();
+            String password = passFiContrasena.getText();
 
             Usuario sesionUsuario = validarCredenciales(username, password);
 
@@ -71,7 +72,7 @@ public class FXMLInicioSesionController {
             lbUsuarioRequerido.setText("*");
             camposValidos = false;
         }
-        if (tfContrasena.getText().isEmpty()) {
+        if (passFiContrasena.getText().isEmpty()) {
             lbContrasenaRequerida.setText("*");
             camposValidos = false;
         }
