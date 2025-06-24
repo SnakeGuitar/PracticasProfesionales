@@ -135,4 +135,9 @@ public class FXMLProyectoController implements Initializable {
             );
         }
     }
+
+    public void clicBtnCancelar(ActionEvent actionEvent) {
+        Stage stage = (Stage) tblProyecto.getScene().getWindow();
+        stage.close();
+    }
 }

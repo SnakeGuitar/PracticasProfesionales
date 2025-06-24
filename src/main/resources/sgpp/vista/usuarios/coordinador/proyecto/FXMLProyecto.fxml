@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.paint.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
@@ -8,33 +10,40 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.coordinador.proyecto.FXMLProyectoController">
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.coordinador.proyecto.FXMLProyectoController">
    <children>
-      <BorderPane prefHeight="781.0" prefWidth="1034.0">
-         <bottom>
-            <HBox prefHeight="59.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#clicBtnRegistrar" prefWidth="150.0" style="-fx-background-color: #5b6fd4;" text="Registrar" textFill="WHITE">
-                     <font>
-                        <Font name="Arial Black" size="15.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="15.0" right="20.0" top="10.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#clicBtnActualizar" prefWidth="150.0" style="-fx-background-color: #5b6fd4;" text="Actualizar" textFill="WHITE">
-                     <font>
-                        <Font name="Arial Black" size="15.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets top="10.0" />
-                     </HBox.margin>
-                  </Button>
-               </children>
-            </HBox>
-         </bottom>
-         <center>
-            <TableView fx:id="tblProyecto" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="117.0" prefWidth="1144.0" styleClass="gradient-background-coordinador" stylesheets="@../../../styles.css">
+         <children>
+            <Label layoutX="28.0" layoutY="31.0" prefHeight="27.0" prefWidth="710.0" text="Sistema de Gestion de Practicas Profesionales">
+               <effect>
+                  <Bloom threshold="0.08" />
+               </effect>
+               <font>
+                  <Font name="Arial Bold Italic" size="24.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop color="#e1e1e1" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+            <Label fx:id="lbNombreProfesor" layoutX="28.0" layoutY="67.0" prefHeight="27.0" text="Coordinador">
+               <font>
+                  <Font name="Arial Italic" size="18.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="0.4368932038834952" endY="1.0">
+                     <stops>
+                        <Stop color="#bfbfbf" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+            <TableView fx:id="tblProyecto" layoutX="28.0" layoutY="136.0" prefHeight="529.0" prefWidth="1088.0">
                <columns>
                   <TableColumn fx:id="colNombre" prefWidth="135.0" text="Nombre" />
                   <TableColumn fx:id="colObjetivoGeneral" prefWidth="117.0" text="Objetivo" />
@@ -43,35 +52,21 @@
                   <TableColumn fx:id="colNombreResponsable" prefWidth="138.0" text="Responsable" />
                   <TableColumn fx:id="colMaxParticipantes" prefWidth="84.0" text="Max Participantes" />
                   <TableColumn fx:id="colFechaInicio" prefWidth="136.0" text="Fecha Inicio" />
-                  <TableColumn fx:id="colFechaFin" prefWidth="134.0" text="Fecha Finalización" />
+                  <TableColumn fx:id="colFechaFin" prefWidth="218.0" text="Fecha Finalización" />
                </columns>
-               <BorderPane.margin>
-                  <Insets left="15.0" right="15.0" />
-               </BorderPane.margin>
             </TableView>
-         </center>
-         <top>
-            <VBox prefHeight="109.0" prefWidth="1031.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Label text="Sistema de Gestión de Practicas Profesionales">
-                     <font>
-                        <Font name="Arial Bold Italic" size="24.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets left="15.0" top="35.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label text="Proyecto">
-                     <font>
-                        <Font name="Arial Italic" size="18.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets left="15.0" />
-                     </VBox.margin>
-                  </Label>
-               </children>
-            </VBox>
-         </top>
-      </BorderPane>
+         </children>
+      </Pane>
+      <Button layoutX="965.0" layoutY="686.0" mnemonicParsing="false" onAction="#clicBtnCancelar" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-font-family: Arial; -fx-font-weight: Bold; -fx-border-radius: 5;" text="Cancelar" />
+      <Button layoutX="190.0" layoutY="686.0" mnemonicParsing="false" onAction="#clicBtnActualizar" prefHeight="31.0" prefWidth="149.0" style="-fx-font-weight: Bold;" styleClass="gradient-background-coordinador" stylesheets="@../../../styles.css" text="Actualizar" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="27.0" layoutY="686.0" mnemonicParsing="false" onAction="#clicBtnRegistrar" prefHeight="31.0" prefWidth="149.0" styleClass="gradient-background-coordinador" stylesheets="@../../../styles.css" text="Registrar" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="15.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
