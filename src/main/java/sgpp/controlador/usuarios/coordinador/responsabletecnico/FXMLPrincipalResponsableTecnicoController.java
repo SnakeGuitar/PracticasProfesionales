@@ -236,14 +236,10 @@ public class FXMLPrincipalResponsableTecnicoController implements Initializable 
     }
 }
 
- 
-
-    @FXML
-    private void BtnRegresar(ActionEvent event) {
-        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+    public void clicBtnCancelar(ActionEvent actionEvent) {
+        Stage stage = (Stage) tblResponsable.getScene().getWindow();
         stage.close();
     }
-
 }
 
 
