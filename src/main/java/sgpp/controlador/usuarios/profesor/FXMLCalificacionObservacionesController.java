@@ -75,10 +75,10 @@ public class FXMLCalificacionObservacionesController {
     }
 
     private void configurarSlider(Slider slider, float valor, int indice) {
-        slider.setValue(valor);
-
         slider.setMax(valor);
         slider.setMin(valor - 1);
+
+        slider.setValue(valor);
 
         slider.valueProperty().addListener((observable, oldValue, newValue) -> {
             float valorRedondeado = redondearValor(newValue.floatValue(), valor);

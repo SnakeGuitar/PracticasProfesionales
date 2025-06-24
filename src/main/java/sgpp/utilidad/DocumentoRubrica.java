@@ -173,8 +173,15 @@ public class DocumentoRubrica {
 
     private static void escribirLineaPorLinea(PDPageContentStream content, String[] lineas) throws IOException {
         for (String linea : lineas) {
-            content.showText(linea);
-            content.newLine();
+            String lineaLimpia = linea.replaceAll("\\r", ""); // Eliminar carriage return
+            String[] sublíneas = lineaLimpia.split("\\n"); // Dividir por line feed
+
+            for (String sublinea : sublíneas) {
+                // Eliminar cualquier otro carácter de control que pueda causar problemas
+                String sublineaFinal = sublinea.replaceAll("[\\x00-\\x08\\x0B\\x0C\\x0E-\\x1F\\x7F]", "");
+                content.showText(sublineaFinal);
+                content.newLine();
+            }
         }
     }
 
