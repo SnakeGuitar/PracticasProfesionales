@@ -1,30 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="sgpp.controlador.usuarios.coordinador.FXMLGenerarDocumentosController"
-            prefWidth="850" prefHeight="500">
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #ffffff;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="sgpp.controlador.usuarios.coordinador.FXMLGenerarDocumentosController">
     <children>
-        <Button fx:id="btnSeleccionarTodos" layoutX="500" layoutY="445"
-        text="Seleccionar Todos" onAction="#seleccionarTodos"/>
 
-        <Label layoutX="30" layoutY="20" text="Generar Documentos de Asignación"
-               style="-fx-font-size: 20px; -fx-font-weight: bold;" />
-
-        <TableView fx:id="tablaAsignaciones" layoutX="30" layoutY="60" prefWidth="790" prefHeight="370">
+        <TableView fx:id="tablaAsignaciones" layoutX="30.0" layoutY="144.0" prefHeight="521.0" prefWidth="966.0">
             <columns>
-                <TableColumn fx:id="colEmpresa" text="Empresa" prefWidth="180"/>
-                <TableColumn fx:id="colProyecto" text="Proyecto" prefWidth="180"/>
-                <TableColumn fx:id="colAlumno" text="Estudiante" prefWidth="180"/>
-                <TableColumn fx:id="colMatricula" text="Matrícula" prefWidth="100"/>
-                <TableColumn fx:id="colSeleccion" text="Seleccionar" prefWidth="100"/>
+                <TableColumn fx:id="colEmpresa" prefWidth="180" text="Empresa" />
+                <TableColumn fx:id="colProyecto" prefWidth="147.0" text="Proyecto" />
+                <TableColumn fx:id="colAlumno" prefWidth="213.0" text="Estudiante" />
+                <TableColumn fx:id="colMatricula" prefWidth="182.0" text="Matrícula" />
+                <TableColumn fx:id="colSeleccion" prefWidth="243.0" text="Seleccionar" />
             </columns>
         </TableView>
-
-        <Button fx:id="btnGenerar" text="Generar Documentos"
-                layoutX="650" layoutY="445"
-                onAction="#generarDocumentos"/>
+      <Pane prefHeight="115.0" prefWidth="1024.0" styleClass="gradient-background-coordinador" stylesheets="@../../../styles.css">
+         <children>
+            <Label layoutX="28.0" layoutY="31.0" prefHeight="27.0" prefWidth="710.0" text="Sistema de Gestion de Practicas Profesionales">
+               <effect>
+                  <Bloom threshold="0.08" />
+               </effect>
+               <font>
+                  <Font name="Arial Bold Italic" size="24.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop color="#e1e1e1" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+            <Label layoutX="28.0" layoutY="67.0" prefHeight="27.0" text="Coordinador">
+               <font>
+                  <Font name="Arial Italic" size="18.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="0.4368932038834952" endY="1.0">
+                     <stops>
+                        <Stop color="#bfbfbf" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+         </children>
+      </Pane>
+      <Button fx:id="btnSeleccionarTodos" layoutX="30.0" layoutY="695.0" mnemonicParsing="false" onAction="#seleccionarTodos" prefHeight="31.0" prefWidth="183.0" styleClass="gradient-background-coordinador" stylesheets="@../../../styles.css" text="Seleccionar todos" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnGenerar" layoutX="229.0" layoutY="695.0" mnemonicParsing="false" onAction="#generarDocumentos" prefHeight="31.0" prefWidth="183.0" styleClass="gradient-background-coordinador" stylesheets="@../../../styles.css" text="Generar documento" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="813.0" layoutY="695.0" mnemonicParsing="false" onAction="#clicBtnCancelar" prefHeight="31.0" prefWidth="183.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-font-family: Arial; -fx-font-weight: Bold; -fx-border-radius: 5;" text="Cancelar" />
     </children>
 </AnchorPane>
