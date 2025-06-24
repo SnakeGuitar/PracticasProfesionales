@@ -102,7 +102,7 @@ public class FXMLPrincipalEstudianteController implements Initializable, IContro
         } catch (IOException | SQLException excepcion) {
             Utilidad.mostrarError(true, excepcion,
                     "Error al cargar autoevaluación",
-                    "No se pudo cargar la ventana de autoevaluación");
+                    "No se pudo cargar la ventana de autoevaluación, es posible que tu expediente no este disponible");
         }
     }
 
