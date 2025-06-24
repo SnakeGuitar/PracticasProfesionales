@@ -11,6 +11,7 @@ import sgpp.modelo.beans.expediente.documentofinal.AutoEvaluacion;
 import sgpp.modelo.dao.entidades.*;
 import sgpp.modelo.dao.expediente.documentofinal.AutoEvaluacionDAO;
 import sgpp.modelo.dao.expediente.presentacion.RubricaPresentacionDAO;
+import sgpp.utilidad.Impresora;
 import sgpp.utilidad.Utilidad;
 
 import java.net.URL;
@@ -284,9 +285,9 @@ public class FXMLAutoevaluacionEstudianteController implements Initializable {
         boolean exitoso = AutoEvaluacionDAO.insertar(autoevaluacion);
 
         if(exitoso) {
-            // TODO: Generar y descargar documento.
             Utilidad.crearAlertaInformacion("Registro exitoso",
                     "Registro de autoevaluación exitosa.");
+            Impresora.descargarAutoEvaluacion(autoevaluacion, btnSubir, idEstudiante);
             Utilidad.cerrarVentana(lbOV);
         } else {
             Utilidad.crearAlertaError("Error",

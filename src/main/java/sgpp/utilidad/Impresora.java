@@ -13,12 +13,10 @@ import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 import org.apache.pdfbox.pdmodel.interactive.form.PDTextField;
 import org.apache.pdfbox.pdmodel.interactive.form.PDCheckBox;
 import sgpp.modelo.beans.Proyecto;
+import sgpp.modelo.beans.expediente.documentofinal.AutoEvaluacion;
 import sgpp.modelo.beans.expediente.documentoinicial.TablaAsignacion;
 import sgpp.modelo.beans.expediente.presentacion.RubricaPresentacion;
-import sgpp.modelo.dao.entidades.EstudianteDAO;
-import sgpp.modelo.dao.entidades.OrganizacionVinculadaDAO;
-import sgpp.modelo.dao.entidades.PeriodoDAO;
-import sgpp.modelo.dao.entidades.ProyectoDAO;
+import sgpp.modelo.dao.entidades.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -31,6 +29,7 @@ import java.util.Locale;
 
 public class Impresora {
 
+    // Métodos para rúbrica de presentación.
     public static void descargarRubrica(RubricaPresentacion rubrica, Control componente, int idEstudiante) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Descargar documento");
@@ -38,13 +37,12 @@ public class Impresora {
         //Generar un nombre apropiado
 
         String nombreSugerido = String.format(
-                "Evaluacion_%s_%s.pdf",
+                "Evaluacion-Presentacion_%s_%s.pdf",
                 recuperarNombreDeEstudiante(idEstudiante).replace(" ", ""),
                 rubrica.getFechaHora().format(DateTimeFormatter.ofPattern("dd_MM_yyyy")));
+
         //Configurar el filechooser
-        fileChooser.setInitialFileName(nombreSugerido);
-        fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Documento PDF", "*.pdf"));
+        configurarFileChooser(fileChooser, nombreSugerido);
 
         Stage stage = Utilidad.getEscenarioComponente(componente);
         File destino = fileChooser.showSaveDialog(stage);
@@ -87,6 +85,7 @@ public class Impresora {
                     "Formato: RÚBRICA DE PRESENTACIÓN ORAL DEL INFORME PARCIAL",
                     "EE PRÁCTICAS PROFESIONALES DE INGENIERÍA DE SOFTWARE"
             };
+
             escribirLineaPorLinea(content, encabezado);
 
             int idProyecto = recuperarIdProyecto(rubrica.getIdEstudiante());
@@ -99,6 +98,7 @@ public class Impresora {
                     "Fecha del reporte: "+rubrica.getFechaHora().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")),
                     "Evaluador(a): "+rubrica.getEvaluador().getNombre()
             };
+
             content.newLine();
             escribirLineaPorLinea(content, datosDelProyecto);
 
@@ -118,6 +118,7 @@ public class Impresora {
                         String.format("CONTENIDO: %s (%s)", criterioContenido, criterios[3]),
                         String.format("ORTOGRAFÍA Y REDACCIÓN: %s (%s)", criterioOrtografia, criterios[4])
                 };
+
                 content.newLine();
                 escribirLineaPorLinea(content, evaluacionCriterios);
             }
@@ -128,6 +129,7 @@ public class Impresora {
                     "OBSERVACIONES Y COMENTARIOS",
                     rubrica.getObservaciones()
             };
+
             escribirLineaPorLinea(content, cierre);
 
             content.endText();
@@ -135,6 +137,141 @@ public class Impresora {
             document.save(baos);
             return baos.toByteArray();
         }
+    }
+
+    // Métodos para rúbrica de presentación.
+    public static void descargarAutoEvaluacion(AutoEvaluacion autoEvaluacion, Control componente, int idEstudiante) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Descargar documento");
+
+        //Generar un nombre apropiado
+
+        String nombreSugerido = String.format(
+                "Autoevaluacion_%s_%s.pdf",
+                recuperarNombreDeEstudiante(idEstudiante).replace(" ", ""),
+                autoEvaluacion.getFechaHora().format(DateTimeFormatter.ofPattern("dd_MM_yyyy")));
+
+        //Configurar el filechooser
+        configurarFileChooser(fileChooser, nombreSugerido);
+
+        Stage stage = Utilidad.getEscenarioComponente(componente);
+        File destino = fileChooser.showSaveDialog(stage);
+
+        //Guardar el archivo en el destino
+        try {
+            byte[] pdf = Impresora.generarAutoEvaluacion(autoEvaluacion);
+            Files.write(destino.toPath(), pdf);
+            Utilidad.crearAlertaInformacion(
+                    "Exito",
+                    "Documento descargado exitosamente a: \n"+destino.getAbsolutePath()
+            );
+        } catch (IOException ioex) {
+            System.out.println(ioex.getMessage());
+            Utilidad.crearAlertaError(
+                    "Error",
+                    "Lo sentimos, no fue posible guardar la autoevaluación en su dispositivo");
+        }
+    }
+
+    /**
+     * Convierta la rubrica en un PDF
+     */
+    private static byte[] generarAutoEvaluacion(AutoEvaluacion autoEvaluacion) throws IOException {
+        try (PDDocument document = new PDDocument();
+             ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            PDPage page = new PDPage(PDRectangle.LETTER);
+            document.addPage(page);
+
+            PDPageContentStream content = new PDPageContentStream(document, page);
+
+            content.beginText();
+            content.setFont(PDType1Font.HELVETICA, 11);
+            content.setLeading(14.5f);
+            content.newLineAtOffset(50, 700);
+
+            String[] encabezado = {
+                    "FACULTAD DE ESTADÍSTICA E INFORMÁTICA",
+                    "Licenciatura en Ingenería de Software",
+                    "Formato: EVALUACIÓN DEL ALUMNO",
+                    "EE PRÁCTICAS PROFESIONALES DE INGENIERÍA DE SOFTWARE"
+            };
+
+            escribirLineaPorLinea(content, encabezado);
+
+            int idProyecto = recuperarIdProyecto(autoEvaluacion.getIdEstudiante());
+            String[] datosDelProyecto = {
+                    "Datos del Proyecto",
+                    "Alumno(a): " + recuperarNombreDeEstudiante(autoEvaluacion.getIdEstudiante()),
+                    "Matricula" + recuperarMatriculaDeEstudiante(autoEvaluacion.getIdEstudiante()),
+                    "Proyecto: " + recuperarNombreDeProyecto(autoEvaluacion.getIdEstudiante()),
+                    "Organizacion Vinculada: " + recuperarNombreDeOV(idProyecto),
+                    "Responsable del proyecto: " + recuperarNombreDeResponsable(autoEvaluacion.getIdResponsable()),
+                    "Departamento: " + recuperarDepartamento(autoEvaluacion.getIdResponsable()),
+                    "Periodo del reporte: " + recuperarAbreviaturaPerido(autoEvaluacion.getIdPeriodo()),
+                    "Fecha del reporte: " + autoEvaluacion.getFechaHora().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))
+            };
+
+            content.newLine();
+            escribirLineaPorLinea(content, datosDelProyecto);
+
+            int[] criterios = autoEvaluacion.getCriterios();
+            if (criterios != null && criterios.length == 10) {
+                String criterio1 = obtenerPuntaje(criterios[0]);
+                String criterio2 = obtenerPuntaje(criterios[1]);
+                String criterio3 = obtenerPuntaje(criterios[2]);
+                String criterio4 = obtenerPuntaje(criterios[3]);
+                String criterio5 = obtenerPuntaje(criterios[4]);
+                String criterio6 = obtenerPuntaje(criterios[5]);
+                String criterio7 = obtenerPuntaje(criterios[6]);
+                String criterio8 = obtenerPuntaje(criterios[7]);
+                String criterio9 = obtenerPuntaje(criterios[8]);
+                String criterio10 = obtenerPuntaje(criterios[9]);
+
+                String[] evaluacionCriterios = {
+                        String.format("Mi participación en la Organización Vinculada fue productiva: %s (%s)",
+                                criterio1, criterios[0]),
+                        String.format("Logré la aplicación de los conocimientos teórico-prácticos adquiridos en la Licenciatura en Ingeniería\n de Software: %s (%s)",
+                                criterio2, criterios[1]),
+                        String.format("Me sentí seguro al realizar las actividades encomendadas: %s (%s)",
+                                criterio3, criterios[2]),
+                        String.format("Las actividades encomendadas despertaron mi interés: %s (%s)",
+                                criterio4, criterios[3]),
+                        String.format("La Organización Vinculada me proporcionó la información y facilidades adecuados durante el desarrollo\n de las prácticas: %s (%s)",
+                                criterio5, criterios[4]),
+                        String.format("La Organización Vinculada me dio a conocer las reglas internas que debía seguir al conducirme\n durante el desarrollo de las prácticas: %s (%s)",
+                                criterio6, criterios[5]),
+                        String.format("El Responsable del Proyecto me orientó correctamente para el desarrollo de mis actividades: %s (%s)",
+                                criterio7, criterios[6]),
+                        String.format("El Responsable del Proyecto realizó un seguimiento efectivo de mis actividades: %s (%s)",
+                                criterio8, criterios[7]),
+                        String.format("El proyecto es congruente con la formación de mi carrera: %s (%s)",
+                                criterio9, criterios[8]),
+                        String.format("Considero que las prácticas son importantes para mi formación profesional: %s (%s)",
+                                criterio10, criterios[9]),
+                };
+
+                content.newLine();
+                escribirLineaPorLinea(content, evaluacionCriterios);
+            }
+
+            content.newLine();
+            String[] cierre = {
+                    String.format("PUNTUACION FINAL: %s", autoEvaluacion.getPuntuacionFinal())
+            };
+
+            escribirLineaPorLinea(content, cierre);
+
+            content.endText();
+            content.close();
+            document.save(baos);
+            return baos.toByteArray();
+        }
+    }
+
+    private static void configurarFileChooser(FileChooser fileChooser, String nombreSugerido) {
+        fileChooser.setInitialFileName(nombreSugerido);
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Documento PDF", "*.pdf"));
     }
 
     private static void llenarCampoTexto(PDAcroForm acroForm, String nombreCampo, String valor) {
@@ -174,6 +311,17 @@ public class Impresora {
         else return "NO COMPETENTE";
     }
 
+    private static String obtenerPuntaje(int criterio) {
+        return switch (criterio) {
+            case 1 -> "TOTALMENTE EN DESACUERDO";
+            case 2 -> "EN DESACUERDO";
+            case 3 -> "INDECISO";
+            case 4 -> "DE ACUERDO";
+            case 5 -> "TOTALMENTE DE ACUERDO";
+            default -> "NULL";
+        };
+    }
+
     private static void escribirLineaPorLinea(PDPageContentStream content, String[] lineas) throws IOException {
         for (String linea : lineas) {
             String lineaLimpia = linea.replaceAll("\\r", ""); // Eliminar carriage return
@@ -198,15 +346,44 @@ public class Impresora {
         return nombreEstudiante;
     }
 
+    private static String recuperarMatriculaDeEstudiante(int idEstudiante) {
+        String matriculaEstudiante = "";
+        try {
+            matriculaEstudiante = EstudianteDAO.obtenerPorId(idEstudiante).getMatricula();
+        } catch (SQLException sqlex) {
+            System.err.println("Error al recuperar la matrícula del estudiante: " + sqlex.getMessage());
+        }
+        return matriculaEstudiante;
+    }
+
     private static String recuperarNombreDeOV(int idProyecto) {
         String nombreOV = "";
         try {
-
             nombreOV = OrganizacionVinculadaDAO.obtenerPorAsocionAProyecto(idProyecto).getNombre();
         } catch (SQLException sqlex) {
             System.err.println("Error al recuperar el nombre de la OV "+sqlex.getMessage());
         }
         return nombreOV;
+    }
+
+    private static String recuperarNombreDeResponsable(int idResponsable) {
+        String nombreResponsable = "";
+        try {
+            nombreResponsable = ResponsableTecnicoDAO.obtenerPorId(idResponsable).getNombre();
+        } catch (SQLException sqlex) {
+            System.err.println("Error al recuperar el nombre del responsable técnico "+sqlex.getMessage());
+        }
+        return nombreResponsable;
+    }
+
+    private static String recuperarDepartamento(int idResponsable) {
+        String departamento = "";
+        try {
+            departamento = ResponsableTecnicoDAO.obtenerPorId(idResponsable).getDepartamento();
+        } catch (SQLException sqlex) {
+            System.err.println("Error al recuperar el departamento del responsable técnico "+sqlex.getMessage());
+        }
+        return departamento;
     }
 
     private static String recuperarNombreDeProyecto(int idEstudiante) {

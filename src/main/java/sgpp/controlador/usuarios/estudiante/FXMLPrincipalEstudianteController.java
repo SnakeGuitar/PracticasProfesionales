@@ -35,6 +35,7 @@ import sgpp.modelo.beans.expediente.documentofinal.AutoEvaluacion;
 import sgpp.modelo.dao.entidades.EstudianteDAO;
 import sgpp.modelo.dao.entidades.PeriodoDAO;
 import sgpp.modelo.dao.expediente.documentofinal.AutoEvaluacionDAO;
+import sgpp.utilidad.Impresora;
 import sgpp.utilidad.UtilFXML;
 import sgpp.utilidad.Utilidad;
 
@@ -119,7 +120,7 @@ public class FXMLPrincipalEstudianteController implements Initializable, IContro
                         "El estudiante ya cuenta con una autoevaluación.\n" +
                                 "¿Deseas descargarla?");
                 if(descargar) {
-                    // TODO: Generar y descargar documento.
+                    Impresora.descargarAutoEvaluacion(autoEvaluacion, lbNombreEstudiante, estudiante.getIdEstudiante());
                 }
             }
         } catch (SQLException sqlex) {
