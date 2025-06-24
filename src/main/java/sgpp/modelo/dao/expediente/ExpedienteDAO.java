@@ -10,41 +10,6 @@ import java.util.ArrayList;
 
 public class ExpedienteDAO {
 
-    // Método CREATE - Insertar nuevo expediente
-    public static boolean insertar(Expediente expediente) throws SQLException {
-        boolean exitoso = false;
-        Connection conexion = null;
-        PreparedStatement sentencia = null;
-
-        String consulta = "INSERT INTO expediente (ID_Estudiante, ID_Periodo, estado, horas_acumuladas) VALUES (?, ?, ?, ?)";
-
-        try {
-            conexion = ConexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(consulta);
-
-            sentencia.setInt(1, expediente.getIdEstudiante());
-            sentencia.setInt(2, expediente.getIdPeriodo());
-            sentencia.setString(3, expediente.getEstado().toString());
-            sentencia.setInt(4, expediente.getHorasAcumuladas());
-
-            int filas = sentencia.executeUpdate();
-
-            if (filas > 0) {
-                Utilidad.crearAlertaInformacion("Registro exitoso",
-                        "Expediente registrado exitosamente.");
-                return true;
-            } else {
-                throw new SQLException();
-            }
-        } catch (SQLException e) {
-            Utilidad.mostrarErrorBD(true, e);
-        } finally {
-            ConexionBD.cerrarConexion(conexion, sentencia, null);
-        }
-
-        return exitoso;
-    }
-
     // Método READ - Obtener expediente por ID de estudiante y periodo
     public static Expediente obtenerPorId(int idEstudiante, int idPeriodo) throws SQLException {
         Connection conexion = null;
@@ -110,7 +75,7 @@ public class ExpedienteDAO {
         Connection conexion = null;
         PreparedStatement sentencia = null;
 
-        String consulta = "UPDATE expediente SET estado = ?, horas_acumuladas = ? WHERE ID_Estudiante = ? AND ID_Periodo = ?";
+        String consulta = "UPDATE expediente SET estado = ?, horas_acumuladas = horas_acumuladas + ? WHERE ID_Estudiante = ? AND ID_Periodo = ?";
 
         try {
             conexion = ConexionBD.abrirConexion();
@@ -129,40 +94,6 @@ public class ExpedienteDAO {
                 exitoso = true;
             } else {
                 throw new SQLException("No se pudo actualizar el expediente");
-            }
-
-        } catch (SQLException e) {
-            Utilidad.mostrarErrorBD(true, e);
-        } finally {
-            ConexionBD.cerrarConexion(conexion, sentencia, null);
-        }
-
-        return exitoso;
-    }
-
-    // Método DELETE - Eliminar expediente
-    public static boolean eliminar(int idEstudiante, int idPeriodo) throws SQLException {
-        boolean exitoso = false;
-        Connection conexion = null;
-        PreparedStatement sentencia = null;
-
-        String consulta = "DELETE FROM expediente WHERE ID_Estudiante = ? AND ID_Periodo = ?";
-
-        try {
-            conexion = ConexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(consulta);
-
-            sentencia.setInt(1, idEstudiante);
-            sentencia.setInt(2, idPeriodo);
-
-            int filas = sentencia.executeUpdate();
-
-            if (filas > 0) {
-                Utilidad.crearAlertaInformacion("Eliminación exitosa",
-                        "Expediente eliminado exitosamente.");
-                exitoso = true;
-            } else {
-                throw new SQLException("No se pudo eliminar el expediente");
             }
 
         } catch (SQLException e) {

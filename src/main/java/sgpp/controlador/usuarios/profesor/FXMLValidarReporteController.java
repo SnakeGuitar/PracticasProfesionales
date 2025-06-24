@@ -28,23 +28,31 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.stage.FileChooser;
 import sgpp.modelo.beans.Estudiante;
+import sgpp.modelo.beans.expediente.EstadoExpediente;
+import sgpp.modelo.beans.expediente.Expediente;
 import sgpp.modelo.beans.expediente.reporte.EntregaReporteMensual;
+import sgpp.modelo.beans.expediente.reporte.ReporteMensual;
 import sgpp.modelo.dao.entidades.EstudianteDAO;
+import sgpp.modelo.dao.entidades.PeriodoDAO;
+import sgpp.modelo.dao.expediente.ExpedienteDAO;
 import sgpp.modelo.dao.expediente.documentoparcial.EntregaReporteMensualDAO;
 import sgpp.modelo.dao.expediente.documentoparcial.ReporteMensualDAO;
 import sgpp.utilidad.Utilidad;
 
 import java.io.FileOutputStream;
 import java.net.URL;
-import java.sql.*;
+import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
-import javafx.stage.Stage;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.ResourceBundle;
 
 public class FXMLValidarReporteController implements Initializable {
 
+    @FXML private Label lbTitulo;
     @FXML private TableView<EntregaReporteMensual> tablaEntregas;
-    @FXML private TableColumn<EntregaReporteMensual, Integer> colID;
     @FXML private TableColumn<EntregaReporteMensual, String>  colEstudiante;
     @FXML private TableColumn<EntregaReporteMensual, Integer> colReporte;
     @FXML private TableColumn<EntregaReporteMensual, String>  colFechaEntrega;
@@ -52,7 +60,6 @@ public class FXMLValidarReporteController implements Initializable {
     @FXML private TableColumn<EntregaReporteMensual, Integer> colHoras;
     @FXML private Button btnValidar, btnRechazar;
 
-    private static final int ID_PERIODO = 4;
     private static final DateTimeFormatter DF = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     private final ObservableList<EntregaReporteMensual> DATOS = FXCollections.observableArrayList();
@@ -65,6 +72,7 @@ public class FXMLValidarReporteController implements Initializable {
         cargarHorasReportadas();
         configurarColumnas();
         cargarDatos();
+        colocarTitulo();
 
         tablaEntregas.setRowFactory(tv -> {
             TableRow<EntregaReporteMensual> row = new TableRow<>();
@@ -79,7 +87,9 @@ public class FXMLValidarReporteController implements Initializable {
 
     private void cargarMapaEstudiantes() {
         try {
-            for (Estudiante e : EstudianteDAO.obtenerEstudiantes()) {
+            int idPeriodo = PeriodoDAO.obtenerPeriodoActual().getIdPeriodo();
+            List<Estudiante> estudiantes = EstudianteDAO.obtenerEstudiantesPorPeriodo(idPeriodo);
+            for (Estudiante e : estudiantes) {
                 MAPA_ESTUDIANTES.put(e.getIdEstudiante(), e.getNombre());
             }
         } catch (SQLException ex) {
@@ -88,12 +98,10 @@ public class FXMLValidarReporteController implements Initializable {
     }
 
     private void cargarHorasReportadas() {
-        try (Connection con = sgpp.modelo.ConexionBD.abrirConexion();
-             PreparedStatement ps = con.prepareStatement(
-                     "SELECT ID_Entrega_Reporte, horas_reportadas FROM reporte_mensual")) {
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                MAPA_HORAS.put(rs.getInt("ID_Entrega_Reporte"), rs.getInt("horas_reportadas"));
+        try {
+            List<ReporteMensual> reportes = ReporteMensualDAO.obtenerTodos();
+            for (ReporteMensual reporte : reportes) {
+                MAPA_HORAS.put(reporte.getIdEntregaReporte(), reporte.getHorasReportadas());
             }
         } catch (SQLException e) {
             Utilidad.mostrarErrorBD(true, e);
@@ -101,7 +109,6 @@ public class FXMLValidarReporteController implements Initializable {
     }
 
     private void configurarColumnas() {
-        colID.setCellValueFactory(c -> new javafx.beans.property.ReadOnlyObjectWrapper<>(c.getValue().getIdEntregaReporte()));
 
         colReporte.setCellValueFactory(c -> new javafx.beans.property.ReadOnlyObjectWrapper<>(c.getValue().getNumReporte()));
 
@@ -129,7 +136,8 @@ public class FXMLValidarReporteController implements Initializable {
     private void cargarDatos() {
         DATOS.clear();
         try {
-            DATOS.addAll(EntregaReporteMensualDAO.obtenerPorPeriodo(ID_PERIODO));
+            int idPeriodo = PeriodoDAO.obtenerPeriodoActual().getIdPeriodo();
+            DATOS.addAll(EntregaReporteMensualDAO.obtenerPorPeriodo(idPeriodo));
             tablaEntregas.setItems(DATOS);
         } catch (SQLException ex) {
             Utilidad.mostrarErrorBD(true, ex);
@@ -161,15 +169,35 @@ public class FXMLValidarReporteController implements Initializable {
         dlg.setHeaderText("Observaciones (opcional)");
         dlg.setContentText("Escribe un comentario:");
         Optional<String> obsOpt = dlg.showAndWait();
-        if (obsOpt.isEmpty()) return;
+        if (obsOpt.isEmpty()) {
+            return;
+        }
 
         if (!Utilidad.crearAlertaConfirmacion(
                 "Confirmar " + nuevoEstado,
-                "¿Seguro que deseas marcar la entrega como " + nuevoEstado + "?")) return;
+                "¿Seguro que deseas marcar la entrega como " + nuevoEstado + "?")) {
+            return;
+        }
 
         try {
             boolean ok = ReporteMensualDAO.actualizarEstado(
                     sel.getIdEntregaReporte(), nuevoEstado, obsOpt.get());
+            if (ok && nuevoEstado.equals("Aceptado")) {
+                int horas = MAPA_HORAS.getOrDefault(sel.getIdEntregaReporte(), 0);
+                int idEstudiante = sel.getIdEstudiante();
+                int idPerodo = sel.getIdPeriodo();
+                Expediente expediente = new Expediente();
+                expediente.setEstado(EstadoExpediente.Activo);
+                expediente.setHorasAcumuladas(horas);
+                expediente.setIdEstudiante(idEstudiante);
+                expediente.setIdPeriodo(idPerodo);
+                boolean actualizacion = ExpedienteDAO.actualizar(expediente);
+                if (!actualizacion) {
+                    Utilidad.crearAlertaAdvertencia(
+                            "Error",
+                            "No fue posible actualizar las horas del expediente del estudiante.");
+                }
+            }
             if (ok) {
                 Utilidad.crearAlertaInformacion("Guardado",
                         "Se actualizó el estado a " + nuevoEstado + ".");
@@ -185,27 +213,25 @@ public class FXMLValidarReporteController implements Initializable {
     }
 
     private String estadoActual(EntregaReporteMensual er) {
-        try (Connection c = sgpp.modelo.ConexionBD.abrirConexion()) {
-            PreparedStatement ps = c.prepareStatement(
-                    "SELECT estado FROM reporte_mensual WHERE ID_Entrega_Reporte = ?");
-            ps.setInt(1, er.getIdEntregaReporte());
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) return rs.getString("estado");
-        } catch (SQLException ignored) {}
+        try {
+            ReporteMensual reporte = ReporteMensualDAO.obtenerReportePorExpediente(er.getIdEntregaReporte());
+            if (reporte != null) {
+                return reporte.getEstado().toString();
+            }
+        } catch (SQLException sqlex) {
+            System.out.println(sqlex.getMessage());
+        }
         return "Pendiente";
     }
 
     private void descargarPDF(EntregaReporteMensual er) {
-        try (Connection c = sgpp.modelo.ConexionBD.abrirConexion()) {
-            PreparedStatement ps = c.prepareStatement(
-                    "SELECT reporte FROM reporte_mensual WHERE ID_Entrega_Reporte = ?");
-            ps.setInt(1, er.getIdEntregaReporte());
-            ResultSet rs = ps.executeQuery();
-            if (!rs.next() || rs.getBytes("reporte") == null) {
+        try {
+            ReporteMensual reporte = ReporteMensualDAO.obtenerReportePorExpediente(er.getIdEntregaReporte());
+            if (reporte == null) {
                 Utilidad.crearAlertaAdvertencia("Sin archivo", "Esta entrega aún no ha subido un PDF.");
                 return;
             }
-            byte[] pdf = rs.getBytes("reporte");
+            byte[] pdf = reporte.getDocumento();
 
             FileChooser fc = new FileChooser();
             fc.setTitle("Guardar PDF");
@@ -222,15 +248,21 @@ public class FXMLValidarReporteController implements Initializable {
             Utilidad.mostrarErrorBD(true, ex);
         }
     }
-    
-@FXML
-private void volverAtras(ActionEvent event) {
-    ((Stage) tablaEntregas.getScene().getWindow()).close();
-}
 
-    @FXML
-    private void btnRegresar(ActionEvent event) {
+    private void colocarTitulo() {
+        String abreviaturaPeriodo = "Periodo Desconocido";
+        try {
+             abreviaturaPeriodo = PeriodoDAO.obtenerPeriodoActual().getAbreviatura();
+        } catch (SQLException sqlex) {
+            Utilidad.crearAlertaAdvertencia(
+                    "Error",
+                    "No se pudo obtener el periodo actual");
+        }
+        lbTitulo.setText(abreviaturaPeriodo);
     }
-
-
+    
+    @FXML
+    private void volverAtras(ActionEvent event) {
+        Utilidad.cerrarVentana(btnValidar);
+    }
 }
