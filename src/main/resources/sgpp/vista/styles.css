@@ -9,3 +9,7 @@
 .gradient-background-profesor {
     -fx-background-color: linear-gradient(to bottom right, #2a2b2a, #a7eeb0);
 }
+
+.gradient-background-expediente {
+    -fx-background-color: linear-gradient(to bottom right, #c0d5fb, #dc8bb8)
+}
