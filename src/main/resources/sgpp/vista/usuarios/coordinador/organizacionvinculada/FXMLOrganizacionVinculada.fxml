@@ -13,27 +13,26 @@
    <children>
       <TableView fx:id="tblOV" layoutX="43.0" layoutY="147.0" prefHeight="507.0" prefWidth="939.0">
         <columns>
-          <TableColumn fx:id="colId" prefWidth="45.0" text="ID" />
           <TableColumn fx:id="colNombre" prefWidth="105.0" text="Nombre" />
             <TableColumn fx:id="colSector" prefWidth="75.0" text="Sector" />
             <TableColumn fx:id="colCorreo" prefWidth="146.0" text="Correo" />
             <TableColumn fx:id="colTelefono" prefWidth="114.0" text="Telefono" />
             <TableColumn fx:id="colDireccion" prefWidth="247.0" text="Direccion" />
             <TableColumn fx:id="colCiudad" prefWidth="98.0" text="Ciudad" />
-            <TableColumn fx:id="colEstado" prefWidth="108.0" text="Estado" />
+            <TableColumn fx:id="colEstado" prefWidth="153.0" text="Estado" />
         </columns>
       </TableView>
-      <Button layoutX="41.0" layoutY="688.0" mnemonicParsing="false" onAction="#clicBtnRegistrarOV" prefHeight="31.0" prefWidth="149.0" styleClass="gradient-background-coordinador" stylesheets="@../../../styles.css" text="Registrar" textFill="WHITE">
+      <Button layoutX="43.0" layoutY="688.0" mnemonicParsing="false" onAction="#clicBtnRegistrarOV" prefHeight="31.0" prefWidth="149.0" styleClass="gradient-background-coordinador" stylesheets="@../../../styles.css" text="Registrar" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font>
       </Button>
-      <Button layoutX="205.0" layoutY="688.0" mnemonicParsing="false" onAction="#clicBtnActualizarOV" prefHeight="31.0" prefWidth="149.0" style="-fx-font-weight: Bold;" styleClass="gradient-background-coordinador" stylesheets="@../../../styles.css" text="Actualizar" textFill="WHITE">
+      <Button layoutX="213.0" layoutY="688.0" mnemonicParsing="false" onAction="#clicBtnActualizarOV" prefHeight="31.0" prefWidth="149.0" style="-fx-font-weight: Bold;" styleClass="gradient-background-coordinador" stylesheets="@../../../styles.css" text="Actualizar" textFill="WHITE">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
       </Button>
-      <Button layoutX="369.0" layoutY="688.0" mnemonicParsing="false" onAction="#clicBtnEliminarOV" prefHeight="31.0" prefWidth="149.0" style="-fx-font-weight: Bold;" styleClass="gradient-background-coordinador" stylesheets="@../../../styles.css" text="Eliminar" textFill="WHITE">
+      <Button layoutX="382.0" layoutY="688.0" mnemonicParsing="false" onAction="#clicBtnEliminarOV" prefHeight="31.0" prefWidth="149.0" style="-fx-font-weight: Bold;" styleClass="gradient-background-coordinador" stylesheets="@../../../styles.css" text="Eliminar" textFill="WHITE">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
@@ -69,8 +68,21 @@
                   </LinearGradient>
                </textFill>
             </Label>
+            <Label layoutX="963.0" layoutY="67.0" prefHeight="27.0" text="OV">
+               <font>
+                  <Font name="Arial Italic" size="18.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="0.4368932038834952" endY="1.0">
+                     <stops>
+                        <Stop color="#bfbfbf" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
          </children>
       </Pane>
-      <Button layoutX="828.0" layoutY="688.0" mnemonicParsing="false" onAction="#clicBtnCancelar" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-font-family: Arial; -fx-font-weight: Bold; -fx-border-radius: 5;" text="Cancelar" />
+      <Button layoutX="830.0" layoutY="688.0" mnemonicParsing="false" onAction="#clicBtnCancelar" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-font-family: Arial; -fx-font-weight: Bold; -fx-border-radius: 5;" text="Cancelar" />
    </children>
 </AnchorPane>
