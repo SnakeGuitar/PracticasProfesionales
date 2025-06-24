@@ -75,7 +75,7 @@ public class ExpedienteDAO {
         Connection conexion = null;
         PreparedStatement sentencia = null;
 
-        String consulta = "UPDATE expediente SET estado = ?, horas_acumuladas = ? WHERE ID_Estudiante = ? AND ID_Periodo = ?";
+        String consulta = "UPDATE expediente SET estado = ?, horas_acumuladas = horas_acumuladas + ? WHERE ID_Estudiante = ? AND ID_Periodo = ?";
 
         try {
             conexion = ConexionBD.abrirConexion();

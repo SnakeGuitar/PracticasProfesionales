@@ -28,10 +28,13 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.stage.FileChooser;
 import sgpp.modelo.beans.Estudiante;
+import sgpp.modelo.beans.expediente.EstadoExpediente;
+import sgpp.modelo.beans.expediente.Expediente;
 import sgpp.modelo.beans.expediente.reporte.EntregaReporteMensual;
 import sgpp.modelo.beans.expediente.reporte.ReporteMensual;
 import sgpp.modelo.dao.entidades.EstudianteDAO;
 import sgpp.modelo.dao.entidades.PeriodoDAO;
+import sgpp.modelo.dao.expediente.ExpedienteDAO;
 import sgpp.modelo.dao.expediente.documentoparcial.EntregaReporteMensualDAO;
 import sgpp.modelo.dao.expediente.documentoparcial.ReporteMensualDAO;
 import sgpp.utilidad.Utilidad;
@@ -166,17 +169,34 @@ public class FXMLValidarReporteController implements Initializable {
         dlg.setHeaderText("Observaciones (opcional)");
         dlg.setContentText("Escribe un comentario:");
         Optional<String> obsOpt = dlg.showAndWait();
-        if (obsOpt.isEmpty()) return;
+        if (obsOpt.isEmpty()) {
+            return;
+        }
 
         if (!Utilidad.crearAlertaConfirmacion(
                 "Confirmar " + nuevoEstado,
-                "¿Seguro que deseas marcar la entrega como " + nuevoEstado + "?")) return;
+                "¿Seguro que deseas marcar la entrega como " + nuevoEstado + "?")) {
+            return;
+        }
 
         try {
             boolean ok = ReporteMensualDAO.actualizarEstado(
                     sel.getIdEntregaReporte(), nuevoEstado, obsOpt.get());
-            if (nuevoEstado.equals("Aceptado")) {
-
+            if (ok && nuevoEstado.equals("Aceptado")) {
+                int horas = MAPA_HORAS.getOrDefault(sel.getIdEntregaReporte(), 0);
+                int idEstudiante = sel.getIdEstudiante();
+                int idPerodo = sel.getIdPeriodo();
+                Expediente expediente = new Expediente();
+                expediente.setEstado(EstadoExpediente.Activo);
+                expediente.setHorasAcumuladas(horas);
+                expediente.setIdEstudiante(idEstudiante);
+                expediente.setIdPeriodo(idPerodo);
+                boolean actualizacion = ExpedienteDAO.actualizar(expediente);
+                if (!actualizacion) {
+                    Utilidad.crearAlertaAdvertencia(
+                            "Error",
+                            "No fue posible actualizar las horas del expediente del estudiante.");
+                }
             }
             if (ok) {
                 Utilidad.crearAlertaInformacion("Guardado",
