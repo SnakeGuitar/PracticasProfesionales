@@ -282,12 +282,12 @@ public class DocumentoParcialDAO {
                 resultado = sentencia.executeQuery();
                 while (resultado.next()) {
                     DocumentoParcial documentoParcial = new DocumentoParcial();
-                    documentoParcial.setIdDocumento(resultado.getInt("id_documento_parcial"));
+                    documentoParcial.setIdDocumento(resultado.getInt("id_doc_parcial"));
                     documentoParcial.setFechaEntrega(UtilidadFormatoDeDatos.stringToLocalDateTime(resultado.getString("fecha_entrega")));
                     documentoParcial.setTipo(TipoDocumentoParcial.valueOf(resultado.getString("tipo")));
                     documentoParcial.setEstado(EstadoDocumento.valueOf(resultado.getString("estado")));
                     documentoParcial.setDocumento(resultado.getBytes("documento"));
-                    documentoParcial.setIdEntregaDocumento(resultado.getInt("id_entrega_documento_parcial"));
+                    documentoParcial.setIdEntregaDocumento(resultado.getInt("id_entrega_doc_parcial"));
                     documentosParciales.add(documentoParcial);
                 }
             } else {

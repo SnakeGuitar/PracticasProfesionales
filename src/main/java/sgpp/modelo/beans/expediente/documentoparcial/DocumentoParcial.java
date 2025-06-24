@@ -50,8 +50,8 @@ public class DocumentoParcial extends Documento {
     @Override
     public String toString() {
         return switch (tipo) {
-            case REPORTE_PARCIAL -> "Reporte Parcial";
-            case EVALUACION_PARCIAL_POR_OV -> "Evaluacion parcial por OV";
+            case ReporteParcial -> "Reporte Parcial";
+            case EvaluacionParcialPorOV -> "Evaluacion parcial por OV";
             default -> super.toString();
         };
     }

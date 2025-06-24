@@ -174,12 +174,12 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
 
     @FXML
     public void btnReporteParcial(ActionEvent actionEvent) {
-        manejarDocumentoParcial(TipoDocumentoParcial.REPORTE_PARCIAL);
+        manejarDocumentoParcial(TipoDocumentoParcial.ReporteParcial);
     }
 
     @FXML
     public void btnEvaluacionParcialOV(ActionEvent actionEvent) {
-        manejarDocumentoParcial(TipoDocumentoParcial.EVALUACION_PARCIAL_POR_OV);
+        manejarDocumentoParcial(TipoDocumentoParcial.EvaluacionParcialPorOV);
     }
 
     @FXML
