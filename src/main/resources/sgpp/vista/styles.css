@@ -1,0 +1,11 @@
+.gradient-background-coordinador {
+    -fx-background-color: linear-gradient(to bottom right, #121c84, #8278d4);
+}
+
+.gradient-background-estudiante {
+    -fx-background-color: linear-gradient(to bottom right, #fdabdd, #374a5a);
+}
+
+.gradient-background-profesor {
+    -fx-background-color: linear-gradient(to bottom right, #2a2b2a, #a7eeb0);
+}
