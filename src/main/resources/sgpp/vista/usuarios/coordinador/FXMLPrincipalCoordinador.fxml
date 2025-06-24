@@ -114,7 +114,7 @@
                   </Button>
                </children>
             </Pane>
-            <ImageView fitHeight="39.0" fitWidth="41.0" layoutX="962.0" layoutY="26.0" onMouseClicked="#clicImgViCerrarSesio" opacity="0.75" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="39.0" fitWidth="41.0" layoutX="962.0" layoutY="26.0" onMouseClicked="#clicImgViCerrarSesion" opacity="0.75" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../imagenes/logout_icon_no_background.png" />
                </image>
