@@ -19,7 +19,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import sgpp.modelo.beans.Estudiante;
 import sgpp.modelo.beans.Periodo;
 import sgpp.modelo.beans.expediente.EstadoDocumento;
@@ -53,6 +52,14 @@ import java.util.List;
 public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initializable {
 
     @FXML
+    private Label lbFechasIniciales;
+    @FXML
+    private Label lbFechasParciales;
+    @FXML
+    private Label lbFechasFinales;
+    @FXML
+    private Label lbAperturaCierre;
+    @FXML
     private Label nombreArchivoDocumento;
 
     @FXML
@@ -71,20 +78,10 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
     private Button btnConstanciaSeguro;
 
     @FXML
-    private Label lblFechas;
-
-    @FXML
-    private Label lblFechas1;
-
-    @FXML
     private Button btnReporteParcial;
 
     @FXML
     private Button btnEvaluacionParcialOV;
-
-    @FXML
-    private Label lblFechas2;
-
     @FXML
     private Button btnReporteFinal;
 
@@ -96,9 +93,6 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
 
     @FXML
     private Button btnCartaLiberacion;
-
-    @FXML
-    private Label lblFechas3;
 
     private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     private int idEstudiante;
@@ -139,12 +133,12 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
 
     @FXML
     public void clicBtnEntregarDocumento(ActionEvent actionEvent) {
-        subirReporte(actionEvent);
+        clicBtnSubirReporte(actionEvent);
     }
 
     @FXML
     public void clicBtnSeleccionarDocumento(ActionEvent actionEvent) {
-        seleccionarPDF(actionEvent);
+        clicBtnSeleccionarPDF(actionEvent);
     }
 
     @FXML
@@ -202,7 +196,7 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
         manejarDocumentoFinal(TipoDocumentoFinal.CARTA_LIBERACION);
     }
 
-    public void seleccionarPDF(ActionEvent actionEvent) {
+    public void clicBtnSeleccionarPDF(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleccionar archivo PDF");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Archivos PDF", "*.pdf"));
@@ -216,7 +210,7 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
     }
 
     @FXML
-    private void subirReporte(ActionEvent event) {
+    private void clicBtnSubirReporte(ActionEvent event) {
         //TODO mover a CU subir reporte
         // Validaciones preliminares
         if (entregaSeleccionada == null) {
@@ -250,18 +244,12 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
             }
 
             // Subir según el tipo de documento
-            boolean exito = false;
-            switch (tipoDocumentoSeleccionado) {
-                case INICIAL:
-                    exito = subirDocumentoInicial(pdf);
-                    break;
-                case PARCIAL:
-                    exito = subirDocumentoParcial(pdf);
-                    break;
-                case FINAL:
-                    exito = subirDocumentoFinal(pdf);
-                    break;
-            }
+            boolean exito = switch (tipoDocumentoSeleccionado) {
+                case INICIAL -> subirDocumentoInicial(pdf);
+                case PARCIAL -> subirDocumentoParcial(pdf);
+                case FINAL -> subirDocumentoFinal(pdf);
+                default -> false;
+            };
 
             if (exito) {
                 Utilidad.crearAlertaInformacion("Éxito", "Documento subido correctamente.");
@@ -440,11 +428,11 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
 
         // Actualizar todas las etiquetas de fecha según corresponda
         if (tipoDocumentoSeleccionado == TipoDocumento.INICIAL) {
-            lblFechas.setText(textoFechas);
+            lbFechasIniciales.setText(textoFechas);
         } else if (tipoDocumentoSeleccionado == TipoDocumento.PARCIAL) {
-            lblFechas1.setText(textoFechas);
+            lbFechasParciales.setText(textoFechas);
         } else if (tipoDocumentoSeleccionado == TipoDocumento.FINAL) {
-            lblFechas2.setText(textoFechas);
+            lbFechasFinales.setText(textoFechas);
         }
     }
 
@@ -469,18 +457,6 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
     }
 
     private void configurarInterfazInicial() {
-        if (lblFechas != null) {
-            lblFechas.setText("Selecciona un documento inicial para ver su información de entrega");
-        }
-        if (lblFechas1 != null) {
-            lblFechas1.setText("Selecciona un documento parcial para ver su información de entrega");
-        }
-        if (lblFechas2 != null) {
-            lblFechas2.setText("Selecciona un documento final para ver su información de entrega");
-        }
-        if (lblFechas3 != null) {
-            lblFechas3.setText("Estado: Sin información");
-        }
 
         if (nombreArchivoDocumento != null) {
             nombreArchivoDocumento.setText("Ningún archivo seleccionado");
@@ -500,14 +476,10 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
         tipoDocumentoSeleccionado = null;
         tipoEspecificoSeleccionado = null;
         nombreArchivoDocumento.setText("Ningún archivo seleccionado");
-        lblFechas.setText("Selecciona un documento inicial para ver su información de entrega");
-        lblFechas1.setText("Selecciona un documento parcial para ver su información de entrega");
-        lblFechas2.setText("Selecciona un documento final para ver su información de entrega");
     }
 
     @FXML
     private void clicBtnCancelar(ActionEvent event) {
-        Stage stage = (Stage) nombreArchivoDocumento.getScene().getWindow();
-        stage.close();
+        Utilidad.cerrarVentana(lbAperturaCierre);
     }
 }
