@@ -19,6 +19,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.TextStyle;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import sgpp.modelo.ConexionBD;
@@ -73,6 +75,30 @@ public class ReporteMensualDAO {
         }
         return false;
     }
+
+    public static List<ReporteMensual> obtenerTodos() throws SQLException {
+        List<ReporteMensual> reportes = new ArrayList<ReporteMensual>();
+        Connection conexion = ConexionBD.abrirConexion();
+        if (conexion != null) {
+            String consulta = "SELECT * FROM reporte_mensual";
+            PreparedStatement sentencia = null;
+            ResultSet resultado = null;
+            try {
+                sentencia = conexion.prepareStatement(consulta);
+                resultado = sentencia.executeQuery();
+                while (resultado.next()) {
+                    reportes.add(convertirAReporte(resultado));
+                }
+            } catch (SQLException sqlex) {
+                System.err.println("Error al obtener reportes "+sqlex.getMessage());
+            } finally {
+                ConexionBD.cerrarConexion(conexion, sentencia, resultado);
+            }
+        } else {
+            throw new SQLException("Se ha perdido la conexion a la Base de Datos");
+        }
+        return reportes;
+    }
     
     public static boolean actualizarEstado(int idEntregaReporte, String nuevoEstado, String observaciones) throws SQLException {
         String sql = """
@@ -103,14 +129,7 @@ public class ReporteMensualDAO {
                 sentencia.setInt(1, idEntregaReporte);
                 resultado = sentencia.executeQuery();
                 if (resultado.next()) {
-                    reporte = new ReporteMensual();
-                    reporte.setIdReporteMensual(resultado.getInt("ID_Reporte_Mensual"));
-                    reporte.setMes(Mes.valueOf(resultado.getString("mes")));
-                    reporte.setHorasReportadas(resultado.getInt("horas_reportadas"));
-                    reporte.setEstado(EstadoDocumento.valueOf(resultado.getString("estado")));
-                    reporte.setObservaciones(resultado.getString("observaciones"));
-                    reporte.setReporte(resultado.getBytes("reporte"));
-                    reporte.setIdEntregaReporte(resultado.getInt("ID_Entrega_Reporte"));
+                    reporte = convertirAReporte(resultado);
                 }
             } catch (SQLException sqlex) {
                 System.out.println("Error al obtener los reportes mensuales "+sqlex.getMessage());
@@ -120,6 +139,18 @@ public class ReporteMensualDAO {
         } else {
             throw new SQLException("Se ha perdido la conexion a la Base de Datos");
         }
+        return reporte;
+    }
+
+    private static ReporteMensual convertirAReporte(ResultSet resultado) throws SQLException {
+        ReporteMensual reporte = new ReporteMensual();
+        reporte.setIdReporteMensual(resultado.getInt("ID_Reporte_Mensual"));
+        reporte.setMes(Mes.valueOf(resultado.getString("mes")));
+        reporte.setHorasReportadas(resultado.getInt("horas_reportadas"));
+        reporte.setEstado(EstadoDocumento.valueOf(resultado.getString("estado")));
+        reporte.setObservaciones(resultado.getString("observaciones"));
+        reporte.setReporte(resultado.getBytes("reporte"));
+        reporte.setIdEntregaReporte(resultado.getInt("ID_Entrega_Reporte"));
         return reporte;
     }
 }

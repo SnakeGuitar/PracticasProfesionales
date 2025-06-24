@@ -48,7 +48,7 @@
       </Pane>
 
       <!-- Botón Regresar -->
-      <Button fx:id="btnRegresar" layoutX="29.0" layoutY="131.0" mnemonicParsing="false" onAction="#btnClicRegresar" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #6a92c8;" text="Regresar" textFill="WHITE">
+      <Button fx:id="btnRegresar" layoutX="29.0" layoutY="131.0" mnemonicParsing="false" onAction="#clicBtnRegresar" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #6a92c8;" text="Regresar" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font>
@@ -88,17 +88,17 @@
       </Label>
 
       <!-- Lista de documentos -->
-      <ListView fx:id="listDocumentosExpediente" layoutX="29.0" layoutY="205.0" prefHeight="300.0" prefWidth="742.0" style="-fx-background-radius: 5; -fx-border-radius: 5;" />
+      <ListView fx:id="listDocumentosExpediente" layoutX="29.0" layoutY="205.0" onMouseClicked="#clicListDocumentos" prefHeight="300.0" prefWidth="742.0" style="-fx-background-radius: 5; -fx-border-radius: 5;" />
 
       <!-- Botones inferiores -->
-      <Button fx:id="btnDescargar" disable="true" layoutX="29.0" layoutY="520.0" mnemonicParsing="false" onAction="#btnClicDescargar" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #6a92c8;" text="Descargar" textFill="WHITE">
+      <Button fx:id="btnDescargar" disable="true" layoutX="621.0" layoutY="534.0" mnemonicParsing="false" onAction="#clicBtnDescargar" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #6a92c8;" text="Descargar" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font>
       </Button>
 
       <!-- Botón Cancelar/Cerrar -->
-      <Button layoutX="619.0" layoutY="520.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-font-family: Arial; -fx-font-weight: Bold; -fx-border-radius: 5;" text="Cerrar" />
+      <Button layoutX="28.0" layoutY="533.0" mnemonicParsing="false" onAction="#clicBtnRegresar" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-font-family: Arial; -fx-font-weight: Bold; -fx-border-radius: 5;" text="Cerrar" />
 
    </children>
 </AnchorPane>
