@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -9,8 +10,8 @@
 
 <AnchorPane prefHeight="671.0" prefWidth="493.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.coordinador.organizacionvinculada.FXMLActualizarOVController">
    <children>
-      <Button layoutX="146.0" layoutY="609.0" mnemonicParsing="false" onAction="#clicBtnCancelar" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-font-family: Arial; -fx-font-weight: Bold; -fx-border-radius: 5;" text="Cancelar" />
-      <Button layoutX="312.0" layoutY="609.0" mnemonicParsing="false" onAction="#clicBtnActualizar" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #5b6fd4; -fx-background-radius: 5;" text="Actualizar" textFill="WHITE">
+      <Button layoutX="197.0" layoutY="602.0" mnemonicParsing="false" onAction="#clicBtnCancelar" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-font-family: Arial; -fx-font-weight: Bold; -fx-border-radius: 5;" text="Cancelar" />
+      <Button layoutX="30.0" layoutY="602.0" mnemonicParsing="false" onAction="#clicBtnActualizar" prefHeight="31.0" prefWidth="152.0" style="-fx-background-radius: 5;" styleClass="gradient-background-coordinador" stylesheets="@../../../styles.css" text="Actualizar" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font>
@@ -61,15 +62,23 @@
             <Font name="Arial Bold" size="15.0" />
          </font>
       </Label>
-      <Label layoutX="30.0" layoutY="71.0" text="Organizacion Vinculada">
+      <Label layoutX="30.0" layoutY="71.0" opacity="0.81" text="Organizacion Vinculada">
          <font>
-            <Font name="Arial" size="18.0" />
+            <Font name="Arial Italic" size="18.0" />
          </font>
       </Label>
       <Label layoutX="30.0" layoutY="31.0" style="-fx-font-weight: Italic;" text="Actualizar">
          <font>
             <Font name="Arial Bold" size="24.0" />
          </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0" startX="1.0" startY="0.15048543689320387">
+               <stops>
+                  <Stop color="BLACK" />
+                  <Stop color="WHITE" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
       </Label>
    </children>
 </AnchorPane>
