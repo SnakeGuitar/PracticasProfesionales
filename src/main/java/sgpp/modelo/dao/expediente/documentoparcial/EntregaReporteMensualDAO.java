@@ -232,4 +232,41 @@ public class EntregaReporteMensualDAO {
         }
         return resultadoOperacion;
     }
+
+    public static EntregaReporteMensual obtenerEntregaPorEstudiante(int numReporte, int idPeriodo, int idEstudiante) {
+        String sql = """
+        SELECT * FROM entrega_reporte
+        WHERE num_reporte = ? AND ID_Periodo = ? AND ID_Estudiante = ?
+    """;
+
+        try (Connection con = ConexionBD.abrirConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, numReporte);
+            ps.setInt(2, idPeriodo);
+            ps.setInt(3, idEstudiante);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    EntregaReporteMensual entrega = new EntregaReporteMensual();
+                    entrega.setIdEntregaReporte(rs.getInt("ID_Entrega_Reporte"));
+                    entrega.setNumReporte(rs.getInt("num_reporte"));
+                    entrega.setFechaApertura(rs.getTimestamp("fecha_apertura").toLocalDateTime());
+                    entrega.setFechaLimite(rs.getTimestamp("fecha_limite").toLocalDateTime());
+                    entrega.setFechaEntrega(rs.getTimestamp("fecha_entrega") != null
+                            ? rs.getTimestamp("fecha_entrega").toLocalDateTime()
+                            : null);
+                    entrega.setIdEstudiante(rs.getInt("ID_Estudiante"));
+                    entrega.setIdPeriodo(rs.getInt("ID_Periodo"));
+                    return entrega;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error en obtenerEntregaPorEstudiante: " + e.getMessage());
+        }
+
+        return null;
+    }
+
+
 }

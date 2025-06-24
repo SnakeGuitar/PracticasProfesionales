@@ -92,8 +92,8 @@ public class FXMLValidarReporteController implements Initializable {
         cbFiltroReporte.setItems(FXCollections.observableArrayList("Todos", "1", "2", "3", "4"));
         cbFiltroReporte.getSelectionModel().select("Todos");
 
-        cbFiltroEstado.setItems(FXCollections.observableArrayList("Pendiente", "Aceptado", "Rechazado", "Todos"));
-        cbFiltroEstado.getSelectionModel().select("Pendiente");
+        cbFiltroEstado.setItems(FXCollections.observableArrayList( "Entregado", "Pendiente", "Aceptado", "Rechazado", "Todos"));
+        cbFiltroEstado.getSelectionModel().select("Entregado");
 
         cbFiltroReporte.setOnAction(e -> aplicarFiltros());
         cbFiltroEstado.setOnAction(e -> aplicarFiltros());
@@ -189,7 +189,7 @@ public class FXMLValidarReporteController implements Initializable {
             return;
         }
 
-        // 🚫 Reglas de validación previas
+
         if (!esReporteEntregable(sel) || !esCambioDeEstadoValido(sel, nuevoEstado)) {
             return;
         }

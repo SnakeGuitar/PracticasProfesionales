@@ -28,10 +28,7 @@ import sgpp.modelo.beans.expediente.EstadoDocumento;
 import sgpp.modelo.beans.expediente.reporte.Mes;
 import sgpp.modelo.beans.expediente.reporte.ReporteMensual;
 
-/**
- *
- * @author cuent
- */
+
 public class ReporteMensualDAO {
     public static boolean insertar(int idEntregaReporte, int horas, byte[] pdf) throws SQLException {
         String sql = """
@@ -153,4 +150,6 @@ public class ReporteMensualDAO {
         reporte.setIdEntregaReporte(resultado.getInt("ID_Entrega_Reporte"));
         return reporte;
     }
+
+
 }
