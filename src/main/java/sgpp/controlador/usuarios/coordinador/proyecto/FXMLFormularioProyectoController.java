@@ -24,23 +24,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sgpp.SistemaGestionPracticasProfesionales;
 import sgpp.dominio.ProyectoDM;
 import sgpp.dominio.ResultadoValidacion;
 import sgpp.modelo.beans.OrganizacionVinculada;
+import sgpp.modelo.beans.Periodo;
 import sgpp.modelo.beans.Proyecto;
 import sgpp.modelo.beans.ResponsableTecnico;
 import sgpp.modelo.dao.ResultadoSQL;
 import sgpp.modelo.dao.entidades.OrganizacionVinculadaDAO;
+import sgpp.modelo.dao.entidades.PeriodoDAO;
 import sgpp.modelo.dao.entidades.ProyectoDAO;
 import sgpp.modelo.dao.entidades.ResponsableTecnicoDAO;
 import sgpp.utilidad.Utilidad;
@@ -49,7 +45,10 @@ import sgpp.utilidad.UtilidadFormatoDeDatos;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -109,6 +108,7 @@ public class FXMLFormularioProyectoController implements Initializable {
     public void inicializarInformacion(boolean esEdicion, Proyecto proyectoEdicion) {
         this.proyectoEdicion = proyectoEdicion;
         this.esEdicion = esEdicion;
+        configurarDatePickers();
         if (esEdicion) {
             lbNombreCU.setText("Actualizar Proyecto");
             btnGuardar.setText("Actualizar");
@@ -377,6 +377,43 @@ public class FXMLFormularioProyectoController implements Initializable {
             }
         }
         return 0;
+    }
+
+    private void configurarDatePickers() {
+        try {
+            Periodo periodo = PeriodoDAO.obtenerPeriodoActual();
+            LocalDate fechaInicio = LocalDate.parse(periodo.getFechaInicio());
+            LocalDate fechaFin = LocalDate.parse(periodo.getFechaFin());
+            datePkFechaInicio.setDayCellFactory(datePicker -> new DateCell() {
+                @Override
+                public void updateItem(LocalDate date, boolean empty) {
+                    if (empty || date.isBefore(fechaInicio) || date.isAfter(fechaFin)) {
+                        setDisable(true);
+                        setStyle("-fx-background-color: #eee;"); // Estilo para fechas deshabilitadas
+                    }
+                }
+            });
+            datePkFechaFin.setDayCellFactory(datePicker -> new DateCell() {
+                @Override
+                public void updateItem(LocalDate date, boolean empty) {
+                    if (empty || date.isBefore(fechaInicio) || date.isAfter(fechaFin)) {
+                        setDisable(true);
+                        setStyle("-fx-background-color: #eee;"); // Estilo para fechas deshabilitadas
+                    }
+                }
+            });
+        } catch (SQLException sqlex) {
+            Utilidad.crearAlertaAdvertencia(
+                    "Error",
+                    "Lo sentimos, no se pudo encontrar el periodo, regresara a la ventana anterior");
+            Utilidad.cerrarVentana(lbNombreCU);
+        } catch (DateTimeParseException dtpex) {
+            Utilidad.crearAlertaAdvertencia(
+                    "Error",
+                    "Lo sentimos, no fue posible interpretar las fechas del  periodo, , regresara a la ventana anterior"
+            );
+            Utilidad.cerrarVentana(lbNombreCU);
+        }
     }
 
     private int obtenerIndiceEnComboResponsable(int idResponsable) {
