@@ -8,8 +8,9 @@
  */
 
 /*
- * Estado: En progreso
+ * Estado: TERMINADO
  * Modificaciones:
+ * seth: carga el coordinador desde esta ventana a la principal de este
  */
 
 package sgpp.controlador.usuarios.coordinador;

@@ -1,3 +1,18 @@
+/*
+ * Autor original: Seth Marquez
+ * Ultimo autor: Seth Marquez
+ * Fecha de creación: 12-06-2025
+ * Fecha de la última versión aprobada:24-06-25
+ * Fecha de la última modificación: 24-06-2025
+ * Descripción: Clase controlador para manejar las operaciones de la vista FXMLPrincipalTecnicoController.fxml
+ */
+
+/*
+ * Estado: TERMINADO
+ * Modificaciones:
+ * Oculta el id y el filtrado es dinamico.
+ */
+
 package sgpp.controlador.usuarios.coordinador.responsabletecnico;
 
 import java.io.IOException;
@@ -79,6 +94,9 @@ public class FXMLPrincipalResponsableTecnicoController implements Initializable 
         colId.setCellValueFactory(cellData -> 
             new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getIdResponsable()).asObject()
         );
+
+        // oculta la columna id
+        colId.setVisible(false);
 
         // Por medio del metodo cargarOrganizacionesVinculadas carga el nombre atravez de la id.
         colIdOrgVinculada.setCellValueFactory(cellData -> {
