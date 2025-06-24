@@ -373,7 +373,7 @@ public class DocumentoParcialDAO {
                     documentoParcial.setDocumento(documento);
                 }
 
-                documentoParcial.setIdEntregaDocumento(resultado.getInt("id_entrega_documento_final"));
+                documentoParcial.setIdEntregaDocumento(resultado.getInt("id_entrega_doc_final"));
 
                 documentosParciales.add(documentoParcial);
             }

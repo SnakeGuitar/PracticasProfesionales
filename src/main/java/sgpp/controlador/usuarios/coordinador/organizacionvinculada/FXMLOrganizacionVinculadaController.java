@@ -48,8 +48,6 @@ public class FXMLOrganizacionVinculadaController implements Initializable {
     @FXML
     private TableView<OrganizacionVinculada> tblOV;
     @FXML
-    private TableColumn<OrganizacionVinculada, Integer> colId;
-    @FXML
     private TableColumn<OrganizacionVinculada, String> colNombre;
     @FXML
     private TableColumn<OrganizacionVinculada, String> colSector;
@@ -72,7 +70,6 @@ public class FXMLOrganizacionVinculadaController implements Initializable {
     }
 
     private void configurarTabla() {
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colSector.setCellValueFactory(new PropertyValueFactory<>("sector"));
         colCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
