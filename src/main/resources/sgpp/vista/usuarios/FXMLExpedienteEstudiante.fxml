@@ -20,17 +20,17 @@
    <children>
 
                         <!-- Botones inferiores -->
-      <Button fx:id="btnDescargar" disable="true" layoutX="28.0" layoutY="542.0" mnemonicParsing="false" onAction="#clicBtnDescargar" prefHeight="31.0" prefWidth="152.0" styleClass="gradient-background-profesor" stylesheets="@../styles.css" text="Descargar" textFill="WHITE">
+      <Button fx:id="btnDescargar" disable="true" layoutX="28.0" layoutY="542.0" mnemonicParsing="false" onAction="#clicBtnDescargar" prefHeight="31.0" prefWidth="152.0" styleClass="gradient-background-expediente" stylesheets="@../styles.css" text="Descargar" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font>
       </Button>
       <!-- Header azul con título del sistema -->
-      <Pane prefHeight="188.0" prefWidth="800.0" styleClass="gradient-background-profesor" stylesheets="@../styles.css">
+      <Pane prefHeight="188.0" prefWidth="800.0" styleClass="gradient-background-expediente" stylesheets="@../styles.css">
          <children>
             <Label layoutX="28.0" layoutY="31.0" prefHeight="27.0" prefWidth="710.0" text="Sistema de Gestion de Practicas Profesionales">
                <effect>
-                  <Bloom threshold="0.08" />
+                  <Bloom threshold="0.13" />
                </effect>
                <font>
                   <Font name="Arial Bold Italic" size="24.0" />
@@ -44,14 +44,15 @@
                   </LinearGradient>
                </textFill>
             </Label>
-            <Label fx:id="lbNombreProfesor" layoutX="28.0" layoutY="67.0" prefHeight="27.0" text="Profesor">
+            <Label fx:id="lbNombreProfesor" layoutX="28.0" layoutY="67.0" prefHeight="27.0" text="Expediente">
                <font>
                   <Font name="Arial Italic" size="18.0" />
                </font>
                <textFill>
-                  <LinearGradient endX="0.4368932038834952" endY="1.0">
+                  <LinearGradient endX="0.883495145631068" endY="0.6699029126213593" startX="0.8883495145631068">
                      <stops>
                         <Stop color="#bfbfbf" />
+                        <Stop color="#a8a8a8" offset="0.007246376811594203" />
                         <Stop color="WHITE" offset="1.0" />
                      </stops>
                   </LinearGradient>
@@ -59,7 +60,7 @@
             </Label>
       
             <!-- Panel de información del estudiante -->
-            <Pane blendMode="LIGHTEN" layoutX="194.0" layoutY="131.0" prefHeight="31.0" prefWidth="577.0" styleClass="gradient-background-profesor" stylesheets="@../styles.css">
+            <Pane blendMode="LIGHTEN" layoutX="194.0" layoutY="131.0" prefHeight="31.0" prefWidth="577.0" styleClass="gradient-background-expediente" stylesheets="@../styles.css">
                <children>
                   <Label layoutX="14.0" layoutY="5.0" prefHeight="21.0" prefWidth="90.0" text="Expediente:" textFill="WHITE">
                      <font>
@@ -87,10 +88,13 @@
                   <!-- Botón Cancelar/Cerrar -->
             <Button layoutX="619.0" layoutY="543.0" mnemonicParsing="false" onAction="#clicBtnRegresar" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #ffffff; -fx-background-radius: 8; -fx-font-family: Arial; -fx-font-weight: Bold; -fx-border-color: #000000;" text="Cerrar" />
          </children>
+         <effect>
+            <ColorAdjust saturation="0.02" />
+         </effect>
       </Pane>
 
                   <!-- Botón Regresar -->
-      <Button fx:id="btnRegresar" blendMode="LIGHTEN" layoutX="29.0" layoutY="131.0" mnemonicParsing="false" onAction="#clicBtnRegresar" prefHeight="31.0" prefWidth="149.0" styleClass="gradient-background-profesor" stylesheets="@../styles.css" text="Regresar" textFill="WHITE">
+      <Button fx:id="btnRegresar" blendMode="LIGHTEN" layoutX="29.0" layoutY="131.0" mnemonicParsing="false" onAction="#clicBtnRegresar" prefHeight="31.0" prefWidth="149.0" styleClass="gradient-background-expediente" stylesheets="@../styles.css" text="Regresar" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font>
