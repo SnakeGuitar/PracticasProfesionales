@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.profesor.FXMLValidarDocumentoController">
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.profesor.FXMLValidarDocumentoController">
    <children>
       <TableView fx:id="tblEntregas" layoutX="29.0" layoutY="177.0" prefHeight="517.0" prefWidth="965.0" style="-fx-background-radius: 10;">
         <columns>
@@ -16,22 +17,22 @@
             <TableColumn fx:id="colEstado" prefWidth="138.0" text="Estado" />
         </columns>
       </TableView>
-      <Button layoutX="29.0" layoutY="710.0" mnemonicParsing="false" onAction="#clicBtnActualizarLista" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #6a92c8;" text="Actualizar lista" textFill="WHITE">
+      <Button layoutX="29.0" layoutY="710.0" mnemonicParsing="false" onAction="#clicBtnActualizarLista" prefHeight="31.0" prefWidth="149.0" styleClass="gradient-background-profesor" stylesheets="@../../styles.css" text="Actualizar lista" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font>
       </Button>
-      <Button layoutX="193.0" layoutY="710.0" mnemonicParsing="false" onAction="#clicBtnValidar" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #6a92c8;" text="Validar" textFill="WHITE">
+      <Button layoutX="193.0" layoutY="710.0" mnemonicParsing="false" onAction="#clicBtnValidar" prefHeight="31.0" prefWidth="149.0" styleClass="gradient-background-profesor" stylesheets="@../../styles.css" text="Validar" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font>
       </Button>
-      <Button layoutX="356.0" layoutY="710.0" mnemonicParsing="false" onAction="#clicBtnRechazar" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #a3b4d4;" text="Rechazar" textFill="WHITE">
+      <Button layoutX="356.0" layoutY="710.0" mnemonicParsing="false" onAction="#clicBtnRechazar" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #2a2b2a;" text="Rechazar" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font>
       </Button>
-      <Pane prefHeight="115.0" prefWidth="1024.0" style="-fx-background-color: #6a92c8;">
+      <Pane prefHeight="115.0" prefWidth="1024.0" styleClass="gradient-background-profesor" stylesheets="@../../styles.css">
          <children>
             <Label layoutX="28.0" layoutY="31.0" prefHeight="27.0" prefWidth="710.0" text="Sistema de Gestion de Practicas Profesionales">
                <effect>
@@ -65,22 +66,22 @@
          </children>
       </Pane>
       <Button layoutX="842.0" layoutY="710.0" mnemonicParsing="false" onAction="#clicBtnCancelar" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-font-family: Arial; -fx-font-weight: Bold; -fx-border-radius: 5;" text="Cancelar" />
-      <Button layoutX="29.0" layoutY="131.0" mnemonicParsing="false" onAction="#clicBtnVerIniciales" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #6a92c8;" text="Iniciales" textFill="WHITE">
+      <Button layoutX="29.0" layoutY="131.0" mnemonicParsing="false" onAction="#clicBtnVerIniciales" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #2a2b2a;" text="Iniciales" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font>
       </Button>
-      <Button layoutX="193.0" layoutY="131.0" mnemonicParsing="false" onAction="#clicBtnVerParciales" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #6a92c8;" text="Parciales" textFill="WHITE">
+      <Button layoutX="193.0" layoutY="131.0" mnemonicParsing="false" onAction="#clicBtnVerParciales" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #2a2b2a;" text="Parciales" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font>
       </Button>
-      <Button layoutX="356.0" layoutY="131.0" mnemonicParsing="false" onAction="#clicBtnVerFinales" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #6a92c8;" text="Finales" textFill="WHITE">
+      <Button layoutX="356.0" layoutY="131.0" mnemonicParsing="false" onAction="#clicBtnVerFinales" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #2a2b2a;" text="Finales" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font>
       </Button>
-      <Pane layoutX="520.0" layoutY="131.0" prefHeight="31.0" prefWidth="475.0" style="-fx-background-color: #6a92c8;">
+      <Pane layoutX="520.0" layoutY="131.0" prefHeight="31.0" prefWidth="475.0" styleClass="gradient-background-profesor" stylesheets="@../../styles.css">
          <children>
             <Label layoutX="14.0" layoutY="5.0" prefHeight="21.0" prefWidth="207.0" text="Lista de documentos actual: " textFill="WHITE">
                <font>
