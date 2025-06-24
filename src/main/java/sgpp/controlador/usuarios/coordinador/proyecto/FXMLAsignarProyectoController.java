@@ -127,7 +127,7 @@ public class FXMLAsignarProyectoController implements Initializable {
         boolean confirmacion = Utilidad.crearAlertaConfirmacion(
                 "¿Cancelar?", "Se perderá el progreso no guardado");
         if (confirmacion) {
-            Utilidad.getEscenarioComponente(listProyectos).close();
+            Utilidad.cerrarVentana(lbNombreEstudiante);
         }
     }
 

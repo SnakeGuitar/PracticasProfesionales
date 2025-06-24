@@ -24,7 +24,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sgpp.SistemaGestionPracticasProfesionales;
@@ -46,6 +52,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import static sgpp.utilidad.Utilidad.cerrarVentana;
 
 public class FXMLFormularioProyectoController implements Initializable {
     @FXML
@@ -119,7 +127,7 @@ public class FXMLFormularioProyectoController implements Initializable {
                     Alert.AlertType.ERROR,
                     "Error inesperado",
                     "Lo sentimos, por el momento no se pudieron recuperar las organizaciones vinculadas");
-            cerrarVentana();
+            Utilidad.cerrarVentana(lbErrorFechaFin);
         }
     }
 
@@ -135,7 +143,7 @@ public class FXMLFormularioProyectoController implements Initializable {
                     "Error inesperado",
                     "Lo sentimos, por el momento no se pudieron recuperar los responsables técnicos"
             );
-            cerrarVentana();
+            Utilidad.cerrarVentana(lbErrorFechaFin);
         }
     }
 
@@ -173,7 +181,7 @@ public class FXMLFormularioProyectoController implements Initializable {
         boolean cancelar = Utilidad.confirmarCancelar();
 
         if (cancelar) {
-            cerrarVentana();
+            Utilidad.cerrarVentana(lbErrorFechaFin);
         }
     }
 
@@ -204,7 +212,7 @@ public class FXMLFormularioProyectoController implements Initializable {
                     Alert.AlertType.INFORMATION,
                     "Exito",
                     "Proyecto Registrado Exitosamente");
-            cerrarVentana();
+            Utilidad.cerrarVentana(lbErrorFechaFin);
         } else {
             Utilidad.crearAlerta(Alert.AlertType.ERROR, "Error", resultado.getMensaje());
         }
@@ -219,7 +227,7 @@ public class FXMLFormularioProyectoController implements Initializable {
                 Utilidad.crearAlerta(
                         Alert.AlertType.INFORMATION,
                         "Exito", "Proyecto Actualizado Exitosamente");
-                cerrarVentana();
+                Utilidad.cerrarVentana(lbErrorFechaFin);
             } else {
                 Utilidad.crearAlerta(Alert.AlertType.ERROR, "Error", resultado.getMensaje());
             }
@@ -378,9 +386,5 @@ public class FXMLFormularioProyectoController implements Initializable {
             }
         }
         return 0;
-    }
-
-    private void cerrarVentana() {
-        Utilidad.getEscenarioComponente(txFiNombre).close();
     }
 }

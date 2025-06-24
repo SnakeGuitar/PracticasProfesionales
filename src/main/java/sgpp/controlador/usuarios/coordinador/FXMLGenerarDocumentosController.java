@@ -32,6 +32,7 @@ import sgpp.modelo.beans.expediente.documentoinicial.TablaAsignacion;
 import sgpp.modelo.dao.entidades.PeriodoDAO;
 import sgpp.modelo.dao.entidades.TablaAsignacionDAO;
 import sgpp.modelo.dao.expediente.documentoinicial.OficioAsignacionDAO;
+import sgpp.utilidad.Impresora;
 import sgpp.utilidad.Utilidad;
 
 import java.sql.SQLException;
@@ -177,7 +178,7 @@ public class FXMLGenerarDocumentosController {
                     .filter(TablaAsignacion::isSeleccionado)
                     .forEach(asignacion -> {
                         try {
-                            byte[] pdf = Utilidad.generarDocumentoAsignacion(asignacion);
+                            byte[] pdf = Impresora.generarDocumentoAsignacion(asignacion);
                             if (pdf == null) {
                                 System.err.println("No se generó PDF para: " + asignacion.getNombreEstudiante());
                                 return;

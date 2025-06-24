@@ -183,6 +183,7 @@ public class FXMLCriteriosPresentacionController implements Initializable {
         }
         if(criteriosSeleccionados) {
             irCalificacionObservaciones();
+            Utilidad.cerrarVentana(btnCancelar);
         } else {
             Utilidad.crearAlertaAdvertencia("Criterios vacíos",
                     "Selecciona un valor por cada criterio para continuar.");

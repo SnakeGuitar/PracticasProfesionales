@@ -10,7 +10,7 @@ import sgpp.modelo.beans.Profesor;
 import sgpp.modelo.beans.expediente.presentacion.RubricaPresentacion;
 import sgpp.modelo.dao.entidades.ProfesorDAO;
 import sgpp.modelo.dao.expediente.presentacion.RubricaPresentacionDAO;
-import sgpp.utilidad.DocumentoRubrica;
+import sgpp.utilidad.Impresora;
 import sgpp.utilidad.Utilidad;
 import sgpp.utilidad.UtilidadFormatoDeDatos;
 
@@ -131,7 +131,7 @@ public class FXMLCalificacionObservacionesController {
         if(exitoso) {
             Utilidad.crearAlertaInformacion("Registro exitoso",
                     "Registro de rúbrica exitosa.");
-            DocumentoRubrica.descargarRubrica(rubrica, lbPromedio, idEstudiante);
+            Impresora.descargarRubrica(rubrica, lbPromedio, idEstudiante);
             Utilidad.cerrarVentana(lbPromedio);
         } else {
             Utilidad.crearAlertaError("Error",

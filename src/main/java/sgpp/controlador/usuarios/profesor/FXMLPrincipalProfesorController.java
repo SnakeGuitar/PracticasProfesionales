@@ -106,7 +106,7 @@ public class FXMLPrincipalProfesorController implements Initializable, IControla
                     RUTA_FXML_INICIAR_SESION,
                     "Sistema de Gestión de Prácticas Profesionales",
                     FXMLInicioSesionController.class);
-            Utilidad.getEscenarioComponente(lbNombreProfesor).close();
+            Utilidad.cerrarVentana(lbNombreProfesor);
         }
     }
 }

@@ -178,7 +178,7 @@ public class FXMLPrincipalEstudianteController implements Initializable, IContro
                     RUTA_FXML_INICIAR_SESION,
                     "Sistema de Gestión de Prácticas Profesionales",
                     FXMLInicioSesionController.class);
-            Utilidad.getEscenarioComponente(lbNombreEstudiante).close();
+            Utilidad.cerrarVentana(lbNombreEstudiante);
         }
     }
 }

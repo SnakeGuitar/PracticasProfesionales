@@ -164,7 +164,7 @@ public class FXMLConfigurarEntregasController implements Initializable {
                 "¿Cancelar?",
                 "Se perdera el progreso no guardado");
         if (confirmacion) {
-            Utilidad.getEscenarioComponente(txFiAperturaFinal).close();
+            Utilidad.cerrarVentana(lbErrorAperturaFinal);
         }
     }
 
