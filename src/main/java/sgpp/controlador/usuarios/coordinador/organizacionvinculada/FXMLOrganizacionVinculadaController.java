@@ -40,7 +40,7 @@ import java.util.ResourceBundle;
 
 public class FXMLOrganizacionVinculadaController implements Initializable {
     private static final String RUTA_FXML_REGISTRAR_OV = "/sgpp/vista/usuarios/coordinador/organizacionvinculada/FXMLRegistrarOV.fxml";
-    private static final String RUTA_FXML_ACTUALIZAR_OV = "/sgpp/vista/usuarios/coordinador/organizacionvinculada/FXMLActualizarOV.fxml"; // Implementar
+    private static final String RUTA_FXML_ACTUALIZAR_OV = "/sgpp/vista/usuarios/coordinador/organizacionvinculada/FXMLActualizarOV.fxml";
     private static final String RUTA_FXML_ELIMINAR_OV = "/sgpp/vista/usuarios/coordinador/organizacionvinculada/FXMLEliminarOV.fxml"; // Implementar
 
     private ObservableList<OrganizacionVinculada> listaOrganizaciones;
@@ -146,10 +146,8 @@ public class FXMLOrganizacionVinculadaController implements Initializable {
     public void clicBtnEliminarOV(ActionEvent actionEvent) {
     }
 
-    @FXML
-    public void clicBtnImprimirOV(ActionEvent actionEvent) {
+    public void clicBtnCancelar(ActionEvent actionEvent) {
+        Stage stage = (Stage) tblOV.getScene().getWindow();
+        stage.close();
     }
-
-
-    
 }

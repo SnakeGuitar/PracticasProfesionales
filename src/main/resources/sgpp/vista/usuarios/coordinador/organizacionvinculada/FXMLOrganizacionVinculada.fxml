@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
@@ -10,22 +11,7 @@
 
 <AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.coordinador.organizacionvinculada.FXMLOrganizacionVinculadaController">
    <children>
-      <Label layoutX="857.0" layoutY="47.0" prefHeight="27.0" prefWidth="102.0" text="Coordinador">
-         <font>
-            <Font name="Arial Italic" size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="41.0" layoutY="47.0" prefHeight="27.0" prefWidth="710.0" text="Sistema de Gestion de Practicas Profesionales">
-         <font>
-            <Font name="Arial Bold Italic" size="24.0" />
-         </font>
-      </Label>
-      <Label layoutX="41.0" layoutY="86.0" text="Organizacion Vinculada">
-         <font>
-            <Font name="Arial Italic" size="18.0" />
-         </font>
-      </Label>
-      <TableView fx:id="tblOV" layoutX="41.0" layoutY="161.0" prefHeight="507.0" prefWidth="939.0">
+      <TableView fx:id="tblOV" layoutX="43.0" layoutY="147.0" prefHeight="507.0" prefWidth="939.0">
         <columns>
           <TableColumn fx:id="colId" prefWidth="45.0" text="ID" />
           <TableColumn fx:id="colNombre" prefWidth="105.0" text="Nombre" />
@@ -37,25 +23,54 @@
             <TableColumn fx:id="colEstado" prefWidth="108.0" text="Estado" />
         </columns>
       </TableView>
-      <Button layoutX="41.0" layoutY="688.0" mnemonicParsing="false" onAction="#clicBtnRegistrarOV" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #5B6FD4FF;" text="Registrar" textFill="WHITE">
+      <Button layoutX="41.0" layoutY="688.0" mnemonicParsing="false" onAction="#clicBtnRegistrarOV" prefHeight="31.0" prefWidth="149.0" styleClass="gradient-background-coordinador" stylesheets="@../../../styles.css" text="Registrar" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font>
       </Button>
-      <Button layoutX="205.0" layoutY="688.0" mnemonicParsing="false" onAction="#clicBtnActualizarOV" prefHeight="31.0" prefWidth="149.0" style="-fx-font-weight: Bold; -fx-background-color: #5B6FD4FF;" text="Actualizar" textFill="WHITE">
+      <Button layoutX="205.0" layoutY="688.0" mnemonicParsing="false" onAction="#clicBtnActualizarOV" prefHeight="31.0" prefWidth="149.0" style="-fx-font-weight: Bold;" styleClass="gradient-background-coordinador" stylesheets="@../../../styles.css" text="Actualizar" textFill="WHITE">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
       </Button>
-      <Button layoutX="831.0" layoutY="688.0" mnemonicParsing="false" onAction="#clicBtnImprimirOV" prefHeight="31.0" prefWidth="149.0" style="-fx-font-weight: Bold; -fx-background-color: #5b6fd4;" text="Imprimir" textFill="WHITE">
+      <Button layoutX="369.0" layoutY="688.0" mnemonicParsing="false" onAction="#clicBtnEliminarOV" prefHeight="31.0" prefWidth="149.0" style="-fx-font-weight: Bold;" styleClass="gradient-background-coordinador" stylesheets="@../../../styles.css" text="Eliminar" textFill="WHITE">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
       </Button>
-      <Button layoutX="369.0" layoutY="688.0" mnemonicParsing="false" onAction="#clicBtnEliminarOV" prefHeight="31.0" prefWidth="149.0" style="-fx-font-weight: Bold; -fx-background-color: #5B6FD4FF;" text="Eliminar" textFill="WHITE">
-         <font>
-            <Font name="Arial" size="15.0" />
-         </font>
-      </Button>
+      <Pane prefHeight="115.0" prefWidth="1024.0" styleClass="gradient-background-coordinador" stylesheets="@../../../styles.css">
+         <children>
+            <Label layoutX="28.0" layoutY="31.0" prefHeight="27.0" prefWidth="710.0" text="Sistema de Gestion de Practicas Profesionales">
+               <effect>
+                  <Bloom threshold="0.08" />
+               </effect>
+               <font>
+                  <Font name="Arial Bold Italic" size="24.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop color="#e1e1e1" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+            <Label layoutX="28.0" layoutY="67.0" prefHeight="27.0" text="Coordinador">
+               <font>
+                  <Font name="Arial Italic" size="18.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="0.4368932038834952" endY="1.0">
+                     <stops>
+                        <Stop color="#bfbfbf" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+         </children>
+      </Pane>
+      <Button layoutX="828.0" layoutY="688.0" mnemonicParsing="false" onAction="#clicBtnCancelar" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-font-family: Arial; -fx-font-weight: Bold; -fx-border-radius: 5;" text="Cancelar" />
    </children>
 </AnchorPane>
