@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -13,10 +14,19 @@
          <font>
             <Font name="Arial Bold" size="24.0" />
          </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0" startX="1.0">
+               <stops>
+                  <Stop color="BLACK" />
+                  <Stop color="BLACK" offset="0.15217391304347827" />
+                  <Stop color="WHITE" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
       </Label>
-      <Label layoutX="27.0" layoutY="68.0" text="Organizacion Vinculada">
+      <Label layoutX="27.0" layoutY="68.0" opacity="0.45" text="Organizacion Vinculada">
          <font>
-            <Font name="Arial" size="18.0" />
+            <Font name="Arial Italic" size="18.0" />
          </font>
       </Label>
       <Label layoutX="27.0" layoutY="130.0" text="Nombre">
@@ -64,11 +74,11 @@
             <Font name="Arial Bold" size="15.0" />
          </font>
       </Label>
-      <Button layoutX="309.0" layoutY="606.0" mnemonicParsing="false" onAction="#clicBtnRegistrar" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #5b6fd4; -fx-background-radius: 5;" text="Registrar" textFill="WHITE">
+      <Button layoutX="27.0" layoutY="607.0" mnemonicParsing="false" onAction="#clicBtnRegistrar" prefHeight="31.0" prefWidth="152.0" styleClass="gradient-background-coordinador" stylesheets="@../../../styles.css" text="Registrar" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font>
       </Button>
-      <Button layoutX="143.0" layoutY="606.0" mnemonicParsing="false" onAction="#clicBtnCancelar" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-font-family: Arial; -fx-font-weight: Bold; -fx-border-radius: 5;" text="Cancelar" />
+      <Button layoutX="194.0" layoutY="607.0" mnemonicParsing="false" onAction="#clicBtnCancelar" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-font-family: Arial; -fx-font-weight: Bold; -fx-border-radius: 5;" text="Cancelar" />
    </children>
 </AnchorPane>
