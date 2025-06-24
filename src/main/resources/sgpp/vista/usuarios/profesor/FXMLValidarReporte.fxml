@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.profesor.FXMLValidarReporteController">
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.profesor.FXMLValidarReporteController">
    <children>
    
        <!-- Botón Regresar -->
@@ -29,11 +28,13 @@
             </LinearGradient>
          </textFill>
       </Button>
-         <Button layoutX="31.0" layoutY="715.0" onAction="#actualizarLista" prefWidth="160" styleClass="gradient-background-profesor" stylesheets="@../../styles.css" text="Actualizar lista" textFill="WHITE" />
-         <Button fx:id="btnValidar" layoutX="210.0" layoutY="715.0" onAction="#validarEntrega" prefHeight="31.0" prefWidth="160.0" styleClass="gradient-background-profesor" stylesheets="@../../styles.css" text="Validar" textFill="WHITE" />
-         <Button fx:id="btnRechazar" layoutX="384.0" layoutY="715.0" onAction="#rechazarEntrega" prefHeight="31.0" prefWidth="160.0" style="-fx-background-color: #2a2b2a; -fx-text-fill: white;" text="Rechazar" />
+         <Button fx:id="btnValidar" layoutX="31.0" layoutY="714.0" onAction="#validarEntrega" prefHeight="31.0" prefWidth="160.0" styleClass="gradient-background-profesor" stylesheets="@../../styles.css" text="Validar" textFill="WHITE" />
+         <Button fx:id="btnRechazar" layoutX="202.0" layoutY="714.0" onAction="#rechazarEntrega" prefHeight="31.0" prefWidth="160.0" style="-fx-background-color: #2a2b2a; -fx-text-fill: white;" text="Rechazar" />
+       <ComboBox fx:id="cbFiltroReporte" layoutX="699.0" layoutY="148.0" prefWidth="120.0" />
+       <TextField fx:id="tfFiltroNombre" layoutX="429.0" layoutY="148.0" prefWidth="200.0" promptText="Buscar estudiante..." />
+       <ComboBox fx:id="cbFiltroEstado" layoutX="838.0" layoutY="148.0" prefWidth="140.0" />
 
-              <!-- Tabla -->
+       <!-- Tabla -->
         <TableView fx:id="tablaEntregas" layoutX="31.0" layoutY="203.0" prefHeight="493.0" prefWidth="967.0">
             <columns>
                 <TableColumn fx:id="colEstudiante" prefWidth="181.59997296333313" text="Estudiante" />
@@ -44,7 +45,7 @@
             </columns>
         </TableView>
 
-              <Label fx:id="lbTitulo" layoutX="331.0" layoutY="141.0" style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-font-family: Arial;" text="Entregas – Periodo X">
+              <Label fx:id="lbTitulo" layoutX="31.0" layoutY="140.0" style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-font-family: Arial;" text="Entregas – Periodo X">
          <textFill>
             <LinearGradient endX="1.0" endY="1.0" startX="1.0">
                <stops>

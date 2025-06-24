@@ -28,7 +28,6 @@ import java.util.List;
 
 public class EntregaReporteMensualDAO {
 
-    /* ---------- EXISTENTES ---------- */
 
     public static ArrayList<EntregaReporteMensual> obtenerPorEstudianteYPeriodo(int idEstudiante, int idPeriodo)
             throws SQLException {
