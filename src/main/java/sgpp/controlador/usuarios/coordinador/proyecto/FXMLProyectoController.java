@@ -92,12 +92,8 @@ public class FXMLProyectoController implements Initializable {
                     "Error de datos",
                     "Lo sentimos, debido a un error inesperado no se pudo recuperar la informacion de los proyectos"
             );
-            cerrarVentana();
+            Utilidad.cerrarVentana(tblProyecto);
         }
-    }
-
-    public void cerrarVentana() {
-        Utilidad.getEscenarioComponente(tblProyecto).close();
     }
 
     public void clicBtnRegistrar(ActionEvent actionEvent) {

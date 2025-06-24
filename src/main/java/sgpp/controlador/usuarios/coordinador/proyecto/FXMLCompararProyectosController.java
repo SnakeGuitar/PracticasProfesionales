@@ -101,12 +101,12 @@ public class FXMLCompararProyectosController implements Initializable {
     @FXML
     private void clicBtnSi(ActionEvent actionEvent) {
         confirmacion = true;
-        Utilidad.getEscenarioComponente(lbNuevaFechaFin).close();
+        Utilidad.cerrarVentana(lbNuevaFechaFin);
     }
 
     @FXML
     private void clicBtnNo(ActionEvent actionEvent) {
         confirmacion = false;
-        Utilidad.getEscenarioComponente(lbNuevaFechaFin).close();
+        Utilidad.cerrarVentana(lbNuevaFechaFin);
     }
 }
