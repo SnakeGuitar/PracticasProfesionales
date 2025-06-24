@@ -14,7 +14,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
+import sgpp.modelo.beans.Estudiante;
 import sgpp.modelo.beans.expediente.reporte.EntregaReporteMensual;
+import sgpp.modelo.dao.entidades.PeriodoDAO;
 import sgpp.modelo.dao.expediente.documentoparcial.EntregaReporteMensualDAO;
 import sgpp.modelo.dao.expediente.documentoparcial.ReporteMensualDAO;
 import sgpp.utilidad.Utilidad;
@@ -34,8 +36,8 @@ public class FXMLEntregaReporteMensualController implements Initializable {
     @FXML private Label  lblFechas, lblArchivoSeleccionado;
     @FXML private TextField tfHoras;
 
-    private final int ID_ESTUDIANTE = 4;
-    private final int ID_PERIODO    = 4;
+    private Estudiante estudiante; //TODO usame para el DAO
+    private int idPeriodo;
     private EntregaReporteMensual entregaSeleccionada;
     private File archivoSeleccionado;
 
@@ -45,6 +47,11 @@ public class FXMLEntregaReporteMensualController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         lblFechas.setText("Selecciona un reporte para ver su apertura y límite de entrega");
+        this.idPeriodo = cargarPeriodo();
+    }
+
+    public void inicializarEstudiante(Estudiante estudiante) {
+        this.estudiante = estudiante;
     }
 
     @FXML private void btnReporte1(ActionEvent e){ manejarEntrega(1); }
@@ -116,7 +123,7 @@ public class FXMLEntregaReporteMensualController implements Initializable {
 
     private void manejarEntrega(int num){
         EntregaReporteMensual er =
-                EntregaReporteMensualDAO.obtenerEntrega(num, ID_PERIODO);
+                EntregaReporteMensualDAO.obtenerEntrega(num, idPeriodo);
         if(er == null){
             Utilidad.crearAlertaAdvertencia("Sin datos",
                     "No se encontró información para el reporte #"+num);
@@ -138,6 +145,18 @@ public class FXMLEntregaReporteMensualController implements Initializable {
         } else {
             Utilidad.crearAlertaInformacion("Abierta", "Puedes subir tu reporte.");
         }
+    }
+
+    private int cargarPeriodo() {
+        int idPeriodo = 0;
+        try {
+            idPeriodo = PeriodoDAO.obtenerPeriodoActual().getIdPeriodo();
+        } catch (SQLException sqlex) {
+            Utilidad.crearAlertaError(
+                    "Error",
+                    "No se encontro el periodo activo");
+        }
+        return idPeriodo;
     }
 
     @FXML

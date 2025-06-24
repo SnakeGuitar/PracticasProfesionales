@@ -36,6 +36,7 @@ import sgpp.modelo.dao.entidades.EstudianteDAO;
 import sgpp.modelo.dao.entidades.PeriodoDAO;
 import sgpp.modelo.dao.expediente.documentofinal.AutoEvaluacionDAO;
 import sgpp.utilidad.Impresora;
+import sgpp.utilidad.ResultadoFXML;
 import sgpp.utilidad.UtilFXML;
 import sgpp.utilidad.Utilidad;
 
@@ -107,7 +108,17 @@ public class FXMLPrincipalEstudianteController implements Initializable, IContro
     }
 
     public void clicBtnReporte(ActionEvent actionEvent) {
-        Utilidad.crearEscenario(RUTA_FXML_SUBIR_REPORTE, "ReportesMensuales");
+        ResultadoFXML<FXMLEntregaReporteMensualController> resultado = new UtilFXML().abrirFXMLModal(
+                RUTA_FXML_SUBIR_REPORTE,
+                "Reportes Mensuales",
+                FXMLEntregaReporteMensualController.class,
+                Utilidad.getEscenarioComponente(lbNombreEstudiante)
+        );
+        if (resultado != null) {
+            FXMLEntregaReporteMensualController controlador = resultado.getControlador();
+            controlador.inicializarEstudiante(estudiante);
+            resultado.getStage().showAndWait();
+        }
     }
 
     public void clicBtnAutoevaluacion(ActionEvent actionEvent) {
