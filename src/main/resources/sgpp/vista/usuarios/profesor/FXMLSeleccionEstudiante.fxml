@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -11,10 +17,10 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="768.0" prefWidth="687.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.profesor.FXMLSeleccionEstudianteController">
+<AnchorPane prefHeight="768.0" prefWidth="713.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.profesor.FXMLSeleccionEstudianteController">
     <children>
         <!-- Header azul con título del sistema -->
-        <Pane prefHeight="115.0" prefWidth="700.0" style="-fx-background-color: #6a92c8;">
+        <Pane prefHeight="115.0" prefWidth="713.0" styleClass="gradient-background-profesor" stylesheets="@../../styles.css">
             <children>
                 <Label layoutX="28.0" layoutY="31.0" prefHeight="27.0" prefWidth="710.0" text="Sistema de Gestion de Practicas Profesionales">
                     <effect>
@@ -49,21 +55,30 @@
         </Pane>
 
         <!-- Botón Regresar -->
-        <Button fx:id="btnRegresar" layoutX="29.0" layoutY="131.0" mnemonicParsing="false" onAction="#btnClicRegresar" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #6a92c8;" text="Regresar" textFill="WHITE">
+        <Button fx:id="btnRegresar" layoutX="530.0" layoutY="695.0" mnemonicParsing="false" onAction="#btnClicRegresar" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000;" text="Regresar">
             <font>
                 <Font name="Arial Bold" size="15.0" />
             </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0" startX="1.0">
+               <stops>
+                  <Stop color="BLACK" />
+                  <Stop color="BLACK" offset="0.21739130434782608" />
+                  <Stop color="WHITE" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
         </Button>
 
         <!-- Botón Refrescar alineado a la derecha -->
-        <Button fx:id="btnRefrescar" layoutX="520.0" layoutY="131.0" mnemonicParsing="false" onAction="#btnClicRefrescar" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #6a92c8;" text="Refrescar" textFill="WHITE">
+        <Button fx:id="btnRefrescar" layoutX="195.0" layoutY="695.0" mnemonicParsing="false" onAction="#btnClicRefrescar" prefHeight="31.0" prefWidth="149.0" styleClass="gradient-background-profesor" stylesheets="@../../styles.css" text="Refrescar" textFill="WHITE">
             <font>
                 <Font name="Arial Bold" size="15.0" />
             </font>
         </Button>
 
         <!-- Tabla de estudiantes -->
-        <TableView fx:id="tblEstudiantes" layoutX="29.0" layoutY="177.0" prefHeight="517.0" prefWidth="644.0" style="-fx-background-radius: 10;">
+        <TableView fx:id="tblEstudiantes" layoutX="35.0" layoutY="193.0" prefHeight="464.0" prefWidth="644.0" style="-fx-background-radius: 10;">
             <columns>
                 <TableColumn fx:id="colMatricula" prefWidth="300.0" text="Matrícula" />
                 <TableColumn fx:id="colNombre" prefWidth="344.0" text="Nombre" />
@@ -71,11 +86,25 @@
         </TableView>
 
         <!-- Botones inferiores -->
-        <Button fx:id="btnConsultar" layoutX="29.0" layoutY="710.0" mnemonicParsing="false" onAction="#btnClicConsultar" prefHeight="31.0" prefWidth="149.0" style="-fx-background-color: #6a92c8;" text="Consultar" textFill="WHITE">
+        <Button fx:id="btnConsultar" layoutX="35.0" layoutY="695.0" mnemonicParsing="false" onAction="#btnClicConsultar" prefHeight="31.0" prefWidth="149.0" styleClass="gradient-background-profesor" stylesheets="@../../styles.css" text="Consultar" textFill="WHITE">
             <font>
                 <Font name="Arial Bold" size="15.0" />
             </font>
         </Button>
+      <Label layoutX="282.0" layoutY="132.0" prefHeight="37.0" prefWidth="149.0" text="Expediente">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="24.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0" startX="1.0">
+               <stops>
+                  <Stop color="BLACK" />
+                  <Stop color="BLACK" offset="0.2536231884057971" />
+                  <Stop color="WHITE" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
 
     </children>
 </AnchorPane>

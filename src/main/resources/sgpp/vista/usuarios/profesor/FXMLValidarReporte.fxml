@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -8,31 +14,81 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="520.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.profesor.FXMLValidarReporteController">
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.profesor.FXMLValidarReporteController">
+   <children>
+   
+       <!-- Botón Regresar -->
+       <Button layoutX="838.0" layoutY="714.0" onAction="#volverAtras" prefHeight="31.0" prefWidth="160.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-border-radius: 8;" text="Regresar">
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0" startX="1.0" startY="0.16990291262135923">
+               <stops>
+                  <Stop color="BLACK" />
+                  <Stop color="BLACK" offset="0.2210144927536232" />
+                  <Stop color="WHITE" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Button>
+         <Button layoutX="31.0" layoutY="715.0" onAction="#actualizarLista" prefWidth="160" styleClass="gradient-background-profesor" stylesheets="@../../styles.css" text="Actualizar lista" textFill="WHITE" />
+         <Button fx:id="btnValidar" layoutX="210.0" layoutY="715.0" onAction="#validarEntrega" prefHeight="31.0" prefWidth="160.0" styleClass="gradient-background-profesor" stylesheets="@../../styles.css" text="Validar" textFill="WHITE" />
+         <Button fx:id="btnRechazar" layoutX="384.0" layoutY="715.0" onAction="#rechazarEntrega" prefHeight="31.0" prefWidth="160.0" style="-fx-background-color: #2a2b2a; -fx-text-fill: white;" text="Rechazar" />
 
-    <VBox alignment="TOP_CENTER" spacing="15" AnchorPane.bottomAnchor="60" AnchorPane.leftAnchor="15" AnchorPane.rightAnchor="15" AnchorPane.topAnchor="15">
-
-        <Label fx:id="lbTitulo" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #3b5998;" text="Entregas – Periodo X" />
-
-        <!-- Tabla -->
-        <TableView fx:id="tablaEntregas" prefHeight="380" prefWidth="780" style="-fx-border-color: #5b6fd4;">
+              <!-- Tabla -->
+        <TableView fx:id="tablaEntregas" layoutX="31.0" layoutY="203.0" prefHeight="493.0" prefWidth="967.0">
             <columns>
                 <TableColumn fx:id="colEstudiante" prefWidth="181.59997296333313" text="Estudiante" />
-                <TableColumn fx:id="colReporte" prefWidth="135.99998474121094" text="Reporte" />
-                <TableColumn fx:id="colFechaEntrega" prefWidth="163.20001220703125" text="Fecha entrega" />
-                <TableColumn fx:id="colEstado" prefWidth="179.20010375976562" text="Estado" />
-                <TableColumn fx:id="colHoras" prefWidth="128.79998779296875" text="Horas Reportadas" />
+                <TableColumn fx:id="colReporte" prefWidth="172.0" text="Reporte" />
+                <TableColumn fx:id="colFechaEntrega" prefWidth="196.0" text="Fecha entrega" />
+                <TableColumn fx:id="colEstado" prefWidth="222.0" text="Estado" />
+                <TableColumn fx:id="colHoras" prefWidth="200.0" text="Horas Reportadas" />
             </columns>
         </TableView>
 
-        <!-- Botonera -->
-        <HBox alignment="CENTER" spacing="20">
-            <Button onAction="#actualizarLista" prefWidth="160" style="-fx-background-color: #5b6fd4; -fx-text-fill: white;" text="Actualizar lista" />
-            <Button fx:id="btnValidar" onAction="#validarEntrega" prefWidth="120" style="-fx-background-color: #5b6fd4; -fx-text-fill: white;" text="Validar" />
-            <Button fx:id="btnRechazar" onAction="#rechazarEntrega" prefWidth="120" style="-fx-background-color: #c0392b; -fx-text-fill: white;" text="Rechazar" />
-        </HBox>
-    </VBox>
-
-    <!-- Botón Regresar -->
-    <Button layoutX="695" layoutY="470" onAction="#volverAtras" prefWidth="100" style="-fx-background-color: #95a5a6; -fx-text-fill: white;" text="Regresar" />
+              <Label fx:id="lbTitulo" layoutX="331.0" layoutY="141.0" style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-font-family: Arial;" text="Entregas – Periodo X">
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0" startX="1.0">
+               <stops>
+                  <Stop color="BLACK" />
+                  <Stop color="WHITE" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+      </Label>
+      <Pane prefHeight="115.0" prefWidth="1024.0" styleClass="gradient-background-profesor" stylesheets="@../../styles.css">
+         <children>
+            <Label layoutX="28.0" layoutY="31.0" prefHeight="27.0" prefWidth="710.0" text="Sistema de Gestion de Practicas Profesionales">
+               <effect>
+                  <Bloom threshold="0.08" />
+               </effect>
+               <font>
+                  <Font name="Arial Bold Italic" size="24.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop color="#e1e1e1" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+            <Label fx:id="lbNombreProfesor" layoutX="28.0" layoutY="67.0" prefHeight="27.0" text="Profesor">
+               <font>
+                  <Font name="Arial Italic" size="18.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="0.4368932038834952" endY="1.0">
+                     <stops>
+                        <Stop color="#bfbfbf" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+         </children>
+      </Pane>
+   </children>
 </AnchorPane>
