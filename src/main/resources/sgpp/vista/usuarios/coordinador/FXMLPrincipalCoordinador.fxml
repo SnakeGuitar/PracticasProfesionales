@@ -61,54 +61,54 @@
                   </Label>
                </children>
             </Pane>
-            <Pane layoutX="111.0" layoutY="168.0" opacity="0.67" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #121c84; -fx-background-radius: 16;">
+            <Pane layoutX="111.0" layoutY="168.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-radius: 16;" styleClass="gradient-background-coordinador" stylesheets="@../../styles.css">
                <children>
-                  <Button layoutX="14.0" layoutY="110.0" mnemonicParsing="false" onAction="#clicBtnProyectos" prefHeight="31.0" prefWidth="99.0" style="-fx-background-color: #121c84; -fx-font-weight: Bold;" text="Proyectos" textFill="WHITE">
+                  <Button blendMode="LIGHTEN" layoutX="14.0" layoutY="110.0" mnemonicParsing="false" onAction="#clicBtnProyectos" prefHeight="31.0" prefWidth="99.0" style="-fx-font-weight: Bold;" styleClass="gradient-background-coordinador" text="Proyectos" textFill="WHITE">
                      <font>
                         <Font name="Arial" size="15.0" />
                      </font>
                   </Button>
                </children>
             </Pane>
-            <Pane layoutX="387.0" layoutY="168.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #121c84; -fx-background-radius: 16;">
+            <Pane layoutX="387.0" layoutY="168.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-radius: 16;" styleClass="gradient-background-coordinador" stylesheets="@../../styles.css">
                <children>
-                  <Button layoutX="14.0" layoutY="110.0" mnemonicParsing="false" onAction="#clicBtnOrganizacionVinculada" prefHeight="31.0" prefWidth="197.0" style="-fx-background-color: #121c84; -fx-font-weight: Bold;" text="Organizacion Vinculada" textFill="WHITE">
+                  <Button blendMode="LIGHTEN" layoutX="14.0" layoutY="110.0" mnemonicParsing="false" onAction="#clicBtnOrganizacionVinculada" prefHeight="31.0" prefWidth="197.0" style="-fx-font-weight: Bold;" styleClass="gradient-background-coordinador" text="Organizacion Vinculada" textFill="WHITE">
                      <font>
                         <Font name="Arial" size="15.0" />
                      </font>
                   </Button>
                </children>
             </Pane>
-            <Pane layoutX="663.0" layoutY="168.0" opacity="0.29" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #121c84; -fx-background-radius: 16;">
+            <Pane layoutX="663.0" layoutY="168.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-radius: 16;" styleClass="gradient-background-coordinador">
                <children>
-                  <Button layoutX="14.0" layoutY="101.0" mnemonicParsing="false" onAction="#clicBtnResponsableTecnico" prefHeight="49.0" prefWidth="174.0" style="-fx-background-color: #121c84; -fx-font-weight: Bold;" text="Responsable Técnico" textFill="WHITE" wrapText="true">
+                  <Button blendMode="LIGHTEN" layoutX="14.0" layoutY="101.0" mnemonicParsing="false" onAction="#clicBtnResponsableTecnico" prefHeight="49.0" prefWidth="174.0" style="-fx-font-weight: Bold;" styleClass="gradient-background-coordinador" text="Responsable Técnico" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="Arial" size="15.0" />
                      </font>
                   </Button>
                </children>
             </Pane>
-            <Pane layoutX="663.0" layoutY="438.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #121c84; -fx-background-radius: 16;">
+            <Pane layoutX="663.0" layoutY="438.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-radius: 16;" styleClass="gradient-background-coordinador">
                <children>
-                  <Button layoutX="17.0" layoutY="88.0" mnemonicParsing="false" onAction="#clicBtnDocumentosAsignacion" prefHeight="74.0" prefWidth="147.0" style="-fx-background-color: #121c84; -fx-font-weight: Bold;" text="Documentos de Asignacion" textFill="WHITE" wrapText="true">
+                  <Button blendMode="LIGHTEN" layoutX="17.0" layoutY="88.0" mnemonicParsing="false" onAction="#clicBtnDocumentosAsignacion" prefHeight="74.0" prefWidth="147.0" style="-fx-font-weight: Bold;" styleClass="gradient-background-coordinador" text="Documentos de Asignacion" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="Arial" size="15.0" />
                      </font>
                   </Button>
                </children>
             </Pane>
-            <Pane layoutX="387.0" layoutY="438.0" opacity="0.79" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #121c84; -fx-background-radius: 16;">
+            <Pane layoutX="387.0" layoutY="438.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-radius: 16;" styleClass="gradient-background-coordinador">
                <children>
-                  <Button layoutX="14.0" layoutY="110.0" mnemonicParsing="false" onAction="#clicBtnProgramarEntregas" prefHeight="31.0" prefWidth="174.0" style="-fx-background-color: #121c84; -fx-font-weight: Bold;" text="Programar Entregas" textFill="WHITE">
+                  <Button blendMode="LIGHTEN" layoutX="14.0" layoutY="110.0" mnemonicParsing="false" onAction="#clicBtnProgramarEntregas" prefHeight="31.0" prefWidth="174.0" style="-fx-font-weight: Bold;" styleClass="gradient-background-coordinador" text="Programar Entregas" textFill="WHITE">
                      <font>
                         <Font name="Arial" size="15.0" />
                      </font>
                   </Button>
                </children>
             </Pane>
-            <Pane layoutX="111.0" layoutY="438.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #121c84; -fx-background-radius: 16;">
+            <Pane layoutX="111.0" layoutY="438.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-radius: 16;" styleClass="gradient-background-coordinador">
                <children>
-                  <Button layoutX="28.0" layoutY="110.0" mnemonicParsing="false" onAction="#clicBtnAsignarProyectos" style="-fx-background-color: #121c84; -fx-font-weight: bold;" text="Asignar Proyectos" textFill="WHITE">
+                  <Button blendMode="LIGHTEN" layoutX="28.0" layoutY="110.0" mnemonicParsing="false" onAction="#clicBtnAsignarProyectos" style="-fx-font-weight: bold;" styleClass="gradient-background-coordinador" text="Asignar Proyectos" textFill="WHITE">
                      <font>
                         <Font name="Arial" size="15.0" />
                      </font>
