@@ -86,7 +86,6 @@ public class FXMLProyectoController implements Initializable {
             proyectos.addAll(proyectosAux);
             tblProyecto.setItems(proyectos);
         } catch (SQLException sqlex) {
-            sqlex.printStackTrace();
             Utilidad.crearAlerta(
                     Alert.AlertType.ERROR,
                     "Error de datos",
