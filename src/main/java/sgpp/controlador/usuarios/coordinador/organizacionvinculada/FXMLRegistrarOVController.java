@@ -24,9 +24,9 @@ import sgpp.modelo.dao.entidades.OrganizacionVinculadaDAO;
 import sgpp.utilidad.Utilidad;
 
 import java.sql.SQLException;
+import java.util.List;
 
-import static sgpp.dominio.OrganizacionVinculadaDM.validarSector;
-import static sgpp.dominio.OrganizacionVinculadaDM.validarTelefono;
+import static sgpp.dominio.OrganizacionVinculadaDM.*;
 
 public class FXMLRegistrarOVController implements javafx.fxml.Initializable {
     @FXML
@@ -52,24 +52,90 @@ public class FXMLRegistrarOVController implements javafx.fxml.Initializable {
     public void clicBtnRegistrar(ActionEvent actionEvent) {
         if (validarCampos()) {
             try {
+                String nombre = txfiNombre.getText();
+                String sector = txfiSector.getText();
+                String telefono = txFiTelefono.getText();
+                String correo = txfiCorreo.getText();
+                String direccion = txfiDireccion.getText();
+                String ciudad = txfiCiudad.getText();
+                String estado = txfiEstado.getText();
+
+                if (!validarCampos()) {
+                    Utilidad.crearAlerta(Alert.AlertType.WARNING,
+                            "Campos incompletos",
+                            "Por favor, complete todos los campos antes de continuar.");
+                    return;
+                }
+
+                if (!validarLongitudNombre(nombre)) {
+                    Utilidad.crearAlerta(Alert.AlertType.WARNING,
+                            "Nombre demasiado largo",
+                            "El nombre de la organización no puede exceder los 100 caracteres.");
+                    return;
+                }
+
+                if (!verificarSector(sector)) {
+                    Utilidad.crearAlerta(Alert.AlertType.WARNING,
+                            "Sector inválido",
+                            "El sector no es válido. Por favor, ingrese un sector existente (P.");
+                    return;
+                }
+
+                if (!validarLongitudTelefono(telefono)) {
+                    Utilidad.crearAlerta(Alert.AlertType.WARNING,
+                            "Teléfono inválido",
+                            "El teléfono debe contener exactamente 10 dígitos.");
+                    return;
+                } else if (!verificarFormatoTelefono(telefono)) {
+                    Utilidad.crearAlerta(Alert.AlertType.WARNING,
+                            "Formato de teléfono incorrecto",
+                            "Por favor, ingrese un número de teléfono válido.");
+                    return;
+                }
+
+                if (!validarLongitudCorreo(correo)) {
+                    Utilidad.crearAlerta(Alert.AlertType.WARNING,
+                            "Correo electrónico inválido",
+                            "El correo electrónico debe tener un formato válido y no exceder los 100 caracteres.");
+                    return;
+                } else if (!verificarFormatoCorreo(correo)) {
+                    Utilidad.crearAlerta(Alert.AlertType.WARNING,
+                            "Formato de correo electrónico incorrecto",
+                            "Por favor, ingrese un correo electrónico válido.");
+                    return;
+                }
+
+                if (!validarLongitudDireccion(direccion)) {
+                    Utilidad.crearAlerta(Alert.AlertType.WARNING,
+                            "Dirección demasiado larga",
+                            "La dirección de la organización no puede exceder los 100 caracteres.");
+                    return;
+                }
+
+                if (!validarLongitudCiudad(ciudad)) {
+                    Utilidad.crearAlerta(Alert.AlertType.WARNING,
+                            "Ciudad demasiado larga",
+                            "La ciudad de la organización no puede exceder los 50 caracteres.");
+                    return;
+                }
+
+                if (!validarLongitudEstado(estado)) {
+                    Utilidad.crearAlerta(Alert.AlertType.WARNING,
+                            "Estado demasiado largo",
+                            "El estado de la organización no puede exceder los 50 caracteres.");
+                    return;
+                }
+
                 OrganizacionVinculada organizacion = new OrganizacionVinculada();
-                organizacion.setNombre(txfiNombre.getText());
 
-                if (!validarSector(txfiSector.getText().trim())) {
-                    return; // Si el sector no es válido, no continuar con la actualización
-                }
-
-                organizacion.setSector(txfiSector.getText());
-
-                if (!validarTelefono(txFiTelefono.getText().trim())) {
-                    return; // Si el teléfono no es válido, no continuar con la actualización
-                }
-
-                organizacion.setTelefono(txFiTelefono.getText());
-                organizacion.setCorreo(txfiCorreo.getText());
-                organizacion.setDireccion(txfiDireccion.getText());
-                organizacion.setCiudad(txfiCiudad.getText());
-                organizacion.setEstado(txfiEstado.getText());
+                organizacion.setNombre(nombre);
+                organizacion.setSector(sector.trim());
+                organizacion.setTelefono(telefono.trim());
+                organizacion.setCorreo(correo.trim());
+                organizacion.setDireccion(direccion.trim());
+                organizacion.setCiudad(ciudad.trim());
+                organizacion.setEstado(estado.trim());
+                
                 boolean registrado = OrganizacionVinculadaDAO.registrar(organizacion);
 
                 if (registrado) {
