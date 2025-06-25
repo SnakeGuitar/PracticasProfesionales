@@ -144,7 +144,6 @@ public class FXMLOrganizacionVinculadaController implements Initializable {
     }
 
     public void clicBtnCancelar(ActionEvent actionEvent) {
-        Stage stage = (Stage) tblOV.getScene().getWindow();
-        stage.close();
+        Utilidad.cerrarVentana(tblOV);
     }
 }

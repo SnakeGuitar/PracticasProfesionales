@@ -38,7 +38,6 @@
          <font>
             <Font name="Arial" size="15.0" />
          </font></TextField>
-      <TextField fx:id="txfiSector" layoutX="27.0" layoutY="232.0" prefHeight="35.0" prefWidth="434.0" />
       <Label layoutX="27.0" layoutY="204.0" text="Sector">
          <font>
             <Font name="Arial Bold" size="15.0" />
@@ -62,14 +61,12 @@
             <Font name="Arial Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="txfiCiudad" layoutX="27.0" layoutY="529.0" prefHeight="35.0" prefWidth="175.0" />
-      <Label layoutX="27.0" layoutY="501.0" text="Ciudad">
+      <Label layoutX="25.0" layoutY="510.0" text="Ciudad">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="txfiEstado" layoutX="219.0" layoutY="529.0" prefHeight="35.0" prefWidth="242.0" />
-      <Label layoutX="219.0" layoutY="501.0" text="Estado">
+      <Label layoutX="220.0" layoutY="510.0" text="Estado">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font>
@@ -80,5 +77,8 @@
          </font>
       </Button>
       <Button layoutX="194.0" layoutY="607.0" mnemonicParsing="false" onAction="#clicBtnCancelar" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-font-family: Arial; -fx-font-weight: Bold; -fx-border-radius: 5;" text="Cancelar" />
+      <ComboBox fx:id="comboSector" layoutX="28.0" layoutY="233.0" prefHeight="31.0" prefWidth="434.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000;" />
+      <ComboBox fx:id="comboCiudad" layoutX="27.0" layoutY="540.0" prefHeight="33.0" prefWidth="152.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000;" />
+      <ComboBox fx:id="comboEstado" layoutX="212.0" layoutY="540.0" prefHeight="33.0" prefWidth="249.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000;" />
    </children>
 </AnchorPane>
