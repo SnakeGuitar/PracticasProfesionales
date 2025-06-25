@@ -30,10 +30,17 @@ module com.sgpp.sistemagestionpracticasprofesionales {
 
     exports sgpp.modelo.beans to javafx.fxml;
 
+
+    // Pruebas unitarias
+    exports test.organizacionvinculada to junit;
+
     // Paquete de aplicación principal
     exports sgpp;
     exports sgpp.controlador.usuarios to javafx.fxml;
     opens sgpp.controlador.usuarios to javafx.fxml;
     requires org.apache.pdfbox;
     requires kernel;
+    requires junit;
+    requires org.junit.jupiter.api;
+    requires org.jetbrains.annotations;
 }
