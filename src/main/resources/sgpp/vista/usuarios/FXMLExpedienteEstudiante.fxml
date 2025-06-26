@@ -20,13 +20,13 @@
    <children>
 
                         <!-- Botones inferiores -->
-      <Button fx:id="btnDescargar" disable="true" layoutX="28.0" layoutY="542.0" mnemonicParsing="false" onAction="#clicBtnDescargar" prefHeight="31.0" prefWidth="152.0" styleClass="gradient-background-expediente" stylesheets="@../styles.css" text="Descargar" textFill="WHITE">
+      <Button fx:id="btnDescargar" layoutX="28.0" layoutY="542.0" mnemonicParsing="false" onAction="#clicBtnDescargar" prefHeight="31.0" prefWidth="152.0" styleClass="gradient-background-profesor" stylesheets="@../styles.css" text="Descargar" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font>
       </Button>
       <!-- Header azul con título del sistema -->
-      <Pane prefHeight="188.0" prefWidth="800.0" styleClass="gradient-background-expediente" stylesheets="@../styles.css">
+      <Pane prefHeight="188.0" prefWidth="800.0" styleClass="gradient-background-profesor" stylesheets="@../styles.css">
          <children>
             <Label layoutX="28.0" layoutY="31.0" prefHeight="27.0" prefWidth="710.0" text="Sistema de Gestion de Practicas Profesionales">
                <effect>
@@ -60,7 +60,7 @@
             </Label>
       
             <!-- Panel de información del estudiante -->
-            <Pane blendMode="LIGHTEN" layoutX="194.0" layoutY="131.0" prefHeight="31.0" prefWidth="577.0" styleClass="gradient-background-expediente" stylesheets="@../styles.css">
+            <Pane blendMode="LIGHTEN" layoutX="194.0" layoutY="131.0" prefHeight="31.0" prefWidth="577.0" styleClass="gradient-background-profesor" stylesheets="@../styles.css">
                <children>
                   <Label layoutX="14.0" layoutY="5.0" prefHeight="21.0" prefWidth="90.0" text="Expediente:" textFill="WHITE">
                      <font>
@@ -94,7 +94,7 @@
       </Pane>
 
                   <!-- Botón Regresar -->
-      <Button fx:id="btnRegresar" blendMode="LIGHTEN" layoutX="29.0" layoutY="131.0" mnemonicParsing="false" onAction="#clicBtnRegresar" prefHeight="31.0" prefWidth="149.0" styleClass="gradient-background-expediente" stylesheets="@../styles.css" text="Regresar" textFill="WHITE">
+      <Button fx:id="btnRegresar" blendMode="LIGHTEN" layoutX="29.0" layoutY="131.0" mnemonicParsing="false" onAction="#clicBtnRegresar" prefHeight="31.0" prefWidth="149.0" styleClass="gradient-background-profesor" stylesheets="@../styles.css" text="Regresar" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font>

@@ -64,8 +64,6 @@ public class FXMLRegistrarOVController implements javafx.fxml.Initializable {
     @FXML
     private ComboBox<String> comboEstado;
 
-    OrganizacionVinculada organizacionVinculada;
-
     @Override
     public void initialize(java.net.URL url, java.util.ResourceBundle rb) {
         configurarComboBoxes();

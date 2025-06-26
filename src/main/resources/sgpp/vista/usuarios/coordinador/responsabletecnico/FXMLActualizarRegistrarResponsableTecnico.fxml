@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="671.0" prefWidth="493.0" style="-fx-background-color: #ffffff;" 
-            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
-            fx:controller="sgpp.controlador.usuarios.coordinador.responsabletecnico.FXMLActualizarRegistrarResponsableTecnicoController">
+<AnchorPane prefHeight="671.0" prefWidth="493.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.coordinador.responsabletecnico.FXMLActualizarRegistrarResponsableTecnicoController">
    <children>
       <Label layoutX="27.0" layoutY="28.0" style="-fx-font-style: italic;" text="Actualizar / Registrar">
          <font>
@@ -69,20 +68,16 @@
             <Font name="Arial Bold" size="15.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cbEmpresa" layoutX="27.0" layoutY="454.0" prefHeight="35.0" prefWidth="434.0">
+      <ComboBox fx:id="cbEmpresa" layoutX="27.0" layoutY="454.0" prefHeight="35.0" prefWidth="434.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000;">
 
       </ComboBox>
 
-      <Button fx:id="btnGuardar" layoutX="309.0" layoutY="606.0" mnemonicParsing="false" 
-              prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #5b6fd4; -fx-background-radius: 5;" 
-              text="Guardar" textFill="WHITE" onAction="#clicBtnGuardar">
+      <Button fx:id="btnGuardar" layoutX="27.0" layoutY="606.0" mnemonicParsing="false" onAction="#clicBtnGuardar" prefHeight="31.0" prefWidth="152.0" styleClass="gradient-background-coordinador" stylesheets="@../../../styles.css" text="Guardar" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font>
       </Button>
 
-      <Button fx:id="btnCancelar" layoutX="143.0" layoutY="606.0" mnemonicParsing="false" 
-              prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-font-family: Arial; -fx-font-weight: Bold; -fx-border-radius: 5;" 
-              text="Cancelar" onAction="#clicBtnCancelar" />
+      <Button fx:id="btnCancelar" layoutX="192.0" layoutY="606.0" mnemonicParsing="false" onAction="#clicBtnCancelar" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-font-family: Arial; -fx-font-weight: Bold; -fx-border-radius: 5;" text="Cancelar" />
    </children>
 </AnchorPane>

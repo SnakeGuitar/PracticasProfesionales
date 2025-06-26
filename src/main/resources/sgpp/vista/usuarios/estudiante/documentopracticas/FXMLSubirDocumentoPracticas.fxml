@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.Bloom?>
@@ -10,7 +16,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.estudiante.documentopracticas.FXMLSubirDocumentoPracticasController">
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.estudiante.documentopracticas.FXMLSubirDocumentoPracticasController">
    <children>
       <Pane prefHeight="768.0" prefWidth="1025.0" styleClass="gradient-background-estudiante" stylesheets="@../../../styles.css">
          <children>
@@ -53,13 +59,13 @@
                         <Font name="Arial" size="15.0" />
                      </font>
                   </Label>
-                  <Button layoutX="34.0" layoutY="555.0" onAction="#clicBtnSeleccionarPDF" prefHeight="31.0" prefWidth="230.0" styleClass="gradient-background-estudiante" stylesheets="@../../../styles.css" text="Seleccionar PDF" textFill="WHITE">
+                  <Button layoutX="34.0" layoutY="555.0" onAction="#clicBtnSeleccionarPDF" prefHeight="31.0" prefWidth="209.0" styleClass="gradient-background-estudiante" stylesheets="@../../../styles.css" text="Seleccionar PDF" textFill="WHITE">
                      <font>
                         <Font name="Arial" size="15.0" />
                      </font>
                   </Button>
-                  <Button layoutX="282.0" layoutY="555.0" onAction="#clicBtnSubirReporte" prefHeight="31.0" prefWidth="230.0" styleClass="gradient-background-estudiante" stylesheets="@../../../styles.css" text="Subir Documento" textFill="white" />
-                  <Label layoutX="152.0" layoutY="21.0" prefHeight="133.0" prefWidth="684.0" text="Entregas de Documentos de Practicas">
+                  <Button layoutX="256.0" layoutY="555.0" onAction="#clicBtnSubirReporte" prefHeight="31.0" prefWidth="209.0" styleClass="gradient-background-estudiante" stylesheets="@../../../styles.css" text="Subir Documento" textFill="white" />
+                  <Label layoutX="161.0" layoutY="38.0" prefHeight="46.0" prefWidth="684.0" text="Entregas de Documentos de Practicas">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="36.0" />
                      </font>
@@ -78,72 +84,72 @@
                         <Font name="Arial Italic" size="16.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lbFechasIniciales" layoutX="154.0" layoutY="176.0" text="Documentos Iniciales">
+                  <Label fx:id="lbFechasIniciales" layoutX="34.0" layoutY="115.0" text="Documentos Iniciales">
                      <font>
                         <Font name="Arial Italic" size="16.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btnCartaAceptacion" layoutX="126.0" layoutY="212.0" onAction="#btnCartaAceptacion" prefHeight="32.0" prefWidth="209.0" style="-fx-background-color: #374a5a;" text="Carta Aceptacion" textFill="white">
+                  <Button fx:id="btnCartaAceptacion" layoutX="34.0" layoutY="146.0" onAction="#btnCartaAceptacion" prefHeight="32.0" prefWidth="209.0" style="-fx-background-color: #374a5a;" text="Carta Aceptacion" textFill="white">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="16.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnCronograma" layoutX="126.0" layoutY="258.0" onAction="#btnCronograma" prefHeight="32.0" prefWidth="209.0" style="-fx-background-color: #374a5a;" text="Cronograma" textFill="white">
+                  <Button fx:id="btnCronograma" layoutX="256.0" layoutY="146.0" onAction="#btnCronograma" prefHeight="32.0" prefWidth="209.0" style="-fx-background-color: #374a5a;" text="Cronograma" textFill="white">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="16.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnOficioAsignacion" layoutX="126.0" layoutY="305.0" onAction="#btnOficioAsignacion" prefHeight="32.0" prefWidth="209.0" style="-fx-background-color: #374a5a;" text="Oficio Asignacion" textFill="white">
+                  <Button fx:id="btnOficioAsignacion" layoutX="474.0" layoutY="146.0" onAction="#btnOficioAsignacion" prefHeight="32.0" prefWidth="209.0" style="-fx-background-color: #374a5a;" text="Oficio Asignacion" textFill="white">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="16.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnHorarioUV" layoutX="126.0" layoutY="349.0" onAction="#btnHorarioUV" prefHeight="32.0" prefWidth="209.0" style="-fx-background-color: #374a5a;" text="Horario UV" textFill="white">
+                  <Button fx:id="btnHorarioUV" layoutX="691.0" layoutY="146.0" onAction="#btnHorarioUV" prefHeight="32.0" prefWidth="209.0" style="-fx-background-color: #374a5a;" text="Horario UV" textFill="white">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="16.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnConstanciaSeguro" layoutX="126.0" layoutY="395.0" onAction="#btnConstanciaSeguro" prefHeight="32.0" prefWidth="209.0" style="-fx-background-color: #374a5a;" text="Constancia Seguro" textFill="white">
+                  <Button fx:id="btnConstanciaSeguro" layoutX="34.0" layoutY="192.0" onAction="#btnConstanciaSeguro" prefHeight="32.0" prefWidth="209.0" style="-fx-background-color: #374a5a;" text="Constancia Seguro" textFill="white">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="16.0" />
                      </font>
                   </Button>
-                  <Label fx:id="lbFechasParciales" layoutX="395.0" layoutY="176.0" text="Documentos Parciales">
+                  <Label fx:id="lbFechasParciales" layoutX="34.0" layoutY="250.0" text="Documentos Parciales">
                      <font>
                         <Font name="Arial Italic" size="16.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btnReporteParcial" layoutX="360.0" layoutY="212.0" onAction="#btnReporteParcial" prefHeight="32.0" prefWidth="230.0" style="-fx-background-color: #374a5a;" text="Reporte Parcial" textFill="white">
+                  <Button fx:id="btnReporteParcial" layoutX="34.0" layoutY="276.0" onAction="#btnReporteParcial" prefHeight="32.0" prefWidth="209.0" style="-fx-background-color: #374a5a;" text="Reporte Parcial" textFill="white">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="16.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnEvaluacionParcialOV" layoutX="360.0" layoutY="258.0" onAction="#btnEvaluacionParcialOV" prefHeight="32.0" prefWidth="230.0" style="-fx-background-color: #374a5a;" text="Evaluacion Parcial Por OV" textFill="white">
+                  <Button fx:id="btnEvaluacionParcialOV" layoutX="256.0" layoutY="276.0" onAction="#btnEvaluacionParcialOV" prefHeight="32.0" prefWidth="209.0" style="-fx-background-color: #374a5a;" text="Evaluacion Parcial Por OV" textFill="white">
                      <font>
-                        <Font name="Arial Rounded MT Bold" size="16.0" />
+                        <Font name="Arial Rounded MT Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Label fx:id="lbFechasFinales" layoutX="656.0" layoutY="176.0" text="Documentos Finales">
+                  <Label fx:id="lbFechasFinales" layoutX="37.0" layoutY="343.0" text="Documentos Finales">
                      <font>
                         <Font name="Arial Italic" size="16.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btnReporteFinal" layoutX="617.0" layoutY="212.0" onAction="#btnReporteFinal" prefHeight="32.0" prefWidth="230.0" style="-fx-background-color: #374a5a;" text="Reporte Final" textFill="white">
+                  <Button fx:id="btnReporteFinal" layoutX="34.0" layoutY="369.0" onAction="#btnReporteFinal" prefHeight="32.0" prefWidth="209.0" style="-fx-background-color: #374a5a;" text="Reporte Final" textFill="white">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="16.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnAutoevaluacion" layoutX="617.0" layoutY="258.0" onAction="#btnAutoevaluacion" prefHeight="32.0" prefWidth="230.0" style="-fx-background-color: #374a5a;" text="Autoevaluacion" textFill="white">
+                  <Button fx:id="btnAutoevaluacion" layoutX="256.0" layoutY="369.0" onAction="#btnAutoevaluacion" prefHeight="32.0" prefWidth="209.0" style="-fx-background-color: #374a5a;" text="Autoevaluacion" textFill="white">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="16.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnEvaluacionFinalOV" layoutX="617.0" layoutY="305.0" onAction="#btnEvaluacionFinalOV" prefHeight="32.0" prefWidth="230.0" style="-fx-background-color: #374a5a;" text="Evaluacion FInal Por OV" textFill="white">
+                  <Button fx:id="btnEvaluacionFinalOV" layoutX="474.0" layoutY="369.0" onAction="#btnEvaluacionFinalOV" prefHeight="32.0" prefWidth="209.0" style="-fx-background-color: #374a5a;" text="Evaluacion FInal Por OV" textFill="white">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="16.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnCartaLiberacion" layoutX="617.0" layoutY="349.0" onAction="#btnCartaLiberacion" prefHeight="32.0" prefWidth="230.0" style="-fx-background-color: #374a5a;" text="Carta Liberacion" textFill="white">
+                  <Button fx:id="btnCartaLiberacion" layoutX="691.0" layoutY="369.0" onAction="#btnCartaLiberacion" prefHeight="32.0" prefWidth="209.0" style="-fx-background-color: #374a5a;" text="Carta Liberacion" textFill="white">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="16.0" />
                      </font>
