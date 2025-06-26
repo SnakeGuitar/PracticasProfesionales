@@ -39,11 +39,19 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class FXMLOrganizacionVinculadaController implements Initializable {
+    // CONSTANTES PARA ERRORES GENERALES
+    private static final String TITULO_ERROR_GENERICO = "Error inesperado";
+    private static final String MENSAJE_ERROR_GENERICO = "Ha ocurrido un error inesperado. Por favor, intente nuevamente.";
+
+    private static final String TITULO_ERROR_CONFIGURACION = "Error de configuración";
+    private static final String MENSAJE_ERROR_CONFIGURACION = "Error al configurar los elementos de la interfaz. Por favor, reinicie la aplicación.";
+
+    private static final String TITULO_ERROR_CARGA_CIUDADES = "Error al cargar ciudades";
+    private static final String MENSAJE_ERROR_CARGA_CIUDADES = "No se pudieron cargar las ciudades para el estado seleccionado. Por favor, intente nuevamente.";
+
     private static final String RUTA_FXML_REGISTRAR_OV = "/sgpp/vista/usuarios/coordinador/organizacionvinculada/FXMLRegistrarOV.fxml";
     private static final String RUTA_FXML_ACTUALIZAR_OV = "/sgpp/vista/usuarios/coordinador/organizacionvinculada/FXMLActualizarOV.fxml";
     private static final String RUTA_FXML_ELIMINAR_OV = "/sgpp/vista/usuarios/coordinador/organizacionvinculada/FXMLEliminarOV.fxml"; // Implementar
-
-    private ObservableList<OrganizacionVinculada> listaOrganizaciones;
 
     @FXML
     private TableView<OrganizacionVinculada> tblOV;
@@ -81,7 +89,7 @@ public class FXMLOrganizacionVinculadaController implements Initializable {
 
     private void cargarDatosTabla() {
         try {
-            listaOrganizaciones = FXCollections.observableArrayList();
+            ObservableList<OrganizacionVinculada> listaOrganizaciones = FXCollections.observableArrayList();
             ArrayList<OrganizacionVinculada> organizacionVinculadaDAO = OrganizacionVinculadaDAO.obtenerOrganizacionesVinculadas();
             listaOrganizaciones.addAll(organizacionVinculadaDAO);
             tblOV.setItems(listaOrganizaciones);
@@ -145,5 +153,17 @@ public class FXMLOrganizacionVinculadaController implements Initializable {
 
     public void clicBtnCancelar(ActionEvent actionEvent) {
         Utilidad.cerrarVentana(tblOV);
+    }
+
+    public static void mostrarErrorGenerico() {
+        Utilidad.crearAlerta(Alert.AlertType.ERROR, TITULO_ERROR_GENERICO, MENSAJE_ERROR_GENERICO);
+    }
+
+    public static void mostrarErrorConfiguracion() {
+        Utilidad.crearAlerta(Alert.AlertType.ERROR, TITULO_ERROR_CONFIGURACION, MENSAJE_ERROR_CONFIGURACION);
+    }
+
+    public static void mostrarErrorCargaCiudades() {
+        Utilidad.crearAlerta(Alert.AlertType.ERROR, TITULO_ERROR_CARGA_CIUDADES, MENSAJE_ERROR_CARGA_CIUDADES);
     }
 }

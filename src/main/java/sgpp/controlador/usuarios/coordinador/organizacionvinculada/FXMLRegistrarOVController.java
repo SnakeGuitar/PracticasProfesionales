@@ -34,29 +34,20 @@ import java.sql.SQLException;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
+import static sgpp.controlador.usuarios.coordinador.organizacionvinculada.FXMLOrganizacionVinculadaController.*;
 import static sgpp.dominio.OrganizacionVinculadaDM.*;
 
 public class FXMLRegistrarOVController implements javafx.fxml.Initializable {
     private static final Logger LOGGER = Logger.getLogger(FXMLRegistrarOVController.class.getName());
 
-    // Constantes para mensajes
     private static final String TITULO_CAMPOS_INCOMPLETOS = "Campos incompletos";
     private static final String MENSAJE_CAMPOS_INCOMPLETOS = "Por favor, complete todos los campos antes de continuar.";
 
-    private static final String TITULO_REGISTRO_EXITOSO = "Organización vinculada registrada exitosamente.";
+    private static final String TITULO_REGISTRO_EXITOSO = "Organización vinculada registrada exitosamente";
     private static final String MENSAJE_REGISTRO_EXITOSO = "La organización vinculada ha sido registrada correctamente.";
 
-    private static final String TITULO_ERROR_REGISTRO = "Error al registrar la organización vinculada.";
+    private static final String TITULO_ERROR_REGISTRO = "Error al registrar la organización vinculada";
     private static final String MENSAJE_ERROR_REGISTRO = "No se pudo registrar la organización vinculada. Por favor, intente nuevamente.";
-
-    private static final String TITULO_ERROR_GENERICO = "Error inesperado";
-    private static final String MENSAJE_ERROR_GENERICO = "Ha ocurrido un error inesperado. Por favor, intente nuevamente.";
-
-    private static final String TITULO_ERROR_CONFIGURACION = "Error de configuración";
-    private static final String MENSAJE_ERROR_CONFIGURACION = "Error al configurar los elementos de la interfaz. Por favor, reinicie la aplicación.";
-
-    private static final String TITULO_ERROR_CARGA_CIUDADES = "Error al cargar ciudades";
-    private static final String MENSAJE_ERROR_CARGA_CIUDADES = "No se pudieron cargar las ciudades para el estado seleccionado. Por favor, intente nuevamente.";
 
     @FXML
     private TextField txfiNombre;
@@ -72,6 +63,8 @@ public class FXMLRegistrarOVController implements javafx.fxml.Initializable {
     private ComboBox<String> comboCiudad;
     @FXML
     private ComboBox<String> comboEstado;
+
+    OrganizacionVinculada organizacionVinculada;
 
     @Override
     public void initialize(java.net.URL url, java.util.ResourceBundle rb) {
@@ -394,18 +387,6 @@ public class FXMLRegistrarOVController implements javafx.fxml.Initializable {
 
     private void mostrarErrorRegistro() {
         Utilidad.crearAlerta(Alert.AlertType.ERROR, TITULO_ERROR_REGISTRO, MENSAJE_ERROR_REGISTRO);
-    }
-
-    private void mostrarErrorGenerico() {
-        Utilidad.crearAlerta(Alert.AlertType.ERROR, TITULO_ERROR_GENERICO, MENSAJE_ERROR_GENERICO);
-    }
-
-    private void mostrarErrorConfiguracion() {
-        Utilidad.crearAlerta(Alert.AlertType.ERROR, TITULO_ERROR_CONFIGURACION, MENSAJE_ERROR_CONFIGURACION);
-    }
-
-    private void mostrarErrorCargaCiudades() {
-        Utilidad.crearAlerta(Alert.AlertType.WARNING, TITULO_ERROR_CARGA_CIUDADES, MENSAJE_ERROR_CARGA_CIUDADES);
     }
 
     private void cerrarVentana() {
