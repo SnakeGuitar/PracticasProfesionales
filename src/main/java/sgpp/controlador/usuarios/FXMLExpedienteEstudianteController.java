@@ -1,3 +1,10 @@
+/*
+ * Autor original: Diego Iván Enríquez Morales
+ * Último autor: Abel Yong
+ * Fecha de creación: 15-06-2025
+ * Descripción: Controlador para seleccionar y descargar documentos del expediente de un estudiante.
+ */
+
 package sgpp.controlador.usuarios;
 
 import javafx.collections.FXCollections;

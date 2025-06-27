@@ -1,3 +1,10 @@
+/*
+ * Autor original: Diego Iván Enríquez Morales
+ * Último autor: Abel Yong
+ * Fecha de creación: 15-06-2025
+ * Descripción: Controlador para seleccionar a un estudiante, sea para consultar expediente o evaluar presentación.
+ */
+
 package sgpp.controlador.usuarios.profesor;
 
 import javafx.collections.FXCollections;

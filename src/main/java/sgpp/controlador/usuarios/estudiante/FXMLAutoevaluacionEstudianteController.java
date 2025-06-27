@@ -1,3 +1,9 @@
+/*
+ * Autor original: Diego Iván Enríquez Morales
+ * Fecha de creación: 15-06-2025
+ * Descripción: Controlador para realizar autoevaluación de prácticas profesionales.
+ */
+
 package sgpp.controlador.usuarios.estudiante;
 
 import javafx.event.ActionEvent;

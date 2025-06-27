@@ -1,3 +1,10 @@
+/*
+ * Autor original: Diego Iván Enríquez Morales
+ * Último autor: Abel Yong
+ * Fecha de creación: 15-06-2025
+ * Descripción: Controlador para calificar (un poco) más a detalle e ingresar observaciones para la evaluación de la presentación oral del estudiante.
+ */
+
 package sgpp.controlador.usuarios.profesor;
 
 import javafx.event.ActionEvent;
