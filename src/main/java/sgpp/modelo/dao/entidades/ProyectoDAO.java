@@ -2,14 +2,14 @@
  * Autor original: Abel Hernandez Yong
  * Último autor: Abel Hernandez Yong
  * Fecha de creación: 14-06-2025
- * Fecha de la última versión aprobada:
- * Fecha de la última modificación: 17-06-2025
+ * Fecha de la última versión aprobada: 26-06-2025
+ * Fecha de la última modificación: 26-06-2025
  * Descripción: Clase DAO para la entidad proyecto
  */
 
 /*
- * Estado: En progreso
- * Modificaciones: Agregado metodo para recuperar un proyecto con preferencia
+ * Estado: Terminada
+ * Modificaciones: Eliminada importacion comodin
  */
 
 package sgpp.modelo.dao.entidades;
@@ -18,7 +18,12 @@ import sgpp.modelo.ConexionBD;
 import sgpp.modelo.beans.Proyecto;
 import sgpp.modelo.dao.ResultadoSQL;
 
-import java.sql.*;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 

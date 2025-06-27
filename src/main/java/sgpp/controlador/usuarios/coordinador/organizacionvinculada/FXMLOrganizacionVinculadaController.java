@@ -51,7 +51,6 @@ public class FXMLOrganizacionVinculadaController implements Initializable {
 
     private static final String RUTA_FXML_REGISTRAR_OV = "/sgpp/vista/usuarios/coordinador/organizacionvinculada/FXMLRegistrarOV.fxml";
     private static final String RUTA_FXML_ACTUALIZAR_OV = "/sgpp/vista/usuarios/coordinador/organizacionvinculada/FXMLActualizarOV.fxml";
-    private static final String RUTA_FXML_ELIMINAR_OV = "/sgpp/vista/usuarios/coordinador/organizacionvinculada/FXMLEliminarOV.fxml"; // Implementar
 
     @FXML
     private TableView<OrganizacionVinculada> tblOV;

@@ -1,3 +1,19 @@
+/*
+ * Autor original: Abel Hernandez Yong
+ * Ultimo autor: Abel Hernandez Yong
+ * Fecha de creación: 16-06-2025
+ * Fecha de la última versión aprobada: 23-06-2026
+ * Fecha de la última modificación: 23-06-2025
+ * Descripción: Controlador para manejar las operaciones de la vista FXMLAsignarProyecto.fxml
+ *              Se encarga de mostrar la lista de proyectos disponibles y estudiantes pendientes de asignacion
+ *              asi como la preferencia de proyecto del estudiante seleccionado
+ */
+
+/*
+ * Estado: Completado
+ * Modificaciones: Se reemplazo el metodo cerrar ventana con Utilidad.cerrarVentana()
+ */
+
 package sgpp.controlador.usuarios.coordinador.proyecto;
 
 import javafx.collections.FXCollections;

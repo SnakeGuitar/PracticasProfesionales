@@ -1,3 +1,17 @@
+/*
+ * Autor original: Abel Hernandez Yong
+ * Último autor: Abel Hernandez Yong
+ * Fecha de creación: 16-06-2025
+ * Fecha de la última versión aprobada: 23-06-2025 18:49
+ * Fecha de la última modificación: 23-06-2025 18:49
+ * Descripción: Controlador para la ventana de administracion de proyectos
+ */
+
+/*
+ * Estado: Terminada
+ * Modificaciones: Se reemplazaron los metodos cerrar ventana con Utilidad.cerrarVentana()
+ */
+
 package sgpp.controlador.usuarios.coordinador;
 
 import javafx.event.ActionEvent;

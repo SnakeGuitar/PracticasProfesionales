@@ -1,3 +1,17 @@
+/*
+ * Autor original: Diego Ivan
+ * Último autor: Abel Yong
+ * Fecha de creación: 16-06-2025
+ * Fecha de la última versión aprobada: 26-06-2025
+ * Fecha de la última modificación: 26-06-2025
+ * Descripción: Clase para obtener un profesor
+ */
+
+/*
+ * Estado: Terminado
+ * Modificaciones: eliminado metodo sin utilizar obtenerTodos()
+ */
+
 package sgpp.modelo.dao.entidades;
 
 import sgpp.modelo.ConexionBD;
@@ -8,7 +22,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class ProfesorDAO {
 
@@ -62,30 +75,6 @@ public class ProfesorDAO {
             throw new SQLException("Se ha perdido la conexion con la Base de Datos");
         }
         return profesor;
-    }
-
-    public static ArrayList<Profesor> obtenerTodos() throws SQLException {
-        Connection conexion = null;
-        PreparedStatement sentencia = null;
-        ResultSet resultado = null;
-        ArrayList<Profesor> profesores = new ArrayList<>();
-        String consulta = "SELECT * FROM profesor";
-
-        try {
-            conexion = ConexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(consulta);
-            resultado = sentencia.executeQuery();
-
-            while (resultado.next()) {
-                profesores.add(convertirResultSetProfesor(resultado));
-            }
-        } catch (SQLException e) {
-            Utilidad.mostrarErrorBD(true, e);
-        } finally {
-            ConexionBD.cerrarConexion(conexion, sentencia, resultado);
-        }
-
-        return profesores;
     }
 
     public static Profesor convertirResultSetProfesor(ResultSet resultado) throws SQLException {
