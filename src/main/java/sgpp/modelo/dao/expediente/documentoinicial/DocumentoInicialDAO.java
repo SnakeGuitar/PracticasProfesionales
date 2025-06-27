@@ -25,7 +25,11 @@ import sgpp.modelo.beans.expediente.documentoinicial.TipoDocumentoInicial;
 import sgpp.utilidad.Utilidad;
 import sgpp.utilidad.UtilidadFormatoDeDatos;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
