@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
-<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.FXMLExpedienteEstudianteController">
-   <children>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
 
-                        <!-- Botones inferiores -->
-      <Button fx:id="btnDescargar" layoutX="28.0" layoutY="542.0" mnemonicParsing="false" onAction="#clicBtnDescargar" prefHeight="31.0" prefWidth="152.0" styleClass="gradient-background-profesor" stylesheets="@../styles.css" text="Descargar" textFill="WHITE">
-         <font>
-            <Font name="Arial Bold" size="15.0" />
-         </font>
-      </Button>
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.FXMLExpedienteEstudianteController">
+   <children>
       <!-- Header azul con título del sistema -->
       <Pane prefHeight="188.0" prefWidth="800.0" styleClass="gradient-background-profesor" stylesheets="@../styles.css">
          <children>
@@ -109,6 +106,13 @@
 
       <!-- Lista de documentos -->
       <ListView fx:id="listDocumentosExpediente" layoutX="28.0" layoutY="218.0" onMouseClicked="#clicListDocumentos" prefHeight="284.0" prefWidth="742.0" style="-fx-background-radius: 16;" />
+
+                        <!-- Botones inferiores -->
+      <Button fx:id="btnDescargar" layoutX="28.0" layoutY="542.0" mnemonicParsing="false" onAction="#clicBtnDescargar" prefHeight="31.0" prefWidth="152.0" styleClass="gradient-background-profesor" stylesheets="@../styles.css" text="Descargar" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="15.0" />
+         </font>
+      </Button>
 
    </children>
 </AnchorPane>

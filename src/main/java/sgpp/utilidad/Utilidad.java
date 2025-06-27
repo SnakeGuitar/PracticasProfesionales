@@ -96,12 +96,29 @@ public class Utilidad {
     public static void crearEscenario(String URL, String tituloEscenario) {
         try {
             Stage nuevoEscenario = new Stage();
+
             Parent vista = FXMLLoader.load(Objects.requireNonNull(SistemaGestionPracticasProfesionales.class.getResource(URL)));
             Scene nuevaEscena = new Scene(vista);
+
             nuevoEscenario.setScene(nuevaEscena);
             nuevoEscenario.initModality(Modality.APPLICATION_MODAL);
             nuevoEscenario.setTitle(tituloEscenario);
             nuevoEscenario.showAndWait();
+        } catch (IOException excepcion) {
+            mostrarError(true, excepcion, "Error al cargar la vista", "No se pudo cargar la vista: " + URL);
+        }
+    }
+
+    public static void crearEscenarioSimple(String URL, String tituloEscenario) {
+        try {
+            Stage nuevoEscenario = new Stage();
+
+            Parent vista = FXMLLoader.load(Objects.requireNonNull(SistemaGestionPracticasProfesionales.class.getResource(URL)));
+            Scene nuevaEscena = new Scene(vista);
+
+            nuevoEscenario.setScene(nuevaEscena);
+            nuevoEscenario.setTitle(tituloEscenario);
+            nuevoEscenario.show();
         } catch (IOException excepcion) {
             mostrarError(true, excepcion, "Error al cargar la vista", "No se pudo cargar la vista: " + URL);
         }

@@ -189,7 +189,7 @@ public class FXMLExpedienteEstudianteController {
     }
 
     public void clicBtnRegresar(ActionEvent actionEvent) {
-        Utilidad.crearEscenario(RUTA_FXML_SELECCION_ESTUDIANTE, "Seleccionar Estudiante");
+        Utilidad.crearEscenarioSimple(RUTA_FXML_SELECCION_ESTUDIANTE, "Seleccionar Estudiante");
         Utilidad.cerrarVentana(btnRegresar);
     }
 
