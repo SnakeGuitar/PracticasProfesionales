@@ -3,13 +3,13 @@
  * Último autor: Abel Yong
  * Fecha de creación: 15-06-2025
  * Fecha de la última versión aprobada:
- * Fecha de la última modificación: 15-06-2025 00:38
+ * Fecha de la última modificación: 23-06-2025 00:38
  * Descripción: DAO para la entidad periodo
  */
 
 /*
- * Estado: En progreso
- * Modificaciones: Agregado metodo obtenerPeriodoActual()
+ * Estado: Terminado
+ * Modificaciones: Agregado metodo recuperarPeriodoPorID
  */
 
 package sgpp.modelo.dao.entidades;

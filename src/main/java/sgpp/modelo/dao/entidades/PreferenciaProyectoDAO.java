@@ -1,3 +1,18 @@
+/*
+ * Autor original: Abel Yong
+ * Último autor: Abel Yong
+ * Fecha de creación: 15-06-2025
+ * Fecha de la última versión aprobada:
+ * Fecha de la última modificación: 15-06-2025 00:38
+ * Descripción: Clase para obtener las preferencias de los estudiantes
+ *              utilizado por el CU asignar proyecto
+ */
+
+/*
+ * Estado: Terminado
+ * Modificaciones: agregado convertirAPreferenciaProyecto()
+ */
+
 package sgpp.modelo.dao.entidades;
 
 import sgpp.modelo.ConexionBD;
