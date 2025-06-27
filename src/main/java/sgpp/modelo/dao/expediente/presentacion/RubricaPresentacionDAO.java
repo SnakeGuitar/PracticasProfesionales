@@ -5,7 +5,11 @@ import sgpp.modelo.beans.expediente.presentacion.RubricaPresentacion;
 import sgpp.modelo.dao.entidades.ProfesorDAO;
 import sgpp.utilidad.Utilidad;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 
 public class RubricaPresentacionDAO {
 
