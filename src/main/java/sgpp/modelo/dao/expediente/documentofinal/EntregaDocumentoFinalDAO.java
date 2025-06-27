@@ -12,6 +12,7 @@
  * Modificaciones:
  * - Implementación basada en EntregaDocumentoParcialDAO
  * - Adaptado para tabla entrega_doc_final
+ * - Eliminado codigo sin utilizar obtenerEntregaDisponible()
  */
 
 package sgpp.modelo.dao.expediente.documentofinal;
@@ -123,45 +124,6 @@ public class EntregaDocumentoFinalDAO {
         return entregaDocumentoFinal;
     }
 
-    /**
-     * Obtiene todas las entregas de documentos finales disponibles para un estudiante en un período específico.
-     * Solo retorna entregas que están dentro del período de apertura y límite.
-     *
-     * @param idEstudiante ID del estudiante
-     * @param idPeriodo    ID del período
-     * @return Lista de entregas disponibles ordenadas por fecha límite
-     * @throws SQLException Si ocurre un error en la consulta
-     */
-
-
-    /*
-    public static EntregaDocumentoInicial obtenerEntregaDisponible(int idEstudiante, int idPeriodo) throws SQLException {
-        EntregaDocumentoInicial entrega = null;
-        Connection conexionBD = ConexionBD.abrirConexion();
-        if (conexionBD != null) {
-            String consulta = "SELECT * FROM entrega_doc_inicial WHERE ID_Estudiante = ? AND ID_Periodo = ?";
-            PreparedStatement sentencia = null;
-            ResultSet resultado = null;
-            try {
-                sentencia = conexionBD.prepareStatement(consulta);
-                sentencia.setInt(1, idEstudiante);
-                sentencia.setInt(2, idPeriodo);
-                resultado = sentencia.executeQuery();
-                if (resultado.next()) {
-                    System.out.println("Entrega encontrada para el estudiante con ID: " + idEstudiante + " y periodo con ID: " + idPeriodo);
-                    entrega = convertirAEntrega(resultado);
-                }
-            } catch (SQLException e) {
-                throw new SQLException("Error al obtener la entrega de documento inicial: " + e.getMessage(), e);
-            } finally {
-                Utilidad.cerrarRecursosSQL(conexionBD, sentencia, resultado);
-            }
-        } else {
-            throw new SQLException("No se pudo establecer la conexión a la base de datos.");
-        }
-        return entrega;
-    }
-     */
     public static EntregaDocumentoFinal obtenerEntregaDisponible(int idEstudiante, int idPeriodo) throws SQLException {
         EntregaDocumentoFinal entrega = null;
         Connection conexionBD = ConexionBD.abrirConexion();
