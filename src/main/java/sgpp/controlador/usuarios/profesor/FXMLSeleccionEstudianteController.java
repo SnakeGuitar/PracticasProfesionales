@@ -35,8 +35,6 @@ public class FXMLSeleccionEstudianteController implements Initializable {
     private static final String RUTA_FXML_RUBRICA_PRESENTACION = "/sgpp/vista/usuarios/profesor/FXMLCriteriosPresentacion.fxml";
 
     @FXML
-    public Button btnRefrescar;
-    @FXML
     public Button btnRegresar;
     @FXML
     public Button btnConsultar;
@@ -82,7 +80,7 @@ public class FXMLSeleccionEstudianteController implements Initializable {
         }
     }
 
-    private void irExpedienteEstudiante(Estudiante estudiante, int idPeriodo) {
+    private void irExpedienteEstudiante(Estudiante estudiante) {
         try {
             Stage escenarioBase = Utilidad.getEscenarioComponente(btnConsultar);
             FXMLLoader cargador = new FXMLLoader(
@@ -92,13 +90,13 @@ public class FXMLSeleccionEstudianteController implements Initializable {
             Parent vista = cargador.load();
 
             FXMLExpedienteEstudianteController controlador = cargador.getController();
-            controlador.inicializarInformacion(estudiante, idPeriodo);
+            controlador.inicializarInformacion(estudiante);
 
             Scene escenaPrincipal = new Scene(vista);
             escenarioBase.setScene(escenaPrincipal);
             escenarioBase.setTitle("Expediente de Estudiante");
             escenarioBase.show();
-        } catch (IOException ioex) {
+        } catch (IOException | SQLException ioex) {
             Utilidad.mostrarError(
                     true, ioex,
                     "Error al cargar expediente",
@@ -106,7 +104,7 @@ public class FXMLSeleccionEstudianteController implements Initializable {
         }
     }
 
-    private void irRubricaPresentacion(int idEstudiante, int idProfesor, int idPeriodo) {
+    private void irRubricaPresentacion(int idEstudiante, int idProfesor) {
         try {
             Stage escenarioBase = new Stage();
             FXMLLoader cargador = new FXMLLoader(
@@ -116,39 +114,31 @@ public class FXMLSeleccionEstudianteController implements Initializable {
             Parent vista = cargador.load();
 
             FXMLCriteriosPresentacionController controlador = cargador.getController();
-            controlador.inicializarInformacion(idEstudiante, idProfesor, idPeriodo);
+            controlador.inicializarInformacion(idEstudiante, idProfesor);
 
             Scene escenaPrincipal = new Scene(vista);
             escenarioBase.setScene(escenaPrincipal);
             escenarioBase.setTitle("Criterios de Presentación");
             escenarioBase.initModality(Modality.APPLICATION_MODAL);
             escenarioBase.show();
-        } catch (IOException excepcion) {
+        } catch (IOException | SQLException excepcion) {
             Utilidad.mostrarError(true, excepcion,
                     "Error al cargar criterios",
                     "No se pudo cargar la ventana de criterios");
         }
     }
 
-    private void mostrarAlertaSeleccionEstudiante() {
-        Utilidad.crearAlertaAdvertencia("Selecciona un estudiante",
-                "Selecciona un estudiante para continuar.");
-    }
-
     private void definirSiguienteVentana() throws SQLException {
         Estudiante estudianteSeleccionado = obtenerEstudianteDeTabla();
-        int idPeriodo = PeriodoDAO.obtenerPeriodoActual().getIdPeriodo();
 
-        System.out.println(idPeriodo);
-
-        if(estudianteSeleccionado != null && idPeriodo >= 1) {
+        if(estudianteSeleccionado != null) {
             int idEstudiante = estudianteSeleccionado.getIdEstudiante();
 
             if(irRubrica) { // Si la selección del estudiante es para evaluar presentación.
                 RubricaPresentacion rubrica = RubricaPresentacionDAO.obtenerPorEstudiante(idEstudiante);
 
                 if(rubrica == null) {
-                    irRubricaPresentacion(idEstudiante, idProfesor, idPeriodo);
+                    irRubricaPresentacion(idEstudiante, idProfesor);
                 } else {
                     boolean descargar = Utilidad.crearAlertaConfirmacion("Rúbrica encontrada",
                             "El estudiante ya cuenta con una rúbrica de presentación evaluada.\n" +
@@ -158,7 +148,7 @@ public class FXMLSeleccionEstudianteController implements Initializable {
                     }
                 }
             } else { // Si es para ver expediente.
-                irExpedienteEstudiante(estudianteSeleccionado, idPeriodo);
+                irExpedienteEstudiante(estudianteSeleccionado);
             }
         } else {
             Utilidad.crearAlertaError("Error", "No se pudo recuperar el periodo");
@@ -169,8 +159,13 @@ public class FXMLSeleccionEstudianteController implements Initializable {
         return tblEstudiantes.getSelectionModel().getSelectedItem();
     }
 
-    public void btnClicRefrescar(ActionEvent actionEvent) {
-        cargarInformacion();
+    private void verificarSeleccion() throws SQLException {
+        if(obtenerEstudianteDeTabla() != null) {
+            definirSiguienteVentana();
+        } else {
+            Utilidad.crearAlertaAdvertencia("Selecciona un estudiante",
+                    "Selecciona un estudiante para continuar.");
+        }
     }
 
     public void btnClicRegresar(ActionEvent actionEvent) {
@@ -178,6 +173,6 @@ public class FXMLSeleccionEstudianteController implements Initializable {
     }
 
     public void btnClicConsultar(ActionEvent actionEvent) throws SQLException {
-        definirSiguienteVentana();
+        verificarSeleccion();
     }
 }

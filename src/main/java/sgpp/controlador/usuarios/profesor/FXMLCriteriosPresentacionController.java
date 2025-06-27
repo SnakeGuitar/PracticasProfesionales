@@ -12,14 +12,15 @@ import javafx.scene.control.ToggleGroup;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sgpp.SistemaGestionPracticasProfesionales;
+import sgpp.modelo.dao.entidades.PeriodoDAO;
 import sgpp.utilidad.Utilidad;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import static sgpp.utilidad.Utilidad.configurarListener;
-import static sgpp.utilidad.Utilidad.configurarRadioButton;
+import static sgpp.utilidad.Utilidad.*;
 
 public class FXMLCriteriosPresentacionController implements Initializable {
     private static final String RUTA_FXML_CALIFICACION_OBSERVACIONES = "/sgpp/vista/usuarios/profesor/FXMLCalificacionObservaciones.fxml";
@@ -108,10 +109,10 @@ public class FXMLCriteriosPresentacionController implements Initializable {
         configurarCriterios();
     }
 
-    public void inicializarInformacion(int idProfesor, int idEstudiante, int idPeriodo) {
+    public void inicializarInformacion(int idProfesor, int idEstudiante) throws SQLException {
         this.idEstudiante = idEstudiante;
         this.idProfesor = idProfesor;
-        this.idPeriodo = idPeriodo;
+        this.idPeriodo = PeriodoDAO.obtenerPeriodoActual().getIdPeriodo();;
     }
 
     private void configurarCriterios() {
@@ -123,13 +124,13 @@ public class FXMLCriteriosPresentacionController implements Initializable {
         tgCriterio4 = new ToggleGroup();
         tgCriterio5 = new ToggleGroup();
 
-        toggleGroups = new ToggleGroup[]{
+        toggleGroups = new ToggleGroup[] {
                 tgCriterio1, tgCriterio2,
                 tgCriterio3, tgCriterio4,
                 tgCriterio5
         };
 
-        radioButtons = new RadioButton[][]{
+        radioButtons = new RadioButton[][] {
                 {rdBtnCriterio11, rdBtnCriterio12, rdBtnCriterio13, rdBtnCriterio14, rdBtnCriterio15},
                 {rdBtnCriterio21, rdBtnCriterio22, rdBtnCriterio23, rdBtnCriterio24, rdBtnCriterio25},
                 {rdBtnCriterio31, rdBtnCriterio32, rdBtnCriterio33, rdBtnCriterio34, rdBtnCriterio35},
@@ -172,7 +173,7 @@ public class FXMLCriteriosPresentacionController implements Initializable {
         }
     }
 
-    public void btnClicContinuar(ActionEvent actionEvent) {
+    private void verificarCriterios() {
         boolean criteriosSeleccionados = true;
 
         for (float criterio : valorCriterio) {
@@ -181,6 +182,7 @@ public class FXMLCriteriosPresentacionController implements Initializable {
                 break;
             }
         }
+
         if(criteriosSeleccionados) {
             irCalificacionObservaciones();
             Utilidad.cerrarVentana(btnCancelar);
@@ -190,11 +192,28 @@ public class FXMLCriteriosPresentacionController implements Initializable {
         }
     }
 
-    public void BtnClicCancelar(ActionEvent actionEvent) {
-        boolean confirmado = Utilidad.confirmarCancelar();
+    private void cancelarRubrica() {
+        boolean criteriosVacios = true;
 
-        if(confirmado) {
-            Utilidad.cerrarVentana(btnContinuar);
+        for (float criterio : valorCriterio) {
+            if (criterio != 0) {
+                criteriosVacios = false;
+                break;
+            }
         }
+
+        if(criteriosVacios) {
+            cancelarOperacion(btnCancelar);
+        } else {
+            Utilidad.cerrarVentana(btnCancelar);
+        }
+    }
+
+    public void btnClicContinuar(ActionEvent actionEvent) {
+        verificarCriterios();
+    }
+
+    public void BtnClicCancelar(ActionEvent actionEvent) {
+        cancelarRubrica();
     }
 }

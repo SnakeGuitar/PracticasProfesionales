@@ -26,6 +26,7 @@ public class Utilidad {
 
     public static void crearAlerta(Alert.AlertType tipo, String titulo, String contenido) {
         Alert alerta = new Alert(tipo);
+
         alerta.setTitle(titulo);
         alerta.setHeaderText(null);
         alerta.setContentText(contenido);
@@ -35,10 +36,12 @@ public class Utilidad {
 
     public static boolean crearAlertaConfirmacion(String titulo, String contenido) {
         Alert alertaConfirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+
         alertaConfirmacion.setTitle(titulo);
         alertaConfirmacion.setHeaderText(null);
         alertaConfirmacion.setContentText(contenido);
         alertaConfirmacion.setResizable(true);
+
         return alertaConfirmacion.showAndWait().get() == ButtonType.OK;
     }
 
@@ -47,6 +50,14 @@ public class Utilidad {
                 "Cancelar operación",
                 "¿Estás seguro de que deseas cancelar?\n" +
                         "Se perderá el progreso no guardado.");
+    }
+
+    public static void cancelarOperacion(Control componente) {
+        boolean confirmado = confirmarCancelar();
+
+        if(confirmado) {
+            cerrarVentana(componente);
+        }
     }
 
     public static void crearAlertaError(String titulo, String contenido) {

@@ -153,10 +153,7 @@ public class FXMLCalificacionObservacionesController {
     }
 
     public void btnClicCancelar(ActionEvent actionEvent) {
-        boolean confirmado = Utilidad.confirmarCancelar();
-        if(confirmado) {
-            Utilidad.cerrarVentana(lbPromedio);
-        }
+        Utilidad.cancelarOperacion(btnCancelar);
     }
 
     public void btnClicRegresar(ActionEvent actionEvent) {

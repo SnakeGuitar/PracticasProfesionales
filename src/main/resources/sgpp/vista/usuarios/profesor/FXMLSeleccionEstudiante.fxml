@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -17,7 +11,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="768.0" prefWidth="713.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.profesor.FXMLSeleccionEstudianteController">
+<AnchorPane prefHeight="768.0" prefWidth="713.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.profesor.FXMLSeleccionEstudianteController">
     <children>
         <!-- Header azul con título del sistema -->
         <Pane prefHeight="115.0" prefWidth="713.0" styleClass="gradient-background-profesor" stylesheets="@../../styles.css">
@@ -68,13 +62,6 @@
                </stops>
             </LinearGradient>
          </textFill>
-        </Button>
-
-        <!-- Botón Refrescar alineado a la derecha -->
-        <Button fx:id="btnRefrescar" layoutX="195.0" layoutY="695.0" mnemonicParsing="false" onAction="#btnClicRefrescar" prefHeight="31.0" prefWidth="149.0" styleClass="gradient-background-profesor" stylesheets="@../../styles.css" text="Refrescar" textFill="WHITE">
-            <font>
-                <Font name="Arial Bold" size="15.0" />
-            </font>
         </Button>
 
         <!-- Tabla de estudiantes -->

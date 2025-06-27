@@ -6,11 +6,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import sgpp.modelo.beans.Estudiante;
 import sgpp.modelo.beans.Proyecto;
-import sgpp.modelo.beans.ResponsableTecnico;
 import sgpp.modelo.beans.expediente.documentofinal.AutoEvaluacion;
 import sgpp.modelo.dao.entidades.*;
 import sgpp.modelo.dao.expediente.documentofinal.AutoEvaluacionDAO;
-import sgpp.modelo.dao.expediente.presentacion.RubricaPresentacionDAO;
 import sgpp.utilidad.Impresora;
 import sgpp.utilidad.Utilidad;
 
@@ -295,7 +293,7 @@ public class FXMLAutoevaluacionEstudianteController implements Initializable {
         }
     }
 
-    public void btnClicSubir(ActionEvent actionEvent) throws SQLException {
+    private void confirmarGuardado() throws SQLException {
         boolean confirmado = Utilidad.crearAlertaConfirmacion(
                 "Subir autoevaluación",
                 "¿Estás seguro de que deseas subir la autoevaluación?\n" +
@@ -307,11 +305,29 @@ public class FXMLAutoevaluacionEstudianteController implements Initializable {
         }
     }
 
-    public void btnClicCancelar(ActionEvent actionEvent) {
-        boolean confirmado = Utilidad.confirmarCancelar();
+    private void verificarAfirmaciones() throws SQLException {
+        boolean botonesSeleccionados = true;
 
-        if(confirmado) {
-            Utilidad.cerrarVentana(btnCancelar);
+        for (float criterio : valorCriterio) {
+            if (criterio == 0) {
+                botonesSeleccionados = false;
+                break;
+            }
         }
+
+        if(botonesSeleccionados) {
+            confirmarGuardado();
+        } else {
+            Utilidad.crearAlertaAdvertencia("Afirmaciones sin seleccionar",
+                    "Selecciona un botón por cada afirmación para continuar.");
+        }
+    }
+
+    public void btnClicSubir(ActionEvent actionEvent) throws SQLException {
+        verificarAfirmaciones();
+    }
+
+    public void btnClicCancelar(ActionEvent actionEvent) {
+        Utilidad.cancelarOperacion(btnCancelar);
     }
 }

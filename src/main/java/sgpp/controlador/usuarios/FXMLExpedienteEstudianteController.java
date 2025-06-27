@@ -18,6 +18,7 @@ import sgpp.modelo.beans.expediente.documentoinicial.EntregaDocumentoInicial;
 import sgpp.modelo.beans.expediente.documentoparcial.EntregaDocumentoParcial;
 import sgpp.modelo.beans.expediente.reporte.EntregaReporteMensual;
 import sgpp.modelo.beans.expediente.reporte.ReporteMensual;
+import sgpp.modelo.dao.entidades.PeriodoDAO;
 import sgpp.modelo.dao.expediente.ExpedienteDAO;
 import sgpp.modelo.dao.expediente.documentofinal.EntregaDocumentoFinalDAO;
 import sgpp.modelo.dao.expediente.documentoinicial.DocumentoInicialDAO;
@@ -37,7 +38,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class FXMLExpedienteEstudianteController implements Initializable {
+public class FXMLExpedienteEstudianteController {
+    private static final String RUTA_FXML_SELECCION_ESTUDIANTE = "/sgpp/vista/usuarios/profesor/FXMLSeleccionEstudiante.fxml";
+
     @FXML
     public Button btnRegresar;
     @FXML
@@ -62,17 +65,15 @@ public class FXMLExpedienteEstudianteController implements Initializable {
     private int idEntregaReporteTres;
     private int idEntregaReporteCuatro;
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-
-    }
-
-    public void inicializarInformacion(Estudiante estudiante, int idPeriodo) {
+    public void inicializarInformacion(Estudiante estudiante) throws SQLException {
         this.estudiante = estudiante;
         this.idEstudiante = estudiante.getIdEstudiante();
-        this.idPeriodo = idPeriodo;
+        this.idPeriodo = PeriodoDAO.obtenerPeriodoActual().getIdPeriodo();;
+
         lbNombreEstudiante.setText(estudiante.getNombre());
+
         int horasAcumuladas = 0;
+
         try {
              horasAcumuladas = ExpedienteDAO.obtenerPorId(idEstudiante, idPeriodo).getHorasAcumuladas();
         } catch (SQLException sqlex) {
@@ -91,43 +92,57 @@ public class FXMLExpedienteEstudianteController implements Initializable {
         final int NUM_REPORTE_DOS = 2;
         final int NUM_REPORTE_TRES = 3;
         final int NUM_REPORTE_CUATRO = 4;
+
         try {
             EntregaDocumentoInicial entregaInicial = EntregaDocumentoInicialDAO.obtenerEntregaDisponible(
                     idEstudiante, idPeriodo);
+
             EntregaDocumentoParcial entregaParcial = EntregaDocumentoParcialDAO.obtenerEntregaDisponible(
                     idEstudiante, idPeriodo);
+
             EntregaDocumentoFinal entregaFinal = EntregaDocumentoFinalDAO.obtenerEntregaDisponible(
                     idEstudiante, idPeriodo);
+
             EntregaReporteMensual entregaReporteUno = EntregaReporteMensualDAO.obtenerEntregaReporteDisponible(
                     idEstudiante, idPeriodo, NUM_REPORTE_UNO
             );
+
             EntregaReporteMensual entregaReporteDos = EntregaReporteMensualDAO.obtenerEntregaReporteDisponible(
                     idEstudiante, idPeriodo, NUM_REPORTE_DOS
             );
+
             EntregaReporteMensual entregaReporteTres = EntregaReporteMensualDAO.obtenerEntregaReporteDisponible(
                     idEstudiante, idPeriodo, NUM_REPORTE_TRES
             );
+
             EntregaReporteMensual entregaReporteCuatro = EntregaReporteMensualDAO.obtenerEntregaReporteDisponible(
                     idEstudiante, idPeriodo, NUM_REPORTE_CUATRO
             );
+
             if (entregaInicial != null) {
                 idEntregaDocInicial = entregaInicial.getIdEntregaDocumentoInicial();
             }
+
             if (entregaParcial != null) {
                 idEntregaDocParcial = entregaParcial.getIdEntregaDocumentoParcial();
             }
+
             if (entregaFinal != null) {
                 idEntregaDocFinal = entregaFinal.getIdEntregaDocumentoFinal();
             }
+
             if (entregaReporteUno != null) {
                 idEntregaReporteUno = entregaReporteUno.getIdEntregaReporte();
             }
+
             if (entregaReporteDos != null) {
                 idEntregaReporteDos = entregaReporteDos.getIdEntregaReporte();
             }
+
             if (entregaReporteTres != null) {
                 idEntregaReporteTres = entregaReporteTres.getIdEntregaReporte();
             }
+
             if (entregaReporteCuatro != null) {
                 idEntregaReporteCuatro = entregaReporteCuatro.getIdEntregaReporte();
             }
@@ -138,8 +153,8 @@ public class FXMLExpedienteEstudianteController implements Initializable {
 
     private void cargarInformacion() {
         documentos = FXCollections.observableArrayList();
-
         ArrayList<Documento> documentosDAO = new ArrayList<>();
+
         try {
             //Entregas generales
             documentosDAO.addAll(DocumentoInicialDAO.obtenerDocumentosInicialesPorExpediente(idEntregaDocInicial));
@@ -151,14 +166,17 @@ public class FXMLExpedienteEstudianteController implements Initializable {
             if (reporteUno != null) {
                 documentosDAO.add(reporteUno);
             }
+
             ReporteMensual reporteDos = ReporteMensualDAO.obtenerReportePorExpediente(idEntregaReporteDos);
             if (reporteDos != null) {
                 documentosDAO.add(reporteDos);
             }
+
             ReporteMensual reporteTres = ReporteMensualDAO.obtenerReportePorExpediente(idEntregaReporteTres);
             if (reporteTres != null) {
                 documentosDAO.add(reporteTres);
             }
+
             ReporteMensual reporteCuatro = ReporteMensualDAO.obtenerReportePorExpediente(idEntregaReporteCuatro);
             if (reporteCuatro != null) {
                 documentosDAO.add(reporteCuatro);
@@ -174,7 +192,8 @@ public class FXMLExpedienteEstudianteController implements Initializable {
     }
 
     public void clicBtnRegresar(ActionEvent actionEvent) {
-        Utilidad.cerrarVentana(lbNombreEstudiante);
+        Utilidad.crearEscenario(RUTA_FXML_SELECCION_ESTUDIANTE, "Seleccionar Estudiante");
+        Utilidad.cerrarVentana(btnRegresar);
     }
 
     //Requerido para que el boton descargar se habilite, no borrar
@@ -186,6 +205,7 @@ public class FXMLExpedienteEstudianteController implements Initializable {
 
     public void clicBtnDescargar(ActionEvent actionEvent) {
         Documento documento = listDocumentosExpediente.getSelectionModel().getSelectedItem();
+
         if (documento != null) {
             if (documento.getDocumento() != null) {
                 descargarArchivo(documento);
@@ -233,8 +253,8 @@ public class FXMLExpedienteEstudianteController implements Initializable {
             }
         } catch (IOException ioex) {
             Utilidad.crearAlertaError(
-                    "Error",
-                    "Lo sentimos, no fue posible descargar el documento, intentelo más  tarde");
+                    "Error de descarga",
+                    "No fue posible descargar el documento. Inténtelo más  tarde.");
         }
     }
 }
