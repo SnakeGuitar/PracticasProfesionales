@@ -2,13 +2,13 @@
  * Autor original: Abel Hernandez Yong
  * Último autor: Abel Hernandez Yong
  * Fecha de creación: 15-06-2025
- * Fecha de la última versión aprobada:S/F
- * Fecha de la última modificación: 15-06-2025 16:42
+ * Fecha de la última versión aprobada: 26-06-2025
+ * Fecha de la última modificación: 26-06-2025 23:28
  * Descripción: Clase para representar el resultado de operaciones SQL en los controladores
  */
 
 /*
- * Estado: Creada
+ * Estado: Terminada
  * Modificaciones:
  */
 
