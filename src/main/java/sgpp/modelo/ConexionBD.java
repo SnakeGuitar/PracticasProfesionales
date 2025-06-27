@@ -4,7 +4,7 @@
  * Fecha de creación: 10-06-2025
  * Fecha de la última versión aprobada:
  * Fecha de la última modificación: 21-06-2025
- * Descripción: Clase DAO para manejar las operaciones de la entidad OrganizacionVinculada.
+ * Descripción: Clase para conrolar el acceso a la Base de Datos
  */
 
 /*
@@ -29,7 +29,7 @@ public class ConexionBD {
     private static final String URL = String.format(
             "jdbc:mysql://%s:%s/%s?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8", IP, PUERTO, NOMBRE_BD);
 
-    // Por ahora hay que poner root y la contraseña de la base de datos.
+    // Colocar usuario y contraseña para la Base de Datos
 
     private static final String DEFAULT_USERNAME = "";
     private static final String DEFAULT_PASSWORD = "";
