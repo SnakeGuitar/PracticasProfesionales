@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
 <AnchorPane prefHeight="671.0" prefWidth="493.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgpp.controlador.usuarios.coordinador.responsabletecnico.FXMLActualizarRegistrarResponsableTecnicoController">
    <children>
       <Label layoutX="27.0" layoutY="28.0" style="-fx-font-style: italic;" text="Actualizar / Registrar">

@@ -1,6 +1,7 @@
 package sgpp.modelo.beans.expediente.documentoinicial;
 
 import javafx.beans.property.*;
+
 import java.time.LocalDate;
 
 public class TablaAsignacion {

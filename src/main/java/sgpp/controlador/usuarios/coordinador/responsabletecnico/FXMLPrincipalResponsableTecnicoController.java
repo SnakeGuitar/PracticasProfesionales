@@ -15,15 +15,6 @@
 
 package sgpp.controlador.usuarios.coordinador.responsabletecnico;
 
-import java.io.IOException;
-import java.net.URL;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,9 +25,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -49,6 +37,11 @@ import sgpp.modelo.beans.ResponsableTecnico;
 import sgpp.modelo.dao.entidades.OrganizacionVinculadaDAO;
 import sgpp.modelo.dao.entidades.ResponsableTecnicoDAO;
 import sgpp.utilidad.Utilidad;
+
+import java.io.IOException;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.*;
 
 public class FXMLPrincipalResponsableTecnicoController implements Initializable {
 

@@ -3,6 +3,7 @@ package test.organizacionvinculada;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import sgpp.dominio.OrganizacionVinculadaDM;
+
 import static org.junit.Assert.*;
 
 public class OrganizacionVinculadaDMTest {

@@ -33,8 +33,8 @@ import sgpp.utilidad.EstadoMexico;
 import sgpp.utilidad.Utilidad;
 
 import java.sql.SQLException;
-import java.util.logging.Logger;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static sgpp.controlador.usuarios.coordinador.organizacionvinculada.FXMLOrganizacionVinculadaController.*;
 import static sgpp.dominio.OrganizacionVinculadaDM.*;

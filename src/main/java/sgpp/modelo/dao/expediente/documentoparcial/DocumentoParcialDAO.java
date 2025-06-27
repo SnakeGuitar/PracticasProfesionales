@@ -9,8 +9,6 @@ package sgpp.modelo.dao.expediente.documentoparcial;
 
 import sgpp.modelo.ConexionBD;
 import sgpp.modelo.beans.expediente.EstadoDocumento;
-import sgpp.modelo.beans.expediente.documentofinal.DocumentoFinal;
-import sgpp.modelo.beans.expediente.documentofinal.TipoDocumentoFinal;
 import sgpp.modelo.beans.expediente.documentoparcial.DocumentoParcial;
 import sgpp.modelo.beans.expediente.documentoparcial.TipoDocumentoParcial;
 import sgpp.utilidad.Utilidad;

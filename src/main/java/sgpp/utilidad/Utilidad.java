@@ -9,13 +9,13 @@
 
 package sgpp.utilidad;
 
-import javafx.scene.control.*;
-import sgpp.SistemaGestionPracticasProfesionales;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sgpp.SistemaGestionPracticasProfesionales;
 import sgpp.controlador.usuarios.coordinador.FXMLGenerarDocumentosController;
 import sgpp.modelo.beans.Coordinador;
 

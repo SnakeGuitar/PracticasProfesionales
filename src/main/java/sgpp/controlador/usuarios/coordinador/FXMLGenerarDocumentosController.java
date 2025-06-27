@@ -14,11 +14,6 @@
 
 package sgpp.controlador.usuarios.coordinador;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -37,6 +32,10 @@ import sgpp.modelo.dao.expediente.documentoinicial.OficioAsignacionDAO;
 import sgpp.utilidad.Impresora;
 import sgpp.utilidad.Utilidad;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.SQLException;
 
 public class FXMLGenerarDocumentosController {

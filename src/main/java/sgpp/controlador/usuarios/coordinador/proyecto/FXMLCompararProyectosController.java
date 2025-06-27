@@ -17,7 +17,6 @@ package sgpp.controlador.usuarios.coordinador.proyecto;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import sgpp.modelo.beans.Proyecto;

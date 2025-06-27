@@ -17,18 +17,14 @@ package sgpp.controlador.usuarios.coordinador;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import sgpp.SistemaGestionPracticasProfesionales;
 import sgpp.controlador.FXMLInicioSesionController;
 import sgpp.modelo.IControladorPrincipal;
 import sgpp.modelo.beans.Coordinador;
 import sgpp.modelo.beans.Usuario;
 import sgpp.modelo.dao.entidades.CoordinadorDAO;
-import sgpp.utilidad.ResultadoFXML;
 import sgpp.utilidad.UtilFXML;
 import sgpp.utilidad.Utilidad;
 

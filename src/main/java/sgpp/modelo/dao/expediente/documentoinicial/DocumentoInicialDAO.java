@@ -20,8 +20,6 @@ package sgpp.modelo.dao.expediente.documentoinicial;
 
 import sgpp.modelo.ConexionBD;
 import sgpp.modelo.beans.expediente.EstadoDocumento;
-import sgpp.modelo.beans.expediente.documentofinal.DocumentoFinal;
-import sgpp.modelo.beans.expediente.documentofinal.TipoDocumentoFinal;
 import sgpp.modelo.beans.expediente.documentoinicial.DocumentoInicial;
 import sgpp.modelo.beans.expediente.documentoinicial.TipoDocumentoInicial;
 import sgpp.utilidad.Utilidad;

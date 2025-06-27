@@ -18,7 +18,6 @@ import sgpp.modelo.beans.expediente.Documento;
 import sgpp.modelo.beans.expediente.EstadoDocumento;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class DocumentoFinal extends Documento {
     private int idDocumentoFinal;

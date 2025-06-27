@@ -18,12 +18,7 @@ import sgpp.modelo.ConexionBD;
 import sgpp.modelo.beans.Proyecto;
 import sgpp.modelo.dao.ResultadoSQL;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Types;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 

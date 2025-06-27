@@ -17,8 +17,6 @@ package sgpp.modelo.beans.expediente.documentoinicial;
 import sgpp.modelo.beans.expediente.EntregaDocumento;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Locale;
 
 public class EntregaDocumentoInicial extends EntregaDocumento {
     private int idEntregaDocumentoInicial;

@@ -18,7 +18,6 @@ package sgpp.modelo.dao.expediente.documentofinal;
 
 import sgpp.modelo.ConexionBD;
 import sgpp.modelo.beans.expediente.documentofinal.EntregaDocumentoFinal;
-import sgpp.modelo.beans.expediente.documentoparcial.EntregaDocumentoParcial;
 import sgpp.modelo.dao.ResultadoSQL;
 import sgpp.utilidad.UtilidadFormatoDeDatos;
 

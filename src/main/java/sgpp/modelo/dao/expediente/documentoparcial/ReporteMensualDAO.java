@@ -13,6 +13,11 @@
 
 package sgpp.modelo.dao.expediente.documentoparcial;
 
+import sgpp.modelo.ConexionBD;
+import sgpp.modelo.beans.expediente.EstadoDocumento;
+import sgpp.modelo.beans.expediente.reporte.Mes;
+import sgpp.modelo.beans.expediente.reporte.ReporteMensual;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,11 +27,6 @@ import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import sgpp.modelo.ConexionBD;
-import sgpp.modelo.beans.expediente.EstadoDocumento;
-import sgpp.modelo.beans.expediente.reporte.Mes;
-import sgpp.modelo.beans.expediente.reporte.ReporteMensual;
 
 
 public class ReporteMensualDAO {

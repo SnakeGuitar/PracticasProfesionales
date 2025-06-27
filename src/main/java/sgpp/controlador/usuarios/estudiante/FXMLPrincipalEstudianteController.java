@@ -33,7 +33,6 @@ import sgpp.modelo.beans.Estudiante;
 import sgpp.modelo.beans.Usuario;
 import sgpp.modelo.beans.expediente.documentofinal.AutoEvaluacion;
 import sgpp.modelo.dao.entidades.EstudianteDAO;
-import sgpp.modelo.dao.entidades.PeriodoDAO;
 import sgpp.modelo.dao.expediente.documentofinal.AutoEvaluacionDAO;
 import sgpp.utilidad.Impresora;
 import sgpp.utilidad.ResultadoFXML;

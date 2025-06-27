@@ -14,15 +14,6 @@
 
 package sgpp.controlador;
 
-import javafx.scene.control.PasswordField;
-import sgpp.SistemaGestionPracticasProfesionales;
-import sgpp.controlador.usuarios.profesor.FXMLPrincipalProfesorController;
-import sgpp.modelo.IControladorPrincipal;
-import sgpp.modelo.beans.Profesor;
-import sgpp.modelo.beans.Usuario;
-import sgpp.modelo.dao.InicioSesionDAO;
-import sgpp.modelo.dao.entidades.ProfesorDAO;
-import sgpp.utilidad.Utilidad;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,8 +21,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sgpp.SistemaGestionPracticasProfesionales;
+import sgpp.modelo.IControladorPrincipal;
+import sgpp.modelo.beans.Usuario;
+import sgpp.modelo.dao.InicioSesionDAO;
+import sgpp.utilidad.Utilidad;
 
 import java.io.IOException;
 import java.sql.SQLException;

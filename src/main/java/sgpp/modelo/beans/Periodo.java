@@ -14,8 +14,6 @@
 
 package sgpp.modelo.beans;
 
-import java.util.Date;
-
 public class Periodo {
     private int idPeriodo;
     private String abreviatura;

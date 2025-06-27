@@ -45,14 +45,10 @@ import sgpp.utilidad.UtilidadFormatoDeDatos;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import static sgpp.utilidad.Utilidad.cerrarVentana;
 
 public class FXMLFormularioProyectoController implements Initializable {
     @FXML

@@ -18,7 +18,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextFormatter;
 import javafx.util.StringConverter;
-import org.w3c.dom.Text;
 
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
