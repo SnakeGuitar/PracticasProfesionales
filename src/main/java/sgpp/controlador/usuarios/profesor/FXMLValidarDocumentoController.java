@@ -18,6 +18,7 @@ import sgpp.modelo.beans.expediente.documentoinicial.EntregaDocumentoInicial;
 import sgpp.modelo.beans.expediente.documentoparcial.DocumentoParcial;
 import sgpp.modelo.beans.expediente.documentoparcial.EntregaDocumentoParcial;
 import sgpp.modelo.dao.entidades.EstudianteDAO;
+import sgpp.modelo.dao.entidades.PeriodoDAO;
 import sgpp.modelo.dao.expediente.TipoDocumento;
 import sgpp.modelo.dao.expediente.documentofinal.DocumentoFinalDAO;
 import sgpp.modelo.dao.expediente.documentofinal.EntregaDocumentoFinalDAO;
@@ -50,7 +51,7 @@ public class FXMLValidarDocumentoController implements Initializable {
     @FXML
     private Label lbNombreProfesor;
 
-    private static final int ID_PERIODO = 4;
+    private static int ID_PERIODO = inicializarPeriodo();
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     private ObservableList<Documento> datosDocumentos = FXCollections.observableArrayList();
@@ -62,6 +63,18 @@ public class FXMLValidarDocumentoController implements Initializable {
         cargarMapaEstudiantes();
         configurarTablaEntregas();
         cargarDocumentosIniciales();
+    }
+
+    public static int inicializarPeriodo() {
+        try {
+            ID_PERIODO = PeriodoDAO.obtenerPeriodoActual().getIdPeriodo();
+        } catch (SQLException e) {
+            Utilidad.crearAlertaError(
+                    "Error al obtener periodo",
+                    "No se pudo obtener el periodo actual. Por favor, intente más tarde.");
+            ID_PERIODO = 0; // Valor por defecto en caso de error
+        }
+        return ID_PERIODO;
     }
 
     private void cargarMapaEstudiantes() {
