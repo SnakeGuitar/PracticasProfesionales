@@ -165,19 +165,60 @@ public class FXMLPrincipalEstudianteController implements Initializable, IContro
 
     public void clicBtnSubirDocumento(ActionEvent actionEvent) {
         try {
+            // Verificar que el estudiante esté inicializado
+            if (estudiante == null) {
+                Utilidad.crearAlertaError("Error", "No se ha inicializado la información del estudiante");
+                return;
+            }
+
+            // Cargar el FXML
             FXMLLoader cargador = new FXMLLoader(getClass().getResource(RUTA_FXML_SUBIR_DOCUMENTO));
             Parent vista = cargador.load();
+
+            // Obtener el controlador y verificar que no sea null
             FXMLSubirDocumentoPracticasController controlador = cargador.getController();
+            if (controlador == null) {
+                Utilidad.crearAlertaError("Error", "No se pudo inicializar el controlador de la ventana");
+                return;
+            }
+
+            // Cargar el estudiante en el controlador
             controlador.cargarEstudiante(estudiante);
+
+            // Crear y configurar el escenario
             Stage escenario = new Stage();
             escenario.setScene(new Scene(vista));
-            escenario.setTitle("Consultar Entregas");
+            escenario.setTitle("Subir Documentos de Prácticas");
             escenario.initModality(Modality.APPLICATION_MODAL);
+
+            // Configurar el escenario padre para centrar la ventana modal
+            Stage escenarioPadre = (Stage) lbNombreEstudiante.getScene().getWindow();
+            escenario.initOwner(escenarioPadre);
+
+            // Mostrar la ventana y esperar
             escenario.showAndWait();
+
         } catch (IOException ioex) {
-            Utilidad.crearAlertaError("Error", "No se pudo cargar la ventana");
+            // Log del error específico para depuración
+            System.err.println("Error al cargar FXML: " + ioex.getMessage());
+            ioex.printStackTrace();
+
+            Utilidad.crearAlertaError("Error de carga",
+                    "No se pudo cargar la ventana de subir documentos.\n" +
+                            "Verifique que el archivo FXML existe en la ruta especificada:\n" +
+                            RUTA_FXML_SUBIR_DOCUMENTO);
+        } catch (Exception ex) {
+            // Capturar cualquier otra excepción
+            System.err.println("Error inesperado: " + ex.getMessage());
+            ex.printStackTrace();
+
+            Utilidad.crearAlertaError("Error",
+                    "Ocurrió un error inesperado al abrir la ventana: " + ex.getMessage());
         }
     }
+
+
+
 
     public void clicImgViCerrarSesion(MouseEvent mouseEvent) {
         boolean confirmacion = Utilidad.crearAlertaConfirmacion(

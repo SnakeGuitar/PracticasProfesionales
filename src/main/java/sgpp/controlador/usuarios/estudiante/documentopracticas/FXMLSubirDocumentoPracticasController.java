@@ -371,7 +371,7 @@ public class FXMLSubirDocumentoPracticasController implements javafx.fxml.Initia
             // Leer el archivo PDF
             byte[] pdf = Files.readAllBytes(archivoSeleccionado.toPath());
 
-            // Validar tamaño del archivo (máximo 10MB)
+            // Validar tamaño del archivo (máximo 10 MB)
             if (pdf.length > 10 * 1024 * 1024) {
                 logger.log(Level.WARNING, "Archivo demasiado grande rechazado - Tamaño: {0} bytes, Archivo: {1}",
                         new Object[]{pdf.length, archivoSeleccionado.getName()});

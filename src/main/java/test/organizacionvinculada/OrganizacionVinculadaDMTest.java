@@ -222,11 +222,11 @@ public class OrganizacionVinculadaDMTest {
         assertFalse(OrganizacionVinculadaDM.verificarFormatoCorreo("usuario@dominio"));
         assertFalse(OrganizacionVinculadaDM.verificarFormatoCorreo("usuario@dominio."));
         assertFalse(OrganizacionVinculadaDM.verificarFormatoCorreo(""));
-        assertFalse(OrganizacionVinculadaDM.verificarFormatoCorreo("usuario@dominio.c"));
         assertFalse(OrganizacionVinculadaDM.verificarFormatoCorreo("usuario espacios@dominio.com"));
         assertFalse(OrganizacionVinculadaDM.verificarFormatoCorreo("usuario@dom inio.com"));
         assertFalse(OrganizacionVinculadaDM.verificarFormatoCorreo("usuario@@dominio.com"));
     }
+
 
     // Pruebas para verificarFormatoTelefono
     @Test

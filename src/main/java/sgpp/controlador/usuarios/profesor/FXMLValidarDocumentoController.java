@@ -58,6 +58,13 @@ public class FXMLValidarDocumentoController implements Initializable {
     private Map<Integer, String> mapa_estudiantes = new HashMap<>();
     private TipoDocumento tipoDocumentoActual = TipoDocumento.INICIAL;
 
+    /**
+     * Inicializa el controlador y carga los datos necesarios.
+     * Configura la tabla de entregas y carga los documentos iniciales.
+     *
+     * @param url            La URL del recurso FXML.
+     * @param resourceBundle El ResourceBundle asociado al FXML.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cargarMapaEstudiantes();
@@ -65,6 +72,12 @@ public class FXMLValidarDocumentoController implements Initializable {
         cargarDocumentosIniciales();
     }
 
+    /**
+     * Inicializa el periodo actual obteniendo su ID desde la base de datos.
+     * Si ocurre un error, muestra una alerta y asigna un valor por defecto.
+     *
+     * @return El ID del periodo actual.
+     */
     public static int inicializarPeriodo() {
         try {
             ID_PERIODO = PeriodoDAO.obtenerPeriodoActual().getIdPeriodo();
@@ -77,6 +90,10 @@ public class FXMLValidarDocumentoController implements Initializable {
         return ID_PERIODO;
     }
 
+    /**
+     * Carga el mapa de estudiantes desde la base de datos.
+     * Utiliza el ID del estudiante como clave y su nombre como valor.
+     */
     private void cargarMapaEstudiantes() {
         try {
             for (Estudiante estudiante : EstudianteDAO.obtenerEstudiantes()) {
@@ -89,6 +106,10 @@ public class FXMLValidarDocumentoController implements Initializable {
         }
     }
 
+    /**
+     * Configura las columnas de la tabla de entregas de documentos.
+     * Asigna las propiedades de cada columna para mostrar la información relevante.
+     */
     private void configurarTablaEntregas() {
         colEstudiante.setCellValueFactory(cellData -> {
             Documento doc = cellData.getValue();
@@ -120,6 +141,13 @@ public class FXMLValidarDocumentoController implements Initializable {
         tblEntregas.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
+    /**
+     * Obtiene el nombre del estudiante basado en el ID de entrega del documento.
+     * Dependiendo del tipo de documento, consulta la base de datos para obtener el ID del estudiante.
+     *
+     * @param idEntregaDocumento El ID de la entrega del documento.
+     * @return El nombre del estudiante o "Desconocido" si no se encuentra.
+     */
     private String obtenerNombreEstudiante(int idEntregaDocumento) {
         try {
             int idEstudiante = 0;
@@ -158,6 +186,12 @@ public class FXMLValidarDocumentoController implements Initializable {
         return "Desconocido";
     }
 
+    /**
+     * Maneja el evento de clic en el botón de actualizar lista.
+     * Dependiendo del tipo de documento actual, recarga la lista de documentos.
+     *
+     * @param actionEvent El evento de acción del botón.
+     */
     public void clicBtnActualizarLista(ActionEvent actionEvent) {
         switch (tipoDocumentoActual) {
             case INICIAL:
@@ -175,6 +209,12 @@ public class FXMLValidarDocumentoController implements Initializable {
                 "Los documentos se han actualizado correctamente.");
     }
 
+    /**
+     * Maneja el evento de clic en el botón de validar documento.
+     * Valida el documento seleccionado y actualiza su estado a 'Aceptado'.
+     *
+     * @param actionEvent El evento de acción del botón.
+     */
     public void clicBtnValidar(ActionEvent actionEvent) {
         Documento documentoSeleccionado = tblEntregas.getSelectionModel().getSelectedItem();
 
@@ -214,6 +254,12 @@ public class FXMLValidarDocumentoController implements Initializable {
         }
     }
 
+    /**
+     * Maneja el evento de clic en el botón de rechazar documento.
+     * Solicita una razón para el rechazo y actualiza el estado del documento.
+     *
+     * @param actionEvent El evento de acción del botón.
+     */
     public void clicBtnRechazar(ActionEvent actionEvent) {
         Documento documentoSeleccionado = tblEntregas.getSelectionModel().getSelectedItem();
 
@@ -260,6 +306,12 @@ public class FXMLValidarDocumentoController implements Initializable {
         });
     }
 
+    /**
+     * Maneja el evento de clic en el botón de cancelar.
+     * Cierra la ventana actual y muestra un mensaje de confirmación.
+     *
+     * @param actionEvent El evento de acción del botón.
+     */
     public void clicBtnCancelar(ActionEvent actionEvent) {
         Stage stage = (Stage) tblEntregas.getScene().getWindow();
         if (Utilidad.confirmarCancelar()) {
@@ -271,24 +323,46 @@ public class FXMLValidarDocumentoController implements Initializable {
         }
     }
 
+    /**
+     * Maneja el evento de clic en el botón para ver documentos iniciales.
+     * Cambia el tipo de documento actual a INICIAL y carga los documentos iniciales.
+     *
+     * @param actionEvent El evento de acción del botón.
+     */
     public void clicBtnVerIniciales(ActionEvent actionEvent) {
         tipoDocumentoActual = TipoDocumento.INICIAL;
         cargarDocumentosIniciales();
         actualizarTituloTabla("Documentos Iniciales");
     }
 
+    /**
+     * Maneja el evento de clic en el botón para ver documentos parciales.
+     * Cambia el tipo de documento actual a PARCIAL y carga los documentos parciales.
+     *
+     * @param actionEvent El evento de acción del botón.
+     */
     public void clicBtnVerParciales(ActionEvent actionEvent) {
         tipoDocumentoActual = TipoDocumento.PARCIAL;
         cargarDocumentosParciales();
         actualizarTituloTabla("Documentos Parciales");
     }
 
+    /**
+     * Maneja el evento de clic en el botón para ver documentos finales.
+     * Cambia el tipo de documento actual a FINAL y carga los documentos finales.
+     *
+     * @param actionEvent El evento de acción del botón.
+     */
     public void clicBtnVerFinales(ActionEvent actionEvent) {
         tipoDocumentoActual = TipoDocumento.FINAL;
         cargarDocumentosFinales();
         actualizarTituloTabla("Documentos Finales");
     }
 
+    /**
+     * Carga los documentos iniciales entregados por los estudiantes en el periodo actual.
+     * Solo se muestran aquellos documentos que están en estado 'Entregado'.
+     */
     private void cargarDocumentosIniciales() {
         try {
 
@@ -312,6 +386,10 @@ public class FXMLValidarDocumentoController implements Initializable {
         }
     }
 
+    /**
+     * Carga los documentos parciales entregados por los estudiantes en el periodo actual.
+     * Solo se muestran aquellos documentos que están en estado 'Entregado'.
+     */
     private void cargarDocumentosParciales() {
         try {
             datosDocumentos.clear();
@@ -335,6 +413,10 @@ public class FXMLValidarDocumentoController implements Initializable {
         }
     }
 
+    /**
+     * Carga los documentos finales entregados por los estudiantes en el periodo actual.
+     * Solo se muestran aquellos documentos que están en estado 'Entregado'.
+     */
     private void cargarDocumentosFinales() {
         try {
             datosDocumentos.clear();
@@ -358,6 +440,12 @@ public class FXMLValidarDocumentoController implements Initializable {
         }
     }
 
+    /**
+     * Actualiza el documento en la base de datos según su tipo.
+     *
+     * @param documento El documento a actualizar.
+     * @throws SQLException Si ocurre un error al actualizar el documento en la base de datos.
+     */
     private void actualizarDocumento(Documento documento) throws SQLException {
         switch (tipoDocumentoActual) {
             case INICIAL:
@@ -372,6 +460,11 @@ public class FXMLValidarDocumentoController implements Initializable {
         }
     }
 
+    /**
+     * Actualiza el título de la tabla de documentos actuales.
+     *
+     * @param titulo El nuevo título a mostrar en la etiqueta de documentos actuales.
+     */
     private void actualizarTituloTabla(String titulo) {
         lblDocumentosActuales.setText(titulo);
     }

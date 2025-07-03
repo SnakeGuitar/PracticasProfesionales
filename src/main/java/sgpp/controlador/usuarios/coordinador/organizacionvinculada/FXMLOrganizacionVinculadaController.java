@@ -76,6 +76,11 @@ public class FXMLOrganizacionVinculadaController implements Initializable {
         cargarDatosTabla();
     }
 
+    /**
+     * Configura las columnas de la tabla para mostrar los datos de las organizaciones vinculadas.
+     * Utiliza PropertyValueFactory para enlazar las propiedades de los objetos OrganizacionVinculada
+     * con las columnas de la tabla.
+     */
     private void configurarTabla() {
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colSector.setCellValueFactory(new PropertyValueFactory<>("sector"));
@@ -86,6 +91,10 @@ public class FXMLOrganizacionVinculadaController implements Initializable {
         colEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
     }
 
+    /**
+     * Carga los datos de las organizaciones vinculadas en la tabla.
+     * Utiliza el DAO para obtener los datos y los muestra en la tabla.
+     */
     private void cargarDatosTabla() {
         try {
             ObservableList<OrganizacionVinculada> listaOrganizaciones = FXCollections.observableArrayList();
@@ -102,6 +111,12 @@ public class FXMLOrganizacionVinculadaController implements Initializable {
         }
     }
 
+    /**
+     * Maneja el evento de clic en el botón "Registrar OV".
+     * Abre una nueva ventana para registrar una nueva organización vinculada.
+     *
+     * @param actionEvent el evento de acción del botón "Registrar OV"
+     */
     @FXML
     public void clicBtnRegistrarOV(ActionEvent actionEvent) {
         Utilidad.crearEscenario(
@@ -110,6 +125,12 @@ public class FXMLOrganizacionVinculadaController implements Initializable {
         cargarDatosTabla(); // Recargar datos después de registrar una nueva organización
     }
 
+    /**
+     * Maneja el evento de clic en el botón "Actualizar OV".
+     * Abre una ventana modal para actualizar la organización vinculada seleccionada.
+     *
+     * @param actionEvent el evento de acción del botón "Actualizar OV"
+     */
     @FXML
     public void clicBtnActualizarOV(ActionEvent actionEvent) {
         OrganizacionVinculada organizacion = tblOV.getSelectionModel().getSelectedItem();
@@ -146,22 +167,43 @@ public class FXMLOrganizacionVinculadaController implements Initializable {
         }
     }
 
+    /**
+     * Maneja el evento de clic en el botón "Eliminar OV".
+     * Actualmente no implementa ninguna acción.
+     *
+     * @param actionEvent el evento de acción del botón "Eliminar OV"
+     */
     @FXML
     public void clicBtnEliminarOV(ActionEvent actionEvent) {
     }
 
+
+    /**
+     * Cierra la ventana actual sin realizar ninguna acción.
+     *
+     * @param actionEvent el evento de acción del botón "Cancelar"
+     */
     public void clicBtnCancelar(ActionEvent actionEvent) {
         Utilidad.cerrarVentana(tblOV);
     }
 
+    /**
+     * Muestra un mensaje de error genérico.
+     */
     public static void mostrarErrorGenerico() {
         Utilidad.crearAlerta(Alert.AlertType.ERROR, TITULO_ERROR_GENERICO, MENSAJE_ERROR_GENERICO);
     }
 
+    /**
+     * Muestra un mensaje de error al configurar los elementos de la interfaz.
+     */
     public static void mostrarErrorConfiguracion() {
         Utilidad.crearAlerta(Alert.AlertType.ERROR, TITULO_ERROR_CONFIGURACION, MENSAJE_ERROR_CONFIGURACION);
     }
 
+    /**
+     * Muestra un mensaje de error al cargar las ciudades.
+     */
     public static void mostrarErrorCargaCiudades() {
         Utilidad.crearAlerta(Alert.AlertType.ERROR, TITULO_ERROR_CARGA_CIUDADES, MENSAJE_ERROR_CARGA_CIUDADES);
     }

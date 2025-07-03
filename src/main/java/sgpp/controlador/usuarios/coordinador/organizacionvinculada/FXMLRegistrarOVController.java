@@ -12,7 +12,6 @@
  * Estado: En progreso
  * Modificaciones: Se modularizaron los métodos
  *                 Se agregaron más validacionees para los campos
- *                 Se implementó javadocs en el controlador
  *                 Se implementó el uso de logger para hacer más robusto el manejo de errores
  */
 
@@ -71,6 +70,10 @@ public class FXMLRegistrarOVController implements javafx.fxml.Initializable {
         LOGGER.info("Controlador inicializado y ComboBoxes configurados");
     }
 
+    /**
+     * Configura los ComboBoxes de sector, estado y ciudad.
+     * Maneja excepciones para asegurar que la configuración sea robusta.
+     */
     public void configurarComboBoxes() {
         try {
             configurarComboSector();
@@ -83,6 +86,9 @@ public class FXMLRegistrarOVController implements javafx.fxml.Initializable {
         }
     }
 
+    /**
+     * Muestra un mensaje de error al usuario cuando hay un problema al configurar los ComboBoxes.
+     */
     public void configurarComboSector() {
         ObservableList<String> sectores = FXCollections.observableArrayList(
                 "PUBLICO", "PRIVADO", "SOCIAL"
@@ -91,6 +97,10 @@ public class FXMLRegistrarOVController implements javafx.fxml.Initializable {
         comboSector.setPromptText("Seleccione un sector");
     }
 
+    /**
+     * Configura el ComboBox de estado con los nombres de los estados de México.
+     * Utiliza la clase EstadoMexico para obtener los nombres.
+     */
     public void configurarComboEstado() {
         ObservableList<String> estados = FXCollections.observableArrayList(
                 EstadoMexico.obtenerTodosLosNombres()
@@ -99,12 +109,18 @@ public class FXMLRegistrarOVController implements javafx.fxml.Initializable {
         comboEstado.setPromptText("Seleccione un estado");
     }
 
+    /**
+     * Muestra un mensaje de error al usuario cuando hay un problema al configurar los ComboBoxes.
+     */
     public void configurarComboCiudad() {
         comboCiudad.setItems(FXCollections.observableArrayList());
         comboCiudad.setPromptText("Primero seleccione un estado");
         comboCiudad.setDisable(true); // Deshabilitado hasta que se seleccione un estado
     }
 
+    /**
+     * Muestra un mensaje de error al usuario cuando hay un problema al configurar los ComboBoxes.
+     */
     private void configurarListeners() {
         // Listener para el ComboBox de estado
         comboEstado.setOnAction(event -> manejarCambioEstado());
@@ -117,6 +133,9 @@ public class FXMLRegistrarOVController implements javafx.fxml.Initializable {
         });
     }
 
+    /**
+     * Muestra un mensaje de error al usuario cuando hay un problema al configurar los ComboBoxes.
+     */
     private void manejarCambioEstado() {
         String estadoSeleccionado = comboEstado.getValue();
 
@@ -136,6 +155,9 @@ public class FXMLRegistrarOVController implements javafx.fxml.Initializable {
         }
     }
 
+    /**
+     * Muestra un mensaje de error al usuario cuando hay un problema al cargar las ciudades.
+     */
     private void cargarCiudadesPorEstado(String nombreEstado) {
         EstadoMexico.buscarPorNombre(nombreEstado)
                 .ifPresentOrElse(
@@ -154,14 +176,23 @@ public class FXMLRegistrarOVController implements javafx.fxml.Initializable {
                 );
     }
 
+    /**
+     * Muestra un mensaje de error al usuario cuando hay un problema al cargar las ciudades.
+     */
     private void habilitarComboCiudad() {
         comboCiudad.setDisable(false);
     }
 
+    /**
+     * Muestra un mensaje de error al usuario cuando hay un problema al cargar las ciudades.
+     */
     private void limpiarSeleccionCiudad() {
         comboCiudad.setValue(null);
     }
 
+    /**
+     * Muestra un mensaje de error al usuario cuando hay un problema al configurar los ComboBoxes.
+     */
     private void deshabilitarComboCiudad() {
         comboCiudad.setDisable(true);
         comboCiudad.setItems(FXCollections.observableArrayList());
@@ -169,6 +200,9 @@ public class FXMLRegistrarOVController implements javafx.fxml.Initializable {
         comboCiudad.setPromptText("Primero seleccione un estado");
     }
 
+    /**
+     * Muestra un mensaje de error al usuario cuando hay un problema al configurar los ComboBoxes.
+     */
     @FXML
     public void clicBtnRegistrar(ActionEvent actionEvent) {
         try {
@@ -184,6 +218,9 @@ public class FXMLRegistrarOVController implements javafx.fxml.Initializable {
         }
     }
 
+    /**
+     * Muestra un mensaje de error al usuario cuando hay un problema al configurar los ComboBoxes.
+     */
     @FXML
     public void clicBtnCancelar(ActionEvent actionEvent) {
         cerrarVentana();
@@ -286,6 +323,10 @@ public class FXMLRegistrarOVController implements javafx.fxml.Initializable {
                 validarCiudadYEstado();
     }
 
+    /**
+     * Valida el nombre de la organización.
+     * @return true si el nombre es válido, false en caso contrario
+     */
     private boolean validarNombre() {
         String nombre = obtenerTextoLimpio(txfiNombre);
         if (!validarLongitudNombre(nombre)) {
@@ -297,6 +338,10 @@ public class FXMLRegistrarOVController implements javafx.fxml.Initializable {
         return true;
     }
 
+    /**
+     * Valida el sector de la organización.
+     * @return true si el sector es válido, false en caso contrario
+     */
     private boolean validarSector() {
         String sector = comboSector.getValue();
         if (sector == null || !verificarSector(sector)) {
@@ -308,6 +353,10 @@ public class FXMLRegistrarOVController implements javafx.fxml.Initializable {
         return true;
     }
 
+    /**
+     * Valida el número de teléfono.
+     * @return true si el teléfono es válido, false en caso contrario
+     */
     private boolean validarTelefono() {
         String telefono = obtenerTextoLimpio(txFiTelefono);
         if (!validarLongitudTelefono(telefono)) {
@@ -325,6 +374,10 @@ public class FXMLRegistrarOVController implements javafx.fxml.Initializable {
         return true;
     }
 
+    /**
+     * Valida el correo electrónico.
+     * @return true si el correo es válido, false en caso contrario
+     */
     private boolean validarCorreo() {
         String correo = obtenerTextoLimpio(txfiCorreo);
         if (!validarLongitudCorreo(correo)) {
@@ -342,6 +395,10 @@ public class FXMLRegistrarOVController implements javafx.fxml.Initializable {
         return true;
     }
 
+    /**
+     * Valida la dirección de la organización.
+     * @return true si la dirección es válida, false en caso contrario
+     */
     private boolean validarDireccion() {
         String direccion = obtenerTextoLimpio(txfiDireccion);
         if (!validarLongitudDireccion(direccion)) {
@@ -353,6 +410,10 @@ public class FXMLRegistrarOVController implements javafx.fxml.Initializable {
         return true;
     }
 
+    /**
+     * Valida la ciudad y el estado seleccionados.
+     * @return true si la ciudad y el estado son válidos, false en caso contrario
+     */
     private boolean validarCiudadYEstado() {
         String estado = comboEstado.getValue();
         String ciudad = comboCiudad.getValue();
@@ -374,19 +435,31 @@ public class FXMLRegistrarOVController implements javafx.fxml.Initializable {
         return true;
     }
 
-    // Métodos para mostrar alertas
+
+    /**
+     * Muestra un mensaje de error al usuario cuando hay un problema al configurar los ComboBoxes.
+     */
     private void mostrarAlertaCamposIncompletos() {
         Utilidad.crearAlerta(Alert.AlertType.WARNING, TITULO_CAMPOS_INCOMPLETOS, MENSAJE_CAMPOS_INCOMPLETOS);
     }
 
+    /**
+     * Muestra un mensaje de error al usuario cuando hay un problema al configurar los ComboBoxes.
+     */
     private void mostrarRegistroExitoso() {
         Utilidad.crearAlerta(Alert.AlertType.INFORMATION, TITULO_REGISTRO_EXITOSO, MENSAJE_REGISTRO_EXITOSO);
     }
 
+    /**
+     * Muestra un mensaje de error al usuario cuando hay un problema al configurar los ComboBoxes.
+     */
     private void mostrarErrorRegistro() {
         Utilidad.crearAlerta(Alert.AlertType.ERROR, TITULO_ERROR_REGISTRO, MENSAJE_ERROR_REGISTRO);
     }
 
+    /**
+     * Muestra un mensaje de error genérico al usuario.
+     */
     private void cerrarVentana() {
         Utilidad.cerrarVentana(txfiNombre);
     }
