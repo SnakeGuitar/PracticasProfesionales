@@ -180,93 +180,14 @@ public class DocumentoParcialDAO {
         return exito;
     }
 
-    /**
-     * Guarda o actualiza un documento parcial específico por tipo.
-     *
-     * @param pdfDocumento              Documento PDF en bytes
-     * @param idEntregaDocumentoParcial ID de entrega del documento parcial
-     * @param tipoDocumento            Tipo de documento parcial
-     * @throws SQLException Si ocurre un error al actualizar el registro
-     */
-    public static void guardarDocumentoParcial(byte[] pdfDocumento, int idEntregaDocumentoParcial, TipoDocumentoParcial tipoDocumento) throws SQLException {
-        Connection conexion = null;
-        PreparedStatement sentencia = null;
-
-        try {
-            conexion = ConexionBD.abrirConexion();
-
-            if (conexion != null) {
-                String consulta = "UPDATE documento_parcial " +
-                        "SET documento = ?, estado = 'Entregado', fecha_entrega = NOW() " +
-                        "WHERE tipo = ? AND ID_Entrega_Doc_Parcial = ?";
-
-                sentencia = conexion.prepareStatement(consulta);
-                sentencia.setBytes(1, pdfDocumento);
-                sentencia.setString(2, tipoDocumento.name());
-                sentencia.setInt(3, idEntregaDocumentoParcial);
-
-                int filasAfectadas = sentencia.executeUpdate();
-
-                ConexionBD.cerrarConexion(conexion, sentencia, null);
-
-                if (filasAfectadas > 0) {
-                    System.out.println("Documento parcial de tipo " + tipoDocumento.name() + " guardado correctamente en la base de datos.");
-                } else {
-                    throw new SQLException("No se encontró un documento tipo '" + tipoDocumento.name() + "' con ID_Entrega_Doc_Parcial = " + idEntregaDocumentoParcial);
-                }
-
-            } else {
-                throw new SQLException();
-            }
-        } catch (SQLException e) {
-            Utilidad.mostrarErrorBD(true, e);
-        } finally {
-            ConexionBD.cerrarConexion(conexion, sentencia, null);
-        }
-    }
 
     /**
-     * Obtiene un documento parcial específico por ID.
+     * Obtiene una lista de documentos parciales por ID de entrega.
      *
-     * @param idDocumentoParcial ID del documento parcial
-     * @return DocumentoParcial o null si no se encuentra
+     * @param idEntregaDocParcial ID de entrega del documento parcial
+     * @return Lista de documentos parciales
      * @throws SQLException Si ocurre un error en la consulta
      */
-    public static DocumentoParcial obtenerDocumentoParcialPorId(int idDocumentoParcial) throws SQLException {
-        Connection conexion = null;
-        PreparedStatement sentencia = null;
-        ResultSet resultado = null;
-        DocumentoParcial documentoParcial = null;
-
-        try {
-            conexion = ConexionBD.abrirConexion();
-            if (conexion != null) {
-                String consulta = "SELECT * FROM documento_parcial WHERE ID_Doc_Parcial = ?";
-                sentencia = conexion.prepareStatement(consulta);
-                sentencia.setInt(1, idDocumentoParcial);
-
-                resultado = sentencia.executeQuery();
-                if (resultado.next()) {
-                    documentoParcial = new DocumentoParcial();
-                    documentoParcial.setIdDocumento(resultado.getInt("ID_Doc_Parcial"));
-                    documentoParcial.setFechaEntrega(UtilidadFormatoDeDatos.stringToLocalDateTime(resultado.getString("fecha_entrega")));
-                    documentoParcial.setTipo(TipoDocumentoParcial.valueOf(resultado.getString("tipo")));
-                    documentoParcial.setEstado(EstadoDocumento.valueOf(resultado.getString("estado")));
-                    documentoParcial.setDocumento(resultado.getBytes("documento"));
-                    documentoParcial.setIdEntregaDocumento(resultado.getInt("ID_Entrega_Doc_Parcial"));
-                }
-            } else {
-                throw new SQLException();
-            }
-        } catch (SQLException e) {
-            Utilidad.mostrarErrorBD(true, e);
-        } finally {
-            ConexionBD.cerrarConexion(conexion, sentencia, resultado);
-        }
-
-        return documentoParcial;
-    }
-
     public static List<DocumentoParcial> obtenerDocumentosParcialesPorExpediente(int idEntregaDocParcial) throws SQLException {
         Connection conexion = null;
         PreparedStatement sentencia = null;
@@ -332,6 +253,13 @@ public class DocumentoParcialDAO {
         return documentoParcial;
     }
 
+    /**
+     * Obtiene una lista de documentos parciales por ID de periodo.
+     *
+     * @param idPeriodo ID del periodo
+     * @return Lista de documentos parciales
+     * @throws SQLException Si ocurre un error en la consulta
+     */
     public static List<DocumentoParcial> obtenerDocumentosParcialesPorPeriodo(int idPeriodo) throws SQLException {
         List<DocumentoParcial> documentosParciales = new ArrayList<>();
         Connection conexion = null;
@@ -375,13 +303,13 @@ public class DocumentoParcialDAO {
                     documentoParcial.setDocumento(documento);
                 }
 
-                documentoParcial.setIdEntregaDocumento(resultado.getInt("id_entrega_doc_final"));
+                documentoParcial.setIdEntregaDocumento(resultado.getInt("id_entrega_doc_parcial"));
 
                 documentosParciales.add(documentoParcial);
             }
 
         } catch (SQLException e) {
-            throw new SQLException("Error al obtener documentos finales por periodo: " + e.getMessage(), e);
+            throw new SQLException("Error al obtener documentos parciales por periodo: " + e.getMessage(), e);
         } finally {
             ConexionBD.cerrarConexion(conexion, sentencia, resultado);
         }
@@ -389,6 +317,12 @@ public class DocumentoParcialDAO {
         return documentosParciales;
     }
 
+    /**
+     * Actualiza el estado de un documento parcial.
+     *
+     * @param documentoParcial Objeto DocumentoParcial con el nuevo estado
+     * @throws SQLException Si ocurre un error en la actualización
+     */
     public static void actualizarDocumentoParcial(DocumentoParcial documentoParcial) throws SQLException {
         Connection conexion = null;
         PreparedStatement sentencia = null;

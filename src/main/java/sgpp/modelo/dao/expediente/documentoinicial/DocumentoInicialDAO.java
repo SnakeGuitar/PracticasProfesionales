@@ -1,19 +1,17 @@
 /* Autor original: Luis Donaldo
- * Último autor: Seth Marquez
+ * Último autor: Luis Donaldo
  * Fecha de creación: 15-06-2025
  * Fecha de la última versión aprobada:
- * Fecha de la última modificación: 15-06-2025
+ * Fecha de la última modificación: 02-07-2025
  * Descripción: Clase DAO para el manejo de la tabla 'documento_inicial'.
  *              Permite actualizar documentos PDF generados desde el sistema,
  *              específicamente para el tipo 'OficioAsignacion'.
  */
 
 /*
- * Estado: En progreso
+ * Estado: Completo
  * Modificaciones:
- * - Implementación del método guardarOficioAsignacion()
- * - Uso de conexión JDBC con cierre manual de recursos
- * - Fusión de definiciones duplicadas de la clase
+ * - Eliminación de métodos obsoletos.
  */
 
 package sgpp.modelo.dao.expediente.documentoinicial;
@@ -34,50 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DocumentoInicialDAO {
-
-    /**
-     * Guarda el PDF generado para un documento tipo 'OficioAsignacion' y actualiza su estado y fecha de entrega.
-     *
-     * @param pdfDocumento Documento PDF en bytes.
-     * @param idEntrega    ID_Entrega_Doc_Inicial correspondiente al alumno.
-     * @throws SQLException Si ocurre un error al actualizar el registro.
-     */
-    public static void guardarOficioAsignacion(byte[] pdfDocumento, int idEntrega) throws SQLException {
-        Connection conexion = null;
-        PreparedStatement sentencia = null;
-
-        try {
-            conexion = ConexionBD.abrirConexion();
-            if (conexion != null) {
-                String consulta = "UPDATE documento_inicial " +
-                        "SET documento = ?, estado = 'Entregado', fecha_entrega = NOW() " +
-                        "WHERE tipo = 'OficioAsignacion' AND ID_Entrega_Doc_Inicial = ?";
-
-                sentencia = conexion.prepareStatement(consulta);
-                sentencia.setBytes(1, pdfDocumento);
-                sentencia.setInt(2, idEntrega);
-
-                int filasAfectadas = sentencia.executeUpdate();
-
-                sentencia.close();
-                conexion.close();
-
-                if (filasAfectadas > 0) {
-                    System.out.println("Documento de OficioAsignacion guardado correctamente en la base de datos.");
-                } else {
-                    throw new SQLException("No se encontró un documento tipo 'OficioAsignacion' con ID_Entrega_Doc_Inicial = " + idEntrega);
-                }
-
-            } else {
-                throw new SQLException();
-            }
-        } catch (SQLException e) {
-            Utilidad.mostrarErrorBD(true, e);
-        } finally {
-            ConexionBD.cerrarConexion(conexion, sentencia, null);
-        }
-    }
-
     /**
      * Obtiene los documentos iniciales por expediente de estudiante y período.
      * @return Lista de documentos iniciales
@@ -164,40 +118,13 @@ public class DocumentoInicialDAO {
     }
 
     /**
-     * Verifica si existe un documento inicial para un estudiante en un período específico.
+     * Obtiene un documento inicial por su ID de entrega y tipo.
      *
-     * @param idEstudiante ID del estudiante
-     * @param idPeriodo    ID del período
-     * @return true si existe al menos un documento, false en caso contrario
-     * @throws SQLException Si ocurre un error en la consulta
+     * @param idEntregaDocInicial ID de entrega del documento inicial
+     * @param tipo                Tipo de documento inicial
+     * @return DocumentoInicial si se encuentra, null en caso contrario
+     * @throws SQLException Si ocurre un error al acceder a la base de datos
      */
-    public static boolean existeDocumentoInicial(int idEstudiante, int idPeriodo) throws SQLException {
-        Connection conexionBD = null;
-        PreparedStatement sentencia = null;
-        ResultSet resultado = null;
-        boolean existe = false;
-
-        try {
-            conexionBD = ConexionBD.abrirConexion();
-            if (conexionBD != null) {
-                String consulta = "SELECT COUNT(*) FROM documento_inicial WHERE id_estudiante = ? AND id_periodo = ?";
-                sentencia = conexionBD.prepareStatement(consulta);
-                sentencia.setInt(1, idEstudiante);
-                sentencia.setInt(2, idPeriodo);
-
-                resultado = sentencia.executeQuery();
-                if (resultado.next()) {
-                    existe = resultado.getInt(1) > 0;
-                }
-            } else {
-                throw new SQLException("No se pudo establecer la conexión a la base de datos.");
-            }
-        } finally {
-            ConexionBD.cerrarConexion(conexionBD, sentencia, resultado);
-        }
-        return existe;
-    }
-
     public static DocumentoInicial obtenerDocumentoInicialPorTipo(int idEntregaDocInicial, TipoDocumentoInicial tipo) throws SQLException {
         DocumentoInicial documentoInicial = null;
         Connection conexion = ConexionBD.abrirConexion();
@@ -226,6 +153,13 @@ public class DocumentoInicialDAO {
         return documentoInicial;
     }
 
+    /**
+     * Obtiene una lista de documentos iniciales asociados a un período específico.
+     *
+     * @param idPeriodo ID del período para filtrar los documentos
+     * @return Lista de DocumentoInicial
+     * @throws SQLException Si ocurre un error al acceder a la base de datos
+     */
     public static List<DocumentoInicial> obtenerDocumentosInicialesPorPeriodo(int idPeriodo) throws SQLException {
         List<DocumentoInicial> documentosIniciales = new ArrayList<>();
         Connection conexion = null;
@@ -283,6 +217,12 @@ public class DocumentoInicialDAO {
         return documentosIniciales;
     }
 
+    /**
+     * Actualiza el estado de un documento inicial en la base de datos.
+     *
+     * @param documentoInicial Objeto DocumentoInicial con el nuevo estado
+     * @throws SQLException Si ocurre un error al actualizar el estado
+     */
     public static void actualizarDocumentoInicial(DocumentoInicial documentoInicial) throws SQLException {
         Connection conexion = null;
         PreparedStatement sentencia = null;
