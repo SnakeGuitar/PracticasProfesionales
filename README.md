@@ -13,5 +13,8 @@ comando: `mysql –u  root  –p  practicasprofesionales  <  "\..\BD_PracticasPr
 y colocar las credenciales de una cuenta con permisos `SELECT`, `INSERT`,
 `UPDATE` y `EXECUTE` en `practicasprofesionales`
 
-5: Los usuarios y sus credenciales pueden crear nuevos, actualizar los existentes o utilizar los del archivo *LEÉME.txt*
+5: Los usuarios y sus credenciales puede crear nuevos, actualizar los existentes o utilizar los del archivo *LEÉME.txt*
 (no incluido en este repositorio)
+
+6: Puede crear nuevos usuarios para hacer llamando al procedimiento `CALL insertar_usuario('[usuario]', '[password]', '[COORDINADOR/ESTUDIANTE/PROFESOR]', 1);`
+en `practicasprofesionales`
